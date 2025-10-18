@@ -1,0 +1,22 @@
+{
+    "name": "diogomaia/meumanoburger",
+    "type": "project",
+    "autoload": {
+        "classmap": [
+            "Controller/"
+        ],
+        "psr-4": {
+            "Diogomaia\\Meumanoburger\\": "meuManoBurger/",
+            "Controller\\": "Controller/",
+            "Model\\": "Model/"
+        },
+        "files": [
+            "Config/configuration.php"
+        ]
+    },
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">= 8.0",
+        "ext-mbstring": "*"
+    }
+}
