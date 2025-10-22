@@ -18,7 +18,7 @@ class Adm
     public function registerAdm($nome_adm, $email_adm, $senha_adm, $imagem_adm)
     {
         try {
-            $sql = "INSERT INTO Administrador (nome_adm, email_adm, senha_adm, imagem_adm)
+            $sql = "INSERT INTO administrador (nome_adm, email_adm, senha_adm, imagem_adm)
             VALUES (:nome_adm, :email_adm, :senha_adm, :imagem_adm)";
 
             $hashedPassword = password_hash($senha_adm, PASSWORD_DEFAULT);
@@ -40,7 +40,7 @@ class Adm
     public function getAdmByEmail($email_adm): mixed
     {
         try {
-            $sql = "SELECT * FROM Administrador WHERE  email_adm =  :email_adm LIMIT 1";
+            $sql = "SELECT * FROM administrador WHERE  email_adm =  :email_adm LIMIT 1";
 
             $stmt = $this->db->prepare($sql);
 
