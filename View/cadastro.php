@@ -19,7 +19,7 @@
             <div class="form_cadastro">
                 <h1>Seja Bem-Vindo ao MeumanoBurger</h1>
                 <h2>Cadastre-se</h2>
-                <h3>E aproveite nossos recursos</h3>
+                <p>E aproveite nossos recursos</p>
             
             
                 <form>
@@ -27,12 +27,15 @@
 
             <div class="foto">
               <label for="imagemPerfil">
+
+             <h4>Adicionar Foto</h4>
               <figure class="foto-do-perfil">
-            <img id="previewImagem" src="../templates/assets/img/perfil.png" alt="Imagem do perfil" />
+                <img id="previewImagem" src="../templates/assets/img/perfil.png" alt="Imagem do perfil" />
              </figure>
-           </label>
-             <input type="file" id="imagemPerfil" name="imagemPerfil" accept="image/*" style="display: none;">
-               </div>
+
+              </label>
+                 <input type="file" id="imagemPerfil" name="imagemPerfil" accept="image/*" style="display: none;">
+            </div>
 
                     </div>
                      <p>Nome</p>
@@ -47,7 +50,7 @@
                         <input type="password" name="password" id="password" required>
                        
 
-                        <p>Confirm_Senha</p>
+                        <p>Confirmar Senha</p>
                         <input type="password" name="confirm_password" id="confirm_password" required>
                     </div>
 
@@ -75,6 +78,6 @@
         </div>
     </main>
 
-    <script src="../templates/assets/js/login.js"></script>
+    <script src="../templates/assets/js/cadastro.js"></script>
 </body>
 </html>
