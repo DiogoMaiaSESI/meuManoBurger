@@ -71,5 +71,32 @@ class ProductController {
         $cleanId = filter_var($id, FILTER_VALIDATE_INT);
         return $this->productModel->getProductById($cleanId);
     }
+    public function toggleFavoriteAction() {
+        if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+            return ['success' => false, 'errors' => ['Requisição inválida.']];
+        }
+
+        $userId = $_SESSION['user_id'] ?? null;
+        $productId = filter_input(INPUT_POST, 'id_produto', FILTER_VALIDATE_INT);
+
+        if (!$userId) {
+            return ['success' => false, 'errors' => ['Você precisa estar logado para gerenciar favoritos.']];
+        }
+
+
+        return $this->productModel->toggleFavorite($userId, $productId);
+    }
+
+
+    public function listFavorites() {
+
+        $userId = $_SESSION['user_id'] ?? null;
+        
+        if (!$userId) {
+            return []; 
+        }
+
+        return $this->productModel->getFavoritesByUser($userId);
+    }
 }
 ?>

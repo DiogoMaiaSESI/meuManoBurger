@@ -146,5 +146,69 @@ class Product {
             return null;
         }
     }
+    private function isFavorite($userId, $productId) {
+        $stmt = $this->conn->prepare("SELECT id_favorito FROM favoritos WHERE id_cliente_fk = :userId AND id_produto_fk = :productId");
+        $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
+        $stmt->bindParam(':productId', $productId, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetch() !== false;
+    }
+
+
+    public function toggleFavorite($userId, $productId) {
+        if (empty($userId) || empty($productId)) {
+            return ['success' => false, 'errors' => ['Usuário ou produto inválido.']];
+        }
+
+        try {
+
+            if ($this->isFavorite($userId, $productId)) {
+
+                $stmt = $this->conn->prepare(
+                    "DELETE FROM favoritos WHERE id_cliente_fk = :userId AND id_produto_fk = :productId"
+                );
+                $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
+                $stmt->bindParam(':productId', $productId, PDO::PARAM_INT);
+                $stmt->execute();
+
+                return ['success' => true, 'action' => 'unfavorited'];
+            } else {
+
+                $stmt = $this->conn->prepare(
+                    "INSERT INTO favoritos (id_cliente_fk, id_produto_fk) VALUES (:userId, :productId)"
+                );
+                $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
+                $stmt->bindParam(':productId', $productId, PDO::PARAM_INT);
+                $stmt->execute();
+
+                return ['success' => true, 'action' => 'favorited'];
+            }
+        } catch (PDOException $e) {
+            error_log("Erro ao alternar favorito: " . $e->getMessage());
+            return ['success' => false, 'errors' => ['Ocorreu um erro no servidor.']];
+        }
+    }
+
+    public function getFavoritesByUser($userId) {
+        if (empty($userId)) {
+            return [];
+        }
+
+        try {
+
+            $stmt = $this->conn->prepare(
+                "SELECT p.* FROM produto p
+                 JOIN favoritos f ON p.id_produto = f.id_produto_fk
+                 WHERE f.id_cliente_fk = :userId"
+            );
+            $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Erro ao buscar favoritos: " . $e->getMessage());
+            return [];
+        }
+    }
 }
 ?>
