@@ -1,0 +1,43 @@
+.payment-methods-list {
+
+    margin-bottom: 3rem;
+}
+.form-header {
+    margin-bottom: 2.0rem;
+}
+.payment-method-item {
+    display: flex;
+    align-items: center;
+    padding: 2rem;
+    border: 1px solid var(--Cinza);
+    border-radius: 1.8rem;
+    margin-bottom: 2rem;
+    font-size: 1.8rem;
+    font-weight: 500;
+}
+
+.payment-icon-figure {
+    margin-right: 1.5rem;
+}
+
+.payment-icon {
+    height: 2.4rem;
+}
+
+.add-payment-btn {
+    width: 100%;
+    padding: 1.8rem;
+    background-color: var(--VermelhoCereja);
+    color: var(--Branco);
+    border: none;
+    border-radius: 1.8rem;
+    font-size: 1.8rem;
+    font-weight: 700;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.add-payment-btn:hover {
+    opacity: 0.9;
+}
