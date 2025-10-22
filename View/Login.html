@@ -11,9 +11,8 @@
     <main>
         <div class="container">
             <div class="imagem_login">
-                <figure>
+                
                     <img src="../templates/assets/img/imglogin-cadastro.png" alt="Uma mulher sentada em uma cadeira com um notebook no colo, com um celular na página de login atrás">
-                </figure>
             </div>
 
             <div class="form_login">
@@ -21,30 +20,41 @@
                 <h2>Realize o Login</h2>
             
                 <form>
-                    <p>Email</p>
-                    <input type="email" name="email" id="email">
+                    <div class="inputs">
 
-                    <p>Senha</p>
-                    <input type="password" name="password" id="password">
+                        <p>Email</p>
+                        <input type="email" name="email" id="email">
+                        <p class="msg_erro">Este campo é obrigatório</p>
+                        
+                        <p>Senha</p>
+                        <input type="password" name="password" id="password">
+                        <p class="msg_erro">Este campo é obrigatório</p>
+                    </div>
 
+                    <div class="btn_entrar">
+                        <button type="submit">Entrar</button>
+                    </div>
                 </form>
-                <button type="submit">Entrar</button>
 
                 <div class="google_facebook">
-                    <figure>
-                        <img src="../templates/assets/img/google.png" alt="Logo do Google">
+                    <figure class="google">
+                        <a href=""> <!--Link para autenticação com o Google-->  
+                            <img src="../templates/assets/img/google.png" alt="Logo do Google">
+                        </a>
                     </figure>
 
-                    <figure>
-                        <img src="../templates/assets/img/facebook.png" alt="Logo do Facebook" >
+                    <figure class="facebook">
+                        <a href=""> <!--Link para autenticação com o Facebook-->
+                            <img src="../templates/assets/img/facebook.png" alt="Logo do Facebook">
+                        </a>
                     </figure>
                 </div>
-
-                <p>Não tem uma conta? <span>Cadastre-se</span></p>
-
-                <h3></h3>
+                <p class="cadastre-se">Não tem uma conta? <span>Cadastre-se</span></p>
+                <footer></footer>
             </div>
         </div>
     </main>
+
+    <script src="../templates/assets/js/login.js"></script>
 </body>
 </html>
