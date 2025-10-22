@@ -9,20 +9,46 @@
     <body>
         <header>
             <div class="sandwich">
-                <figure>
+                <figure class="menu">
                     <img src="../templates/assets/img/sandwichMenu.png" alt="">
                 </figure>
                 <div class="options">
                     <div class="option">
+                        <figure>
+                            <img src="../templates/assets/img/cutlery.png" alt="">
+                        </figure>
+                        <h5>Cardápio</h5>
+                    </div>
+                    <div class="option">
+                        <figure>
+                            <img src="../templates/assets/img/coxinhaIcon.png" alt="">
+                        </figure>
+                        <h5>Pedidos</h5>
+                    </div>
+                    <div class="option">
+                        <figure>
+                            <img src="../templates/assets/img/chat.png" alt="">
+                        </figure>
+                        <h5>Feedbacks</h5>
+                    </div>
+                    <div class="option">
+                        <figure>
+                            <img src="../templates/assets/img/shoppingCart.png" alt="">
+                        </figure>
+                        <h5>Carrinho</h5>
                     </div>
                 </div>
             </div>
-            <figure>
+            <div class="sombra"></div>
+            <figure class="logo">
                 <img src="../templates/assets/img/Logo.png" alt="">
             </figure>
             <div class="headerButtons">
                 <figure>
                     <img src="../templates/assets/img/volte.png" alt="">
+                </figure>
+                <figure>
+                    <img src="../templates/assets/img/yellowShoppingCart.png" alt="">
                 </figure>
                 <figure>
                     <img src="../templates/assets/img/Profile.png" alt="">
@@ -38,27 +64,21 @@
                         </figure>
                     </div>
                     <div class="rightDiv">
-                        <div class="title">
-                            <h2>Coxinha</h2>
-                            <div class="icons">
-                                <figure>
-                                    <img src="templates/assets/img/lapis.png" alt="">
-                                </figure>
-                                <figure>
-                                    <img src="templates/assets/img/lixeira.png" alt="">
-                                </figure>
-                            </div>
-                        </div>
+                        <h2 class="title">Coxinha</h2>
                         <p>Uma coxinha crocante por fora e macia por dentro, recheada com frango desfiado temperado na medida certa e um toque cremoso de catupiry. Preparada com massa leve e dourada, é perfeita para matar a fome a qualquer hora do dia.</p>
-                        <h2>R$ 7,00</h2>
-                        <button>Salvar alterações</button>
+                        <h2 class="price">R$ 7,00</h2>
+                        <div class="buttons">
+                            <button class="cart">Adicionar ao carrinho</button>
+                            <button class="favorite">Adicionar aos favoritos</button>
+                        </div>
                     </div>
                 </div>
                 <div class="secondDiv">
-                    <h4><span>Tipo</span>Lanche</h4>
-                    <h4><span>Quantidade</span>30</h4>
+                    <div><h4 class="subtitle">Tipo</h4><h4 class="subtitle2">Lanche</h4></div>
+                    <div><h4 class="subtitle">Quantidade</h4><h4 class="subtitle2">30</h4></div>
                 </div>
             </div>
         </main>
+        <script src="../templates/assets/js/detalhamentoUser.js"></script>
     </body>
 </html>

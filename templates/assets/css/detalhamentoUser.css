@@ -1,9 +1,240 @@
 @import 'global.css';
 
+body {
+    min-height: 78.2rem;
+}
+
 header {
     background-color: var(--VermelhoCereja);
     display: flex;
     height: 10.6rem;
+    width: 100%;
+    align-items: center;
+    justify-content: end;
+    padding-right: 4.9rem;
+    position: relative;
+    position: fixed;
+}
+.headerButtons {
+    display: flex;
+    gap: 4.6rem;
+    align-items: end;
+}
+.headerButtons figure {
+    transition: 500ms;
+    cursor: pointer;
+}
+.headerButtons figure:hover {
+    transition: 500ms;
+    opacity: 70%;
+}
+.logo{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+figure img{
+    display: block;
+}
+figure{
+    width: fit-content;
+    height: fit-content;
+}
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 10.6rem;
+    height: 100%;
+    background-color: #F4F4F4;
+}
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 3.7rem;
+    width: 92.6rem;
+}
+.mainDiv, .secondDiv {
+    width: 100%;
+}
+.mainDiv {
+    display: flex;
+    height: 40.3rem;
+    box-shadow: 0 0 1.5rem 0 rgba(0, 0, 0, 0.25);
+    border-radius: 2rem;
+}
+.leftDiv, .rightDiv {
+    width: 50%;
+    height: 100%;
+}
+.leftDiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #F4F4F4;
+    border-top-left-radius: 2rem;
+    border-bottom-left-radius: 2rem;
+}
+.rightDiv {
+    padding: 2.2rem 4.6rem;
+    gap: 2.7rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--Branco);
+    border-top-right-radius: 2rem;
+    border-bottom-right-radius: 2rem;
+}
+.title {
+    font-size: 3.6rem;
+    width: 100%;
+}
+h2 {
+    font-weight: 700;
+    color: var(--VermelhoCereja);
+}
+.price {
+    font-size: 3rem;
+    width: 100%;
+}
+p {
+    font-size: 1.6rem;
+    font-weight: 400;
+    text-align: justify;
+    line-height: 1.9rem;
+}
+.buttons {
+    display: flex;
+    gap: 3rem;
+}
+.cart {
+    width: 17.9rem;
+    height: 4.7rem;
+    border-radius: 0.8rem;
+    background-color: var(--VermelhoCereja);
+    box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
+    color: var(--Branco);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 1.4rem;
+    font-weight: 700;
+    border-style: none;
+    transition: 500ms;
+    cursor: pointer;
+}
+.cart:hover  {
+    border-style: solid;
+    border-width: 0.1rem;
+    border-color: var(--Preto);
+    box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.25);
+    transition: 500ms;
+    background-color: #c0222f;
+}
+.favorite {
+    cursor: pointer;
+    width: 17.2rem;
+    height: 4.7rem;
+    border-radius: 0.8rem;
+    background-color: var(--AmareloPrimario);
+    box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
+    color: var(--Preto);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 1.4rem;
+    font-weight: 700;
+    border-style: none;
+    transition: 500ms;
+}
+.favorite:hover {
+    background-color: var(--AmareloSecundario);
+    border-style: solid;
+    border-width: 0.1rem;
+    box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.25);
+    transition: 500ms;
+    border-color: var(--Preto);
+}
+.secondDiv {
+    display: flex;
     align-items: center;
     justify-content: space-between;
+    box-shadow: 0 0 1.5rem 0 rgba(0, 0, 0, 0.25);
+    border-radius: 2rem;
+    height: 13.7rem;
+    padding: 0 6rem;
+}
+.secondDiv div {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: center;
+}
+.subtitle {
+    font-size: 2.5rem;
+    color: var(--VermelhoCereja);
+    font-weight: 700;
+}
+.subtitle2 {
+    font-size: 2.4rem;
+    font-weight: normal;
+}
+.menu {
+    width: 8rem !important;
+    padding-left: 4rem;
+    cursor: pointer;
+}
+.menu:hover {
+    transition: 500ms;
+    opacity: 70%;
+}
+.sandwich {
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    gap: 3.2rem;
+    position: absolute;
+    top: 3.3rem;
+    left: 0;
+    width: fit-content;
+}
+.options {
+    background-color: var(--VermelhoCereja);
+    width: 25.5rem;
+    border-style: solid;
+    border-width: 0.2rem;
+    display: none;
+}
+.option {
+    display: flex;
+    justify-content: baseline;
+    align-items: center;
+    height: 6.4rem;
+    border-style: solid;
+    border-width: 0.1rem;
+    border-color: var(--Preto);
+    color: var(--Branco);
+    padding-left: 1.6rem;
+    gap: 2.1rem;
+}
+h5 {
+    font-size: 2.1rem;
+    font-weight: 400;
+}
+.sombra {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
+    background-color: var(--Preto);
+    opacity: 40%;
+    display: none;
 }
