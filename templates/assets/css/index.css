@@ -1,0 +1,37 @@
+body{
+    font-family: 'inter', Arial, Helvetica, sans-serif;}
+
+header{
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+.cabecalho{
+    display: flex;
+    gap: 5.2rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.cabecalho p{
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+.cabecalho img{
+    width: 5.4rem;
+    height: 5.4rem;
+}
+
+.icone img 
+{
+    width: 3.4rem;
+    height: 3.4rem;
+    margin-left: 1rem;
+    margin-right: 3rem;
+}
+
+.cabecalho button{
+    width: 45rem;
+    height: 5.2rem;
+    background-color: var(--AmareloPrimario);
+}
