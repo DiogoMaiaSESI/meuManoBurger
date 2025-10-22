@@ -1,0 +1,9 @@
+@import 'global.css';
+
+header {
+    background-color: var(--VermelhoCereja);
+    display: flex;
+    height: 10.6rem;
+    align-items: center;
+    justify-content: space-between;
+}
