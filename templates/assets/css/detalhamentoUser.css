@@ -56,10 +56,13 @@ main {
     justify-content: center;
     align-items: center;
     gap: 3.7rem;
-    width: 92.6rem;
+    max-width: 92.6rem;
+    width: 80%;
+    min-width: 79rem;
 }
 .mainDiv, .secondDiv {
     width: 100%;
+    background-color: var(--Branco);
 }
 .mainDiv {
     display: flex;
@@ -68,7 +71,7 @@ main {
     border-radius: 2rem;
 }
 .leftDiv, .rightDiv {
-    width: 50%;
+    width: 100%;
     height: 100%;
 }
 .leftDiv {
@@ -79,8 +82,16 @@ main {
     border-top-left-radius: 2rem;
     border-bottom-left-radius: 2rem;
 }
+.leftDiv figure {
+    max-width: 38.9rem;
+    width: 90%;
+}
+.leftDiv figure img {
+    width: 100%;
+    height: 30.3rem;
+}
 .rightDiv {
-    padding: 2.2rem 4.6rem;
+    padding: 2.2rem 2rem;
     gap: 2.7rem;
     display: flex;
     flex-direction: column;
@@ -88,6 +99,7 @@ main {
     background-color: var(--Branco);
     border-top-right-radius: 2rem;
     border-bottom-right-radius: 2rem;
+    min-width: 41rem;
 }
 .title {
     font-size: 3.6rem;
@@ -259,4 +271,136 @@ h5 {
     opacity: 40%;
     transition: 500ms;
     pointer-events: all;
+}
+@media screen and (max-width: 824px) and (min-width: 393px){
+    html {
+        height: 100%;
+    }
+    body {
+        background-color: #F4F4F4;
+    }
+    main {
+        padding-top: 40rem;
+        padding-bottom: 10rem;
+        height: 100%;
+    }
+    .mainDiv {
+        flex-direction: column;
+        height: fit-content;
+        background-color: var(--Branco);
+        border-radius: 2rem;
+    }
+    .leftDiv, .rightDiv{
+        border-radius: 2rem;
+        background-color: var(--Branco);
+    }
+    .container {
+        max-width: 54.8rem;
+        width: 80%;
+        min-width: 33.6rem;
+        padding-bottom: 2rem;
+    }
+    .rightDiv {
+        width: 100%;
+        min-width: auto !important;
+        max-width: auto !important;
+        height: fit-content;
+    }
+    .headerButtons {
+        gap: 1rem;
+    }
+    .menu, .menu img, .headerButtons figure img {
+        width: 3.5rem;
+    }
+    .logo img {
+        width: 10rem;
+    }
+    header {
+        padding-right: 2rem;
+    }
+    .menu {
+        width: 6rem !important;
+        padding-left: 2rem;
+    }
+    .buttons {
+        width: 100%;
+        justify-content: center;
+    }
+    .leftDiv figure img {
+        height: auto;
+    }
+    .secondDiv {
+        padding: 0 2rem;
+    }
+    .leftDiv {
+        padding: 2rem;
+        height: fit-content;
+    }
+}
+@media screen and (max-width: 392px){
+    .mainDiv {
+        flex-direction: column;
+        height: fit-content;
+        background-color: var(--Branco);
+        border-radius: 2rem;
+    }
+    .leftDiv, .rightDiv{
+        border-radius: 2rem;
+        background-color: var(--Branco);
+    }
+    .container {
+        max-width: 54.8rem;
+        width: 80%;
+        min-width: 33.6rem;
+        padding-bottom: 2rem;
+    }
+    .rightDiv {
+        width: 100%;
+        min-width: auto !important;
+        max-width: auto !important;
+        height: fit-content;
+    }
+    .headerButtons {
+        gap: 1rem;
+    }
+    .menu, .menu img, .headerButtons figure img {
+        width: 3.5rem;
+    }
+    .logo {
+        left: 40%;
+    }
+    body {
+        background-color: #F4F4F4;
+    }
+    main {
+        padding-top: 20rem;
+    }
+    .logo img {
+        width: 10rem;
+    }
+    header {
+        padding-right: 2rem;
+    }
+    .menu {
+        width: 6rem !important;
+        padding-left: 2rem;
+    }
+    .buttons {
+        width: 100%;
+        justify-content: center;
+    }
+    .leftDiv figure img {
+        height: auto;
+    }
+    .secondDiv {
+        padding: 0 2rem;
+    }
+    .leftDiv {
+        padding: 2rem;
+        height: fit-content;
+    }
+    p {
+        font-size: 1.4rem;
+        line-height: 1.7rem;
+    }
 }
