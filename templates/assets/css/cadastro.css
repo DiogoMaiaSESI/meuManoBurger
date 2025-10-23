@@ -1,15 +1,16 @@
 @import url('global.css');
 
 body {
-    position: relative;
-    height: fit-content;
-    padding-bottom: 3.6rem;
+    display: flex;
+    flex-direction: column;
 }
 
 .container{
     display: flex;
-    gap: 10rem;
-    align-items: center;
+    width: 100%;
+    height: 100%;
+    /* gap: 0;  */
+    align-items: stretch; 
 }
 
 .imagem_login{
@@ -17,11 +18,9 @@ body {
     justify-content: center;
     align-items: center;
     background-color: #F0EEEE;
-    width: 100%;
+    width: 50%; 
+    max-height: 100rem;
     height: 100%;
-    align-items: center;
-    z-index: 1;
-    min-width: 64.9rem;
 }
 
 .imagem_login img{
@@ -29,30 +28,52 @@ body {
     height: 50.1rem;
 }
 
+.formContainer {
+    width: 50%; 
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding-left: 5rem;
+    padding-top: 2rem;
+}
+
+.form_cadastro{
+    max-width: 46.8rem;
+    width: 100%;
+    height: fit-content; 
+    margin: auto 0;
+}
+
 h2 {
     margin-bottom: 1rem;
 }
 
+.frase{
+    font-family: 'Inter';
+    font-size: 1.5rem;
+    color: var(--Preto);
+   
+}
 .foto label {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 .foto-do-perfil {
-  width: 10.0rem;              
+  width: 10.0rem;            
   height: 10.0rem;
-  border-radius: 5.0rem;        
-  overflow: hidden;          
-  display: flex;             
+  border-radius: 5.0rem;      
+  overflow: hidden;           
+  display: flex;              
   align-items: center;
   justify-content: center;
-  border: 0.2rem solid #ccc;    
+  border: 0.2rem solid #ccc;  
   cursor: pointer;
 }
 
 .foto-do-perfil img {
   width: 100%;
-   align-items: center;
+    align-items: center;
   justify-content: center;
   height: 100%;
   object-fit: cover;          
@@ -62,20 +83,10 @@ h2 {
 .adfoto{
     font-family: 'Inter';
     font-size: 1.4rem;
-    color: var(--Preto);
+    color: var(--VermelhoCereja);
     text-align: center;
     align-items: center;
-}
-.formContainer {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.form_cadastro{
-    width: 46.8rem;
-    height: fit-content;
+    margin-bottom: 1.0rem;
 }
 
 .form_cadastro h1{
@@ -91,13 +102,12 @@ h2 {
     margin-top: 2.6rem;
 }
 
-
 form{
     display: flex;
     margin-top: 2.0rem;
     flex-direction: column;
     align-items: center;
-    gap: 5rem;
+    gap: 1.3rem;
 }
 form p{
     width: 100%;
@@ -108,14 +118,14 @@ form p{
 }
 
 .labelInput{
-    padding-left: 2.5rem;
+    padding-left: 0.5rem;
     margin-top: 2rem;
 }
 
 input{
     font-family: 'Inter';
     width: 100%;
-    height: 3.5rem;
+    height: 2.5rem;
     border: 0.1rem solid var(--Preto);
     padding-left: 1.2rem;
     border-left: none;
@@ -126,10 +136,11 @@ input{
 
 button{
     width: 10.0rem;
-    height: 4rem;
+    height: 3.0rem;
     border-radius: 0.5rem;
     background-color: var(--VermelhoCereja);
     border: none;
+    margin-top: 2.5rem;
     color: var(--Branco);
     font-size: 2.0rem;
     cursor: pointer;
@@ -138,6 +149,7 @@ button{
 button:hover{
     background-color: #af353f;
     border: 0.1rem solid var(--VermelhoCereja)
+    
 }
 
 .google_facebook{
@@ -158,8 +170,9 @@ button:hover{
     font-family: 'Inter';
     font-size: 1.5rem;
     color: var(--Preto);
-    margin-bottom: 4.5rem;
+    /* margin-bottom: 4.5rem; */
     text-align: center;
+    margin-bottom: 2.5rem;
 }
 
 span{
@@ -171,15 +184,7 @@ span:hover{
     text-decoration: underline;
 }
 
-footer{
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    text-align: center;
-    height: 3.6rem;    
-    background-color: #FFDB58;
-}
+
 
 .msg_erro{
     color: red;

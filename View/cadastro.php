@@ -20,7 +20,7 @@
                 <div class="form_cadastro">
                     <h1>Seja Bem-Vindo ao MeumanoBurger</h1>
                     <h2>Cadastre-se</h2>
-                    <p>E aproveite nossos recursos</p>
+                    <p class="frase">E aproveite nossos recursos</p>
                     <form>
                         <div class="inputs">
                             <div class="foto">
@@ -47,7 +47,6 @@
     
                         <p class="labelInput">Confirmar Senha</p>
                         <input type="password" name="confirm_password" id="confirm_password" required>
-    
                         <p class="msg_erro">As senhas não coincidem</p>
     
                         <button type="submit">Cadastrar</button>
@@ -72,7 +71,6 @@
         </div>
         </div>
     </main>
-    <footer></footer>
     <script src="../templates/assets/js/cadastro.js"></script>
 </body>
 
