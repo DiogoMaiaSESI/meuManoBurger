@@ -141,6 +141,7 @@ p {
     border-radius: 2rem;
     height: 13.7rem;
     padding: 0 6rem;
+    background-color: var(--Branco);
 }
 .secondDiv div {
     display: flex;
@@ -480,4 +481,156 @@ input::placeholder {
     font-weight: 400;
     color: var(--Preto);
     text-align: center;
+}
+@media screen and (max-width: 824px) and (min-width: 393px){
+    form {
+        flex-direction: column;
+    }
+    html {
+        height: 100%;
+    }
+    body {
+        background-color: #F4F4F4;
+    }
+    main {
+        padding-top: 40rem;
+        padding-bottom: 10rem;
+        height: 100%;
+    }
+    .mainDiv {
+        flex-direction: column;
+        height: fit-content;
+        background-color: var(--Branco);
+        border-radius: 2rem;
+    }
+    .leftDiv, .rightDiv{
+        border-radius: 2rem;
+        background-color: var(--Branco);
+    }
+    .container {
+        max-width: 54.8rem;
+        width: 80%;
+        min-width: 33.6rem;
+        padding-bottom: 2rem;
+    }
+    .rightDiv {
+        width: 100%;
+        min-width: auto !important;
+        max-width: auto !important;
+        height: fit-content;
+    }
+    .headerButtons {
+        gap: 1rem;
+    }
+    .menu, .menu img, .headerButtons figure img {
+        width: 3.5rem;
+    }
+    .logo img {
+        width: 10rem;
+    }
+    header {
+        padding-right: 2rem;
+    }
+    .menu {
+        width: 6rem !important;
+        padding-left: 2rem;
+    }
+    .buttons {
+        width: 100%;
+        justify-content: center;
+    }
+    .leftDiv figure {
+        width: 90%;
+    }
+    .leftDiv figure img {
+        width: 100%;
+        height: auto;
+    }
+    .secondDiv {
+        padding: 0 2rem;
+    }
+    .leftDiv {
+        padding: 2rem;
+        height: fit-content;
+        width: 100%;
+    }
+}
+@media screen and (max-width: 392px){
+    form {
+        flex-direction: column;
+    }
+    .mainDiv {
+        flex-direction: column;
+        height: fit-content;
+        background-color: var(--Branco);
+        border-radius: 2rem;
+    }
+    .leftDiv, .rightDiv{
+        border-radius: 2rem;
+        background-color: var(--Branco);
+    }
+    .container {
+        max-width: 54.8rem;
+        width: 80%;
+        min-width: 33.6rem;
+        padding-bottom: 2rem;
+    }
+    .rightDiv {
+        width: 100%;
+        min-width: auto !important;
+        max-width: auto !important;
+        height: fit-content;
+    }
+    .headerButtons {
+        gap: 1rem;
+    }
+    .menu, .menu img, .headerButtons figure img {
+        width: 3.5rem;
+    }
+    .logo {
+        left: 40%;
+    }
+    body {
+        background-color: #F4F4F4;
+    }
+    main {
+        padding-top: 30rem;
+    }
+    .logo img {
+        width: 10rem;
+    }
+    header {
+        padding-right: 2rem;
+    }
+    .menu {
+        width: 6rem !important;
+        padding-left: 2rem;
+    }
+    .buttons {
+        width: 100%;
+        justify-content: center;
+    }
+    .leftDiv figure {
+        width: 90%;
+    }
+    .leftDiv figure img {
+        height: auto;
+        width: 100%;
+    }
+    .secondDiv {
+        padding: 0 2rem;
+    }
+    .leftDiv {
+        padding: 2rem;
+        height: fit-content;
+        width: 100%;
+    }
+    p {
+        font-size: 1.4rem;
+        line-height: 1.7rem;
+    }
+    .apagar {
+        width: 30rem;
+        height: 20rem;
+    }
 }
