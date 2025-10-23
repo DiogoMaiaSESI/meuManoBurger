@@ -41,3 +41,45 @@
 .add-payment-btn:hover {
     opacity: 0.9;
 }
+
+.payment-method-item {
+    /* Transforma o item em um container flex para alinhar o rádio button */
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Empurra o rádio button para a direita */
+}
+
+/* Esconde o rádio button padrão do navegador */
+.card-select-radio {
+    display: none;
+}
+
+/* Estiliza o nosso indicador visual (o "check") */
+.card-select-indicator {
+    display: inline-block;
+    width: 2.2rem;
+    height: 2.2rem;
+    border: 2px solid var(--Cinza);
+    border-radius: 50%; /* Deixa o indicador redondo */
+    cursor: pointer;
+    position: relative;
+    transition: border-color 0.2s;
+}
+
+/* Quando o rádio button está checado, o indicador muda de cor */
+.card-select-radio:checked + .card-select-indicator {
+    border-color: var(--VermelhoCereja);
+}
+
+/* Cria a bolinha interna do "check" quando o rádio está checado */
+.card-select-radio:checked + .card-select-indicator::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 1.2rem;
+    height: 1.2rem;
+    background-color: var(--VermelhoCereja);
+    border-radius: 50%;
+}

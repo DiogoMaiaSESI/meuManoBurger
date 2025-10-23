@@ -239,3 +239,115 @@ figure {
 .content-tab.active {
     display: block;
 }
+
+.edit-card-btn {
+    background: transparent !important; /* Usa !important para garantir a sobreposição */
+    border: none !important;
+    padding: 0 !important;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.2rem;  /* Define uma largura fixa */
+    height: 2.2rem; /* Define uma altura fixa */
+}
+
+.edit-card-btn .icon-editar-card {
+    width: 100%;
+    height: 100%;
+    display: block;
+    opacity: 0.6;
+    transition: opacity 0.2s ease-in-out;
+}
+
+.edit-card-btn:hover .icon-editar-card {
+    opacity: 1;
+}
+.modal-content-small {
+    background-color: var(--Branco);
+    padding: 3rem;
+    border-radius: 1.8rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    width: 90%;
+    max-width: 35rem; /* Menor que o modal do cartão */
+    animation: fadeIn 0.3s ease-out;
+}
+
+.modal-content-small p {
+    font-size: 1.8rem;
+    font-weight: 500;
+    color: var(--Preto);
+    margin-bottom: 2.5rem;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+.modal-buttons button {
+    padding: 1.2rem 3rem;
+    border: none;
+    border-radius: 1.8rem;
+    font-size: 1.6rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.btn-confirm-sim {
+    background-color: var(--VermelhoCereja);
+    color: var(--Branco);
+}
+
+.btn-confirm-nao {
+    background-color: var(--Cinza);
+    color: var(--Preto);
+    border: 1px solid #ccc;
+}
+
+.modal-buttons button:hover {
+    opacity: 0.9;
+}
+
+.pic-action-buttons {
+    display: none; /* Começa escondido */
+    position: absolute;
+    bottom: -40px; /* Posiciona abaixo da foto */
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+    justify-content: center;
+}
+
+.pic-action-buttons.visible {
+    display: flex; /* Classe que o JS vai adicionar para mostrar */
+}
+
+.pic-action-buttons button {
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 1.2rem;
+    font-size: 1.4rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.btn-save-pic {
+    background-color: #28a745; /* Verde para salvar */
+    color: var(--Branco);
+}
+
+.btn-cancel-pic {
+    background-color: #6c757d; /* Cinza para cancelar */
+    color: var(--Branco);
+}
+
+.pic-action-buttons button:hover {
+    opacity: 0.9;
+}
