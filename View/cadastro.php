@@ -28,7 +28,7 @@
             <div class="foto">
               <label for="imagemPerfil">
 
-             <h4>Adicionar Foto</h4>
+             <p class = "adfoto"> Adicionar Foto</p>
               <figure class="foto-do-perfil">
                 <img id="previewImagem" src="../templates/assets/img/perfil.png" alt="Imagem do perfil" />
              </figure>
@@ -73,7 +73,7 @@
                         </a>
                     </figure>
                 </div>
-                <p class="cadastre-se"> Já tem uma conta? <span>Login</span></p>
+                <p class="login"> Já tem uma conta? <span>Login</span></p>
                 <footer></footer>
             </div>
         </div>
