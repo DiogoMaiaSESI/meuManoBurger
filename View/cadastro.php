@@ -38,8 +38,12 @@
                         <input type="text" name="nome" id="nome" required>
     
                         <p class="labelInput">Tipo</p>
-                        <select name="" id=""></select>
-                        <input type="email" name="email" id="email" required>
+                        <select name="opcoes_cardapio" id="opcoes_cardapio">
+                            <option value="123"></option>
+                            <option value="123"></option>   
+                            <option value="123"></option>
+                        </select>
+                      
     
                         <p class="labelInput">Descrição</p>
                         <input type="text" name="descricao" id="descricao" required>
@@ -48,7 +52,7 @@
                         <input type="number" name="quantidade" id="quantidade" required>
     
                         <p class="labelInput">Preço</p>
-                        <input type=" number" name="preco" id="preco" required>
+                        <input type="number" name="preco" id="preco" set= 0.01 required>
     
                         <button type="submit">Cadastrar</button>
                         
