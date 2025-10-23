@@ -52,6 +52,7 @@
 
                         <p>Confirmar Senha</p>
                         <input type="password" name="confirm_password" id="confirm_password" required>
+                         <p class="msg_erro">As senhas não coincidem</p>
                     </div>
 
                     <div class="btn_cadastrar">
