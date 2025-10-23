@@ -13,6 +13,8 @@ const cancelar = document.querySelector('.cancelar')
 const cancelar2 = document.querySelector('.cancelar2')
 const editar = document.querySelector('.editar')
 const deletar = document.querySelector('.deletar')
+const figImg = document.querySelector('.foto figure img')
+const fotoInput = document.querySelector('#foto')
 
 menu.addEventListener('click', () => {
     opcoes.classList.toggle('optionActive')
@@ -64,4 +66,8 @@ deletar.addEventListener('click', () => {
 
 form.addEventListener('submit', (e) => {
     e.preventDefault()
+})
+
+figImg.addEventListener('click', () => {
+    fotoInput.click()
 })
