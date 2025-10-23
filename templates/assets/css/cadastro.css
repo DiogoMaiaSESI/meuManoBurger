@@ -1,17 +1,23 @@
 @import url('global.css');
 
-main{
-    height: 100%;
+body {
+    position: relative;
+    height: fit-content;
+    padding-bottom: 3.6rem;
 }
+
 .container{
     display: flex;
-    height: 100%;
     gap: 10rem;
+    align-items: center;
 }
 
 .imagem_login{
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: #F0EEEE;
-    width: 50%;
+    width: 100%;
     height: 100%;
     align-items: center;
     z-index: 1;
@@ -19,14 +25,19 @@ main{
 }
 
 .imagem_login img{
-    position: absolute;
-    margin-top: 5.0rem;
-    margin-left: 4.0rem;
     width: 50.0rem;
     height: 50.1rem;
 }
 
+h2 {
+    margin-bottom: 1rem;
+}
 
+.foto label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 .foto-do-perfil {
   width: 10.0rem;              
   height: 10.0rem;
@@ -52,16 +63,19 @@ main{
     font-family: 'Inter';
     font-size: 1.4rem;
     color: var(--Preto);
-    margin-bottom: 0.5rem;
     text-align: center;
     align-items: center;
-    justify-content: center;
 }
-
-
-
+.formContainer {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .form_cadastro{
-    margin-top: 4.3rem;
+    width: 46.8rem;
+    height: fit-content;
 }
 
 .form_cadastro h1{
@@ -79,22 +93,28 @@ main{
 
 
 form{
+    display: flex;
     margin-top: 2.0rem;
     flex-direction: column;
+    align-items: center;
+    gap: 5rem;
 }
-
 form p{
-    margin-top: 2.0rem;
-    margin-left: 0.5rem;
+    width: 100%;
     font-family: 'Inter';
     font-size: 1.5rem;
     color: var(--Preto);
     font-weight: bold;
 }
 
+.labelInput{
+    padding-left: 2.5rem;
+    margin-top: 2rem;
+}
+
 input{
     font-family: 'Inter';
-    width: 38.0rem;
+    width: 100%;
     height: 3.5rem;
     border: 0.1rem solid var(--Preto);
     padding-left: 1.2rem;
@@ -113,8 +133,6 @@ button{
     color: var(--Branco);
     font-size: 2.0rem;
     cursor: pointer;
-    margin-top: 4.0rem;
-    margin-left: 12.0rem;
 }
 
 button:hover{
@@ -125,9 +143,7 @@ button:hover{
 .google_facebook{
     display: flex;
     gap: 2.0rem;
-    margin-top: 2.0rem;
-    margin-left: 13rem;
-    
+    justify-content: center;    
 }
 
 
@@ -142,8 +158,8 @@ button:hover{
     font-family: 'Inter';
     font-size: 1.5rem;
     color: var(--Preto);
-    margin-left: 5.0rem;
-    margin-top: 3.0rem;
+    margin-bottom: 4.5rem;
+    text-align: center;
 }
 
 span{
@@ -159,9 +175,9 @@ footer{
     position: absolute;
     bottom: 0;
     left: 0;
-    width: 200%;
+    width: 100%;
     text-align: center;
-    height: 2.0rem;    
+    height: 3.6rem;    
     background-color: #FFDB58;
 }
 
