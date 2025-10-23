@@ -27,6 +27,7 @@ header {
 .headerButtons figure:hover {
     transition: 500ms;
     opacity: 70%;
+    transform: scale(110%, 110%);
 }
 .logo{
     position: absolute;
