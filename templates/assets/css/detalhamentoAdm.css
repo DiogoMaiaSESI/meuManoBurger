@@ -217,8 +217,8 @@ h5 {
     font-size: 2.1rem;
     font-weight: 400;
 }
-.sombra {
-    position: absolute;
+.sombra, .sombraForm, .deleteForm {
+    position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
@@ -229,10 +229,10 @@ h5 {
     transition: 500ms;
     pointer-events: none;
 }
-.shadowActive {
-    opacity: 40%;
+.shadowActive, .shadowFormActive, .deleteFormActive {
+    opacity: 40% !important;
     transition: 500ms;
-    pointer-events: all;
+    pointer-events: all !important;
 }
 .title {
     display: flex;
@@ -253,17 +253,26 @@ h5 {
     transform: scale(110%, 110%);
 }
 form {
-    position: absolute;
+    transition: 500ms;
+    position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: var(--Branco);
     padding: 2rem;
-    display: none;
+    display: flex;
+    opacity: 0%;
+    pointer-events: none;
     justify-content: center;
     align-items: center;
     gap: 2rem;
     border-radius: 2rem;
+    z-index: 3;
+}
+.formActive, .apagarActive {
+    opacity: 100% !important;
+    pointer-events: all !important;
+    transition: 500ms;
 }
 .formLeft {
     width: 27.6rem;
@@ -391,7 +400,7 @@ input::placeholder {
     display: flex;
     gap: 3rem;
 }
-.cancelar {
+.cancelar, .cancelar2 {
     width: 12.3rem;
     height: 3.8rem;
     background-color: var(--Cinza);
@@ -400,8 +409,10 @@ input::placeholder {
     font-weight: 600;
     border-style: none;
     border-radius: 0.7rem;
+    cursor: pointer;
+    transition: 500ms;
 }
-.editar {
+.editar, .deletar {
     width: 12.3rem;
     height: 3.8rem;
     background-color: var(--VermelhoCereja);
@@ -410,4 +421,63 @@ input::placeholder {
     font-weight: 600;
     border-style: none;
     border-radius: 0.7rem;
+    cursor: pointer;
+    transition: 500ms;
+}
+.cancelar:hover, .cancelar2:hover {
+    background-color: #c2c2c2;
+    transition: 500ms;
+}
+.editar:hover, .deletar:hover {
+    background-color: #b11b27;
+    transition: 500ms;
+}
+.apagar {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 35rem;
+    height: 21.4rem;
+    padding-top: 2.8rem;
+    padding-bottom: 2.8rem;
+    background-color: var(--Branco);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-style: none;
+    border-radius: 1.4rem;
+    gap: 3.7rem;
+    opacity: 0%;
+    pointer-events: none;
+    z-index: 3;
+    transition: 500ms;
+}
+.text {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.3rem;
+}
+.botoes {
+    display: flex;
+    width: fit-content;
+    height: fit-content;
+    gap: 3rem;
+}
+.text h3 {
+    width: 100%;
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: var(--VermelhoCereja);
+    text-align: center;
+}
+.text h4 {
+    width: 26.2rem;
+    font-size: 1.6rem;
+    font-weight: 400;
+    color: var(--Preto);
+    text-align: center;
 }
