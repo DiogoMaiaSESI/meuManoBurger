@@ -45,13 +45,13 @@
             </figure>
             <div class="headerButtons">
                 <figure>
-                    <img src="../templates/assets/img/volte.png" alt="">
+                    <img class="back" src="../templates/assets/img/volte.png" alt="">
                 </figure>
                 <figure>
-                    <img src="../templates/assets/img/yellowShoppingCart.png" alt="">
+                    <img class="cartPage" src="../templates/assets/img/yellowShoppingCart.png" alt="">
                 </figure>
                 <figure>
-                    <img src="../templates/assets/img/Profile.png" alt="">
+                    <img class="profileButton" src="../templates/assets/img/Profile.png" alt="">
                 </figure>
             </div>
         </header>

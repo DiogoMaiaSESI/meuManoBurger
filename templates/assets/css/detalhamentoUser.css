@@ -208,8 +208,16 @@ p {
     background-color: var(--VermelhoCereja);
     width: 25.5rem;
     border-style: solid;
+    border-left-style: none;
     border-width: 0.2rem;
-    display: none;
+    transform: translateX(-100%);
+    transition: 500ms;
+    border-top-right-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+}
+.optionActive {
+    transform: translateX(0%);
+    transition: 500ms;
 }
 .option {
     display: flex;
@@ -217,11 +225,18 @@ p {
     align-items: center;
     height: 6.4rem;
     border-style: solid;
+    border-left-style: none;
     border-width: 0.1rem;
     border-color: var(--Preto);
     color: var(--Branco);
     padding-left: 1.6rem;
     gap: 2.1rem;
+    cursor: pointer;
+    transition: 500ms;
+}
+.option:hover {
+    padding-left: 2.5rem;
+    transition: 500ms;
 }
 h5 {
     font-size: 2.1rem;
@@ -235,6 +250,12 @@ h5 {
     height: 100vh;
     z-index: 1;
     background-color: var(--Preto);
+    opacity: 0%;
+    transition: 500ms;
+    pointer-events: none;
+}
+.shadowActive {
     opacity: 40%;
-    display: none;
+    transition: 500ms;
+    pointer-events: all;
 }
