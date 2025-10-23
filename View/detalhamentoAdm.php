@@ -4,9 +4,49 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Página de detalhamento | Meumanoburger</title>
-        <link rel="stylesheet" href="../templates/assets/css/detalhamentoUser.css" type="text/css">
+        <link rel="stylesheet" href="../templates/assets/css/detalhamentoAdm.css" type="text/css">
     </head>
     <body>
+        <form>
+            <div class="formLeft">
+                <h2>Editar lanche</h2>
+                <div class="inputs">
+                    <div class="foto">
+                        <h3>Foto</h3>
+                        <figure>
+                            <img src="../templates/assets/img/camera.png" alt="">
+                        </figure>
+                        <input type="file" name="foto" id="foto">
+                    </div>
+                    <div class="input">
+                        <h4>Nome</h4>
+                        <input type="text" placeholder="Digite o nome do lanche">
+                    </div>
+                    <div class="input">
+                        <h4>Tipo</h4>
+                        <button>Selecione o tipo do lanche <figure><img src="../templates/assets/img/seta.png" alt=""></figure></button>
+                    </div>
+                </div>
+            </div>
+            <div class="formRight">
+                <div class="input">
+                    <h4>Descrição</h4>
+                    <textarea name="descricao" id="descricao" placeholder="Digite a descrição"></textarea>
+                </div>
+                <div class="input">
+                    <h4>Quantidade</h4>
+                    <input type="number" placeholder="Ex: 35">
+                </div>
+                <div class="input">
+                    <h4>Preco</h4>
+                    <input type="number" placeholder="Ex: 7.00" step="0.01">
+                </div>
+                <div class="submitBtns">
+                    <button class="cancelar">Cancelar</button>
+                    <button class="editar">Editar</button>
+                </div>
+            </div>
+        </form>
         <header>
             <div class="sandwich">
                 <figure class="menu">
@@ -48,9 +88,6 @@
                     <img class="back" src="../templates/assets/img/volte.png" alt="">
                 </figure>
                 <figure>
-                    <img class="cartPage" src="../templates/assets/img/yellowShoppingCart.png" alt="">
-                </figure>
-                <figure>
                     <img class="profileButton" src="../templates/assets/img/Profile.png" alt="">
                 </figure>
             </div>
@@ -64,13 +101,20 @@
                         </figure>
                     </div>
                     <div class="rightDiv">
-                        <h2 class="title">Coxinha</h2>
+                        <div class="title">
+                            <h2 class="title">Coxinha</h2>
+                            <div class="icons">
+                                <figure>
+                                    <img class="lapis" src="../templates/assets/img/lapis.png" alt="">
+                                </figure>
+                                <figure>
+                                    <img class="lixeira" src="../templates/assets/img/lixeira.png" alt="">
+                                </figure>
+                            </div>
+                        </div>
                         <p>Uma coxinha crocante por fora e macia por dentro, recheada com frango desfiado temperado na medida certa e um toque cremoso de catupiry. Preparada com massa leve e dourada, é perfeita para matar a fome a qualquer hora do dia.</p>
                         <h2 class="price">R$ 7,00</h2>
-                        <div class="buttons">
-                            <button class="cart">Adicionar ao carrinho</button>
-                            <button class="favorite">Adicionar aos favoritos</button>
-                        </div>
+                        <button class="save">Salvar alterações</button>
                     </div>
                 </div>
                 <div class="secondDiv">
@@ -79,6 +123,8 @@
                 </div>
             </div>
         </main>
-        <script src="../templates/assets/js/detalhamentoUser.js"></script>
+        <script src="../templates/assets/js/detalhamentoAdm.js"></script>
     </body>
 </html>
+
+
