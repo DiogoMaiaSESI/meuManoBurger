@@ -1,37 +1,69 @@
+@import "global.css";
 body{
     font-family: 'inter', Arial, Helvetica, sans-serif;}
 
 header{
     width: 100%;
+    height: 11.2rem;
     display: flex;
     align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    background-color: var(--Branco);
 }
 .cabecalho{
     display: flex;
-    gap: 5.2rem;
+    gap: 8.2rem;
     justify-content: center;
     align-items: center;
 }
 
-.cabecalho p{
-    font-size: 1.5rem;
-    font-weight: 600;
+.cabecalho button{
+    font-size: 1.7rem;
+    font-weight: 500;
+    cursor: pointer;
+    background: none;
+    border: none; 
+    padding: 0.9rem 1rem;
+    transition: all 0.3s ease; 
+}
+
+.cabecalho button:hover {
+    background-color: rgb(250, 239, 142);
+    border-radius: 1rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
 }
 .cabecalho img{
-    width: 5.4rem;
-    height: 5.4rem;
+    width: 6.9rem;
+    height: 6.4rem;
 }
 
 .icone img 
 {
-    width: 3.4rem;
-    height: 3.4rem;
+    width: 4rem;
+    height: 4rem;
     margin-left: 1rem;
-    margin-right: 3rem;
+    margin-right: 5rem;
 }
 
-.cabecalho button{
-    width: 45rem;
-    height: 5.2rem;
+button.login{
+    width: 9rem;
+    height: 3.2rem;
+    margin-left: 4.5rem;
     background-color: var(--AmareloPrimario);
+    border-radius: .3rem;
+    font-weight: bold;
+    font-size: 1.5rem;
+    border: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0,0.3);
+}
+
+main{
+    margin-top: 11.2rem;
+    z-index: 1;
+    margin-bottom: 10rem;
 }
