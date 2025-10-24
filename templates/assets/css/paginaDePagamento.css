@@ -44,6 +44,7 @@ figure{
     width: 8rem !important;
     padding-left: 4rem;
     cursor: pointer;
+    pointer-events: all;
 }
 .menu:hover {
     transition: 500ms;
@@ -59,6 +60,7 @@ figure{
     top: 3.3rem;
     left: 0;
     width: fit-content;
+    pointer-events: none;
 }
 .options {
     background-color: var(--VermelhoCereja);
@@ -305,5 +307,6 @@ button:hover {
     }
     .logo{
         left: 40%;
+        
     }
 }
