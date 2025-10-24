@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../templates/assets/css/cadastro.css">
+    <link rel="stylesheet" href="../templates/assets/css/cadastro_produto.css">
     <link rel="icon" href="../templates/assets/img/Logo.png">
     <title>Cadastro de Produto | MeuManoBurger</title>
 </head>
@@ -21,6 +21,7 @@
                     <h1>Cadastre seu novo produto</h1>
                     <form>
                         <div class="inputs">
+
                             <div class="foto">
                                 <label for="imagemProduto">
                                     <p class="adfoto"> Adicionar Foto</p>
@@ -33,27 +34,43 @@
                                     style="display: none;">
                             </div>
                         </div>
+                               <div class="icons">
+                                <figure>
+                                    <img class="lapis" src="../templates/assets/img/lapis.png" alt=" Imagem de um lápis ">
+                                </figure>
+                                <figure>
+                                    <img class="voltar" src="../templates/assets/img/volte.png" alt=" Imagem de uma seta de voltar ">
+                                </figure>
+                            </div>
+
+
     
                         <p class="labelInput">Nome</p>
                         <input type="text" name="nome" id="nome" required>
     
-                        <p class="labelInput">Tipo</p>
-                        <select name="opcoes_cardapio" id="opcoes_cardapio">
-                            <option value="123"></option>
-                            <option value="123"></option>   
-                            <option value="123"></option>
+                        <p class="labelInput">Categoria</p>
+                        <select name="opcoes_cardapio" id="opcoes_cardapio" required>
+                            <option value="">Selecione</option>
+                            <option value="2">Hambúrgueres</option>
+                            <option value="3">Lanches</option>   
+                            <option value="4">Bebidas</option>
+                            <option value="5">Café da manhã</option>
+                            <option value="6">Doces</option>
+                            <option value="7">Tapioca</option>
+                            <option value="8">Promoções</option>
+
                         </select>
                       
     
                         <p class="labelInput">Descrição</p>
-                        <input type="text" name="descricao" id="descricao" required>
+                        <textarea name="descricao" id="descricao" placeholder ="Descreva o seu  Produto aqui" required></textarea>
     
                         <p class="labelInput">Quantidade</p>
-                        <input type="number" name="quantidade" id="quantidade" required>
+                        <input type="number" name="quantidade" id="quantidade" placeholder ="Ex: 10" required>
     
                         <p class="labelInput">Preço</p>
-                        <input type="number" name="preco" id="preco" set= 0.01 required>
-    
+                        <input type="number" name="preco" id="preco" placeholder ="Ex: 2.50" set= 0.01 required>
+
                         <button type="submit">Cadastrar</button>
                         
                      
