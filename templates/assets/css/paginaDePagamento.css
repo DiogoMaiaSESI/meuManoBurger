@@ -10,6 +10,8 @@ header {
     padding-right: 4.9rem;
     position: relative;
     position: fixed;
+    top: 0;
+    left: 0;
 }
 .headerButtons {
     display: flex;
@@ -112,4 +114,19 @@ h5 {
     opacity: 40%;
     transition: 500ms;
     pointer-events: all;
+}
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80rem;
+    height: 79.6rem;
+    box-shadow: 0 0 3.06rem 0 rgba(0, 0, 0, 0.2);
+}
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 24rem;
+    background-color: #F4F4F4;
 }
