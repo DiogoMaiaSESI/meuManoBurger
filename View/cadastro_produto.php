@@ -46,7 +46,7 @@
 
     
                         <p class="labelInput">Nome</p>
-                        <input type="text" name="nome" id="nome" required>
+                        <input type="text" name="nome" id="nome" placeholder =""required>
     
                         <p class="labelInput">Categoria</p>
                         <select name="opcoes_cardapio" id="opcoes_cardapio" required>
