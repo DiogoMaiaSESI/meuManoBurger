@@ -1,56 +1,61 @@
 @import "global.css";
-body{
-    font-family: 'inter', Arial, Helvetica, sans-serif;}
 
-header{
+body {
+    font-family: 'inter', Arial, Helvetica, sans-serif;
+     background-color: #c9c9c92e;
+}
+
+header {
     width: 100%;
     height: 11.2rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     position: fixed;
     top: 0;
     left: 0;
     z-index: 100;
     background-color: var(--Branco);
 }
-.cabecalho{
+
+.cabecalho {
     display: flex;
     gap: 8.2rem;
     justify-content: center;
     align-items: center;
 }
 
-.cabecalho button{
+.cabecalho button {
     font-size: 1.7rem;
     font-weight: 500;
     cursor: pointer;
     background: none;
-    border: none; 
+    border: none;
     padding: 0.9rem 1rem;
-    transition: all 0.3s ease; 
+    transition: all 0.3s ease;
 }
 
 .cabecalho button:hover {
     background-color: rgb(250, 239, 142);
+    font-weight: bold;
     border-radius: 1rem;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
-.cabecalho img{
+
+.cabecalho img {
     width: 6.9rem;
     height: 6.4rem;
 }
 
-.icone img 
-{
+.icone img {
     width: 4rem;
     height: 4rem;
     margin-left: 1rem;
     margin-right: 5rem;
 }
 
-button.login{
+button.login {
     width: 9rem;
     height: 3.2rem;
     margin-left: 4.5rem;
@@ -59,56 +64,79 @@ button.login{
     font-weight: bold;
     font-size: 1.5rem;
     border: none;
-    box-shadow: 0 2px 8px rgba(0, 0, 0,0.3);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
 }
-
-main{
+.login:hover {
+    background-color: var(--VermelhoCereja);
+    color: var(--Branco);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+main {
     margin-top: 11.2rem;
     z-index: 1;
-    margin-bottom: 10rem;
+    margin-bottom: 7rem;
 }
-section{
+
+section {
     z-index: 1;
 }
 
-.maispedidos{
+.sessaomaispedidos {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.maispedidos {
     display: flex;
     flex-direction: column;
     margin-left: 4.2rem;
-    margin-bottom: 11rem;
+    margin-bottom: 6rem;
 }
 
-.maispedidostitulo{
+.maispedidostitulo {
     display: flex;
     align-items: center;
-    margin-bottom: 3rem;
+    margin-bottom: 1rem;
 }
 
-.maispedidostitulo img{
+.maispedidostitulo img {
     width: 4.8rem;
     height: 4.8rem;
 }
 
-.maispedidostitulo h2{
+.maispedidostitulo h2 {
     font-size: 3rem;
     font-weight: bold;
     color: var(--VermelhoCereja);
 }
 
-.maispedidoscards{
+.maispedidossubtitulo{
+    font-size: 1.8rem;
+    font-weight: normal;
+    margin-bottom: 3rem;
+
+}
+
+.maispedidoscards {
     display: flex;
     gap: 3rem;
 }
-.card{
+
+.card {
     width: 22.7rem;
     height: 26.7rem;
-    border-radius: 2rem;
+    border-radius: 1.5rem;
     display: flex;
     flex-direction: column;
     align-items: center;
-    border: 1px solid #D9D9D9;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    background-color: var(--Branco);
 }
-.card img{
+
+.card img {
     width: 20rem;
     height: 13rem;
     margin-left: 1.1rem;
@@ -117,7 +145,7 @@ section{
     border-radius: .5rem;
 }
 
-.nomedopedido{
+.nomedopedido {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -130,69 +158,75 @@ section{
     margin-top: 2.4rem;
 }
 
-.elementocima{
+.elementocima {
     width: 95%;
-    margin-top: 3rem;
     display: flex;
     justify-content: end;
+    padding-top: 3rem;
 }
-.sobre{
+.sobrenos{
+        background-color: var(--Branco);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+.sobre {
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.elementobaixo{
+.elementobaixo {
     width: 95%;
     display: flex;
     justify-content: start;
-    margin-left: 2rem;
-    margin-bottom: 5rem;
+    padding-left: 5rem;
+    padding-bottom: 5rem;
 }
 
-.feedback{
+.feedback {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-left: 6.9rem;
     margin-bottom: 15rem;
 }
 
-.feedback h3{
+.feedback h3 {
     font-size: 3rem;
     font-weight: bold;
     color: var(--VermelhoCereja);
     margin-top: 3.5rem;
 }
-.subtitulo{
+
+.subtitulo {
     font-size: 2rem;
     font-weight: normal;
     margin-top: 1rem;
     margin-bottom: 8rem;
-    
-}
-.word{
-        color: var(--VermelhoCereja);
+
 }
 
-.feedbackcontainer{
+.word {
+    color: var(--VermelhoCereja);
+}
+
+.feedbackcontainer {
     display: flex;
     flex-direction: column;
 }
-.lineone{
+
+.lineone {
     display: flex;
     gap: 8rem;
     margin-bottom: 9.1rem;
 }
 
-.linetwo{
+.linetwo {
     display: flex;
     gap: 8rem;
 }
 
-.caixa{
+.caixa {
     display: flex;
     flex-direction: column;
     width: 46.8rem;
@@ -201,28 +235,29 @@ section{
     padding-left: 2.5rem;
     padding-right: 2.5rem;
     border-radius: 1rem;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    background-color: var(--Branco);
 }
 
-.dados{
+.dados {
     display: flex;
     align-items: center;
     gap: 2.2rem;
     margin-bottom: 2.9rem;
 }
 
-.dados img{
+.dados img {
     width: 6rem;
     height: 5rem;
 }
 
-.dados p{
+.dados p {
     font-size: 2rem;
     color: var(--VermelhoCereja);
     font-weight: bold;
 }
 
-.textofeedback{
+.textofeedback {
     width: 40.9rem;
     height: 14.4rem;
     font-size: 1.8rem;
@@ -230,13 +265,77 @@ section{
     text-align: justify;
 }
 
-footer{
+footer {
     width: 100%;
-    height: 70.2rem;
+    height: 60.2rem;
     background-color: var(--VermelhoCereja);
+    color: var(--Branco);
 }
 
-.caixafooter{
+.footerinfor {
     display: flex;
-    color: white;
+    justify-content: center;
+}
+
+.caixafooter {
+    display: flex;
+    padding: 5rem;
+    width: 70%;
+}
+
+.localizacao {
+    display: flex;
+    flex-direction: column;
+    margin-right: 6rem;
+}
+
+.localizacao h4 {
+    font-size: 3rem;
+    font-weight: 500;
+    margin-bottom: 2.6rem;
+}
+
+.localizacao p {
+    font-size: 2rem;
+    width: 44.5rem;
+    margin-bottom: 5rem;
+}
+
+.decoracao1 {
+    display: flex;
+    align-items: end;
+    margin-right: 5.8rem;
+}
+
+.contato {
+    display: flex;
+    flex-direction: column;
+}
+
+.contato h4 {
+    font-size: 3rem;
+    font-weight: 500;
+    margin-bottom: 1.8rem;
+}
+
+.contato p {
+    font-size: 1.7rem;
+    margin-bottom: 2.5rem;
+}
+.redessociais{
+    display: flex;
+    gap: 1rem;
+}
+.redessociais img{
+    width: 4rem;
+    height: 4rem;
+}
+.decoracao2{
+    margin-top: 2rem;
+}
+
+footer h5{
+    display: flex;
+    justify-content: center;
+    font-size: 1.5rem;
 }
