@@ -1,0 +1,164 @@
+@import url('global.css');
+
+
+main {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100vh;
+}
+
+.container {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+}
+
+.logo {
+  background-color: var(--VermelhoCereja);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  height:100vh;
+}
+
+.logo img {
+  width: 60%;
+  max-width: 70.0rem;
+}
+
+.formContainer {
+  background-color: var(--Branco);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  padding: 2.0rem
+}
+
+h1 {
+  color: var(--VermelhoCereja);
+  text-align: center;
+  margin-bottom: 1rem;
+  font-size: 3.5rem;
+  font-family: 'Inter';
+  font-weight: bold;
+}
+
+.adfoto {
+  font-family: 'Inter';
+  font-size: 1.4rem;
+  color: var(--Preto);
+  text-align: center;
+  font-weight: bold;
+  margin-top: 1.0rem;
+  margin-bottom: 0.5rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100;
+  gap: 1.5rem;
+}
+
+.foto {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.foto-do-produto img {
+  width: 9.0rem;
+  height:  9.0rem;
+  border-radius: 50%;
+  padding:  1.0rem;
+  cursor: pointer;
+  object-fit: cover;
+}
+
+.labelInput {
+  width: 100%;
+  font-family: 'Inter';
+  font-size: 1.5rem;
+  color: var(--Preto);
+  font-weight: bold;
+  text-align: left;
+  padding: 1.0rem 0;
+
+}
+
+input[type="text"],
+input[type="number"],
+textarea,
+select {
+  width: 100%;
+  border-radius: 0.6rem;
+  border:0.1rem solid var(--Preto);
+  padding: 1rem 1.2rem;
+  font-size: 1.4rem;
+  outline: none;
+  font-family: 'Inter';
+}
+
+textarea {
+  resize: none;
+  min-height: 8rem;
+}
+
+
+
+#quantidade,
+#preco {
+  width: 45%;
+}
+
+.qtd-preco {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  gap: 2rem;
+}
+
+
+button {
+  width: 100%;
+  height: 3.5rem;
+  border-radius: 0.8rem;
+  background-color: var(--VermelhoCereja);
+  border: none;
+  margin-top: 1.5rem;
+  color: var(--Branco);
+  font-size: 2.0rem;
+  cursor: pointer;
+  font-family: 'Inter';
+
+
+}
+
+button:hover{
+    border: 0.1rem solid var(--VermelhoCereja);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+
+}
+
+.icons {
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.icons img {
+  width: 3.5rem;
+  height: 3.5rem;
+  cursor: pointer;
+}
+
+

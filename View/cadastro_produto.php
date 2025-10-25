@@ -36,9 +36,6 @@
                         </div>
                                <div class="icons">
                                 <figure>
-                                    <img class="lapis" src="../templates/assets/img/lapis.png" alt=" Imagem de um lápis ">
-                                </figure>
-                                <figure>
                                     <img class="voltar" src="../templates/assets/img/volte.png" alt=" Imagem de uma seta de voltar ">
                                 </figure>
                             </div>
@@ -46,7 +43,7 @@
 
     
                         <p class="labelInput">Nome</p>
-                        <input type="text" name="nome" id="nome" placeholder =""required>
+                        <input type="text" name="nome" id="nome"  placeholder ="Nome do produto" required>
     
                         <p class="labelInput">Categoria</p>
                         <select name="opcoes_cardapio" id="opcoes_cardapio" required>
@@ -63,14 +60,20 @@
                       
     
                         <p class="labelInput">Descrição</p>
-                        <textarea name="descricao" id="descricao" placeholder ="Descreva o seu  Produto aqui" required></textarea>
-    
+                        <textarea name="descricao" id="descricao" placeholder ="Descreva o seu produto aqui" required></textarea>
+                             
+
+                        <div class="qtd-preco">
+                        <div clas = "qtd">
                         <p class="labelInput">Quantidade</p>
                         <input type="number" name="quantidade" id="quantidade" placeholder ="Ex: 10" required>
-    
+                        </div>
+
+                        <div clas = "preco">
                         <p class="labelInput">Preço</p>
                         <input type="number" name="preco" id="preco" placeholder ="Ex: 2.50" set= 0.01 required>
-
+                         </div>
+                        </div>
                         <button type="submit">Cadastrar</button>
                         
                      
@@ -80,7 +83,6 @@
                 </div>
             </div>
     </main>
-    <footer></footer>
     <script src="../templates/assets/js/cadastro_produto.js"></script>
 </body>
 
