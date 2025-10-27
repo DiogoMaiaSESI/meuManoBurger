@@ -9,7 +9,6 @@ body {
     display: flex;
     width: 100%;
     height: 100%;
-    /* gap: 0;  */
     align-items: stretch; 
 }
 
@@ -38,7 +37,7 @@ body {
 }
 
 .form_cadastro{
-    max-width: 46.8rem;
+    max-width: 54.8rem;
     width: 100%;
     height: fit-content; 
     margin: auto 0;
@@ -135,14 +134,14 @@ input{
 }
 
 button{
-    width: 10.0rem;
+    width: 12.0rem;
     height: 3.0rem;
     border-radius: 0.5rem;
     background-color: var(--VermelhoCereja);
     border: none;
     margin-top: 2.5rem;
     color: var(--Branco);
-    font-size: 2.0rem;
+    font-size: 1.8rem;
     cursor: pointer;
 }
 
@@ -168,7 +167,7 @@ button:hover{
 
 .login{
     font-family: 'Inter';
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     color: var(--Preto);
     /* margin-bottom: 4.5rem; */
     text-align: center;
@@ -184,7 +183,507 @@ span:hover{
     text-decoration: underline;
 }
 
+.msg_erro{
+    color: red;
+    font-size: 1.4rem;
+    margin-left: 0.5rem;
+    margin-top: 0.5rem;
+    display: none;
+}
 
+
+@media screen and (min-width: 980px) and (max-width: 1220px){
+  
+
+    .container{
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: stretch; 
+}
+
+.imagem_login{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #F0EEEE;
+    width: 50%; 
+    max-height: 100rem;
+    height: 100%;
+}
+
+.imagem_login img{
+    width: 40.0rem;
+    height: 40.1rem;
+}
+
+.formContainer {
+    width: 50%; 
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding-left: 5rem;
+    padding-top: 2rem;
+
+}
+
+.form_cadastro{
+    max-width: 40.0rem;
+    width: 100%;
+    height: fit-content; 
+    margin: auto 0;
+}
+
+h2 {
+    margin-bottom: 1rem;
+}
+
+.frase{
+    font-family: 'Inter';
+    font-size: 1.3rem;
+    color: var(--Preto);
+   
+}
+.foto label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form_cadastro h1{
+    font-family: 'Inter';
+    font-size: 3.4rem;
+    color: var(--VermelhoCereja);
+ }
+
+}
+
+
+
+@media screen and (min-width: 915px) and (max-width: 980px){
+
+    .container{
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: stretch; 
+}
+
+.imagem_login{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #F0EEEE;
+    width: 50%; 
+    max-height: 100rem;
+    height: 100%;
+}
+
+.imagem_login img{
+    width: 36.0rem;
+    height: 39.1rem;
+}
+
+.formContainer {
+    width: 50%; 
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding-left: 5rem;
+    padding-top: 2rem;
+
+}
+
+.form_cadastro{
+    max-width: 37.0rem;
+    width: 100%;
+    height: fit-content; 
+    margin: auto 0;
+}
+
+.form_cadastro h1{
+    font-family: 'Inter';
+    font-size: 3.5rem;
+    color: var(--VermelhoCereja);
+ }
+
+}
+
+
+@media screen and (min-width: 800px) and (max-width: 915px){
+
+ .container{
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: stretch;  
+}
+
+
+.imagem_login{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #F0EEEE;
+    width: 50%; 
+    max-height: 100rem;
+    height: 100%;
+}
+
+.imagem_login img{
+    width: 36.0rem;
+    height: 39.1rem;
+}
+
+.formContainer {
+    width: 50%; 
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding-left: 5rem;
+    padding-top: 2rem;
+}
+
+.form_cadastro{
+    max-width: 30.0rem;
+    width: 100%;
+    height: fit-content; 
+    margin: auto 0;
+}
+
+.form_cadastro h1{
+    font-family: 'Inter';
+    font-size: 3.0rem;
+    color: var(--VermelhoCereja);
+ }
+
+
+}
+
+@media screen and (min-width: 700px) and (max-width: 800px){
+
+    .container{
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: stretch; 
+}
+
+.imagem_login{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #F0EEEE;
+    width: 50%; 
+    max-height: 100rem;
+    height: 100%;
+}
+
+.imagem_login img{
+    width: 33.0rem;
+    height: 37.1rem;
+}
+
+.formContainer {
+    width: 50%; 
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding-left: 5rem;
+    padding-top: 2rem;
+
+}
+
+.form_cadastro{
+    max-width: 27.6rem;
+    width: 100%;
+    height: fit-content; 
+    margin: auto 0;
+}
+
+.form_cadastro h1{
+    font-family: 'Inter';
+    font-size: 2.5rem;
+    color: var(--VermelhoCereja);
+ }
+
+
+ 
+.login{
+    font-family: 'Inter';
+    font-size: 1.4rem;
+    color: var(--Preto);
+    /* margin-bottom: 4.5rem; */
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+ 
+.msg_erro{
+    color: red;
+    font-size: 1.0rem;
+    margin-left: 0.5rem;
+    margin-top: 0.5rem;
+    display: none;
+}
+}
+
+
+@media screen and (min-width: 600px) and (max-width: 700px){
+
+
+  body {
+    flex-direction: column;
+    height: 100vh;
+  }
+
+  .container {
+    flex-direction: column;
+    align-items: center;
+    height: auto;
+  }
+
+  .imagem_login {
+    width: 100%;
+    height: 40.0rem; 
+    justify-content: center;
+    align-items: center;
+    background-color: #F0EEEE;
+  }
+
+.imagem_login img{
+    width: 35.0rem;
+    height: auto;
+}
+  .formContainer {
+    width: 100%;
+    padding: 2rem;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .form_cadastro {
+    width: 100%;
+    max-width: 58rem;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .form_cadastro h1 {
+    font-size: 3.3rem;
+    text-align: left;
+  }
+
+  .form_cadastro h2 {
+    font-size: 2.4rem;
+    text-align: left;
+  }
+
+  .labelInput{
+    padding-left: 0.5rem;
+    margin-top: 2rem;
+    text-align: left;
+}
+
+  h2{
+    margin-top: 4.0rem;
+  }
+
+  .frase {
+    font-size: 1.4rem;
+    text-align: left;
+  }
+
+  button {
+    width: 100%;
+    max-width: 20rem;
+    cursor: pointer;
+  }
+
+  button:hover{
+    background-color: #af353f;
+    border: 0.1rem solid var(--VermelhoCereja)
+    
+}
+
+  .login {
+    font-size: 1.8rem;
+     font-family: 'Inter';
+    
+  }
+
+  .adfoto{
+    margin-top: 1rem;
+    font-size: 1.8rem;
+  }
+  .msg_erro{
+    color: red;
+    font-size: 1.0rem;
+    margin-left: 0.5rem;
+    margin-top: 0.5rem;
+    display: none;
+}
+}
+
+@media screen and (min-width: 499px) and (max-width: 600px){
+
+    
+  body {
+    flex-direction: column;
+    height: 100vh;
+  }
+
+  .container {
+    flex-direction: column;
+    align-items: center;
+    height: auto;
+  }
+
+  .imagem_login {
+    width: 100%;
+    height: 40.0rem; 
+    justify-content: center;
+    align-items: center;
+    background-color: #F0EEEE;
+  }
+
+.imagem_login img{
+    width: 35.0rem;
+    height: auto;
+}
+  .formContainer {
+    width: 100%;
+    padding: 2rem;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .form_cadastro {
+    width: 100%;
+    max-width: 50rem;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .form_cadastro h1 {
+    font-size: 3.0rem;
+    text-align: left;
+  }
+
+  .form_cadastro h2 {
+    font-size: 2.2rem;
+    text-align: left;
+  }
+
+  .labelInput{
+    padding-left: 0.5rem;
+    margin-top: 2rem;
+    text-align: left;
+}
+
+  h2{
+    margin-top: 4.0rem;
+  }
+
+  .frase {
+    font-size: 1.4rem;
+    text-align: left;
+  }
+
+  button {
+    width: 100%;
+    max-width: 20rem;
+    cursor: pointer;
+  }
+
+  button:hover{
+    background-color: #af353f;
+    border: 0.1rem solid var(--VermelhoCereja)
+}
+
+.adfoto{
+    font-size: 1.6rem;
+}
+
+}
+
+
+
+@media screen and (min-width: 300px) and (max-width: 499px){
+
+
+  body {
+    flex-direction: column;
+    height: 100vh;
+  }
+
+  .container {
+    flex-direction: column;
+    align-items: center;
+    height: auto;
+  }
+
+  .imagem_login {
+    width: 100%;
+    height: 40.0rem; 
+    justify-content: center;
+    align-items: center;
+    background-color: #F0EEEE;
+  }
+
+.imagem_login img{
+    width: 33.0rem;
+    height: auto;
+}
+  .formContainer {
+    width: 100%;
+    padding: 2rem;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .form_cadastro {
+    width: 100%;
+    max-width: 35rem;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .form_cadastro h1 {
+    font-size: 2.8rem;
+    text-align: left;
+  }
+
+  .form_cadastro h2 {
+    font-size: 2.0rem;
+    text-align: left;
+  }
+
+  .labelInput{
+    padding-left: 0.5rem;
+    margin-top: 2rem;
+    text-align: left;
+}
+
+  h2{
+    margin-top: 4.0rem;
+  }
+
+  .frase {
+    font-size: 1.4rem;
+    text-align: left;
+  }
+
+  button {
+    width: 100%;
+    max-width: 20rem;
+    cursor: pointer;
+  }
+
+  button:hover{
+    background-color: #af353f;
+    border: 0.1rem solid var(--VermelhoCereja)
+    
+}
 
 .msg_erro{
     color: red;
@@ -192,4 +691,26 @@ span:hover{
     margin-left: 0.5rem;
     margin-top: 0.5rem;
     display: none;
+    text-align: left;
+}
+
+  .login {
+    font-size: 1.4rem;
+     font-family: 'Inter';
+    
+  }
+ 
+  .google_facebook {
+    gap: 1.5rem;
+  }
+
+  .foto-do-perfil {
+    width: 8rem;
+    height: 8rem;
+  }
+  
+
+  .adfoto {
+    font-size: 1.5rem;
+  }
 }
