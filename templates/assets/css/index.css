@@ -515,7 +515,7 @@ footer h5 {
 
 }
 
-@media screen and (min-width:600px) and (max-width:899px) {
+@media screen and (min-width:600px) and (max-width:900px) {
 
     .cabecalho {
         gap: 1.2rem;
@@ -722,7 +722,7 @@ footer h5 {
 }
 
 
-@media screen and (min-width:440px) and (max-width:599px) {
+@media screen and (min-width:440px) and (max-width:600px) {
     header {
         display: flex;
         justify-content: space-between;
@@ -951,7 +951,7 @@ footer h5 {
 
 }
 
-@media screen and (min-width: 340px) and (max-width:439px) {
+@media screen and (min-width: 340px) and (max-width:440px) {
     header {
         display: flex;
         justify-content: space-between;
