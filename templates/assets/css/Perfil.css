@@ -1,100 +1,128 @@
 @import url('../css/global.css');
 
-body {
+body
+{
     background-color: var(--Cinza);
 }
 
-figure {
+figure
+{
     margin: 0;
     display: inline-block;
     line-height: 0;
 }
 
-.main-header {
+/* --- CABEÇALHO UNIFICADO --- */
+
+.main-header
+{
     background-color: var(--VermelhoCereja);
-    padding: 1.5rem 2rem;
+    padding: 1rem 2vw;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     position: sticky;
     top: 0;
-    z-index: 10;
+    z-index: 1000;
 }
 
-.header-content {
+.unified-nav ul
+{
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between; /* Layout padrão para Desktop */
+    gap: 2rem;
     width: 100%;
+    max-width: 140rem;
     margin: 0 auto;
+    padding: 0;
+    list-style: none;
 }
 
-.header-left, .header-right {
+.unified-nav li
+{
     display: flex;
     align-items: center;
-    flex: 1;
 }
 
-.header-center {
-    display: flex;
-    justify-content: center;
+/* Regra Chave: Esconde os links de perfil no desktop */
+.mobile-only
+{
+    display: none;
 }
 
-.header-right {
-    justify-content: flex-end;
-    gap: 2.5rem;
-}
-
-.menu-btn {
+.menu-btn
+{
     background: none;
     border: none;
     cursor: pointer;
-    padding: 0.5rem;
+    padding: 0;
 }
 
-.logo-principal {
-    height: 8rem;
+.logo-principal
+{
+    height: clamp(5rem, 6vw, 8rem);
 }
 
-.icon-img {
-    height: 4.5rem;
-    width: auto;
-    display: block;
+.icon-img
+{
+    height: clamp(3rem, 4vw, 4.5rem);
 }
 
-.profile-container {
+/* --- LAYOUT PRINCIPAL (DESKTOP) --- */
+
+.profile-container
+{
     display: flex;
     align-items: flex-start;
-    gap: 3rem;
-    max-width: 140rem; 
+    gap: clamp(1.5rem, 2vw, 3rem);
+    max-width: 140rem;
     width: 100%;
     margin: 3rem auto;
-    padding: 0 8rem;
+    padding: 0 clamp(1.5rem, 4vw, 8rem);
 }
 
-.sidebar {
+.sidebar
+{
     background-color: var(--Branco);
     padding: 2rem;
     border-radius: 1.8rem;
-    width: 28rem;
-    flex-shrink: 0;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    flex-basis: 30%;
+    flex-shrink: 1;
+    min-width: 25rem;
+    max-width: 28rem;
 }
 
-.sidebar-header {
+.content-area
+{
+    flex-basis: 70%;
+    flex-grow: 1;
+    min-width: 0;
+}
+
+/* --- ESTILOS DOS COMPONENTES (SEU CÓDIGO ORIGINAL) --- */
+
+.sidebar-header
+{
     text-align: center;
     margin-bottom: 3rem;
 }
 
-.sidebar-header p {
+.sidebar-header p
+{
     font-size: 1.8rem;
     font-weight: 500;
     color: var(--Preto);
 }
 
-.sidebar-nav ul {
+.sidebar-nav ul
+{
     list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
-.sidebar-nav li a {
+.sidebar-nav li a
+{
     display: block;
     padding: 1.2rem 1.5rem;
     text-decoration: none;
@@ -106,49 +134,52 @@ figure {
     transition: background-color 0.2s;
 }
 
-.sidebar-nav li a:hover {
+.sidebar-nav li a:hover
+{
     background-color: var(--RosaClaro);
 }
 
-.sidebar-nav li a.active {
+.sidebar-nav li a.active
+{
     background-color: var(--VermelhoCereja);
     color: var(--Branco);
     font-weight: 700;
 }
 
-.content-area {
-    flex-grow: 1;
-}
-
-.form-card {
+.form-card
+{
     background-color: var(--Branco);
     padding: 3rem;
     border-radius: 1.8rem;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    width: 90%;
-    float: right;
 }
 
-.form-top-section {
+.form-top-section
+{
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
     margin-bottom: 2.5rem;
+    flex-wrap: wrap;
+    gap: 2rem;
 }
 
-.form-header {
+.form-header
+{
     flex-grow: 1;
     padding-right: 2rem;
 }
 
-.form-header h2 {
+.form-header h2
+{
     color: var(--VermelhoCereja);
     font-size: 2.8rem;
     font-weight: 700;
     margin-bottom: 1rem;
 }
 
-.form-header::after {
+.form-header::after
+{
     content: '';
     display: block;
     width: 100%;
@@ -156,19 +187,22 @@ figure {
     background-color: var(--Cinza);
 }
 
-.profile-picture-container {
+.profile-picture-container
+{
     position: relative;
     flex-shrink: 0;
 }
 
-.profile-picture {
-    width: 15rem; 
-    height: 15rem; 
+.profile-picture
+{
+    width: 15rem;
+    height: 15rem;
     border-radius: 1.8rem;
     object-fit: cover;
 }
 
-.edit-picture-btn {
+.edit-picture-btn
+{
     position: absolute;
     bottom: -1rem;
     right: -1rem;
@@ -185,27 +219,32 @@ figure {
     transition: background-color 0.2s;
 }
 
-.edit-picture-btn:hover {
+.edit-picture-btn:hover
+{
     background-color: var(--AmareloSecundario);
 }
 
-.icon-editar {
+.icon-editar
+{
     height: 2.2rem;
-    width: 2.2rem; 
+    width: 2.2rem;
 }
 
-.form-group {
+.form-group
+{
     margin-bottom: 3.5rem;
 }
 
-.form-group label {
+.form-group label
+{
     display: block;
     margin-bottom: 0.5rem;
     font-weight: 700;
     font-size: 2.4rem;
 }
 
-.form-group input {
+.form-group input
+{
     width: 100%;
     padding: 1.2rem;
     border: 1px solid var(--Cinza);
@@ -214,7 +253,8 @@ figure {
     height: 6.0rem;
 }
 
-.submit-btn {
+.submit-btn
+{
     width: 100%;
     padding: 1.5rem;
     background-color: var(--VermelhoCereja);
@@ -228,66 +268,68 @@ figure {
     transition: opacity 0.2s;
 }
 
-.submit-btn:hover {
+.submit-btn:hover
+{
     opacity: 0.9;
 }
 
-.content-tab {
+.content-tab
+{
     display: none;
 }
 
-.content-tab.active {
+.content-tab.active
+{
     display: block;
 }
 
-.edit-card-btn {
-    background: transparent !important; /* Usa !important para garantir a sobreposição */
-    border: none !important;
-    padding: 0 !important;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 2.2rem;  /* Define uma largura fixa */
-    height: 2.2rem; /* Define uma altura fixa */
-}
-
-.edit-card-btn .icon-editar-card {
+.modal-overlay
+{
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    display: block;
-    opacity: 0.6;
-    transition: opacity 0.2s ease-in-out;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 2000;
+    justify-content: center;
+    align-items: center;
 }
 
-.edit-card-btn:hover .icon-editar-card {
-    opacity: 1;
+.modal-overlay.active
+{
+    display: flex;
 }
-.modal-content-small {
+
+.modal-content-small
+{
     background-color: var(--Branco);
     padding: 3rem;
     border-radius: 1.8rem;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
     text-align: center;
     width: 90%;
-    max-width: 35rem; /* Menor que o modal do cartão */
-    animation: fadeIn 0.3s ease-out;
+    max-width: 35rem;
 }
 
-.modal-content-small p {
+.modal-content-small p
+{
     font-size: 1.8rem;
     font-weight: 500;
     color: var(--Preto);
     margin-bottom: 2.5rem;
 }
 
-.modal-buttons {
+.modal-buttons
+{
     display: flex;
     justify-content: center;
     gap: 1.5rem;
 }
 
-.modal-buttons button {
+.modal-buttons button
+{
     padding: 1.2rem 3rem;
     border: none;
     border-radius: 1.8rem;
@@ -297,38 +339,43 @@ figure {
     transition: opacity 0.2s;
 }
 
-.btn-confirm-sim {
+.btn-confirm-sim
+{
     background-color: var(--VermelhoCereja);
     color: var(--Branco);
 }
 
-.btn-confirm-nao {
+.btn-confirm-nao
+{
     background-color: var(--Cinza);
     color: var(--Preto);
     border: 1px solid #ccc;
 }
 
-.modal-buttons button:hover {
+.modal-buttons button:hover
+{
     opacity: 0.9;
 }
 
-.pic-action-buttons {
-    display: none; /* Começa escondido */
+.pic-action-buttons
+{
+    display: none;
     position: absolute;
-    bottom: -40px; /* Posiciona abaixo da foto */
+    bottom: -40px;
     left: 50%;
     transform: translateX(-50%);
-    display: flex;
     gap: 1rem;
     width: 100%;
     justify-content: center;
 }
 
-.pic-action-buttons.visible {
-    display: flex; /* Classe que o JS vai adicionar para mostrar */
+.pic-action-buttons.visible
+{
+    display: flex;
 }
 
-.pic-action-buttons button {
+.pic-action-buttons button
+{
     padding: 0.8rem 1.5rem;
     border: none;
     border-radius: 1.2rem;
@@ -338,16 +385,94 @@ figure {
     transition: opacity 0.2s;
 }
 
-.btn-save-pic {
-    background-color: #28a745; /* Verde para salvar */
+.btn-save-pic
+{
+    background-color: #28a745;
     color: var(--Branco);
 }
 
-.btn-cancel-pic {
-    background-color: #6c757d; /* Cinza para cancelar */
+.btn-cancel-pic
+{
+    background-color: #6c757d;
     color: var(--Branco);
 }
 
-.pic-action-buttons button:hover {
+.pic-action-buttons button:hover
+{
     opacity: 0.9;
+}
+
+/* --- MEDIA QUERIES PARA RESPONSIVIDADE --- */
+
+@media (max-width: 834px)
+{
+    /* 1. TRANSFORMA O HEADER EM UMA BARRA COM SCROLL */
+    .main-header
+    {
+        padding: 1rem 0; /* Remove padding lateral para o scroll ir de ponta a ponta */
+    }
+
+    .unified-nav ul
+    {
+        justify-content: flex-start; /* Alinha tudo ao início para o scroll */
+        overflow-x: auto;
+        white-space: nowrap;
+        padding: 0 1.5rem; /* Adiciona um respiro nas laterais dentro da área de scroll */
+    }
+
+    .unified-nav ul::-webkit-scrollbar
+    {
+        display: none; /* Esconde a barra de rolagem visualmente */
+    }
+
+    /* 2. ESCONDE A LOGO DO DESKTOP */
+    .desktop-only
+    {
+        display: none;
+    }
+
+    /* 3. MOSTRA OS LINKS DE PERFIL QUE ESTAVAM ESCONDIDOS */
+    .mobile-only
+    {
+        display: flex;
+    }
+    
+    .mobile-only a
+    {
+        padding: 0.8rem 1.5rem;
+        text-decoration: none;
+        color: rgba(255, 255, 255, 0.7);
+        border-radius: 1.8rem;
+        font-size: 1.4rem;
+        font-weight: 500;
+        transition: background-color 0.2s, color 0.2s;
+    }
+
+    .mobile-only a.active
+    {
+        background-color: var(--Branco);
+        color: var(--VermelhoCereja);
+        font-weight: 700;
+    }
+
+    /* 4. ESCONDE A SIDEBAR DO DESKTOP */
+    .sidebar
+    {
+        display: none;
+    }
+
+    /* 5. AJUSTA O CONTAINER PRINCIPAL */
+    .profile-container
+    {
+        flex-direction: column;
+        padding: 2rem 1.5rem;
+        margin-top: 0;
+        gap: 2rem;
+    }
+
+    .content-area
+    {
+        width: 100%;
+        flex-basis: auto;
+    }
 }
