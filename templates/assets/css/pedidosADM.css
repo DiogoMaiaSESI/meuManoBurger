@@ -1,0 +1,86 @@
+@import "global.css";
+
+header {
+    width: 100%;
+    background-color: var(--VermelhoCereja);
+}
+
+.cabecalho {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 2.6rem;
+    margin-right: 2.6rem;
+}
+
+.menu img {
+    width: 3rem;
+    height: 3rem;
+}
+
+.logo img {
+    width: 9rem;
+    height: 7rem;
+}
+
+.perfil img {
+    width: 4rem;
+    height: 4rem;
+}
+
+.voltar img {
+    width: 3.5rem;
+    height: 3.5rem;
+}
+
+.lateral {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    margin-left: 3rem;
+}
+.titulo {
+    margin-top: 4.6rem;
+    font-size: 3rem;
+    margin-bottom:3rem ;
+}
+
+.pesquisa {
+    display: flex;
+    margin-bottom: 8.4rem;
+    gap: 1rem;
+}
+
+input {
+    width: 60%;
+    height: 4rem;
+    border-radius: 1.5rem;
+    padding-left: 3rem;
+}
+
+.pesquisa img {
+    width: 2.5rem;
+    height: 2.5rem;
+}
+
+button.btn{
+    width: 7rem;
+    height: 3.5rem;
+    border-radius: 2rem;
+    background-color: var(--AmareloSecundario);
+    border: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+.pedido{
+    display: flex;
+    width: 95%;
+    height: 12.2rem;
+    border: 1px solid black;
+    border-radius: 1.5rem;
+    margin-bottom: 2rem;
+}
