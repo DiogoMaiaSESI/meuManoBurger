@@ -56,7 +56,7 @@ sobrenos.addEventListener('click', () =>{
   
     if(window.innerWidth > 1100){
         window.scrollTo({
-            top: 1150,
+            top: 1280,
             behavior: 'smooth'
         })
     }
@@ -80,7 +80,7 @@ feedbacks.addEventListener('click', () =>{
   
     if(window.innerWidth > 1100){
         window.scrollTo({
-            top: 2000,
+            top: 2150,
             behavior: 'smooth'
         })
     }
