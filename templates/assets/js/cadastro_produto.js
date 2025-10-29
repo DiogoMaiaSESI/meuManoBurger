@@ -13,13 +13,16 @@ document.addEventListener('DOMContentLoaded', function () {
 if (imagem === 0) { // Se nenhum arquivo foi selecionado
   alert('Por favor, selecione uma imagem do produto.');
   return;
-}
-
-
-    else {
+}else {
       window.location.href = "cardapio.php";
     }
   });
+
+ 
+  const card = document.querySelector('.voltar')
+  card.addEventListener('click', () => {
+    window.location.href = 'cardapiouser.php'
+})
 
 
 
