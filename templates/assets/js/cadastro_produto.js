@@ -10,15 +10,15 @@ document.addEventListener('DOMContentLoaded', function () {
          event.preventDefault();
       
   const imagem = document.getElementById('imagemProduto').files.length; // Pega a quantidade de arquivos selecionados no input de imagem
-if (imagem === 0) { // Se nenhum arquivo foi selecionado
+  if (imagem === 0) { // Se nenhum arquivo foi selecionado
   alert('Por favor, selecione uma imagem do produto.');
   return;
-}else {
-      window.location.href = "cardapio.php";
+  }else {
+      window.location.href = "cardapiouser.php";
     }
   });
 
- 
+
   const card = document.querySelector('.voltar')
   card.addEventListener('click', () => {
     window.location.href = 'cardapiouser.php'
