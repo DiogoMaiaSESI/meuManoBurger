@@ -1,9 +1,28 @@
 @import 'global.css';
 
-
+body {
+    padding-top: 10.6rem;
+}
+main {
+    height: 64.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12.6rem;
+}
+main h1{
+    width: 44.7rem;
+    font-size: 4.8rem;
+    text-align: justify;
+    color: var(--VermelhoCereja);
+    font-weight: bold;
+}
+main h1 span {
+    color: var(--AmareloSecundario);
+}
 header {
     width: 100%;
-    height: 11.2rem;
+    height: 10.6rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -12,26 +31,44 @@ header {
     top: 0;
     left: 0;
     z-index: 100;
-    background-color: var(--Preto);
+    background-color: var(--VermelhoCereja);
 }
 
 .cabecalho {
     display: flex;
-    gap: 8.2rem;
+    gap: 5.2rem;
     justify-content: center;
     align-items: center;
-
+    position: absolute;
+    right: 5.2rem;
+    top: 50%;
+    transform: translateY(-50%);
+}
+figure {
+    display: flex;
+    margin: 0 !important;
+    height: fit-content;
+}
+.cabecalho figure {
+    width: fit-content;
+    height: fit-content;
 }
 
+.logo img{
+    width: 10.6rem;
+    height: 8.5rem;
+}
+
+.perfil img{
+    width: 5.5rem;
+    height: 5.5rem;
+}
 
 main {
-    margin-top: 11.2rem;
+    padding-top: 15rem;
     z-index: 1;
-    margin-bottom: 7rem;
+    margin-bottom: 20rem;
 }
-
-
-
 
 section {
     z-index: 1;
@@ -41,60 +78,59 @@ section {
 h2 {
     font-size: 5.6rem;
     font-weight: bold;
-    margin-bottom: 6rem;
     text-align: center;
     color: var(--VermelhoCereja);
 }
 
 .textoft{
     display: flex;
-    justify-content: space-between;
-
-
-
-
+    justify-content: center;
+    gap: 7.4rem;
+    margin-bottom: 2rem;
 }
 
 .textbtn{
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: baseline;
+    gap: 4.4rem;
+    width: 40.6rem;
+}
+
+.cardapioDiv {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
-    gap: 2rem;
-    margin-bottom: 4rem;
+    gap: 5.1rem;
+    width: 100%rem;
 }
 
 .textomenu{
-    font-size: 3.4rem;
+    font-size: 4rem;
+    font-weight: normal;
     text-align: justify;
-    margin-top: 8rem;
-    margin-left: 10rem;
-    margin-right: 13rem;
-    margin-bottom: 4rem;
 }
 
 
 .foto {
     display: flex;
     justify-content: right;
-    margin-top: 2.5rem;
-    margin-right : 6rem;
 
 }
 
 .foto img {
-    width: 85rem;
-    height: 80rem;
+    width: 63.4rem;
+    height: 50.7rem;
 }
 
 .btncardapio{
-
-    width: 38rem;
-    height: 4.5rem;
+    width: 100%;
+    height: 8.5rem;
     justify-content: center;
     background-color: var(--VermelhoCereja);
-    border-radius: 0.5rem;
-    margin-right: 2rem;
+    border-radius: 1.4rem;
     font-weight: bold;
     font-size: 2.6rem;
     border: none;
@@ -111,9 +147,8 @@ h2 {
 
 .decoracao1 {
     display: flex;
-    justify-content: start;
-    align-items: right;
-    
+    justify-content: end;
+    padding-right: 5rem;
 }
 
 
@@ -124,8 +159,8 @@ h2 {
 
 .decoracao2 {
     display: flex;
-    justify-content:end;
-    
+    justify-content:baseline;
+    padding-left: 5rem;
 }
 
 .decoracao2 img{
@@ -140,7 +175,7 @@ h2 {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-bottom: 0rem;
+    margin-bottom: 8rem;
 }
 
 .textostitulo{
@@ -150,15 +185,14 @@ h2 {
     margin-right: 78rem;
 }
 .frase {
-    font-size: 2.5rem;
-    font-weight: normal;
+    font-size: 4rem;
+    font-weight: 300;
     margin-top: 3.5rem;
     margin-bottom: 6rem;
 }
 
 .feed {
-    font-size: 4rem;
-    font-family: 'Inter';
+    font-size: 4.5rem;
     color: var(--VermelhoCereja); ;
     font-weight: bold;
     text-align: left;
@@ -213,7 +247,7 @@ h2 {
 }
 
 .dados p {
-    font-size: 2rem;
+    font-size: 2.5rem;
     color: var(--VermelhoCereja);
     font-weight: bold;
 }
@@ -226,6 +260,11 @@ h2 {
     text-align: justify;
 }
 
+.textofeedback p {
+    font-size: 2.3rem;
+    font-weight: bold;
+}
+
 hr{
     margin: 4rem;
 }
@@ -236,6 +275,9 @@ footer {
     height: 6.6rem;
     background-color: var(--VermelhoCereja);
     color: var(--Branco);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 footer h4 {
     display: flex;
@@ -277,7 +319,7 @@ footer h4 {
     display: flex;
     flex-direction: column;
     align-items: baseline;
-    gap: 3.2rem;
+    gap: 3rem;
     position: absolute;
     top: 3.3rem;
     left: 0;
@@ -337,4 +379,17 @@ h5 {
     opacity: 40%;
     transition: 500ms;
     pointer-events: all;
+}
+
+@media screen and (max-width: 1172px) {
+    .hambImg {
+        width: 32.4rem;
+    }
+    .title {
+        width: 29.1rem;
+        font-size: 3.2rem;
+    }
+    main {
+        height: fit-content;
+    }
 }
