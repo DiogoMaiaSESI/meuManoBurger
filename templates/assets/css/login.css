@@ -4,18 +4,21 @@ main{
     height: 100%;
 }
 .container{
+    align-items: center;
     display: flex;
     height: 100%;
     gap: 10rem;
+    padding: 0;
 }
 
 .imagem_login{
     background-color: #F0EEEE;
     width: 50%;
     height: 100%;
+    display: flex;
+    justify-content: center;
     align-items: center;
     z-index: 1;
-    min-width: 64.9rem;
 }
 
 .form_login{
@@ -123,7 +126,6 @@ footer{
     bottom: 0;
     left: 0;
     width: 100%;
-    text-align: center;
     height: 3.0rem;    
     background-color: #FFDB58;
 }
@@ -136,7 +138,7 @@ footer{
     display: none;
 }
 
-@media screen and (min-width: 1074px) and (max-width: 1170px){
+@media screen and (min-width: 1074px) and (max-width: 1314px){
 
     .imagem_login{
         width: 50%;

@@ -36,3 +36,9 @@ const verificarInputs = () => {
 
     return correct
 }
+
+const a = window.innerHeight;
+const b = window.innerWidth;
+
+console.log(a)
+console.log(b)
