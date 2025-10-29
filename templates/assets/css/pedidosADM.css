@@ -97,11 +97,13 @@ h5 {
     transition: 500ms;
     pointer-events: all;
 }
-.logo{
+
+.logo {
     width: 100%;
     display: flex;
     justify-content: center;
 }
+
 .logo img {
     width: 9rem;
     height: 7rem;
@@ -115,6 +117,13 @@ h5 {
 .voltar img {
     width: 3.5rem;
     height: 3.5rem;
+    transition: all 0.3s ease;
+}
+
+.voltar:hover {
+    border-radius: 50rem;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
 }
 
 .lateral {
@@ -354,4 +363,159 @@ button.detalhes:hover,
 button.statusbtn:hover {
     transform: translateY(-3px);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.modaldetalhes {
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+
+}
+
+.conteudomodaldetalhes {
+    width: 35%;
+    height: 55%;
+    border-radius: 2rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    z-index: 100rem;
+    background-color: var(--Branco);
+    margin-top: 10%;
+    margin-left: 33%;
+}
+
+.fechar {
+    width: 97%;
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 2rem;
+    padding-bottom: 3rem;
+}
+.fechar img:hover{
+    transform: translateY(-3px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.fechar img {
+    width: 3rem;
+    height: 3rem;
+    transition: all 0.3s ease;
+}
+
+.modaldados {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 2rem;
+    margin-right: 2rem;
+    margin-bottom: 4rem;
+}
+
+.modalilustracao img {
+    width: 8rem;
+    height: 9rem;
+}
+
+.modalcodigopedidos {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .5rem;
+}
+
+.codigotitulo {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--VermelhoCereja);
+}
+
+.codigotexto {
+    font-size: 1.5rem;
+    font-weight: bold;
+    width: 8rem;
+    height: 3rem;
+    background-color: var(--AmareloPrimario);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 1rem;
+}
+
+.modaldata,
+.modalhora {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.modaldata p,
+.modalhora p {
+    font-size: 1.5rem;
+    font-weight: bold;
+    width: 10rem;
+    height: 3rem;
+    background-color: var(--AmareloPrimario);
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.resumopedido{
+    margin-left: 2rem;
+    margin-right: 2rem;
+    border-radius: .5rem;
+    background-color: var(--RosaClaro);
+    height: 40%;
+    padding: 2rem;
+}
+
+.resumotitulo{
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    font-weight: bold;
+    color: var(--VermelhoCereja);
+}
+
+.resumolanche{
+    padding-left: .5rem;
+    padding-right: .5rem;
+    padding-bottom: .5rem;
+    padding-top: 1rem;
+    display: flex;
+    font-size: 1.2rem;
+    justify-content: space-between;
+    width: 100%;
+    border-bottom: 1px solid rgba(153, 146, 146, 0.3);
+}
+
+.modalstatus{
+    margin-top: 3rem;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 3rem;
+}
+.modalstatus p{
+    width: 17%;
+    height: 4rem;
+    font-size: 2rem;
+    font-weight: 700;
+    background-color: var(--VermelhoCereja);
+    color: var(--Branco);
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.modalconfirm {
+    display: none;
 }
