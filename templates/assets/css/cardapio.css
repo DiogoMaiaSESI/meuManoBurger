@@ -4,6 +4,85 @@ header{
     background-color: var(--VermelhoCereja);
 }
 
+.menu {
+    width: 8rem !important;
+    padding-left: 4rem;
+    cursor: pointer;
+}
+.menu:hover {
+    transition: 500ms;
+    opacity: 70%;
+}
+.sandwich {
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    gap: 3.2rem;
+    position: absolute;
+    top: 3.3rem;
+    left: 0;
+    width: fit-content;
+}
+.sandwichActive {
+    z-index: 4 !important;
+}
+.options {
+    background-color: var(--VermelhoCereja);
+    width: 25.5rem;
+    border-style: solid;
+    border-left-style: none;
+    border-width: 0.2rem;
+    transform: translateX(-100%);
+    transition: 500ms;
+    border-top-right-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+}
+.optionActive {
+    transform: translateX(0%);
+    transition: 500ms;
+}
+.option {
+    display: flex;
+    justify-content: baseline;
+    align-items: center;
+    height: 6.4rem;
+    border-style: solid;
+    border-left-style: none;
+    border-width: 0.1rem;
+    border-color: var(--Preto);
+    color: var(--Branco);
+    padding-left: 1.6rem;
+    gap: 2.1rem;
+    cursor: pointer;
+    transition: 500ms;
+}
+.option:hover {
+    padding-left: 2.5rem;
+    transition: 500ms;
+}
+h5 {
+    font-size: 2.1rem;
+    font-weight: 400;
+}
+.sombra {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 3;
+    background-color: var(--Preto);
+    opacity: 0%;
+    transition: 500ms;
+    pointer-events: none;
+}
+.shadowActive {
+    opacity: 40%;
+    transition: 500ms;
+    pointer-events: all;
+}
+
 .container_header{
     padding-top: 1rem;
     display: flex;
@@ -11,7 +90,6 @@ header{
 }
 
 .menu_logo{
-    gap: 2rem;
     display: flex;
     align-items: center;
     margin-left: 3rem;
@@ -26,6 +104,10 @@ header{
 .menu img{
     width: 3.5rem;
     height: 3.5rem;
+}
+
+.logo{
+    margin-left: 8rem;
 }
 
 .logo img{
@@ -55,8 +137,10 @@ header{
 .cardapio_promocoes{
     display: flex;
     margin-left: 10rem;
+    z-index: 2;
     gap: 5rem;
     padding: 2rem 0;
+    position: sticky;
 }
 
 .cardapio_promocoes h1{
@@ -92,6 +176,8 @@ header{
     justify-content: center;
     align-items: center;
     margin-top: 4rem;
+    z-index: 2;
+    position: sticky;
 }
 
 .container_menu h2{
@@ -147,18 +233,11 @@ section h1{
 }
 
 .container {
-    margin-left: 6rem;
+    place-items: center;
     margin-top: 5rem;
-    max-width: 1200px;
+    max-width: 100%;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-}
-
-
-.product-grid {
-    margin-left: 7rem;
-    display: flex;
-    gap: 5rem; 
 }
 
 .config_card {
@@ -267,6 +346,19 @@ footer h2{
         grid-template-columns: 1fr 1fr 1fr;
     }
 
+    .option img{
+        width: 3.5rem;
+        height: 3.5rem;
+    }
+
+    h5{
+        font-size: 1.7rem;
+    }
+
+    .options{
+        width: 23rem;
+    }
+
     .config_card{
         width: 20rem;
         height: 30rem;
@@ -294,9 +386,30 @@ footer h2{
 }
 
 @media screen and (max-width: 813px) and (min-width: 658px) {
-    .product-grid {
-        flex-wrap: wrap;
-        justify-content: center;
+    #hamburgueres img, #lanches img, #bebidas img, #cafe_manha img, #doces img, #Tapioca img, #promocoes img{
+        width: 6rem;
+        height: 6rem;
+    }
+    
+    .menu{
+        top: 0;
+    }
+
+    .option img{
+        width: 3rem;
+        height: 3rem;
+    }
+
+    h5{
+        font-size: 1.7rem;
+    }
+
+    .options{
+        width: 22rem;
+    }
+
+    .option{
+        height: 5.5rem;
     }
     .container {
         grid-template-columns: 1fr 1fr;
@@ -338,7 +451,6 @@ footer h2{
     }
 
     .cardapio_promocoes{
-        margin-left: 5rem;
         gap: 3rem;
     }
 
@@ -369,6 +481,46 @@ footer h2{
 }
 
 @media screen and (max-width: 657px) and (min-width: 609px) {
+
+    #hamburgueres img, #lanches img, #bebidas img, #cafe_manha img, #doces img, #Tapioca img, #promocoes img{
+        width: 6rem;
+        height: 6rem;
+    }
+
+    #cafe_manha{
+        margin-bottom: 1rem;
+    }
+
+    .container_menu{
+        gap: 8rem;
+    }
+
+    .menu{
+        margin-top: 2rem;
+    }
+
+    .sandwich{
+        top: 0;
+        gap: 1.5rem;
+    }
+
+    .option img{
+        width: 2.6rem;
+        height: 2.6rem;
+    }
+
+    h5{
+        font-size: 1.5rem;
+    }
+
+    .options{
+        width: 21rem;
+    }
+
+    .option{
+        height: 5rem;
+    }
+
     .product-grid {
         flex-wrap: wrap;
         justify-content: center;
@@ -418,7 +570,6 @@ footer h2{
     }
 
     .cardapio_promocoes{
-        margin-left: 5rem;
         gap: 3rem;
     }
 
@@ -457,11 +608,74 @@ footer h2{
     }
 }
 
-@media screen and (max-width: 609px) and (min-width: 454px) {
-    .product-grid {
-        flex-wrap: wrap;
-        justify-content: center;
+@media screen and (max-width: 609px) and (min-width: 521px) {
+    
+    .container_menu{
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding: 2rem 0 2rem 12rem;
+        scrollbar-width: thin;
+        scrollbar-color: var(--VermelhoCereja) #f1f1f1;
+        max-width: 100vw;
+        gap: 2rem;
     }
+
+    .config_menu{
+        flex-shrink: 0;
+    }
+
+    #hamburgueres img, #lanches img, #bebidas img, #cafe_manha img, #doces img, #Tapioca img, #promocoes img{
+        width: 6rem;
+        height: 6rem;
+    }
+
+    #cafe_manha img{
+        margin-top: 1.5rem;
+    }
+    .logo{
+        margin-bottom: 1rem;
+        margin-left: 5rem;
+    }
+
+    .voltar_perfil{
+        margin-bottom: 2rem;
+    }
+
+    .voltar_perfil img{
+        width: 2rem;
+        height: 2rem;
+    }
+
+    header{
+        height: 7rem;
+    }
+    
+    .menu{
+        margin-top: 2rem;
+    }
+
+    .sandwich{
+        top: 0;
+        gap: 1.5rem;
+    }
+
+    .option img{
+        width: 2.6rem;
+        height: 2.6rem;
+    }
+
+    h5{
+        font-size: 1.5rem;
+    }
+
+    .options{
+        width: 21rem;
+    }
+
+    .option{
+        height: 5rem;
+    }
+
     .container {
         margin-left: 4rem;
         grid-template-columns: 1fr 1fr;
@@ -488,16 +702,8 @@ footer h2{
         height: 2rem;
     }
 
-    .container_menu{
-        gap: 0;
-    }
-
     #cafe_manha{
         margin-top: 0rem;
-    }
-
-    .container_menu h2{
-        display: none;
     }
 
     .config_menu img{
@@ -513,11 +719,6 @@ footer h2{
     .menu img{
         width: 2.5rem;
         height: 2.5rem;
-    }
-
-    .cardapio_promocoes{
-        margin-left: 5rem;
-        gap: 3rem;
     }
 
     .cardapio_promocoes{
@@ -548,11 +749,74 @@ footer h2{
     }
 }
 
-@media screen and (max-width: 454px){
-    .product-grid {
-        flex-wrap: wrap;
-        justify-content: center;
+@media screen and (max-width: 521px){
+    .container_menu{
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding: 2rem 0 2rem 30rem;
+        scrollbar-width: thin;
+        scrollbar-color: var(--VermelhoCereja) #f1f1f1;
+        max-width: 100vw;
     }
+
+    .config_menu{
+        flex-shrink: 0;
+        margin-left: 2.5rem;
+    }
+
+    #hamburgueres img, #lanches img, #bebidas img, #cafe_manha img, #doces img, #Tapioca img, #promocoes img{
+        width: 6rem;
+        height: 6rem;
+    }
+
+    #cafe_manha img{
+        margin-top: 1.5rem;
+    }
+
+    .logo{
+        margin-bottom: 1rem;
+        margin-left: 5rem;
+    }
+
+    .voltar_perfil{
+        margin-bottom: 2rem;
+    }
+
+    .voltar_perfil img{
+        width: 2rem;
+        height: 2rem;
+    }
+
+    header{
+        height: 7rem;
+    }
+    
+    .menu{
+        margin-top: 2rem;
+    }
+
+    .sandwich{
+        top: 0;
+        gap: 1.5rem;
+    }
+
+    .option img{
+        width: 2.6rem;
+        height: 2.6rem;
+    }
+
+    h5{
+        font-size: 1.5rem;
+    }
+
+    .options{
+        width: 21rem;
+    }
+
+    .option{
+        height: 5rem;
+    }
+
     .container {
         margin-left: 2rem;
         grid-template-columns: 1fr 1fr;
@@ -586,10 +850,6 @@ footer h2{
         margin-top: 0rem;
     }
 
-    .container_menu h2{
-        display: none;
-    }
-
     .config_menu img{
         width: 5rem;
         height: 5rem;
@@ -603,11 +863,6 @@ footer h2{
     .menu img{
         width: 2.5rem;
         height: 2.5rem;
-    }
-
-    .cardapio_promocoes{
-        margin-left: 5rem;
-        gap: 3rem;
     }
 
     .cardapio_promocoes{
