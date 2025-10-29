@@ -1,0 +1,180 @@
+@import 'global.css';
+
+header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    
+}
+
+.menu {
+    width: 8rem !important;
+    padding-left: 4rem;
+    cursor: pointer;
+}
+.menu:hover {
+    transition: 500ms;
+    opacity: 70%;
+}
+.sandwich {
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    gap: 3.2rem;
+    position: absolute;
+    top: 3.3rem;
+    left: 0;
+    width: fit-content;
+}
+.sandwichActive {
+    z-index: 4 !important;
+}
+.options {
+    background-color: var(--VermelhoCereja);
+    width: 25.5rem;
+    border-style: solid;
+    border-left-style: none;
+    border-width: 0.2rem;
+    transform: translateX(-100%);
+    transition: 500ms;
+    border-top-right-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+}
+.optionActive {
+    transform: translateX(0%);
+    transition: 500ms;
+}
+.option {
+    display: flex;
+    justify-content: baseline;
+    align-items: center;
+    height: 6.4rem;
+    border-style: solid;
+    border-left-style: none;
+    border-width: 0.1rem;
+    border-color: var(--Preto);
+    color: var(--Branco);
+    padding-left: 1.6rem;
+    gap: 2.1rem;
+    cursor: pointer;
+    transition: 500ms;
+}
+.option:hover {
+    padding-left: 2.5rem;
+    transition: 500ms;
+}
+h5 {
+    font-size: 2.1rem;
+    font-weight: 400;
+}
+.sombra {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 3;
+    background-color: var(--Preto);
+    opacity: 0%;
+    transition: 500ms;
+    pointer-events: none;
+}
+.shadowActive {
+    opacity: 40%;
+    transition: 500ms;
+    pointer-events: all;
+}
+
+.container_header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    opacity: 100%;
+}
+
+.carrinho_perfil{
+    padding-right: 4rem;
+
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+}
+
+.logo_header, .logo_header figure, .logo_header img{
+    display: flex;
+    justify-content: center;
+}
+
+.carrinho_perfil img{
+    width: 5rem;
+    height: 5rem;
+}
+
+.carrinho_perfil img:hover{
+    cursor: pointer;
+    transition: 500ms;
+    opacity: 70%;
+}
+
+header img{
+    cursor: pointer;
+}
+
+main img{
+    width: 100%;
+}
+
+.container_menu{
+    display: flex;
+    gap: 12rem;
+    justify-content: center;
+    align-items: center;
+    margin-top: 4rem;
+    z-index: 2;
+    position: sticky;
+}
+
+.container_menu h2{
+    justify-content: center;
+    display: flex;
+    margin-top: 0.5rem;
+    text-align: center;
+    width: 9rem;
+    font-size: 2rem;
+    font-weight: 400;
+}
+
+.container_menu img{
+    width: 10rem;
+    height: 10rem;
+    cursor: pointer;
+}
+
+.config_menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 7rem;
+}
+
+.config_menu:hover{
+    transform: scale(1.1);
+    transition: all 0.3s ease;
+}
+
+#cafe_manha{
+    margin-top: 2.4rem;
+}
+
+#hamburgueres h2{
+    width: fit-content;
+}
+
+.container_menu figure {
+    display: flex;
+    justify-content: center;
+}
