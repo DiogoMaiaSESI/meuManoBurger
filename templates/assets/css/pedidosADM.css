@@ -7,17 +7,101 @@ header {
 
 .cabecalho {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     margin-left: 2.6rem;
     margin-right: 2.6rem;
 }
 
-.menu img {
-    width: 3rem;
-    height: 3rem;
+.menu {
+    width: 8rem !important;
+    padding-left: 4rem;
+    cursor: pointer;
 }
 
+.menu:hover {
+    transition: 500ms;
+    opacity: 70%;
+}
+
+.sandwich {
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    gap: 3.2rem;
+    position: absolute;
+    top: 1.5rem;
+    left: 0;
+    width: fit-content;
+}
+
+.options {
+    background-color: var(--VermelhoCereja);
+    width: 25.5rem;
+    border-style: solid;
+    border-left-style: none;
+    border-width: 0.2rem;
+    transform: translateX(-100%);
+    transition: 500ms;
+    border-top-right-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+}
+
+.optionActive {
+    transform: translateX(0%);
+    transition: 500ms;
+}
+
+.option {
+    display: flex;
+    justify-content: baseline;
+    align-items: center;
+    height: 6.4rem;
+    border-style: solid;
+    border-left-style: none;
+    border-width: 0.1rem;
+    border-color: var(--Preto);
+    color: var(--Branco);
+    padding-left: 1.6rem;
+    gap: 2.1rem;
+    cursor: pointer;
+    transition: 500ms;
+}
+
+.option:hover {
+    padding-left: 2.5rem;
+    transition: 500ms;
+}
+
+h5 {
+    font-size: 2.1rem;
+    font-weight: 400;
+}
+
+.sombra {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
+    background-color: var(--Preto);
+    opacity: 0%;
+    transition: 500ms;
+    pointer-events: none;
+}
+
+.shadowActive {
+    opacity: 40%;
+    transition: 500ms;
+    pointer-events: all;
+}
+.logo{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
 .logo img {
     width: 9rem;
     height: 7rem;
@@ -37,6 +121,7 @@ header {
     display: flex;
     align-items: center;
     gap: 1rem;
+
 }
 
 .container {
@@ -102,12 +187,12 @@ button.btn {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     font-weight: bold;
     cursor: pointer;
-    transition: all 0.3s ease; 
+    transition: all 0.3s ease;
 }
 
-button.btn:hover{
+button.btn:hover {
     transform: translateY(-3px);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
     background-color: var(--VermelhoCereja);
     color: var(--Branco);
 }
@@ -253,7 +338,7 @@ button.statusbtn {
     border: none;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     cursor: pointer;
-    transition: all 0.3s ease; 
+    transition: all 0.3s ease;
 }
 
 button.detalhes {
@@ -268,5 +353,5 @@ button.statusbtn {
 button.detalhes:hover,
 button.statusbtn:hover {
     transform: translateY(-3px);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.4); 
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
 }
