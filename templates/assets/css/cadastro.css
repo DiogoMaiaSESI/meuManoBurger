@@ -198,7 +198,7 @@ span:hover {
   display: none;
 }
 
-@media screen and (min-height: 871px) {
+@media screen and (min-height: 854px) {
   html {
     height: 100%;
   }
@@ -270,7 +270,7 @@ span:hover {
     color: var(--VermelhoCereja);
   }
 }
-@media screen and (min-width: 980px) and (max-width: 1220px) and (max-height: 870px) {
+@media screen and (min-width: 980px) and (max-width: 1220px) and (max-height: 855px) {
   html {
     height: 100%;
   }
