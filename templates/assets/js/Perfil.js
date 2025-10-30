@@ -26,19 +26,32 @@ document.addEventListener('DOMContentLoaded', function() {
 
     navLinks.forEach(link => {
         link.addEventListener('click', function(event) {
-            event.preventDefault();
-            activateTab(this.id);
-        });
-    });
+            event.preventDefault()
+
+            // Normaliza ids mobile ("m-btn-dados") para ids da sidebar ("btn-dados")
+            let targetId = this.id || ''
+            if (targetId.startsWith('m-')) {
+                targetId = targetId.replace(/^m-/, '')
+            }
+
+            if (!targetId.startsWith('btn-') && !targetId.startsWith('m-btn-') && targetId !== '') {
+                targetId = 'btn-' + targetId.replace(/^btn-/, '')
+            }
+
+
+            activateTab(targetId)
+        })
+    })
 
     // --- LÓGICA DO MENU SANDUÍCHE ---
     const sandwichMenu = document.querySelector('.sandwich-menu-btn');
-    const sandwichOptions = document.querySelector('.sandwich-options');
-    const sandwichSombra = document.querySelector('.sandwich-sombra');
+    const sandwichOptions = document.querySelector('.options');
+    const sandwichSombra = document.querySelector('.sombra');
 
     function toggleMenu() {
-        if (sandwichOptions) sandwichOptions.classList.toggle('active');
-        if (sandwichSombra) sandwichSombra.classList.toggle('active');
+        // Corrigido para usar as classes certas do seu HTML
+        if (sandwichOptions) sandwichOptions.classList.toggle('optionActive');
+        if (sandwichSombra) sandwichSombra.classList.toggle('shadowActive');
     }
 
     if (sandwichMenu) {
@@ -137,6 +150,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const paymentListContainer = document.getElementById('payment-methods-list');
     const brandButtons = document.querySelectorAll('.brand-btn');
     const selectedCardInput = document.getElementById('card-brand-selected');
+    const typeButtons = document.querySelectorAll('.type-btn'); // Adicionado
+    const selectedTypeInput = document.getElementById('card-type-selected'); // Adicionado
     const modalTitle = document.getElementById('modal-title');
     const modalSubmitBtn = document.getElementById('modal-submit-btn');
     const deleteModal = document.getElementById('modal-confirm-delete');
@@ -148,6 +163,7 @@ document.addEventListener('DOMContentLoaded', function() {
         isEditing = false;
         if (cardForm) cardForm.reset();
         if(brandButtons) brandButtons.forEach(btn => btn.classList.remove('selected'));
+        if(typeButtons) typeButtons.forEach(btn => btn.classList.remove('selected')); // Adicionado
         if(modalTitle) modalTitle.textContent = 'Adicionar novo cartão';
         if(modalSubmitBtn) modalSubmitBtn.textContent = 'Salvar Cartão';
         if (paymentModal) paymentModal.classList.add('active');
@@ -165,6 +181,12 @@ document.addEventListener('DOMContentLoaded', function() {
         if(selectedCardInput) selectedCardInput.value = brand;
         if(brandButtons) brandButtons.forEach(btn => {
             btn.classList.toggle('selected', btn.dataset.brand === brand);
+        });
+        // Lógica para preencher o tipo de cartão ao editar (se você salvar esse dado)
+        const type = cardElement.dataset.type;
+        if(selectedTypeInput) selectedTypeInput.value = type;
+        if(typeButtons) typeButtons.forEach(btn => {
+            btn.classList.toggle('selected', btn.dataset.type === type);
         });
         if(modalTitle) modalTitle.textContent = 'Editar Cartão';
         if(modalSubmitBtn) modalSubmitBtn.textContent = 'Salvar Alterações';
@@ -207,6 +229,14 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+    if(typeButtons) typeButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            typeButtons.forEach(btn => btn.classList.remove('selected'));
+            button.classList.add('selected');
+            if(selectedTypeInput) selectedTypeInput.value = button.dataset.type;
+        });
+    });
+
     if (cardForm) {
         cardForm.addEventListener('submit', function(event) {
             event.preventDefault();
@@ -217,8 +247,9 @@ document.addEventListener('DOMContentLoaded', function() {
             const cardCvv = document.getElementById('card-cvv').value;
             const cardHolder = document.getElementById('card-holder-name').value;
             const selectedBrand = selectedCardInput.value;
+            const selectedType = selectedTypeInput.value; // Adicionado
 
-            if (!cardNickname || !selectedBrand || !cardNumber || !cardExpiry || !cardCvv || !cardHolder) {
+            if (!cardNickname || !selectedBrand || !selectedType || !cardNumber || !cardExpiry || !cardCvv || !cardHolder) {
                 alert('Por favor, preencha todos os campos do cartão.');
                 return;
             }
@@ -256,6 +287,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 cardBeingEdited.dataset.cvv = cardCvv;
                 cardBeingEdited.dataset.holder = cardHolder;
                 cardBeingEdited.dataset.brand = selectedBrand;
+                cardBeingEdited.dataset.type = selectedType; // Adicionado
                 cardBeingEdited.querySelector('.card-info span').textContent = `${cardNickname} (${capitalizedBrand})`;
                 cardBeingEdited.querySelector('.payment-icon').src = brandIconSrc;
                 cardBeingEdited.querySelector('.payment-icon').alt = capitalizedBrand;
@@ -268,6 +300,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 newCardElement.dataset.cvv = cardCvv;
                 newCardElement.dataset.holder = cardHolder;
                 newCardElement.dataset.brand = selectedBrand;
+                newCardElement.dataset.type = selectedType; // Adicionado
                 newCardElement.innerHTML = `
                     <div class="card-info">
                         <figure class="payment-icon-figure"><img src="${brandIconSrc}" alt="${capitalizedBrand}" class="payment-icon"></figure>
@@ -286,6 +319,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             cardForm.reset();
             if(brandButtons) brandButtons.forEach(btn => btn.classList.remove('selected'));
+            if(typeButtons) typeButtons.forEach(btn => btn.classList.remove('selected')); // Adicionado
             closePaymentModal();
         });
     }

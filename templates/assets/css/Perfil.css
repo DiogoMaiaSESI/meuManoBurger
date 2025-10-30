@@ -12,8 +12,6 @@ figure
     line-height: 0;
 }
 
-/* --- CABEÇALHO UNIFICADO --- */
-
 .main-header
 {
     background-color: var(--VermelhoCereja);
@@ -28,13 +26,13 @@ figure
 {
     display: flex;
     align-items: center;
-    justify-content: space-between; /* Layout padrão para Desktop */
-    gap: 2rem;
+    justify-content: space-between;
     width: 100%;
-    max-width: 140rem;
-    margin: 0 auto;
-    padding: 0;
+    padding: 0 1.5rem !important;
     list-style: none;
+}
+.nav-right{
+    gap: 2.0rem;
 }
 
 .unified-nav li
@@ -42,10 +40,16 @@ figure
     display: flex;
     align-items: center;
 }
+.unified-nav .icon-link {
+    padding: 0 0.6rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
 
-/* Regra Chave: Esconde os links de perfil no desktop */
 .mobile-only
 {
+    position: absolute;
     display: none;
 }
 
@@ -59,7 +63,9 @@ figure
 
 .logo-principal
 {
+    
     height: clamp(5rem, 6vw, 8rem);
+
 }
 
 .icon-img
@@ -98,8 +104,22 @@ figure
     flex-grow: 1;
     min-width: 0;
 }
+.mobile-only
+{
+    display: none;
+}
 
-/* --- ESTILOS DOS COMPONENTES (SEU CÓDIGO ORIGINAL) --- */
+/* utilitário: escondido por padrão (desktop), mostrado no header em mobile */
+.hide-on-desktop {
+    display: none; /* desktop: escondido */
+}
+
+/* garante um layout decente quando mostrado no mobile */
+.hide-on-desktop a,
+.hide-on-desktop {
+    align-items: center;
+    gap: 0.6rem;
+}
 
 .sidebar-header
 {
@@ -229,6 +249,35 @@ figure
     height: 2.2rem;
     width: 2.2rem;
 }
+.type-selector {
+    display: flex;
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.type-btn {
+    flex: 1;
+    padding: 1.2rem;
+    border: 2px solid var(--Cinza);
+    background-color: var(--Branco);
+    border-radius: 1.2rem;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--Preto);
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.type-btn:hover {
+    border-color: var(--VermelhoCereja);
+}
+
+.type-btn.selected {
+    background-color: var(--VermelhoCereja);
+    color: var(--Branco);
+    border-color: var(--VermelhoCereja);
+}
+
 
 .form-group
 {
@@ -402,38 +451,42 @@ figure
     opacity: 0.9;
 }
 
-/* --- MEDIA QUERIES PARA RESPONSIVIDADE --- */
 
 @media (max-width: 834px)
 {
-    /* 1. TRANSFORMA O HEADER EM UMA BARRA COM SCROLL */
     .main-header
     {
-        padding: 1rem 0; /* Remove padding lateral para o scroll ir de ponta a ponta */
+        padding: 1rem 0;
+    }
+    .hide-on-desktop
+    {
+        display: flex;
+        gap: 0.6rem;
+        align-items: center;
     }
 
     .unified-nav ul
     {
-        justify-content: flex-start; /* Alinha tudo ao início para o scroll */
+        justify-content: flex-start;
         overflow-x: auto;
         white-space: nowrap;
-        padding: 0 1.5rem; /* Adiciona um respiro nas laterais dentro da área de scroll */
+        padding: 0 1.5rem;
     }
 
     .unified-nav ul::-webkit-scrollbar
     {
-        display: none; /* Esconde a barra de rolagem visualmente */
+        display: none;
     }
 
-    /* 2. ESCONDE A LOGO DO DESKTOP */
+
     .desktop-only
     {
         display: none;
     }
 
-    /* 3. MOSTRA OS LINKS DE PERFIL QUE ESTAVAM ESCONDIDOS */
     .mobile-only
     {
+        position: sticky;
         display: flex;
     }
     
@@ -455,13 +508,11 @@ figure
         font-weight: 700;
     }
 
-    /* 4. ESCONDE A SIDEBAR DO DESKTOP */
     .sidebar
     {
         display: none;
     }
 
-    /* 5. AJUSTA O CONTAINER PRINCIPAL */
     .profile-container
     {
         flex-direction: column;
@@ -475,4 +526,24 @@ figure
         width: 100%;
         flex-basis: auto;
     }
+}
+@media (max-width: 442px) {
+    .form-group {
+        font-size: 1.2rem;
+    }
+
+    .form-group label {
+        font-size: 2.6rem;
+    }
+
+    .form-group input {
+        font-size: 1.8rem;
+        padding: 0.9rem;
+        height: 4.4rem;
+    }
+    .logo-principal
+{
+    height: clamp(5rem, 6vw, 8rem);
+    margin-left: 1.0rem;
+}
 }

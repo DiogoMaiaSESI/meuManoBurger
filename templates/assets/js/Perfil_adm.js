@@ -1,40 +1,85 @@
 document.addEventListener('DOMContentLoaded', function() {
 
-    // --- LÓGICA PARA TROCA DE ABAS ---
+    // --- LÓGICA PARA TROCA DE ABAS (SINCRONIZADA) ---
     const navLinks = document.querySelectorAll('.nav-link');
     const contentTabs = document.querySelectorAll('.content-tab');
+
+    function activateTab(targetId) {
+        if (!targetId) return;
+
+        navLinks.forEach(nav => nav.classList.remove('active'));
+        contentTabs.forEach(tab => tab.classList.remove('active'));
+
+        const targetName = targetId.substring(targetId.indexOf('-') + 1);
+        const targetContentId = 'content-' + targetName;
+
+        const sidebarLink = document.getElementById('btn-' + targetName);
+        const mobileLink = document.getElementById('m-btn-' + targetName);
+        if (sidebarLink) sidebarLink.classList.add('active');
+        if (mobileLink) mobileLink.classList.add('active');
+
+        const targetTab = document.getElementById(targetContentId);
+        if (targetTab) {
+            targetTab.classList.add('active');
+        }
+    }
+
     navLinks.forEach(link => {
         link.addEventListener('click', function(event) {
-            event.preventDefault();
-            const clickedId = this.id;
-            const targetName = clickedId.substring(4);
-            const targetContentId = 'content-' + targetName;
-            navLinks.forEach(nav => nav.classList.remove('active'));
-            this.classList.add('active');
-            contentTabs.forEach(tab => tab.classList.remove('active'));
-            const targetTab = document.getElementById(targetContentId);
-            if (targetTab) {
-                targetTab.classList.add('active');
+            event.preventDefault()
+
+            // Normaliza ids mobile ("m-btn-dados") para ids da sidebar ("btn-dados")
+            let targetId = this.id || ''
+            if (targetId.startsWith('m-')) {
+                targetId = targetId.replace(/^m-/, '')
             }
-        });
-    });
+
+            if (!targetId.startsWith('btn-') && !targetId.startsWith('m-btn-') && targetId !== '') {
+                targetId = 'btn-' + targetId.replace(/^btn-/, '')
+            }
+
+
+            activateTab(targetId)
+        })
+    })
+
+    // --- LÓGICA DO MENU SANDUÍCHE ---
+    const sandwichMenu = document.querySelector('.sandwich-menu-btn');
+    const sandwichOptions = document.querySelector('.options');
+    const sandwichSombra = document.querySelector('.sombra');
+
+    function toggleMenu() {
+        if (sandwichOptions) sandwichOptions.classList.toggle('optionActive');
+        if (sandwichSombra) sandwichSombra.classList.toggle('shadowActive');
+    }
+
+    if (sandwichMenu) {
+        sandwichMenu.addEventListener('click', toggleMenu);
+    }
+    if (sandwichSombra) {
+        sandwichSombra.addEventListener('click', toggleMenu);
+    }
+
 
     // --- LÓGICA DO MODAL DE LOGOUT ---
     const logoutModal = document.getElementById('modal-confirm-logout');
     const openLogoutModalBtn = document.getElementById('btn-sair');
+    const mobileOpenLogoutModalBtn = document.getElementById('m-btn-sair');
     const closeLogoutModalBtn = document.getElementById('btn-logout-nao');
     const confirmLogoutBtn = document.getElementById('btn-logout-sim');
-    if (openLogoutModalBtn) {
-        openLogoutModalBtn.addEventListener('click', function(event) {
-            event.preventDefault();
-            if (logoutModal) logoutModal.classList.add('active');
-        });
+
+    function openLogoutModal(event) {
+        event.preventDefault();
+        if (logoutModal) logoutModal.classList.add('active');
     }
+
+    if (openLogoutModalBtn) openLogoutModalBtn.addEventListener('click', openLogoutModal);
+    if (mobileOpenLogoutModalBtn) mobileOpenLogoutModalBtn.addEventListener('click', openLogoutModal);
+
     if (closeLogoutModalBtn) {
         closeLogoutModalBtn.addEventListener('click', () => {
             if (logoutModal) logoutModal.classList.remove('active');
-            const btnDados = document.getElementById('btn-dados');
-            if (btnDados) btnDados.click();
+            activateTab('btn-dados');
         });
     }
     if (confirmLogoutBtn) {
@@ -44,7 +89,10 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     if (logoutModal) {
         logoutModal.addEventListener('click', (event) => {
-            if (event.target === logoutModal) logoutModal.classList.remove('active');
+            if (event.target === logoutModal) {
+                logoutModal.classList.remove('active');
+                activateTab('btn-dados');
+            }
         });
     }
 
@@ -67,8 +115,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     const reader = new FileReader();
                     reader.onload = function(e) {
                         profilePicPreview.src = e.target.result;
-                        picActionButtons.classList.add('visible');
-                        editPicBtn.style.display = 'none';
+                        if(picActionButtons) picActionButtons.classList.add('visible');
+                        if(editPicBtn) editPicBtn.style.display = 'none';
                     }
                     reader.readAsDataURL(file);
                 }
@@ -78,8 +126,8 @@ document.addEventListener('DOMContentLoaded', function() {
             cancelPicBtn.addEventListener('click', () => {
                 profilePicPreview.src = originalPicSrc;
                 fileUploadInput.value = '';
-                picActionButtons.classList.remove('visible');
-                editPicBtn.style.display = 'flex';
+                if(picActionButtons) picActionButtons.classList.remove('visible');
+                if(editPicBtn) editPicBtn.style.display = 'flex';
             });
         }
         if (savePicBtn) {
@@ -88,8 +136,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (!file) return;
                 console.log("Simulando upload da imagem:", file.name);
                 originalPicSrc = profilePicPreview.src;
-                picActionButtons.classList.remove('visible');
-                editPicBtn.style.display = 'flex';
+                if(picActionButtons) picActionButtons.classList.remove('visible');
+                if(editPicBtn) editPicBtn.style.display = 'flex';
             });
         }
     }
@@ -163,19 +211,3 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
-// --- LÓGICA DO MENU SANDUÍCHE ---
-const menuBtn = document.getElementById('sandwich-menu-btn');
-const optionsContainer = document.querySelector('.options');
-const sombra = document.querySelector('.sombra');
-
-function toggleMenu() {
-    if (optionsContainer) optionsContainer.classList.toggle('optionActive');
-    if (sombra) sombra.classList.toggle('shadowActive');
-}
-
-if (menuBtn) {
-    menuBtn.addEventListener('click', toggleMenu);
-}
-if (sombra) {
-    sombra.addEventListener('click', toggleMenu);
-}

@@ -1,17 +1,22 @@
+<?php
+// seu código PHP aqui, se houver
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perfil Administrador - Meu Mano Burger</title>
+    <title>Meu Perfil - Meu Mano Burger</title>
     <link rel="stylesheet" href="/meuManoBurger/templates/assets/css/Perfil.css">
     <link rel="stylesheet" href="/meuManoBurger/templates/assets/css/Seguranca.css">
+    <link rel="stylesheet" href="/meuManoBurger/templates/assets/css/ModalPagamento.css">
 
-     <style>
+    <style>
         .sandwich-menu-container {
             position: absolute;
-            top: 10.8rem;
+            top: 8.3rem;
             left: 0;
             z-index: 1002;
             pointer-events: none;
@@ -75,6 +80,16 @@
             opacity: 0.4;
             pointer-events: all;
         }
+
+        .unified-nav ul {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            padding: 0;
+            gap: 5.0rem;
+            list-style: none;
+        }
     </style>
 </head>
 
@@ -100,40 +115,56 @@
         </div>
     </div>
     <div class="sombra"></div>
+
     <header class="main-header">
-        <div class="header-content">
-            <div class="header-left">
-                <button id="sandwich-menu-btn" class="menu-btn">
-                    <figure><img src="/meuManoBurger/templates/assets/img/Menu.png" alt="Menu" class="icon-img">
+        <nav class="unified-nav">
+            <ul>
+                <!-- Menu Sanduíche (Sempre visível) -->
+                <li>
+                    <button class="menu-btn sandwich-menu-btn">
+                        <figure><img src="/meuManoBurger/templates/assets/img/Menu.png" alt="Menu" class="icon-img">
+                        </figure>
+                    </button>
+                </li>
+
+                <!-- Logo (Apenas Desktop) -->
+                <li class="desktop-only">
+                    <figure class="logo-container">
+                        <img src="/meuManoBurger/templates/assets/img/Logo.png" alt="Logo Meu Mano Burger"
+                            class="logo-principal">
                     </figure>
-                </button>
-            </div>
-            <div class="header-center">
-                <figure class="logo-container"><img src="/meuManoBurger/templates/assets/img/Logo.png"
-                        alt="Logo Meu Mano Burger" class="logo-principal"></figure>
-            </div>
-            <nav class="header-right">
-                <a href="#" class="icon-link">
-                    <figure><img src="/meuManoBurger/templates/assets/img/Voltar.png" alt="Voltar" class="icon-img">
-                    </figure>
-                </a>
-                <a href="#" class="icon-link">
-                    <figure><img src="/meuManoBurger/templates/assets/img/Carrinho.png" alt="Carrinho" class="icon-img">
-                    </figure>
-                </a>
-                <a href="#" class="icon-link">
-                    <figure><img src="/meuManoBurger/templates/assets/img/MiniPerfil.png" alt="Perfil" class="icon-img">
-                    </figure>
-                </a>
-            </nav>
-        </div>
+                </li>
+
+                <!-- Links de Perfil (Tablet/Mobile) -->
+                <li class="mobile-only"><a href="#" id="m-btn-dados" class="nav-link active hide-on-desktop">Meus dados</a></li>
+                <li class="mobile-only"><a href="#" id="m-btn-historico" class="nav-link hide-on-desktop">Histórico</a>
+                </li>
+                <li class="mobile-only"><a href="#" id="m-btn-seguranca" class="nav-link hide-on-desktop">Segurança</a>
+                </li>
+                <li class="mobile-only"><a href="#" id="m-btn-sair" class="nav-link hide-on-desktop">Sair</a></li>
+
+                <!-- Ícones de Ação (Sempre visíveis, no final) -->
+                <li class="nav-right">
+                    <a href="#" class="icon-link">
+                        <figure><img src="/meuManoBurger/templates/assets/img/Voltar.png" alt="Voltar" class="icon-img">
+                        </figure>
+                    </a>
+                    <a href="#" class="icon-link">
+                        <figure><img src="/meuManoBurger/templates/assets/img/MiniPerfil.png" alt="Perfil"
+                                class="icon-img"></figure>
+                    </a>
+                </li>
+            </ul>
+        </nav>
     </header>
+
+
 
     <main id="profile-container" class="profile-container">
 
         <aside class="sidebar">
             <div class="sidebar-header">
-                <p>Olá, Biatriz!</p>
+                <p>Olá, Beanca!</p>
             </div>
             <nav class="sidebar-nav">
                 <ul>
@@ -158,12 +189,18 @@
                                 <img src="/meuManoBurger/templates/assets/img/FotoPerfil.png" alt="Foto de Perfil"
                                     id="profile-pic-preview" class="profile-picture">
                             </figure>
+
+                            <!-- O input de arquivo, escondido -->
                             <input type="file" id="file-upload-input" accept="image/png, image/jpeg, image/webp"
                                 style="display: none;">
+
+                            <!-- O botão de edição que aciona o input -->
                             <button type="button" id="edit-pic-btn" class="edit-picture-btn">
                                 <figure><img src="/meuManoBurger/templates/assets/img/Edicao.png" alt="Editar Foto"
                                         class="icon-img icon-editar"></figure>
                             </button>
+
+                            <!-- Botões de Salvar/Cancelar, escondidos inicialmente -->
                             <div id="pic-action-buttons" class="pic-action-buttons">
                                 <button id="save-pic-btn" class="btn-save-pic">Salvar</button>
                                 <button id="cancel-pic-btn" class="btn-cancel-pic">Cancelar</button>
@@ -172,9 +209,9 @@
                     </div>
                     <form id="profile-form" class="profile-form" method="POST" action="">
                         <div class="form-group"><label for="nome">Nome</label><input type="text" id="nome" name="nome"
-                                value="Biatriz Washington Stalingrado Lisboa Londres"></div>
+                                value="Beanca Adidas Ford Honda Fiat"></div>
                         <div class="form-group"><label for="email">Email</label><input type="email" id="email"
-                                name="email" value="Biatriz@gmail.com"></div>
+                                name="email" value="Bia1234@gmail.com"></div>
                         <button type="submit" class="submit-btn">Salvar Alterações</button>
                     </form>
                 </div>
@@ -207,11 +244,8 @@
                     </form>
                 </div>
             </div>
-
         </section>
-
     </main>
-
     <div id="modal-confirm-logout" class="modal-overlay">
         <div class="modal-content-small">
             <p>Deseja mesmo sair?</p>
@@ -222,7 +256,8 @@
         </div>
     </div>
 
-    <script src="/meuManoBurger/templates/assets/js/Perfil_adm.js"></script>
+
+    <script src="/meuManoBurger/templates/assets/js/perfil.js"></script>
 
 </body>
 

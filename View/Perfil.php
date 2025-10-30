@@ -18,7 +18,7 @@
     <style>
         .sandwich-menu-container {
             position: absolute;
-            top: 10.8rem;
+            top: 8.3rem;
             left: 0;
             z-index: 1002;
             pointer-events: none;
@@ -87,25 +87,25 @@
 
 <body>
     <div class="sandwich-menu-container">
-    <div class="options">
-        <div class="option">
-            <figure><img src="/meuManoBurger/templates/assets/img/Cardapio.png" alt="Cardápio"></figure>
-            <h5>Cardápio</h5>
-        </div>
-        <div class="option">
-            <figure><img src="/meuManoBurger/templates/assets/img/Pedidos.png" alt="Pedidos"></figure>
-            <h5>Pedidos</h5>
-        </div>
-        <div class="option">
-            <figure><img src="/meuManoBurger/templates/assets/img/Feedbacks.png" alt="Feedbacks"></figure>
-            <h5>Feedbacks</h5>
-        </div>
-        <div class="option">
-            <figure><img src="/meuManoBurger/templates/assets/img/Carrinho_menu.png" alt="Carrinho"></figure>
-            <h5>Carrinho</h5>
+        <div class="options">
+            <div class="option">
+                <figure><img src="/meuManoBurger/templates/assets/img/Cardapio.png" alt="Cardápio"></figure>
+                <h5>Cardápio</h5>
+            </div>
+            <div class="option">
+                <figure><img src="/meuManoBurger/templates/assets/img/Pedidos.png" alt="Pedidos"></figure>
+                <h5>Pedidos</h5>
+            </div>
+            <div class="option">
+                <figure><img src="/meuManoBurger/templates/assets/img/Feedbacks.png" alt="Feedbacks"></figure>
+                <h5>Feedbacks</h5>
+            </div>
+            <div class="option">
+                <figure><img src="/meuManoBurger/templates/assets/img/Carrinho_menu.png" alt="Carrinho"></figure>
+                <h5>Carrinho</h5>
+            </div>
         </div>
     </div>
-</div>
     <div class="sombra"></div>
 
     <header class="main-header">
@@ -114,29 +114,43 @@
                 <!-- Menu Sanduíche (Sempre visível) -->
                 <li>
                     <button class="menu-btn sandwich-menu-btn">
-                        <figure><img src="/meuManoBurger/templates/assets/img/Menu.png" alt="Menu" class="icon-img"></figure>
+                        <figure><img src="/meuManoBurger/templates/assets/img/Menu.png" alt="Menu" class="icon-img">
+                        </figure>
                     </button>
                 </li>
 
                 <!-- Logo (Apenas Desktop) -->
                 <li class="desktop-only">
                     <figure class="logo-container">
-                        <img src="/meuManoBurger/templates/assets/img/Logo.png" alt="Logo Meu Mano Burger" class="logo-principal">
+                        <img src="/meuManoBurger/templates/assets/img/Logo.png" alt="Logo Meu Mano Burger"
+                            class="logo-principal">
                     </figure>
                 </li>
 
                 <!-- Links de Perfil (Tablet/Mobile) -->
-                <li class="mobile-only"><a href="#" id="m-btn-dados" class="nav-link active">Meus dados</a></li>
-                <li class="mobile-only"><a href="#" id="m-btn-historico" class="nav-link">Histórico</a></li>
-                <li class="mobile-only"><a href="#" id="m-btn-favoritos" class="nav-link">Favoritos</a></li>
-                <li class="mobile-only"><a href="#" id="m-btn-pagamento" class="nav-link">Pagamento</a></li>
-                <li class="mobile-only"><a href="#" id="m-btn-seguranca" class="nav-link">Segurança</a></li>
-                <li class="mobile-only"><a href="#" id="m-btn-sair" class="nav-link">Sair</a></li>
+                <li class="mobile-only"><a href="#" id="m-btn-dados" class="nav-link active hide-on-desktop">Meus
+                        dados</a></li>
+                <li class="mobile-only"><a href="#" id="m-btn-historico" class="nav-link hide-on-desktop">Histórico</a>
+                </li>
+                <li class="mobile-only"><a href="#" id="m-btn-favoritos" class="nav-link hide-on-desktop">Favoritos</a>
+                </li>
+                <li class="mobile-only"><a href="#" id="m-btn-pagamento" class="nav-link hide-on-desktop">Pagamento</a>
+                </li>
+                <li class="mobile-only"><a href="#" id="m-btn-seguranca" class="nav-link hide-on-desktop">Segurança</a>
+                </li>
+                <li class="mobile-only"><a href="#" id="m-btn-sair" class="nav-link hide-on-desktop">Sair</a></li>
 
                 <!-- Ícones de Ação (Sempre visíveis, no final) -->
-                <li><a href="#" class="icon-link"><figure><img src="/meuManoBurger/templates/assets/img/Voltar.png" alt="Voltar" class="icon-img"></figure></a></li>
-                <li><a href="#" class="icon-link"><figure><img src="/meuManoBurger/templates/assets/img/Carrinho.png" alt="Carrinho" class="icon-img"></figure></a></li>
-                <li><a href="#" class="icon-link"><figure><img src="/meuManoBurger/templates/assets/img/MiniPerfil.png" alt="Perfil" class="icon-img"></figure></a></li>
+                <li class="nav-right">
+                    <a href="#" class="icon-link">
+                        <figure><img src="/meuManoBurger/templates/assets/img/Voltar.png" alt="Voltar" class="icon-img">
+                        </figure>
+                    </a>
+                    <a href="#" class="icon-link">
+                        <figure><img src="/meuManoBurger/templates/assets/img/MiniPerfil.png" alt="Perfil"
+                                class="icon-img"></figure>
+                    </a>
+                </li>
             </ul>
         </nav>
     </header>
@@ -309,6 +323,14 @@
                         <input type="text" id="card-holder-name" name="card-holder-name"
                             placeholder="Nome como está no cartão" required>
                     </div>
+                    <div class="form-group">
+                <label>Tipo</label>
+                <div class="type-selector">
+                    <button type="button" class="type-btn" data-type="credito">Crédito</button>
+                    <button type="button" class="type-btn" data-type="debito">Débito</button>
+                </div>
+                <input type="hidden" id="card-type-selected" name="card-type-selected" value="">
+            </div>
                     <div class="form-group">
                         <label>Bandeira</label>
                         <div class="brand-selector">
