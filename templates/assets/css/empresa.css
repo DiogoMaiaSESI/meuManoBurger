@@ -87,6 +87,7 @@ h2 {
     justify-content: center;
     gap: 7.4rem;
     margin-bottom: 2rem;
+    margin-top: 2rem;
 }
 
 .textbtn{
@@ -182,7 +183,7 @@ h2 {
     justify-content: left;
     text-align: left;
     align-items: left;
-    margin-right: 78rem;
+    width: 80%;
 }
 .frase {
     font-size: 4rem;
@@ -212,13 +213,13 @@ h2 {
 
 .lineone {
     display: flex;
-    gap: 3rem;
+    gap: 5rem;
     margin-bottom: 4rem;
 }
 
 .linetwo {
     display: flex;
-    gap: 3rem;
+    gap: 5rem;
 }
 
 .caixa {
@@ -233,7 +234,12 @@ h2 {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     background-color: var(--Branco);
 }
-
+.decTab, .decCel {
+    display: none;
+}
+.decComp {
+    display: block;
+}
 .dados {
     display: flex;
     align-items: center;
@@ -253,7 +259,7 @@ h2 {
 }
 
 .textofeedback {
-    width: 40.9rem;
+    width: fit-content;
     height: 14.4rem;
     font-size: 1.8rem;
     font-weight: bold;
@@ -285,25 +291,6 @@ footer h4 {
     font-weight: normal;
     font-size: 1.5rem;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 .menu {
     width: 8rem ;
@@ -381,7 +368,7 @@ h5 {
     pointer-events: all;
 }
 
-@media screen and (max-width: 1172px) {
+@media screen and (max-width: 1172px) and (min-width: 768px){
     .hambImg {
         width: 32.4rem;
     }
@@ -390,6 +377,261 @@ h5 {
         font-size: 3.2rem;
     }
     main {
+        padding-top: 10rem;
+        margin-bottom: 10rem;
         height: fit-content;
+    }
+    h2 {
+        font-size: 5rem;
+    }
+    .textomenu{
+        font-size: 3rem;
+    }
+    .btncardapio {
+        width: 23rem;
+        height: 4.9rem;
+        font-size: 2.4rem;
+        font-weight: normal;
+    }
+    .textbtn {
+        width: 32.5rem;
+        gap: 2.1rem;
+    }
+    .cardapioDiv {
+        gap: 3.1rem;
+    }
+    .foto figure img {
+        width: 35.4rem;
+        height: 28.4rem;
+    }
+    .decoracao1 figure img, .decoracao2 figure img {
+        width: 7rem;
+        height: 7rem;
+    }
+    .feed {
+        font-size: 3.8rem;
+    }
+    .frase {
+        font-size: 3rem;
+    }
+    .caixa {
+        width: 30.2rem;
+        height: 26rem;
+    }
+    .dados figure img {
+        width: 4.8rem;
+        height: 4.8rem;
+    }
+    .dados p {
+        font-size: 2.5rem;
+    }
+    .textofeedback p {
+        font-size: 1.8rem;
+        width: 25.7rem;
+    }
+}
+
+@media screen and (min-width: 501px) and (max-width: 767px){
+    .decComp, .decCel {
+        display: none;
+    }
+    .decTab {
+        display: block;
+    }
+    .menu {
+        padding-left: 0;
+    }
+    .hambImg {
+        width: 25rem;
+    }
+    .title {
+        width: 40rem;
+        font-size: 2.8rem;
+    }
+    main {
+        height: fit-content;
+        flex-direction: column;
+        gap: 2.3rem;
+        padding-top: 10rem;
+        margin-bottom: 10rem;
+    }
+    h2 {
+        font-size: 3.2rem;
+    }
+    .textomenu{
+        font-size: 2.2rem;
+    }
+    .btncardapio {
+        width: 15.5rem;
+        height: 3.5rem;
+        font-size: 1.5rem;
+        font-weight: normal;
+    }
+    .textoft{
+        gap: 2.5rem;
+        align-items: end;
+    }
+    .textbtn {
+        width: 22rem;
+        gap: 2.1rem;
+    }
+    .cardapioDiv {
+        gap: 3.1rem;
+    }
+    .foto figure img {
+        width: 20rem;
+        height: 15.5rem;
+    }
+    .decoracao1 figure img, .decoracao2 figure img {
+        width: 3.7rem;
+        height: 5rem;
+    }
+    .feed {
+        font-size: 3.8rem;
+    }
+    .frase {
+        font-size: 3rem;
+        width: 44rem;
+    }
+    .caixa {
+        width: 22.2rem;
+        height: 24rem;
+    }
+    .dados figure img {
+        width: 4.8rem;
+        height: 4.8rem;
+    }
+    .dados p {
+        font-size: 2.2rem;
+    }
+    .textofeedback p {
+        font-size: 1.2rem;
+        width: 100%;
+    }
+    .lineone, .linetwo {
+        gap: 3.5rem;
+    }
+}
+
+@media screen and (max-width: 500px){
+    .decComp, .decTab {
+        display: none;
+    }
+    .decCel {
+        display: block;
+    }
+    .cabecalho {
+        right: 3rem;
+        gap: 7rem;   
+    }
+    .sandwich {
+        top: 4.5rem;
+    }
+    .menu {
+        padding-left: 0;
+    }
+    .menu img {
+        width: 6rem;
+        height: auto;
+    }
+    .hambImg {
+        width: 15.3rem;
+    }
+    .title {
+        width: 25.8rem;
+        font-size: 2.4rem;
+    }
+    main {
+        height: fit-content;
+        flex-direction: column;
+        gap: 2.3rem;
+        padding-top: 10rem;
+        margin-bottom: 10rem;
+    }
+
+    .logo img {
+        width: 8rem;
+        height: auto;
+    }
+
+    .perfil img {
+        width: 4rem;
+        height: 4rem;
+    }
+
+    h2 {
+        font-size: 2.5rem;
+    }
+    .textomenu{
+        font-size: 1.5rem;
+    }
+    .btncardapio {
+        width: 12.5rem;
+        height: 2.7rem;
+        font-size: 1.3rem;
+        font-weight: normal;
+    }
+    .textoft{
+        margin-top: 0;
+        gap: 1.7rem;
+        align-items: center;
+    }
+    .textbtn {
+        width: 14rem;
+        gap: 2.1rem;
+    }
+    .cardapioDiv {
+        gap: 3.1rem;
+    }
+    .foto figure img {
+        width: 16.5rem;
+        height: 13.2rem;
+    }
+    .decoracao1 figure img, .decoracao2 figure img {
+        width: 3.7rem;
+        height: 5rem;
+    }
+    .decoracao1 {
+        padding-right: 3rem;
+    }
+    .decoracao2 {
+        padding-left: 3rem;
+    }
+    .feed {
+        font-size: 2.8rem;
+        margin-bottom: 0;
+    }
+    .frase {
+        font-size: 1.6rem;
+        margin-top: 1.2rem;
+        margin-bottom: 2.3rem;
+    }
+    .caixa {
+        width: 15rem;
+        height: 16rem;
+        padding-left: 1.1rem;
+        padding-top: 1.6rem;
+        padding-right: 0.8rem;
+    }
+    .dados{
+        gap: 0.9rem;
+        margin-bottom: 0.9rem;
+    }
+    .dados figure img {
+        width: 2.7rem;
+        height: 2.7rem;
+    }
+    .dados p {
+        font-size: 1.8rem;
+    }
+    .textofeedback p {
+        font-size: 0.9rem;
+        width: 100%;
+    }
+    .lineone, .linetwo {
+        gap: 2.2rem;
+    }
+    footer h4 {
+        font-size: 1rem;
     }
 }
