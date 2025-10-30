@@ -245,10 +245,14 @@ button.btn:hover {
     top: 80px;
     left: 2px;
     border-radius: 2rem;
-    display: none;
 }
 
-
+.statusretirado{
+    display: none;
+}
+.statuspendente{
+    display: block;
+}
 .statuspend {
     width: 8.1rem;
     height: 2.4rem;
@@ -267,6 +271,7 @@ button.btn:hover {
     top: 80px;
     left: 2px;
     border-radius: 2rem;
+    
 }
 
 .ilustracao img {
@@ -395,15 +400,10 @@ button.statusbtn:hover {
     padding-top: 2rem;
     padding-bottom: 3rem;
 }
-.fechar img:hover{
-    transform: translateY(-3px);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-}
 
 .fechar img {
     width: 3rem;
     height: 3rem;
-    transition: all 0.3s ease;
 }
 
 .modaldados {
@@ -517,5 +517,78 @@ button.statusbtn:hover {
 }
 
 .modalconfirm {
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
     display: none;
+}
+
+.conteudomodalconfirm{
+    width: 20%;
+    height: 25%;
+    border-radius: 2rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    z-index: 1;
+    background-color: var(--Branco);
+    margin-top: 17%;
+    margin-left: 39%;
+
+}
+
+.conteudomodalconfirm h2{
+    font-weight: bold;
+    font-size: 2rem;
+    color: var(--VermelhoCereja);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 4rem;
+}
+
+.conteudomodalconfirm p{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 2rem;
+    font-size: 1.8rem;
+}
+
+.modalbotoes{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 5rem;
+    margin-bottom: 2rem;
+    gap: 4rem;
+}
+
+.sim{
+    width: 7rem;
+    height: 3rem;
+    border: none;
+    color: var(--Branco);
+    font-weight: bold;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    background-color: #007A37;
+    border-radius: .5rem;
+    cursor: pointer;
+}
+
+.nao{
+    width: 7rem;
+    height: 3rem;
+    color: var(--Branco);
+    font-weight: bold;
+    border: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    background-color: var(--VermelhoCereja);
+    border-radius: .5rem;
+    cursor: pointer;
 }
