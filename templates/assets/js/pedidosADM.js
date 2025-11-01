@@ -133,4 +133,4 @@ btnsim.addEventListener('click', () => {
   Statusdetalhesatual = null
 })
 
-// localStorage.clear();
+localStorage.clear();
