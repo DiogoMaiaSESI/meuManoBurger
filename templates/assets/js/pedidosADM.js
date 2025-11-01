@@ -7,9 +7,8 @@ const modalconfirm = document.querySelector('.modalconfirm')
 const btnsim = document.querySelector('.sim')
 const btnnao = document.querySelector('.nao')
 
-let Pedidoatual = null
-let StatusBtnatual = null
-let Statusdetalhesatual = null
+let currentPedido = null
+let currentStatusBtn = null
 
 menu.addEventListener('click', () => {
   opcoes.classList.toggle('optionActive')
@@ -34,103 +33,58 @@ window.addEventListener('click', (event) => {
 })
 
 const pedidos = document.querySelectorAll('.pedido')
-const statusRetiradoTexto = 'Retirado'
-
-function carregarEstados() {
-
-  pedidos.forEach((pedido) => {
-
-    const codigo = pedido.querySelector('.codigo').textContent
-    const estadoSalvo = localStorage.getItem(`pedido_${codigo}`)
-    
-    if (estadoSalvo === 'retirado') {
-      const retirado = pedido.querySelector('.statusretirado')
-      const pendente = pedido.querySelector('.statuspendente')
-      const statusBtn = pedido.querySelector('.statusbtn')
-      
-      pendente.style.display = 'none'
-      retirado.style.display = 'block'
-      statusBtn.textContent = statusRetiradoTexto
-      statusBtn.disabled = true
-      statusBtn.classList.add('statusbtndesabilitado')
-    }
-  })
-}
-
-
-carregarEstados()
-
 pedidos.forEach((pedido) => {
   const detalhesBtn = pedido.querySelector('.detalhes')
   const statusBtn = pedido.querySelector('.statusbtn')
-  const statusPendente = pedido.querySelector('.statuspendente')
+
+  if (detalhesBtn) {
+    detalhesBtn.addEventListener('click', () => {
+
+      modaldetalhes.style.display = 'block'
+    })
+  }
+
+  if (statusBtn) {
+    statusBtn.addEventListener('click', () => {
+      currentPedido = pedido
+      currentStatusBtn = statusBtn
+      modalconfirm.style.display = 'block'
+    })
+  }
+})
+
+if (btnnao) {
+  btnnao.addEventListener('click', () => {
+    modalconfirm.style.display = 'none'
+    currentPedido = null
+    currentStatusBtn = null
+  })
+}
+
+const statusRetiradoText = 'Retirado'
+if (btnsim) {
+  btnsim.addEventListener('click', () => {
+    modalconfirm.style.display = 'none'
+    if (!currentPedido) return
+
+    const retirado = currentPedido.querySelector('.statusretirado')
+    const pendente = currentPedido.querySelector('.statuspendente')
+
+    if (retirado || pendente) {
+      if (pendente) pendente.style.display = 'none'
+      if (retirado) retirado.style.display = 'block'
+    } else {
   
-  let codigoatual = pedido.querySelector('.codigo')
-  let horaatual = pedido.querySelector('.hora')
-  let dataatual = pedido.querySelector('.data')
 
-  detalhesBtn.addEventListener('click', () => {
-
-    let codigomodal = document.querySelector('.modaldetalhes .codigotexto')
-    codigomodal.textContent = codigoatual.textContent
-
-    let datamodal = document.querySelector('.modaldetalhes .modaldata p')
-    datamodal.textContent = dataatual.textContent
-
-    let horamodal = document.querySelector('.modaldetalhes .modalhora p')
-    horamodal.textContent = horaatual.textContent
-
-    let statuspedido
-
-    if (statusPendente.style.display !== 'none') {
-      statuspedido = 'A retirar'
-    }
-    else {
-      statuspedido = 'Retirado'
+      const statusOk = currentPedido.querySelector('.statusok')
+      const statusPend = currentPedido.querySelector('.statuspend')
+      if (statusPend) statusPend.style.display = 'none'
+      if (statusOk) statusOk.style.display = 'block'
     }
 
-    const statusModal = document.querySelector('.modaldetalhes .modalstatus p')
-    statusModal.textContent = statuspedido
+    if (currentStatusBtn) currentStatusBtn.textContent = statusRetiradoText
 
-    modaldetalhes.style.display = 'block'
+    currentPedido = null
+    currentStatusBtn = null
   })
-
-  statusBtn.addEventListener('click', () => {
-    Pedidoatual = pedido
-    StatusBtnatual = statusBtn
-    Statusdetalhesatual = document.querySelector('.modaldetalhes .modalstatus p')
-    modalconfirm.style.display = 'block'
-  })
-})
-
-btnnao.addEventListener('click', () => {
-  modalconfirm.style.display = 'none'
-  Pedidoatual = null
-  StatusBtnatual = null
-})
-
-btnsim.addEventListener('click', () => {
-  modalconfirm.style.display = 'none'
-  if (!Pedidoatual) return
-
-  const retirado = Pedidoatual.querySelector('.statusretirado')
-  const pendente = Pedidoatual.querySelector('.statuspendente')
-  const codigo = Pedidoatual.querySelector('.codigo').textContent
-
-  pendente.style.display = 'none'
-  retirado.style.display = 'block'
-
-  StatusBtnatual.textContent = statusRetiradoTexto
-  Statusdetalhesatual.textContent = statusRetiradoTexto
-  StatusBtnatual.disabled = true
-  StatusBtnatual.classList.add('statusbtndesabilitado')
-
-
-  localStorage.setItem(`pedido_${codigo}`, 'retirado')
-
-  Pedidoatual = null
-  StatusBtnatual = null
-  Statusdetalhesatual = null
-})
-
-// localStorage.clear();
+}

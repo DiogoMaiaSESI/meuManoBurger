@@ -370,20 +370,6 @@ button.statusbtn:hover {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
 }
 
-button.statusbtn.statusbtndesabilitado {
-    transform: none;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-    cursor: not-allowed;
-    opacity: 0.6;
-    background-color: #f0f0f0;
-    color: #000000;
-}
-
-button.statusbtn.statusbtndesabilitado:hover {
-    transform: none;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-    background-color: #f0f0f0;
-}
 .modaldetalhes {
     position: fixed;
     z-index: 1;
@@ -397,13 +383,13 @@ button.statusbtn.statusbtndesabilitado:hover {
 }
 
 .conteudomodaldetalhes {
-    width: 55rem;
-    height: 60rem;
+    width: 35%;
+    height: 55%;
     border-radius: 2rem;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
     z-index: 100rem;
     background-color: var(--Branco);
-    margin-top: 5%;
+    margin-top: 10%;
     margin-left: 33%;
 }
 
@@ -438,7 +424,7 @@ button.statusbtn.statusbtndesabilitado:hover {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: .2rem;
+    gap: .5rem;
 }
 
 .codigotitulo {
@@ -480,18 +466,12 @@ button.statusbtn.statusbtndesabilitado:hover {
     justify-content: center;
 }
 
-.modaldata img,
-.modalhora img {
-    width: 3rem;
-    height: 3rem;
-}
-
 .resumopedido{
     margin-left: 2rem;
     margin-right: 2rem;
     border-radius: .5rem;
     background-color: var(--RosaClaro);
-    height: 50%;
+    height: 40%;
     padding: 2rem;
 }
 
@@ -523,7 +503,7 @@ button.statusbtn.statusbtndesabilitado:hover {
     margin-bottom: 3rem;
 }
 .modalstatus p{
-    width: 25rem;
+    width: 17%;
     height: 4rem;
     font-size: 2rem;
     font-weight: 700;
@@ -548,8 +528,8 @@ button.statusbtn.statusbtndesabilitado:hover {
 }
 
 .conteudomodalconfirm{
-    width: 35rem;
-    height: 20rem;
+    width: 20%;
+    height: 25%;
     border-radius: 2rem;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
     z-index: 1;
@@ -576,7 +556,7 @@ button.statusbtn.statusbtndesabilitado:hover {
     align-items: center;
     justify-content: center;
     padding-top: 2rem;
-    font-size: 1.5rem;
+    font-size: 1.8rem;
 }
 
 .modalbotoes{
