@@ -1,15 +1,23 @@
 @import url('global.css');
 
-body {
+html {
+    height: 100%;
+  }
+
+  body {
   display: flex;
   flex-direction: column;
-  height: fit-content;
+  height: 100%;
 }
+  main{
+    height: 100%;
+  }
+
 
 .container {
   display: flex;
   width: 100%;
-  height: fit-content;
+  height: 100%;
   align-items: stretch;
 }
 
@@ -28,7 +36,7 @@ body {
 
 .formContainer {
   width: 50%;
-  height: fit-content;
+  height: 100%;
   display: flex;
   align-items: center;
   padding-left: 5rem;
@@ -36,7 +44,7 @@ body {
 }
 
 .form_cadastro {
-  max-width: 54.8rem;
+  max-width: 55.8rem;
   width: 100%;
   height: fit-content;
   margin: auto 0;
@@ -44,10 +52,6 @@ body {
 
 h2 {
   margin-bottom: 1rem;
-}
-
-main {
-  height: fit-content;
 }
 
 .frase {
@@ -157,21 +161,6 @@ button:hover {
   border: 0.1rem solid var(--VermelhoCereja);
 }
 
-.google_facebook {
-  display: flex;
-  gap: 2.0rem;
-  justify-content: center;
-}
-
-
-.google img,
-.facebook img {
-  width: 2.8rem;
-  height: 2.8rem;
-  cursor: pointer;
-}
-
-
 .login {
   font-family: 'Inter';
   font-size: 1.8rem;
@@ -198,7 +187,9 @@ span:hover {
   display: none;
 }
 
-@media screen and (min-height: 854px) {
+
+
+@media screen and (min-width: 980px) and (max-width: 1289px) and (min-height: 833px) {
   html {
     height: 100%;
   }
@@ -270,15 +261,15 @@ span:hover {
     color: var(--VermelhoCereja);
   }
 }
-@media screen and (min-width: 980px) and (max-width: 1220px) and (max-height: 855px) {
+@media screen and (min-width: 980px) and (max-width: 1289px) and (max-height: 833px) {
   html {
-    height: 100%;
+    height: fit-content;
   }
   body{
     height: fit-content;
   }
   main{
-    height: 100%;
+    height: fit-content;
   }
 
   .container {
@@ -818,16 +809,10 @@ span:hover {
     font-family: 'Inter';
 
   }
-
-  .google_facebook {
-    gap: 1.5rem;
-  }
-
   .foto-do-perfil {
     width: 8rem;
     height: 8rem;
   }
-
 
   .adfoto {
     font-size: 1.5rem;

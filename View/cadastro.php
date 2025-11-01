@@ -50,20 +50,6 @@
                         <p class="msg_erro">As senhas não coincidem</p>
     
                         <button type="submit">Cadastrar</button>
-                        
-                        <div class="google_facebook">
-                            <figure class="google">
-                                <a href=""> <!--Link para autenticação com o Google-->
-                                    <img src="../templates/assets/img/google.png" alt="Logo do Google">
-                                </a>
-                            </figure>
-    
-                            <figure class="facebook">
-                                <a href=""> <!--Link para autenticação com o Facebook-->
-                                    <img src="../templates/assets/img/facebook.png" alt="Logo do Facebook">
-                                </a>
-                            </figure>
-                        </div>
                         <p class="login"> Já tem uma conta? <span>Login</span></p>
                     </form>
                 </div>
