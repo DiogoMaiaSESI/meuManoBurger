@@ -156,7 +156,6 @@ h5 {
     display: flex;
     margin-bottom: 8.4rem;
     gap: 1rem;
-
 }
 
 .conjunto {
@@ -178,7 +177,6 @@ input {
     position: absolute;
     left: 15px;
     top: 7px;
-
 }
 
 input::placeholder {
@@ -203,7 +201,6 @@ button.btn:hover {
     background-color: var(--VermelhoCereja);
     color: var(--Branco);
 }
-
 
 .pedidos {
     width: 60%;
@@ -230,15 +227,11 @@ button.btn:hover {
     height: 2.4rem;
     background-color: var(--Branco);
     color: var(--VermelhoCereja);
-
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     font-size: 1.4rem;
     font-weight: bold;
-
     position: absolute;
     top: 80px;
     left: 2px;
@@ -258,20 +251,15 @@ button.btn:hover {
     height: 2.4rem;
     background-color: var(--Branco);
     color: #007A37;
-
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     font-size: 1.4rem;
     font-weight: bold;
-
     position: absolute;
     top: 80px;
     left: 2px;
     border-radius: 2rem;
-
 }
 
 .ilustracao img {
@@ -387,14 +375,13 @@ button.statusbtn.statusbtndesabilitado:hover {
 
 .modaldetalhes {
     position: fixed;
-    z-index: 1;
+    z-index: 2;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     display: none;
-
 }
 
 .conteudomodaldetalhes {
@@ -402,7 +389,6 @@ button.statusbtn.statusbtndesabilitado:hover {
     height: 60rem;
     border-radius: 2rem;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-    z-index: 100rem;
     background-color: var(--Branco);
     margin-top: 5%;
     margin-left: 33%;
@@ -535,12 +521,11 @@ button.statusbtn.statusbtndesabilitado:hover {
     display: flex;
     align-items: center;
     justify-content: center;
-
 }
 
 .modalconfirm {
     position: fixed;
-    z-index: 1;
+    z-index: 2;
     left: 0;
     top: 0;
     width: 100%;
@@ -554,11 +539,10 @@ button.statusbtn.statusbtndesabilitado:hover {
     height: 20rem;
     border-radius: 2rem;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-    z-index: 1;
+    z-index: 2;
     background-color: var(--Branco);
     margin-top: 17%;
     margin-left: 39%;
-
 }
 
 .conteudomodalconfirm h2 {
@@ -615,9 +599,8 @@ button.statusbtn.statusbtndesabilitado:hover {
     cursor: pointer;
 }
 
+
 @media screen and (min-width: 1024px) and (max-width:1250px) {
-
-
     .infortitulo h1 {
         font-size: 2.5rem;
     }
@@ -632,11 +615,9 @@ button.statusbtn.statusbtndesabilitado:hover {
 
     button.detalhes,
     button.statusbtn {
-
         width: 15rem;
         height: 3.6rem;
         font-size: 1.2rem;
-
     }
 
     .codigopedidos,
@@ -646,15 +627,40 @@ button.statusbtn.statusbtndesabilitado:hover {
     }
 
     .totalpedidos {
-
         gap: 3.5rem;
-
     }
 
+    .conteudomodaldetalhes {
+        width: 55rem;
+        height: 57rem;
+        margin-top: 5%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .fechar {
+        padding-bottom: 1rem;
+    }
+
+    .modaldados {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-left: 2rem;
+        margin-right: 2rem;
+        margin-bottom: 4rem;
+    }
+
+    .conteudomodalconfirm {
+        margin-left: auto;
+        margin-right: auto;
+    }
 }
 
 @media screen and (min-width: 840px) and (max-width:1024px) {
-
+    .logo img {
+        margin-left: 5rem;
+    }
 
     .menu img {
         width: 3rem;
@@ -699,11 +705,9 @@ button.statusbtn.statusbtndesabilitado:hover {
 
     button.detalhes,
     button.statusbtn {
-
         width: 15rem;
         height: 3.6rem;
         font-size: 1.2rem;
-
     }
 
     .codigopedidos,
@@ -713,23 +717,75 @@ button.statusbtn.statusbtndesabilitado:hover {
     }
 
     .totalpedidos {
-
         gap: 2.3rem;
-
     }
 
+    .conteudomodaldetalhes {
+        width: 45rem;
+        height: 58rem;
+        margin-top: 5%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .fechar {
+        padding-bottom: 1rem;
+    }
+
+    .fechar img {
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+
+    .modalcodigopedidos {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+        margin-top: 2rem;
+    }
+
+    .modaldata,
+    .modalhora {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+    }
+
+    .conteudomodalconfirm {
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 10%;
+    }
 }
 
 @media screen and (min-width: 600px) and (max-width:840px) {
+    .cabecalho {
+        margin-right: .5rem;
+        margin-left: 5rem;
+    }
 
+    .menu img {
+        width: 3rem;
+        height: 3rem;
+    }
+
+    .logo img {
+        margin-left: 2rem;
+    }
+
+    .sandwich {
+        top: 2rem;
+    }
 
     .infortitulo h1 {
-        font-size: 2.2rem;
+        font-size: 2.3rem;
     }
 
     .infortitulo {
         width: 85%;
-
     }
 
     .pedidos {
@@ -742,11 +798,9 @@ button.statusbtn.statusbtndesabilitado:hover {
 
     button.detalhes,
     button.statusbtn {
-
         width: 14rem;
         height: 3.6rem;
         font-size: 1.1rem;
-
     }
 
     .codigopedidos,
@@ -757,7 +811,6 @@ button.statusbtn.statusbtndesabilitado:hover {
 
     .inforcodigo,
     .infortotal {
-
         font-size: 1.3rem;
     }
 
@@ -773,12 +826,83 @@ button.statusbtn.statusbtndesabilitado:hover {
         gap: 1.7rem;
     }
 
+    .conteudomodaldetalhes {
+        width: 40rem;
+        height: 50rem;
+        margin-top: 8%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .fechar {
+        width: 95%;
+        padding-bottom: 2rem;
+    }
+
+    .fechar img {
+        width: 3rem;
+        height: 3rem;
+    }
+
+    .modaldata,
+    .modalhora {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .modalcodigopedidos {
+        gap: 1rem;
+        margin-top: 2rem;
+    }
+
+    .modalilustracao img {
+        display: none;
+    }
+
+    .resumopedido {
+        height: 40%;
+    }
+
+    .conteudomodalconfirm {
+        width: 30rem;
+        height: 18rem;
+        margin-top: 15%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .modalbotoes{
+        margin-top: 2.8rem;
+    }
 }
 
-@media screen and (min-width: 440px) and (max-width:600px) {
+@media screen and (min-width: 400px) and (max-width:600px) {
+    .cabecalho {
+        margin-right: .5rem;
+        margin-left: 5rem;
+    }
 
-    input::placeholder {
-        font-size: 1.1rem;
+    .perfil img {
+        width: 3.4rem;
+        height: 3.4rem;
+    }
+
+    .voltar img {
+        width: 3rem;
+        height: 3em;
+    }
+
+    .logo img {
+        margin-left: 2rem;
+    }
+
+    .menu img {
+        width: 3rem;
+        height: 3em;
+    }
+
+    .sandwich {
+        top: 2rem;
     }
 
     .infortitulo {
@@ -802,12 +926,25 @@ button.statusbtn.statusbtndesabilitado:hover {
 
     button.btn {
         width: 8rem;
-        height: 4rem;
+        height: 3rem;
+        font-size: 1.2rem;
     }
+
+    .pesquisa {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+        margin-bottom: 3rem;
+    }
+
     input {
         padding-left: 3.5rem;
     }
 
+    input::placeholder {
+        font-size: 1.1rem;
+    }
 
     .pedidos {
         width: 95%;
@@ -819,35 +956,315 @@ button.statusbtn.statusbtndesabilitado:hover {
 
     button.detalhes,
     button.statusbtn {
-
         width: 14rem;
         height: 3.6rem;
         font-size: 1.1rem;
-
     }
 
-    .codigopedidos,
+    .datapedidos,
     .horapedidos,
-    .datapedidos {
-        gap: .8rem;
+    .totalpedidos {
+        display: none;
     }
 
-    .inforcodigo,
-    .infortotal {
-
-        font-size: 1.3rem;
+    .codigopedidos {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
     }
 
-    .codigo,
-    .total,
-    .hora,
-    .data {
+    .codigo {
         width: 8.8rem;
+        font-size: 1.5rem;
+    }
+
+    .conteudomodaldetalhes {
+        width: 35rem;
+        height: 50rem;
+        margin-top: 10%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .fechar {
+        padding-bottom: 1rem;
+        width: 95%;
+    }
+
+    .fechar img {
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+
+    .modalilustracao img {
+        display: none;
+    }
+
+    .modaldados {
+        margin-bottom: 2rem;
+    }
+
+    .modalcodigopedidos {
+        margin-top: 2rem;
+        gap: 2rem;
+    }
+
+    .modaldata,
+    .modalhora {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .resumopedido {
+        height: 45%;
+        padding: 1.5rem;
+    }
+
+    .modalstatus p {
+        width: 20rem;
+        font-size: 1.6rem;
+    }
+
+    .conteudomodalconfirm h2 {
+        font-size: 1.8rem;
+        padding-top: 3rem;
+    }
+
+    .conteudomodalconfirm p {
+        font-size: 1.3rem;
+        padding-top: 1.5rem;
+    }
+
+    .modalbotoes {
+        margin-top: 3rem;
+        gap: 3rem;
+    }
+
+    .conteudomodalconfirm {
+        width: 28rem;
+        height: 16rem;
+        margin-top: 20%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+}
+
+@media screen and (min-width: 340px) and (max-width:400px) {
+    .cabecalho {
+        margin-right: .5rem;
+        margin-left: 5rem;
+    }
+
+    .perfil img {
+        width: 3.4rem;
+        height: 3.4rem;
+    }
+
+    .voltar img {
+        width: 3rem;
+        height: 3em;
+    }
+
+    .logo img {
+        margin-left: 2rem;
+    }
+
+    .menu img {
+        width: 2.5rem;
+        height: 2.5em;
+    }
+
+    .sandwich {
+        top: 2.5rem;
+    }
+
+    .infortitulo {
+        width: 85%;
+    }
+
+    .infortitulo h1 {
+        font-size: 1.5rem;
+    }
+
+    .conjunto {
+        width: 95%;
+    }
+
+    .conjunto img {
+        width: 2rem;
+        height: 2rem;
+        top: 8px;
+        left: 9px;
+    }
+
+    button.btn {
+        width: 8rem;
+        height: 3rem;
         font-size: 1.2rem;
     }
 
-    .totalpedidos {
-        gap: 1.7rem;
+    .pesquisa {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+        margin-bottom: 3rem;
     }
 
+    input {
+        padding-left: 3.5rem;
+    }
+
+    input::placeholder {
+        font-size: 1rem;
+    }
+
+    .ilustracao img {
+        width: 8rem;
+        height: 9rem;
+    }
+
+    .pedidos {
+        width: 95%;
+    }
+
+    .statusok {
+        width: 6.9rem;
+        height: 2.4rem;
+        font-size: 1.2rem;
+        top: 65px;
+        left: 3px;
+    }
+
+    .statusretirado {
+        display: none;
+    }
+
+    .statuspendente {
+        display: block;
+    }
+
+    .statuspend {
+        width: 6.9rem;
+        height: 2.4rem;
+        font-size: 1.2rem;
+        top: 65px;
+        left: 3px;
+    }
+
+    button.detalhes,
+    button.statusbtn {
+        width: 12rem;
+        height: 3.6rem;
+        font-size: 1rem;
+    }
+
+    .central {
+        margin-left: 1rem;
+        margin-right: 1rem;
+    }
+
+    .datapedidos,
+    .horapedidos,
+    .totalpedidos {
+        display: none;
+    }
+
+    .codigopedidos {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+    }
+
+    .codigo {
+        width: 7.5rem;
+        font-size: 1.2rem;
+    }
+
+    .conteudomodaldetalhes {
+        width: 25rem;
+        height: 50rem;
+        margin-top: 10%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .fechar {
+        padding-bottom: .5rem;
+        width: 90%;
+    }
+
+    .fechar img {
+        width: 2rem;
+        height: 2rem;
+    }
+
+    .modalilustracao img {
+        display: none;
+    }
+
+    .modaldados {
+        margin-bottom: 2rem;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .modalcodigopedidos {
+        gap: 2rem;
+    }
+
+    .modaldata,
+    .modalhora {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .modalcodigopedidos {
+        gap: .5rem;
+    }
+    .codigotexto{
+        width: 15rem;
+    }
+    .resumopedido {
+        height: 40%;
+        padding: 1.5rem;
+    }
+
+    .modalstatus p {
+        width: 20rem;
+        font-size: 1.6rem;
+    }
+
+    .conteudomodalconfirm h2 {
+        font-size: 1.8rem;
+        padding-top: 3rem;
+    }
+
+    .conteudomodalconfirm p {
+        font-size: 1.3rem;
+        padding-top: 1.5rem;
+    }
+
+    .modalbotoes {
+        margin-top: 3rem;
+        gap: 3rem;
+    }
+
+    .conteudomodalconfirm {
+        width: 28rem;
+        height: 16rem;
+        margin-top: 20%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+        .sombra {
+        position: fixed;
+        height: 100%;
+    }
 }
