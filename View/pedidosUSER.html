@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pedidos</title>
-    <link rel="stylesheet" href="../templates/assets/css/pedidosADM.css">
+    <link rel="stylesheet" href="../templates/assets/css/pedidosUSER.css">
 </head>
 
 <body>
@@ -33,6 +33,13 @@
                     </figure>
                     <h5>Feedbacks</h5>
                 </div>
+
+                <div class="option">
+                    <figure>
+                        <img src="../templates/assets/img/menucarrinho.png" alt="">
+                    </figure>
+                    <h5>Carrinho</h5>
+                </div>
             </div>
         </div>
         <div class="sombra"></div>
@@ -46,6 +53,10 @@
 
                 <figure class="voltar">
                     <img src="../templates/assets/img/voltar.png" alt="">
+                </figure>
+
+               <figure class="voltar">
+                    <img src="../templates/assets/img/headercarrinho.png" alt="">
                 </figure>
 
                 <figure class="perfil">
@@ -118,11 +129,11 @@
             </div>
         </div>
 
-        <div class="modalconfirm">
-            <div class="conteudomodalconfirm">
+        <div class="modalcancelar">
+            <div class="conteudomodalcancelar">
 
-                <h2>Confirmação de retirada</h2>
-                <p>Tem certeza que o pedido foi retirado?</p>
+                <h2>Confirmação de cancelamento</h2>
+                <p>Tem certeza que deseja cancelar o pedido?</p>
                 <div class="modalbotoes">
                     <button class="sim">Sim</button>
                     <button class="nao">Não</button>
@@ -141,7 +152,7 @@
                             <img src="../templates/assets/img/lupa.png" alt="">
                         </figure>
 
-                            <input type="text" placeholder="Busque pelos seus pedidos através do código, hora ou data!">
+                        <input type="text" placeholder="Busque pelos seus pedidos através do código, hora ou data!">
 
                     </div>
 
@@ -156,15 +167,15 @@
                 <div class="pedido">
 
                     <div class="ilustracao">
-                            <div class="statusretirado">
-                        <p class="statusok">
-                            Retirado
-                        </p>
+                        <div class="statusretirado">
+                            <p class="statusok">
+                                Retirado
+                            </p>
                         </div>
                         <div class="statuspendente">
-                        <p class="statuspend">
-                            A retirar
-                        </p>
+                            <p class="statuspend">
+                                A retirar
+                            </p>
                         </div>
                         <figure>
                             <img src="../templates/assets/img/ilustracao.png" alt="">
@@ -209,7 +220,7 @@
 
                     <div class="botoes">
                         <button class="detalhes">Ver Detalhes</button>
-                        <button class="statusbtn">O pedido foi retirado?</button>
+                        <button class="cancelar">Cancelar Pedido</button>
                     </div>
                 </div>
 
@@ -269,7 +280,7 @@
 
                     <div class="botoes">
                         <button class="detalhes">Ver Detalhes</button>
-                        <button class="statusbtn">O pedido foi retirado?</button>
+                        <button class="cancelar">Cancelar Pedido</button>
                     </div>
                 </div>
 
@@ -329,7 +340,7 @@
 
                     <div class="botoes">
                         <button class="detalhes">Ver Detalhes</button>
-                        <button class="statusbtn">O pedido foi retirado?</button>
+                        <button class="cancelar">Cancelar Pedido</button>
                     </div>
                 </div>
 
@@ -389,7 +400,7 @@
 
                     <div class="botoes">
                         <button class="detalhes">Ver Detalhes</button>
-                        <button class="statusbtn">O pedido foi retirado?</button>
+                        <button class="cancelar">Cancelar Pedido</button>
                     </div>
                 </div>
 
@@ -398,7 +409,7 @@
 
         </div>
     </main>
-    <script src="../templates/assets/js/pedidosADM.js"></script>
+    <script src="../templates/assets/js/pedidosUSER.js"></script>
 </body>
 
 </html>

@@ -2,18 +2,19 @@ document.addEventListener('DOMContentLoaded', function () {
   const opcoes = document.querySelector('.options')
   const menu = document.querySelector('.menu')
   const sombra = document.querySelector('.sombra')
+
+  const pedidos = document.querySelectorAll('.pedido')
+  const statusRetiradoTexto = 'Retirado'
   const modaldetalhes = document.querySelector('.modaldetalhes')
   const fechar = document.querySelector('.fechar')
   const modalconfirm = document.querySelector('.modalconfirm')
   const btnsim = document.querySelector('.sim')
   const btnnao = document.querySelector('.nao')
-  const barraPesquisa = document.querySelector('input[type="text"]')
-  const btnBuscar = document.querySelector('.btn')
-  const todosPedidos = document.querySelectorAll('.pedido')
-
   let Pedidoatual = null
   let StatusBtnatual = null
   let Statusdetalhesatual = null
+
+
 
   menu.addEventListener('click', () => {
     opcoes.classList.toggle('optionActive')
@@ -41,8 +42,7 @@ document.addEventListener('DOMContentLoaded', function () {
       modalconfirm.style.display = 'none'
     }
   })
-  const pedidos = document.querySelectorAll('.pedido')
-  const statusRetiradoTexto = 'Retirado'
+
 
   function carregarEstados() {
 
@@ -64,7 +64,6 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     })
   }
-
 
   carregarEstados()
 
@@ -141,14 +140,19 @@ document.addEventListener('DOMContentLoaded', function () {
     Statusdetalhesatual = null
   })
 
+  const barraPesquisa = document.querySelector('input')
+  const btnBuscar = document.querySelector('.btn')
+
 
   function pesquisarPedidos() {
     const texto = barraPesquisa.value.toLowerCase()
 
-    todosPedidos.forEach(pedido => {
+    pedidos.forEach(pedido => {
       const codigo = pedido.querySelector('.codigo').textContent.toLowerCase()
+      const hora = pedido.querySelector('.hora').textContent
+      const data = pedido.querySelector('.data').textContent
 
-      if (codigo.includes(texto)) {
+      if (codigo.includes(texto) || hora.includes(texto) || data.includes(texto)) {
         pedido.style.display = 'flex'
       } else {
         pedido.style.display = 'none'
@@ -166,11 +170,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
   barraPesquisa.addEventListener('input', function () {
     if (this.value === '') {
-      todosPedidos.forEach(pedido => {
+      pedidos.forEach(pedido => {
         pedido.style.display = 'flex'
       })
     }
   })
 
-  // localStorage.clear();
-});
+  // localStorage.clear()
+})
