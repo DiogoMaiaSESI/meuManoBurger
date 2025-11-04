@@ -74,5 +74,35 @@ class Cliente{
             return false;
         }
     }
+    public function updateCliente($id_cliente, $nome_cliente, $email_cliente, $imagem_cliente) {
+    try {
+        // Começa a query base
+        $sql = 'UPDATE cliente SET nome_cliente = :nome_cliente, email_cliente = :email_cliente';
+        
+        // Adiciona a atualização da imagem APENAS se uma nova imagem foi enviada
+        if ($imagem_cliente !== null) {
+            $sql .= ', imagem_cliente = :imagem_cliente';
+        }
+        
+        $sql .= ' WHERE id_cliente = :id_cliente';
+
+        $stmt = $this->db->prepare($sql);
+
+        $stmt->bindParam(":id_cliente", $id_cliente, PDO::PARAM_INT);
+        $stmt->bindParam(":nome_cliente", $nome_cliente, PDO::PARAM_STR);
+        $stmt->bindParam(":email_cliente", $email_cliente, PDO::PARAM_STR);
+
+        // Faz o bind da imagem APENAS se ela existir
+        if ($imagem_cliente !== null) {
+            $stmt->bindParam(":imagem_cliente", $imagem_cliente, PDO::PARAM_LOB);
+        }
+
+        return $stmt->execute();
+
+    } catch (PDOException $error) {
+        echo "Erro ao atualizar cliente: " . $error->getMessage();
+        return false;
+    }
+}
 }
 ?>

@@ -1,5 +1,52 @@
 <?php
-// seu código PHP aqui, se houver
+session_start();
+
+require_once __DIR__ . '/../Controller/ClienteController.php';
+require_once __DIR__ . '/../Model/Cliente.php';
+
+$clienteModel = new \Model\Cliente();
+$clienteController = new \Controller\ClienteController($clienteModel);
+
+// --- LÓGICA DE ATUALIZAÇÃO ---
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'update_profile') {
+    $nome = $_POST['nome'] ?? null;
+    $email = $_POST['email'] ?? null;
+    $id_cliente = $_SESSION['id_cliente'] ?? 0;
+
+    // Lógica para atualizar a imagem, se uma nova foi enviada
+    $imagem = null;
+    if (isset($_FILES['imagem_cliente']) && $_FILES['imagem_cliente']['error'] === UPLOAD_ERR_OK) {
+        $imagem = file_get_contents($_FILES['imagem_cliente']['tmp_name']);
+    }
+
+    // Chama a função de atualização (que vamos criar no Controller)
+    $success = $clienteController->updateCliente($id_cliente, $nome, $email, $imagem);
+
+    if ($success) {
+        // Atualiza a sessão com os novos dados e recarrega a página
+        $_SESSION['success_message'] = "Perfil atualizado com sucesso!";
+        header('Location: Perfil.php');
+        exit;
+    } else {
+        $_SESSION['error_message'] = "Erro ao atualizar o perfil.";
+        header('Location: Perfil.php');
+        exit;
+    }
+}
+
+// --- LÓGICA DE EXIBIÇÃO ---
+if (!$clienteController->isLoggedIn()) {
+    header('Location: login.php');
+    exit;
+}
+
+$nomeUsuario = $_SESSION['nome_cliente'] ?? 'Usuário';
+$emailUsuario = $_SESSION['email_cliente'] ?? 'email@exemplo.com';
+
+$imagemUsuario = 'path/to/default/image.png';
+if (isset($_SESSION['imagem_cliente']) && !empty($_SESSION['imagem_cliente'])) {
+    $imagemUsuario = 'data:image/jpeg;base64,' . base64_encode($_SESSION['imagem_cliente']);
+}
 ?>
 
 <!DOCTYPE html>
@@ -208,13 +255,24 @@
                         </div>
                     </div>
                     <!-- ID CORRIGIDO AQUI -->
-                    <form id="profile-form" class="profile-form" method="POST" action="">
-                        <div class="form-group"><label for="nome">Nome</label><input type="text" id="nome" name="nome"
-                                value="Beanca Adidas Ford Honda Fiat"></div>
-                        <div class="form-group"><label for="email">Email</label><input type="email" id="email"
-                                name="email" value="Bia1234@gmail.com"></div>
+                    <form id="profile-form" class="profile-form" method="POST" action="Perfil.php" enctype="multipart/form-data">
+                        <!-- Input escondido para identificar a ação -->
+                        <input type="hidden" name="action" value="update_profile">
+                        
+                        <!-- Input escondido para o upload da imagem de perfil -->
+                        <input type="file" id="file-upload-input" name="imagem_cliente" accept="image/*" style="display: none;">
+
+                        <div class="form-group">
+                            <label for="nome">Nome</label>
+                            <input type="text" id="nome" name="nome" value="<?php echo htmlspecialchars($nomeUsuario); ?>">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($emailUsuario); ?>">
+                        </div>
                         <button type="submit" class="submit-btn">Salvar Alterações</button>
                     </form>
+                </div>
                 </div>
             </div>
 

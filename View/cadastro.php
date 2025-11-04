@@ -21,7 +21,8 @@
                     <h1>Seja Bem-Vindo ao MeumanoBurger</h1>
                     <h2>Cadastre-se</h2>
                     <p class="frase">E aproveite nossos recursos</p>
-                    <form>
+                    <form method="POST" action="cadastro.php" enctype="multipart/form-data">
+                        <input type="hidden" name="action" value="register">
                         <div class="inputs">
                             <div class="foto">
                                 <label for="imagemPerfil">

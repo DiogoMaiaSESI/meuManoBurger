@@ -1,7 +1,7 @@
 <?php
 namespace Controller;
 
-require_once __DIR__ . '/../Config/Cliente.php';
+require_once __DIR__ . '/../Model/Cliente.php';
 
 use Model\Cliente;
 use Exception;
@@ -40,6 +40,26 @@ class ClienteController{
             return false;
         }
     }
+    public function updateCliente($id_cliente, $nome_cliente, $email_cliente, $imagem_cliente) {
+    if (empty($id_cliente) || empty($nome_cliente) || empty($email_cliente)) {
+        return false;
+    }
+
+    // Chama o método do Model
+    $success = $this->clienteModel->updateCliente($id_cliente, $nome_cliente, $email_cliente, $imagem_cliente);
+
+    // Se a atualização foi bem-sucedida, atualiza os dados na sessão
+    if ($success) {
+        $_SESSION['nome_cliente'] = $nome_cliente;
+        $_SESSION['email_cliente'] = $email_cliente;
+        // Atualiza a imagem na sessão apenas se uma nova foi enviada
+        if ($imagem_cliente !== null) {
+            $_SESSION['imagem_cliente'] = $imagem_cliente;
+        }
+    }
+
+    return $success;
+}
 
     public function isLoggedIn(){
         return isset($_SESSION['id_cliente']);
