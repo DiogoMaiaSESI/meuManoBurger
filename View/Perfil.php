@@ -13,38 +13,59 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     $email = $_POST['email'] ?? null;
     $id_cliente = $_SESSION['id_cliente'] ?? 0;
 
-    // Lógica para atualizar a imagem, se uma nova foi enviada
     $imagem = null;
+    // Verifica se um novo arquivo de imagem foi enviado
     if (isset($_FILES['imagem_cliente']) && $_FILES['imagem_cliente']['error'] === UPLOAD_ERR_OK) {
         $imagem = file_get_contents($_FILES['imagem_cliente']['tmp_name']);
     }
 
-    // Chama a função de atualização (que vamos criar no Controller)
     $success = $clienteController->updateCliente($id_cliente, $nome, $email, $imagem);
 
     if ($success) {
-        // Atualiza a sessão com os novos dados e recarrega a página
         $_SESSION['success_message'] = "Perfil atualizado com sucesso!";
-        header('Location: Perfil.php');
-        exit;
     } else {
         $_SESSION['error_message'] = "Erro ao atualizar o perfil.";
-        header('Location: Perfil.php');
-        exit;
     }
+    header('Location: Perfil.php');
+    exit;
+}
+// --- LÓGICA DE ALTERAÇÃO DE SENHA ---
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'update_password') {
+    
+
+    $id_cliente = $_SESSION['id_cliente'] ?? 0;
+    $nova_senha = $_POST['nova_senha'] ?? null;
+    $confirmar_senha = $_POST['confirmar_senha'] ?? null;
+
+    $success = $clienteController->updatePassword($id_cliente, $nova_senha, $confirmar_senha);
+
+    if ($success) {
+        $_SESSION['success_message'] = "Senha alterada com sucesso!";
+    } else {
+        if (!isset($_SESSION['error_message'])) {
+            $_SESSION['error_message'] = "Ocorreu um erro ao alterar a senha.";
+        }
+    }
+    header('Location: Perfil.php#content-seguranca');
+    exit;
 }
 
 // --- LÓGICA DE EXIBIÇÃO ---
+// Garante que apenas usuários logados acessem
 if (!$clienteController->isLoggedIn()) {
     header('Location: login.php');
     exit;
 }
 
+// Pega os dados da sessão para exibir na página
 $nomeUsuario = $_SESSION['nome_cliente'] ?? 'Usuário';
 $emailUsuario = $_SESSION['email_cliente'] ?? 'email@exemplo.com';
 
-$imagemUsuario = 'path/to/default/image.png';
+// CORREÇÃO PRINCIPAL AQUI: Lógica para exibir a imagem de perfil
+$imagemUsuario = '../templates/assets/img/FotoPerfil.png'; // Caminho para a imagem padrão (Alanzoka)
+// Verifica se a sessão contém o dado da imagem e se não está vazio
 if (isset($_SESSION['imagem_cliente']) && !empty($_SESSION['imagem_cliente'])) {
+    // Se tiver, converte o dado BLOB (binário) para uma string base64 que o HTML entende
     $imagemUsuario = 'data:image/jpeg;base64,' . base64_encode($_SESSION['imagem_cliente']);
 }
 ?>
@@ -133,6 +154,7 @@ if (isset($_SESSION['imagem_cliente']) && !empty($_SESSION['imagem_cliente'])) {
 </head>
 
 <body>
+    <div id="notification-container" class="notification-container"></div>
     <div class="sandwich-menu-container">
         <div class="options">
             <div class="option">
@@ -232,48 +254,45 @@ if (isset($_SESSION['imagem_cliente']) && !empty($_SESSION['imagem_cliente'])) {
                         </div>
                         <div class="profile-picture-container">
                             <figure>
-                                <!-- Dê um ID à imagem para que o JS possa encontrá-la facilmente -->
-                                <img src="/meuManoBurger/templates/assets/img/FotoPerfil.png" alt="Foto de Perfil"
-                                    id="profile-pic-preview" class="profile-picture">
+                                <img src="<?php echo $imagemUsuario; ?>" alt="Foto de Perfil" id="profile-pic-preview"
+                                    class="profile-picture">
                             </figure>
 
-                            <!-- O input de arquivo, escondido -->
                             <input type="file" id="file-upload-input" accept="image/png, image/jpeg, image/webp"
                                 style="display: none;">
 
-                            <!-- O botão de edição que aciona o input -->
                             <button type="button" id="edit-pic-btn" class="edit-picture-btn">
                                 <figure><img src="/meuManoBurger/templates/assets/img/Edicao.png" alt="Editar Foto"
                                         class="icon-img icon-editar"></figure>
                             </button>
 
-                            <!-- Botões de Salvar/Cancelar, escondidos inicialmente -->
                             <div id="pic-action-buttons" class="pic-action-buttons">
                                 <button id="save-pic-btn" class="btn-save-pic">Salvar</button>
                                 <button id="cancel-pic-btn" class="btn-cancel-pic">Cancelar</button>
                             </div>
                         </div>
                     </div>
-                    <!-- ID CORRIGIDO AQUI -->
-                    <form id="profile-form" class="profile-form" method="POST" action="Perfil.php" enctype="multipart/form-data">
-                        <!-- Input escondido para identificar a ação -->
+                    <form id="profile-form" class="profile-form" method="POST" action="Perfil.php"
+                        enctype="multipart/form-data">
                         <input type="hidden" name="action" value="update_profile">
-                        
-                        <!-- Input escondido para o upload da imagem de perfil -->
-                        <input type="file" id="file-upload-input" name="imagem_cliente" accept="image/*" style="display: none;">
+
+                        <input type="file" id="file-upload-input" name="imagem_cliente" accept="image/*"
+                            style="display: none;">
 
                         <div class="form-group">
                             <label for="nome">Nome</label>
-                            <input type="text" id="nome" name="nome" value="<?php echo htmlspecialchars($nomeUsuario); ?>">
+                            <input type="text" id="nome" name="nome"
+                                value="<?php echo htmlspecialchars($nomeUsuario); ?>">
                         </div>
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($emailUsuario); ?>">
+                            <input type="email" id="email" name="email"
+                                value="<?php echo htmlspecialchars($emailUsuario); ?>">
                         </div>
                         <button type="submit" class="submit-btn">Salvar Alterações</button>
                     </form>
                 </div>
-                </div>
+            </div>
             </div>
 
             <div id="content-pagamento" class="content-tab">
@@ -328,15 +347,16 @@ if (isset($_SESSION['imagem_cliente']) && !empty($_SESSION['imagem_cliente'])) {
                         <h3>Autenticação de 2 Fatores (2FA)</h3>
                         <a href="#" class="add-2fa-link">+ Adicionar método de autenticação</a>
                     </div>
-                    <form id="security-form" class="security-form" method="POST" action="">
+                    <form id="security-form" class="security-form" method="POST" action="Perfil.php">
+                        <input type="hidden" name="action" value="update_password">
                         <h3>Alterar senha</h3>
                         <div class="form-group password-group">
-                            <input type="password" id="nova-senha" name="nova-senha" placeholder="Nova senha">
+                            <input type="password" id="nova-senha" name="nova_senha" placeholder="Nova senha">
                             <img src="/meuManoBurger/templates/assets/img/olhofechado.png" class="password-toggle-icon"
                                 alt="Mostrar/Ocultar Senha">
                         </div>
                         <div class="form-group password-group">
-                            <input type="password" id="confirmar-senha" name="confirmar-senha"
+                            <input type="password" id="confirmar-senha" name="confirmar_senha"
                                 placeholder="Confirmação de nova senha">
                             <img src="/meuManoBurger/templates/assets/img/olhofechado.png" class="password-toggle-icon"
                                 alt="Mostrar/Ocultar Senha">
@@ -382,13 +402,13 @@ if (isset($_SESSION['imagem_cliente']) && !empty($_SESSION['imagem_cliente'])) {
                             placeholder="Nome como está no cartão" required>
                     </div>
                     <div class="form-group">
-                <label>Tipo</label>
-                <div class="type-selector">
-                    <button type="button" class="type-btn" data-type="credito">Crédito</button>
-                    <button type="button" class="type-btn" data-type="debito">Débito</button>
-                </div>
-                <input type="hidden" id="card-type-selected" name="card-type-selected" value="">
-            </div>
+                        <label>Tipo</label>
+                        <div class="type-selector">
+                            <button type="button" class="type-btn" data-type="credito">Crédito</button>
+                            <button type="button" class="type-btn" data-type="debito">Débito</button>
+                        </div>
+                        <input type="hidden" id="card-type-selected" name="card-type-selected" value="">
+                    </div>
                     <div class="form-group">
                         <label>Bandeira</label>
                         <div class="brand-selector">
@@ -427,6 +447,50 @@ if (isset($_SESSION['imagem_cliente']) && !empty($_SESSION['imagem_cliente'])) {
 
 
     <script src="/meuManoBurger/templates/assets/js/perfil.js"></script>
+    <?php
+    // Verifica se existe uma mensagem de sucesso ou erro na sessão
+    if (isset($_SESSION['success_message']) || isset($_SESSION['error_message'])) {
+        
+        // Define a mensagem e o tipo (classe CSS)
+        $message = $_SESSION['success_message'] ?? $_SESSION['error_message'];
+        $type = isset($_SESSION['success_message']) ? 'success' : 'error';
+
+        // Limpa as mensagens da sessão para não exibi-las novamente
+        unset($_SESSION['success_message']);
+        unset($_SESSION['error_message']);
+
+        // Gera o script JavaScript para criar e exibir a notificação
+        echo "
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const container = document.getElementById('notification-container');
+                
+                // Cria o elemento da notificação
+                const toast = document.createElement('div');
+                toast.className = 'toast {$type}';
+                toast.textContent = '{$message}';
+                
+                // Adiciona a notificação ao container
+                container.appendChild(toast);
+                
+                // Força o navegador a aplicar o estilo inicial antes de adicionar a classe 'show'
+                setTimeout(() => {
+                    toast.classList.add('show');
+                }, 10); // Um pequeno delay é suficiente
+                
+                // Remove a notificação após 5 segundos
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                    // Remove o elemento do DOM após a animação de saída
+                    setTimeout(() => {
+                        toast.remove();
+                    }, 500); // Tempo igual à duração da transição do CSS
+                }, 5000);
+            });
+        </script>
+        ";
+    }
+    ?>
 
 </body>
 

@@ -1,44 +1,35 @@
-const msgErros = document.querySelectorAll('.msg_erro');
-const form = document.querySelector('form');
-const input1 = document.querySelector('#email');
-const input2 = document.querySelector('#password');
-const button = document.querySelector('button');
+document.addEventListener('DOMContentLoaded', function () {
+    const form = document.querySelector('form');
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const cadastreSeBtn = document.querySelector('.cadastre-se span');
+    
+    // Seleciona a mensagem de erro que vem do PHP
+    const phpErrorMessage = document.querySelector('.login-error-message');
 
-form.addEventListener('submit', function(event) {
-    event.preventDefault();
+    // Função para limpar a mensagem de erro quando o usuário começa a corrigir
+    function clearErrorOnChange() {
+        if (phpErrorMessage) {
+            phpErrorMessage.style.display = 'none';
+        }
+        // Remove o listener para não executar desnecessariamente de novo
+        emailInput.removeEventListener('input', clearErrorOnChange);
+        passwordInput.removeEventListener('input', clearErrorOnChange);
+    }
+
+    // Se uma mensagem de erro do PHP existir, adiciona o evento para limpá-la
+    if (phpErrorMessage) {
+        emailInput.addEventListener('input', clearErrorOnChange);
+        passwordInput.addEventListener('input', clearErrorOnChange);
+    }
+
+    // Lógica para o botão "Cadastre-se"
+    if (cadastreSeBtn) {
+        cadastreSeBtn.addEventListener('click', function() {
+            window.location.href = 'cadastro.php';
+        });
+    }
+
+    // Não adicionamos um listener de 'submit' para não interferir com o PHP.
+    // O formulário será enviado normalmente.
 });
-
-button.addEventListener('click',()=>{
-    if(verificarInputs()){
-        form.submit()
-        window.location.href = '' //colocar a pagina para redirecionar apos o login
-    }
-})
-
-const verificarInputs = () => {
-    let correct = true
-    const emailError = msgErros[0];
-    const passError = msgErros[1];
-
-    if(input1.value.trim() === ''){
-        correct = false
-        if (emailError) emailError.style.display = 'block'
-    }else{
-        if (emailError) emailError.style.display = 'none'
-    }
-
-    if(input2.value.trim() === ''){
-        correct = false
-        if (passError) passError.style.display = 'block'
-    }else{
-        if (passError) passError.style.display = 'none'
-    }
-
-    return correct
-}
-
-const a = window.innerHeight;
-const b = window.innerWidth;
-
-console.log(a)
-console.log(b)

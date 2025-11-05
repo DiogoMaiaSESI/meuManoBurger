@@ -574,3 +574,13 @@ footer{
         margin-left: 0;
     }
 }
+.login-error-message {
+            background-color: #ffdddd;
+            color: #d8000c;
+            border: 1px solid #d8000c;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            border-radius: 0.8rem;
+            text-align: center;
+            font-size: 1.6rem;
+}

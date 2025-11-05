@@ -450,6 +450,42 @@ figure
 {
     opacity: 0.9;
 }
+.notification-container {
+    position: fixed;
+    top: 10rem; /* Distância do topo, abaixo do header */
+    right: 2rem;
+    z-index: 9999; /* Garante que fique acima de tudo */
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.toast {
+    padding: 1.5rem 2rem;
+    border-radius: 1.2rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    color: var(--Branco);
+    font-size: 1.6rem;
+    font-weight: 600;
+    opacity: 0;
+    transform: translateX(100%);
+    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* Efeito de "elástico" */
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Cor para mensagens de sucesso */
+.toast.success {
+    background-color: #28a745; /* Verde sucesso */
+}
+
+/* Cor para mensagens de erro */
+.toast.error {
+    background-color: var(--VermelhoCereja); /* Vermelho erro */
+}
 
 
 @media (max-width: 834px)

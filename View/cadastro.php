@@ -1,3 +1,54 @@
+<?php
+session_start();
+
+// Inclui os arquivos necessários
+require_once __DIR__ . '/../Controller/ClienteController.php';
+require_once __DIR__ . '/../Model/Cliente.php';
+
+// Bloco de processamento: só executa se o formulário for enviado
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'register') {
+    
+    // Pega os dados do formulário com os nomes do seu HTML
+    $nome = $_POST['nome'] ?? null;
+    $email = $_POST['email'] ?? null;
+    $senha = $_POST['password'] ?? null;
+
+    // Processa a imagem
+    $imagem = null;
+    if (isset($_FILES['imagemPerfil']) && $_FILES['imagemPerfil']['error'] === UPLOAD_ERR_OK) {
+        $imagem = file_get_contents($_FILES['imagemPerfil']['tmp_name']);
+    } else {
+        $caminhoImagemPadrao = __DIR__ . '/../templates/assets/img/perfil.png';
+        if (file_exists($caminhoImagemPadrao)) {
+            $imagem = file_get_contents($caminhoImagemPadrao);
+        }
+    }
+
+    // Validação
+    if (empty($nome) || empty($email) || empty($senha) || empty($imagem)) {
+        $_SESSION['error_message'] = "Todos os campos são obrigatórios.";
+        header('Location: cadastro.php');
+        exit;
+    }
+
+    // Usa o Controller para criar o cliente
+    $clienteModel = new \Model\Cliente();
+    $clienteController = new \Controller\ClienteController($clienteModel);
+    $success = $clienteController->createCliente($nome, $email, $senha, $imagem);
+
+    if ($success) {
+        $_SESSION['success_message'] = "Cadastro realizado com sucesso! Faça o login.";
+        header('Location: login.php');
+        exit;
+    } else {
+        $_SESSION['error_message'] = "Erro ao cadastrar. O e-mail já pode estar em uso.";
+        header('Location: cadastro.php');
+        exit;
+    }
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -51,7 +102,7 @@
                         <p class="msg_erro">As senhas não coincidem</p>
     
                         <button type="submit">Cadastrar</button>
-                        <p class="login"> Já tem uma conta? <span>Login</span></p>
+                        <p class="login">Já tem uma conta? <span class="login-link">Login</span></p>
                     </form>
                 </div>
             </div>
