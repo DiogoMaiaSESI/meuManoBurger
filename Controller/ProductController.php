@@ -11,7 +11,7 @@ class ProductController {
         $this->productModel = new Product();
     }
 
-    public function create() {
+    public function create($nome, $preco, $tipo, $descricao, $imagem, $id_adm_fk) {
         if ($_SERVER["REQUEST_METHOD"] !== "POST") {
             return ['success' => false, 'errors' => ['Requisição inválida.']];
         }
@@ -33,7 +33,7 @@ class ProductController {
         return $this->productModel->createProduct($nome, $preco, $tipo, $descricao, $imagem, $id_adm_fk);
     }
 
-    public function update() {
+    public function update($id, $nome, $preco, $tipo, $descricao, $imagem, $id_adm_fk) {
         if ($_SERVER["REQUEST_METHOD"] !== "POST") {
             return ['success' => false, 'errors' => ['Requisição inválida.']];
         }
@@ -53,7 +53,7 @@ class ProductController {
         return $this->productModel->updateProduct($id, $nome, $preco, $tipo, $descricao, $imagem, $id_adm_fk);
     }
 
-    public function delete() {
+    public function delete($id) {
         if ($_SERVER["REQUEST_METHOD"] !== "POST") {
             return ['success' => false, 'errors' => ['Requisição inválida.']];
         }
