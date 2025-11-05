@@ -387,20 +387,11 @@ main img{
 }
 
 .feedbackcontainer {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
     flex-direction: column;
     justify-content: center;
-}
-
-.lineone {
-    display: flex;
-    gap: 5rem;
-    margin-bottom: 4rem;
-}
-
-.linetwo {
-    display: flex;
-    gap: 5rem;
 }
 
 .caixa {
@@ -643,6 +634,23 @@ footer h3 {
         height: 3rem !important;
     }
 
+    .options{
+        width: 22rem;
+    }
+
+    .option h5{
+        font-size: 1.7rem;
+    }
+
+    .option img{
+        width: 3rem;
+        height: 3rem;
+    }
+    
+    .option{
+        height: 6rem;
+    }
+
     .figure_logo{
         margin-left: 10rem;
     }
@@ -759,6 +767,24 @@ footer h3 {
         height: 3rem !important;
     }
 
+    .options{
+        width: 22rem;
+    }
+
+    .option h5{
+        font-size: 1.7rem;
+    }
+
+    .option img{
+        width: 3rem;
+        height: 3rem;
+    }
+    
+    .option{
+        height: 6rem;
+    }
+
+
     .figure_logo{
         margin-left: 10rem;
     }
@@ -841,7 +867,7 @@ footer h3 {
     }
 }
 
-@media screen and (max-width: 902px) and (min-width: 806px) {
+@media screen and (max-width: 846px) and (min-width: 806px) {
     .maispedidos{
         max-width: 94vw;
     }
@@ -902,6 +928,26 @@ footer h3 {
         width: 3rem !important;
         height: 3rem !important;
     }
+
+    
+    .options{
+        width: 22rem;
+    }
+
+    .option h5{
+        font-size: 1.7rem;
+    }
+
+    .option img{
+        width: 3rem;
+        height: 3rem;
+    }
+    
+    .option{
+        height: 6rem;
+    }
+
+
 
     .figure_logo{
         margin-left: 10rem;
@@ -1000,9 +1046,6 @@ footer h3 {
         font-size: 1.2rem;
         width: 18rem;
     }
-    .lineone, .linetwo {
-        gap: 2.5rem;
-    }
     .feedback {
         margin-bottom: 4rem;
     }
@@ -1036,6 +1079,27 @@ footer h3 {
         font-size: 1.5rem;
     }
 
+     .menu{
+        top: 0;
+    }
+
+    .option img{
+        width: 3rem;
+        height: 3rem;
+    }
+
+    h5{
+        font-size: 1.7rem;
+    }
+
+    .options{
+        width: 22rem;
+    }
+
+    .option{
+        height: 5.5rem;
+    }
+
     .maispedidostitulo h2{
         font-size: 3rem;
     }
@@ -1047,11 +1111,6 @@ footer h3 {
      .card {
         width: 19.7rem;
         height: 24.7rem;
-    }
-
-    .card {
-        width: 13.7rem;
-        height: 16.7rem;
     }
 
     .card img {
@@ -1174,9 +1233,7 @@ footer h3 {
         font-size: 1.2rem;
         width: 18rem;
     }
-    .lineone, .linetwo {
-        gap: 2.5rem;
-    }
+
     .feedback {
         margin-bottom: 4rem;
     }
@@ -1246,6 +1303,25 @@ footer h3 {
         width: 3rem !important;
         height: 3rem !important;
     }
+    
+    .options{
+        width: 22rem;
+    }
+
+    .option h5{
+        font-size: 1.6rem;
+    }
+
+    .option img{
+        width: 3rem;
+        height: 3rem;
+    }
+    
+    .option{
+        height: 5.7rem;
+    }
+
+
 
     .figure_logo{
         margin-left: 10rem;
@@ -1323,6 +1399,21 @@ footer h3 {
         width: 38rem;
     }
 
+    .feedbackcontainer{
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+         overflow-x: auto;
+        overflow-y: hidden;
+        padding-bottom: 2rem;
+        padding-left: 37rem;
+        scrollbar-width: thin;
+        scrollbar-color: var(--VermelhoCereja) #f1f1f1;
+        max-width: 97vw;
+    }
+
+    .caixa{
+        flex-shrink: 0;
+    }
+
     .textostitulo h2{
         font-size: 3rem;
     }
@@ -1356,15 +1447,12 @@ footer h3 {
         font-size: 1.2rem;
         width: 18rem;
     }
-    .lineone, .linetwo {
-        gap: 2.5rem;
-    }
     .feedback {
         margin-bottom: 4rem;
     }
 }
 
-@media screen and (max-width: 580px) and (min-width: 501px){
+@media screen and (max-width: 580px) and (min-width: 515px){
     .maispedidos {
         max-width: 94vw;
         margin-left: 1rem;
@@ -1377,7 +1465,11 @@ footer h3 {
     }
 
     .container_menu {
-        display: none;
+        gap: 0;
+    }
+
+    .config_menu{
+        flex-shrink: 0;
     }
 
     .container_menu img{
@@ -1411,20 +1503,39 @@ footer h3 {
     }
 
     .card img {
-        width: 12rem;
-        height: 8rem;
+        width: 8rem;
+        height: 6rem;
     }
 
     .nomedopedido {
         font-size: 1.2rem;
-        width: 12rem;
+        width: 9rem;
         height: 3rem;
+        text-align: center;
         margin-top: 1rem;
     }
     .menu img{
         width: 3rem !important;
         height: 3rem !important;
     }
+
+    .options{
+        width: 19rem;
+    }
+
+    .option h5{
+        font-size: 1.5rem;
+    }
+
+    .option img{
+        width: 2.7rem;
+        height: 2.7rem;
+    }
+    
+    .option{
+        height: 5rem;
+    }
+
 
     .figure_logo{
         margin-left: 10rem;
@@ -1433,6 +1544,21 @@ footer h3 {
     .figure_logo img {
         width: 10rem;
         height: 8rem;
+    }
+
+    .feedbackcontainer{
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding-bottom: 2rem;
+        padding-left: 47rem;
+        scrollbar-width: thin;
+        scrollbar-color: var(--VermelhoCereja) #f1f1f1;
+        max-width: 97vw;
+    }
+
+    .caixa{
+        flex-shrink: 0;
     }
 
     .carrinho_perfil{
@@ -1528,8 +1654,446 @@ footer h3 {
         font-size: 1.2rem;
         width: 18rem;
     }
-    .lineone, .linetwo {
-        gap: 2.5rem;
+    .feedback {
+        margin-bottom: 4rem;
+    }
+}
+
+@media screen and (max-width: 515px) and (min-width: 380px){
+    
+    header{
+        height: 5rem;
+    }
+
+    .figure_logo img{
+        width: 6rem;
+        height: 4rem;
+    }
+
+    .maispedidos {
+        max-width: 94vw;
+        margin-left: 1rem;
+    }
+
+    .textostitulo {
+        margin-right: 2rem;
+        margin-left: 1rem;
+        width: auto;
+    }
+
+    .container_menu {
+        display: none;
+    }
+
+    .container_menu img{
+        width: 5rem;
+        height: 5rem;
+    }
+
+    #cafe_manha{
+        margin-top: 0;
+    }
+    .config_menu h2{
+        display: none;
+    }
+
+    .maispedidostitulo h2{
+        font-size: 2rem;
+    }
+
+    .maispedidossubtitulo {
+        font-size: 1.3rem;
+    }
+
+    .feedbackcontainer{
+        display: flex;
+        justify-content:left;
+        gap: 3rem;
+        flex-direction: row;
+        overflow-x: scroll;
+        padding-left: 4rem;
+        padding-right: 4rem;
+        padding-bottom: 2rem;
+        scrollbar-width: thin;
+        scrollbar-color: var(--VermelhoCereja) #f1f1f1;
+        width: 100%;
+    }
+    .feedback {
+        align-items: baseline;
+    }
+    .caixa{
+        flex-shrink: 0;
+    }
+
+    .card {
+        width: 10.7rem;
+        height: 13.7rem;
+    }
+
+    .card img {
+        width: 8rem;
+        height: 6rem;
+    }
+
+    .nomedopedido {
+        font-size: 1.2rem;
+        width: 9rem;
+        height: 3rem;
+        text-align: center;
+        margin-top: 1rem;
+    }
+    .menu img{
+        width: 2rem !important;
+        height: 2rem !important;
+    }
+
+    
+    .options{
+        width: 17rem;
+    }
+
+    .option h5{
+        font-size: 1.3rem;
+    }
+
+    .option img{
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+    
+    .option{
+        height: 4.6rem;
+    }
+
+
+
+    .sandwich{
+        top: 2rem;
+    }
+
+    .figure_logo{
+        margin-left: 10rem;
+    }
+
+    .carrinho_perfil{
+        gap: 2rem;
+        padding-right: 2rem;
+    }
+
+    .carrinho_perfil img{
+        width: 3rem;
+        height: 3rem;
+    }
+    
+    footer h3{
+        font-size: 1.3rem;
+    }
+
+    .cardapio h1{
+        font-size: 2rem;
+        margin-left: 1rem;
+    }
+    
+    .img_cardapio img{
+        width: 17rem;
+        height: 15rem;
+    }
+
+    .img_cardapio{
+        right: 22rem;
+        top: 2rem;
+    }
+
+    .saibaBtn{
+        margin-top: 1.3rem;
+        margin-left: 2rem;
+        width: 9rem;
+        height: 4rem;
+        font-size: 1.2rem;
+    }
+
+    .cardapio p{
+        font-size: 1.3rem;
+        width: 18rem;
+    }
+
+    .container_cardapio{
+        margin-top: 4rem;
+        margin-left: 20rem;
+    }
+
+    .informacao_cardapio{
+        width: 36rem;
+        height: 10rem;
+        padding-top: 1rem;
+        padding-left: 2rem;
+    }
+
+    .informacao_cardapio p{
+        width: 14rem;
+        font-size: 1.1rem;
+    }
+
+    .icone_cardapio img{
+        display: none;
+    }
+
+    .textostitulo{
+        margin-right: 0;
+        padding-left: 4rem;
+        margin-left: 0; 
+    }
+
+    .textostitulo h3{
+        margin-top: 0;
+        font-size: 1.5rem;
+        margin-top: 0;
+    }
+
+    .textostitulo h2{
+        font-size: 2rem;
+        margin-top: 0;
+    }
+
+    .caixa {
+        width: 22.2rem;
+        height: 24rem;
+    }
+
+    .dados figure img {
+        width: 4.8rem;
+        height: 4.8rem;
+    }
+    .dados p {
+        font-size: 2.2rem;
+    }
+
+    .textofeedback{
+        width: 18rem;
+    }
+    .textofeedback p {
+        font-size: 1.2rem;
+        width: 18rem;
+    }
+    .feedback {
+        margin-bottom: 4rem;
+    }
+}
+
+@media screen and (max-width: 380px) and (min-width: 344px){
+    
+    header{
+        height: 5rem;
+    }
+
+    .figure_logo img{
+        width: 6rem;
+        height: 4rem;
+    }
+
+    .maispedidos {
+        max-width: 94vw;
+        margin-left: 1rem;
+    }
+
+    .textostitulo {
+        margin-right: 2rem;
+        margin-left: 1rem;
+        width: auto;
+    }
+
+    .container_menu {
+        display: none;
+    }
+
+    .container_menu img{
+        width: 5rem;
+        height: 5rem;
+    }
+
+    #cafe_manha{
+        margin-top: 0;
+    }
+    .config_menu h2{
+        display: none;
+    }
+
+    .maispedidostitulo h2{
+        font-size: 2rem;
+    }
+
+    .maispedidossubtitulo {
+        font-size: 1.3rem;
+    }
+
+    .feedbackcontainer{
+        display: flex;
+        justify-content:left;
+        gap: 3rem;
+        flex-direction: row;
+        overflow-x: scroll;
+        padding-left: 4rem;
+        padding-right: 4rem;
+        padding-bottom: 2rem;
+        scrollbar-width: thin;
+        scrollbar-color: var(--VermelhoCereja) #f1f1f1;
+        width: 100%;
+    }
+    .feedback {
+        align-items: baseline;
+    }
+    .caixa{
+        flex-shrink: 0;
+    }
+
+    .card {
+        width: 10.7rem;
+        height: 13.7rem;
+    }
+
+    .card img {
+        width: 8rem;
+        height: 6rem;
+    }
+
+    .nomedopedido {
+        font-size: 1.2rem;
+        width: 9rem;
+        height: 3rem;
+        text-align: center;
+        margin-top: 1rem;
+    }
+    .menu img{
+        width: 2rem !important;
+        height: 2rem !important;
+    }
+    
+    .options{
+        width: 15rem;
+    }
+
+    .option h5{
+        font-size: 1.2rem;
+    }
+
+    .option img{
+        width: 2.3rem;
+        height: 2.3rem;
+    }
+    
+    .option{
+        height: 4rem;
+    }
+
+
+    .figure_logo{
+        margin-left: 10rem;
+    }
+
+    .carrinho_perfil{
+        gap: 2rem;
+        padding-right: 2rem;
+    }
+
+    .carrinho_perfil img{
+        width: 3rem;
+        height: 3rem;
+    }
+    
+    footer h3{
+        font-size: 1.3rem;
+    }
+
+    .cardapio h1{
+        font-size: 2rem;
+        margin-left: 1rem;
+    }
+    
+    .img_cardapio img{
+        width: 13rem;
+        height: 11rem;
+    }
+
+    .img_cardapio{
+        right: 17rem;
+        top: 1rem;
+    }
+
+    .saibaBtn{
+        margin-top: 1rem;
+        margin-left: 2rem;
+        width: 7rem;
+        height: 3rem;
+        font-size: .9rem;
+    }
+
+    .cardapio p{
+        font-size: 1.3rem;
+        width: 18rem;
+    }
+
+    .container_cardapio{
+        margin-top: 4rem;
+        margin-left: 15rem;
+    }
+
+    .informacao_cardapio{
+        width: 30rem;
+        height: 8rem;
+        padding-top: 0.1rem;
+        padding-left: 2rem;
+    }
+
+    .informacao_cardapio p{
+        width: 14rem;
+        font-size: 1.1rem;
+    }
+
+    .icone_cardapio img{
+        display: none;
+    }
+
+    .textostitulo{
+        margin-right: 0;
+        padding-left: 4rem;
+        margin-left: 0; 
+    }
+
+    .sandwich{
+        top: 2rem;
+    }
+
+
+    .textostitulo h3{
+        margin-top: 0;
+        font-size: 1.5rem;
+        margin-top: 0;
+    }
+
+    .textostitulo h2{
+        font-size: 2rem;
+        margin-top: 0;
+    }
+
+    .caixa {
+        width: 22.2rem;
+        height: 24rem;
+    }
+
+    .dados figure img {
+        width: 4.8rem;
+        height: 4.8rem;
+    }
+    .dados p {
+        font-size: 2.2rem;
+    }
+
+    .textofeedback{
+        width: 18rem;
+    }
+    .textofeedback p {
+        font-size: 1.2rem;
+        width: 18rem;
     }
     .feedback {
         margin-bottom: 4rem;
