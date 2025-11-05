@@ -1,3 +1,24 @@
+<?php
+
+require_once('../vendor/autoload.php');
+use Controller\ProductController;
+$productController = new ProductController();
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if (isset($_POST['nome'],$_POST['opcoes_cardapio'],$_POST['descricao'],$_POST['quantidade'],$_POST['preco'],$_POST['imagemProduto'])) {
+        $nome = $_POST['nome'];
+        $opcoes = $_POST['opcoes_cardapio'];
+        $descricao = $_POST['descricao'];
+        $quantidade = $_POST['quantidade'];
+        $preco = $_POST['preco'];
+        $foto = $_POST['imagemProduto'];
+        $imagem = file_get_contents($foto);
+        $productController->create();
+    }
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
     <head>
