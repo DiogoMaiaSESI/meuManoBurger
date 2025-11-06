@@ -14,14 +14,15 @@ document.addEventListener('DOMContentLoaded', function () {
   alert('Por favor, selecione uma imagem do produto.');
   return;
   }else {
-      window.location.href = "cardapiouser.php";
+    form.submit()
+      // window.location.href = "cardapiouser.php";
     }
   });
 
 
   const card = document.querySelector('.voltar')
   card.addEventListener('click', () => {
-    window.location.href = 'cardapiouser.php'
+    // window.location.href = 'cardapiouser.php'
 })
 
 

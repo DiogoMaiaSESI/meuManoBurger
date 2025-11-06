@@ -1,25 +1,30 @@
 <?php
 
-session_start();
-$_SESSION['idAdm'] = 1;
-$_SESSION['admEmail'] = 'mariane.mmb.admin@gmail.com';
-$_SESSION['admSenha'] = '123';
-
 require_once('../vendor/autoload.php');
 use Controller\ProductController;
-$productController = new ProductController();
+use Controller\AdmController;
+use Controller\EstoqueController;
 
+session_start();
+
+$productController = new ProductController();
+$admController = new AdmController();
+$estoqueController = new EstoqueController();
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if (isset($_POST['nome'],$_POST['opcoes_cardapio'],$_POST['descricao'],$_POST['quantidade'],$_POST['preco'],$_POST['imagemProduto'])) {
-        $nome = $_POST['nome'];
-        $opcoes = $_POST['opcoes_cardapio'];
-        $descricao = $_POST['descricao'];
+    if (isset($_POST['nome_produto'],$_POST['tipo_produto'],$_POST['descricao_produto'],$_POST['quantidade'],$_POST['preco_produto']) && $_FILES['imagem_produto']['error'] === UPLOAD_ERR_OK) {
+        $nome = $_POST['nome_produto'];
+        $opcoes = $_POST['tipo_produto'];
+        $descricao = $_POST['descricao_produto'];
         $quantidade = $_POST['quantidade'];
-        $preco = $_POST['preco'];
-        $foto = $_POST['imagemProduto'];
+        $preco = $_POST['preco_produto'];
+        $foto = $_FILES['imagem_produto']['tmp_name'];
         $imagem = file_get_contents($foto);
         $id_adm_fk = $_SESSION['idAdm'];
         $productController->create($nome, $preco, $opcoes, $descricao, $imagem, $id_adm_fk);
+        $produtos = $productController->listAll();
+        $ultimoProduto = end($produtos);
+        $id_produto = $ultimoProduto['id_produto'];
+        $estoqueController->insEstoque($quantidade, $id_produto);
     }
 }
 
@@ -41,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
             <div class="formContainer">
                 <h1>Cadastre seu novo produto</h1>
-                <form>
+                <form method="POST" enctype="multipart/form-data">
                     <div class="inputs">
                         <div class="foto">
                             <label for="imagemProduto">
@@ -50,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     <img id="previewImagem" src="../templates/assets/img/camera.png" alt="Imagem de camera para adicionar foto do produto" />
                                 </figure>
                             </label>
-                            <input type="file" id="imagemProduto" name="imagemProduto" accept="image/*" style="display: none;">
+                            <input type="file" id="imagemProduto" name="imagem_produto" accept="image/*" style="display: none;">
                         </div>
                     </div>
                     <div class="icons">
@@ -59,9 +64,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         </figure>
                     </div>
                     <p class="labelInput">Nome</p>
-                    <input type="text" name="nome" id="nome"  placeholder ="Nome do produto" required>
+                    <input type="text" name="nome_produto" id="nome"  placeholder ="Nome do produto" required>
                     <p class="labelInput">Categoria</p>
-                    <select name="opcoes_cardapio" id="opcoes_cardapio" required>
+                    <select name="tipo_produto" id="opcoes_cardapio" required>
                         <option value="">Selecione</option>
                         <option value="2">Hambúrgueres</option>
                         <option value="3">Lanches</option>   
@@ -72,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <option value="8">Promoções</option>
                     </select>
                     <p class="labelInput">Descrição</p>
-                    <textarea name="descricao" id="descricao" placeholder ="Descreva o seu produto aqui" required></textarea>
+                    <textarea name="descricao_produto" id="descricao" placeholder ="Descreva o seu produto aqui" required></textarea>
                     <div class="qtd-preco">
                         <div clas = "qtd">
                             <p class="labelInput">Quantidade</p>
@@ -80,7 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         </div>
                         <div clas = "preco">
                             <p class="labelInput">Preço</p>
-                            <input type="number" name="preco" id="preco" placeholder ="Ex: 2.50" set= 0.01 required>
+                            <input type="number" name="preco_produto" id="preco" placeholder ="Ex: 2.50" step= 0.01 required>
                         </div>
                     </div>
                     <button type="submit">Cadastrar</button>
