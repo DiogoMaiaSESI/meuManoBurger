@@ -1,5 +1,10 @@
 <?php
 
+session_start();
+$_SESSION['idAdm'] = 1;
+$_SESSION['admEmail'] = 'mariane.mmb.admin@gmail.com';
+$_SESSION['admSenha'] = '123';
+
 require_once('../vendor/autoload.php');
 use Controller\ProductController;
 $productController = new ProductController();
@@ -13,7 +18,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $preco = $_POST['preco'];
         $foto = $_POST['imagemProduto'];
         $imagem = file_get_contents($foto);
-        $productController->create();
+        $id_adm_fk = $_SESSION['idAdm'];
+        $productController->create($nome, $preco, $opcoes, $descricao, $imagem, $id_adm_fk);
     }
 }
 
