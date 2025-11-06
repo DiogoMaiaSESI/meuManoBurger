@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 }
 // --- LÓGICA DE ALTERAÇÃO DE SENHA ---
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'update_password') {
-    
+
 
     $id_cliente = $_SESSION['id_cliente'] ?? 0;
     $nova_senha = $_POST['nova_senha'] ?? null;
@@ -67,6 +67,30 @@ $imagemUsuario = '../templates/assets/img/FotoPerfil.png'; // Caminho para a ima
 if (isset($_SESSION['imagem_cliente']) && !empty($_SESSION['imagem_cliente'])) {
     // Se tiver, converte o dado BLOB (binário) para uma string base64 que o HTML entende
     $imagemUsuario = 'data:image/jpeg;base64,' . base64_encode($_SESSION['imagem_cliente']);
+}
+$clienteModel = new \Model\Cliente(); // Precisamos de uma instância do model
+$cliente2FAData = $clienteModel->get2FAData($_SESSION['id_cliente']);
+$is2FAEnabled = ($cliente2FAData && $cliente2FAData['2fa_enabled'] == 1);
+// --- LÓGICA DE LOGOUT ---
+
+if (isset($_GET['action']) && $_GET['action'] === 'logout') {
+    // Limpa todas as variáveis da sessão.
+    $_SESSION = array();
+
+    // Destrói o cookie de sessão no navegador.
+    if (ini_get("session.use_cookies")) {
+        $params = session_get_cookie_params();
+        setcookie(session_name(), '', time() - 42000,
+            $params["path"], $params["domain"],
+            $params["secure"], $params["httponly"]
+         );
+    }
+
+    // Finalmente, destrói a sessão no servidor.
+    session_destroy();
+
+    header("Location: login.php");
+    exit;
 }
 ?>
 
@@ -149,6 +173,35 @@ if (isset($_SESSION['imagem_cliente']) && !empty($_SESSION['imagem_cliente'])) {
         .sombra.shadowActive {
             opacity: 0.4;
             pointer-events: all;
+        }
+
+        /* ... (no final do arquivo) ... */
+
+        /* ESTILOS PARA O MODAL 2FA */
+        .qr-code-container {
+            display: flex;
+            justify-content: center;
+            margin: 2rem 0;
+            padding: 1rem;
+            background-color: var(--Branco);
+            border-radius: 1.2rem;
+        }
+
+        #2fa-setup-content p {
+            text-align: center;
+            font-size: 1.6rem;
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+        }
+
+        #2fa-verify-form .form-group {
+            margin-bottom: 2rem;
+        }
+
+        #2fa-verify-form input {
+            text-align: center;
+            font-size: 2rem;
+            letter-spacing: 0.5rem;
         }
     </style>
 </head>
@@ -345,7 +398,16 @@ if (isset($_SESSION['imagem_cliente']) && !empty($_SESSION['imagem_cliente'])) {
                     </div>
                     <div class="security-section">
                         <h3>Autenticação de 2 Fatores (2FA)</h3>
-                        <a href="#" class="add-2fa-link">+ Adicionar método de autenticação</a>
+                        <?php if ($is2FAEnabled): ?>
+                            <!-- Se 2FA está ATIVA -->
+                            <div class="status-2fa active">
+                                <span>Status: Ativada</span>
+                                <button id="btn-open-disable-2fa" class="disable-2fa-btn">Desativar</button>
+                            </div>
+                        <?php else: ?>
+                            <!-- Se 2FA está INATIVA -->
+                            <a href="#" class="add-2fa-link">+ Adicionar método de autenticação</a>
+                        <?php endif; ?>
                     </div>
                     <form id="security-form" class="security-form" method="POST" action="Perfil.php">
                         <input type="hidden" name="action" value="update_password">
@@ -444,13 +506,55 @@ if (isset($_SESSION['imagem_cliente']) && !empty($_SESSION['imagem_cliente'])) {
             </div>
         </div>
     </div>
+    <!-- MODAL PARA DESATIVAR 2FA -->
+    <div id="modal-disable-2fa" class="modal-overlay">
+        <div class="modal-content">
+            <button id="close-disable-2fa-modal-btn" class="close-modal-btn">&times;</button>
+            <h2>Desativar Autenticação de 2 Fatores</h2>
+            <p style="font-size: 1.5rem;">Para sua segurança, por favor, digite sua senha atual para confirmar a desativação.</p>
+            <form id="disable-2fa-form">
+                <div class="form-group password-group">
+                    <input type="password" id="disable-2fa-password" placeholder="Sua senha atual" required>
+                    <img src="/meuManoBurger/templates/assets/img/olhofechado.png" class="password-toggle-icon"
+                        alt="Mostrar/Ocultar Senha">
+                </div>
+                <button type="submit" class="submit-btn danger">Confirmar e Desativar</button>
+                <p id="disable-2fa-error-message" class="error-message" style="text-align: center; margin-top: 1rem;">
+                </p>
+            </form>
+        </div>
+    </div>
+    <!-- MODAL PARA CONFIGURAÇÃO DO 2FA -->
+    <div id="modal-2fa" class="modal-overlay">
+        <div class="modal-content">
+            <button id="close-2fa-modal-btn" class="close-modal-btn">&times;</button>
+            <h2>Ativar Autenticação de 2 Fatores</h2>
+            <div id="2fa-setup-content">
+                <p>1. Escaneie o QR Code abaixo com seu aplicativo autenticador (Google Authenticator, Authy, etc).</p>
+                <div id="qr-code-container" class="qr-code-container">
+                    <!-- O QR Code será inserido aqui pelo JavaScript -->
+                </div>
+                <p>2. Digite o código de 6 dígitos gerado pelo aplicativo para verificar.</p>
+                <form id="2fa-verify-form">
+                    <input type="hidden" id="2fa-secret-input" value="">
+                    <div class="form-group">
+                        <label for="2fa-code">Código de Verificação</label>
+                        <input type="text" id="2fa-code" name="2fa-code" placeholder="123456" required maxlength="6"
+                            pattern="\d{6}" inputmode="numeric">
+                    </div>
+                    <button type="submit" class="submit-btn">Verificar e Ativar</button>
+                    <p id="2fa-error-message" class="error-message" style="text-align: center; margin-top: 1rem;"></p>
+                </form>
+            </div>
+        </div>
+    </div>
 
 
     <script src="/meuManoBurger/templates/assets/js/perfil.js"></script>
     <?php
     // Verifica se existe uma mensagem de sucesso ou erro na sessão
     if (isset($_SESSION['success_message']) || isset($_SESSION['error_message'])) {
-        
+
         // Define a mensagem e o tipo (classe CSS)
         $message = $_SESSION['success_message'] ?? $_SESSION['error_message'];
         $type = isset($_SESSION['success_message']) ? 'success' : 'error';

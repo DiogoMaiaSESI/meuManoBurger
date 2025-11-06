@@ -17,6 +17,8 @@
     "minimum-stability": "dev",
     "require": {
         "php": ">= 8.0",
-        "ext-mbstring": "*"
+        "ext-mbstring": "*",
+        "pragmarx/google2fa-qrcode": "^3.0",
+        "bacon/bacon-qr-code": "dev-main"
     }
 }

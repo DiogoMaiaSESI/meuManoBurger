@@ -129,5 +129,118 @@ class Cliente
             return false;
         }
     }
+
+    public function set2FASecret($id_cliente, $secret) {
+        $sql = 'UPDATE cliente SET 2fa_secret = :secret, 2fa_enabled = 0 WHERE id_cliente = :id_cliente';
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':secret', $secret, PDO::PARAM_STR);
+        $stmt->bindParam(':id_cliente', $id_cliente, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+
+    public function enable2FA($id_cliente) {
+        $sql = 'UPDATE cliente SET 2fa_enabled = 1 WHERE id_cliente = :id_cliente';
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':id_cliente', $id_cliente, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+    public function getClienteById($id_cliente)
+    {
+        try {
+            $sql = 'SELECT * FROM cliente WHERE id_cliente = :id_cliente LIMIT 1';
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(":id_cliente", $id_cliente, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $error) {
+            return false;
+        }
+    }
+
+    public function get2FAData($id_cliente)
+    {
+        try {
+            $sql = 'SELECT 2fa_secret, 2fa_enabled FROM cliente WHERE id_cliente = :id_cliente LIMIT 1';
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(":id_cliente", $id_cliente, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $error) {
+            return false;
+        }
+    }
+    public function saveRecoveryCodes($id_cliente, array $codes)
+    {
+        try {
+            // armazena array de hashes em JSON
+            $hashes = array_map(function($c){ return password_hash($c, PASSWORD_DEFAULT); }, $codes);
+            $json = json_encode($hashes);
+            $sql = 'UPDATE cliente SET 2fa_recovery = :recovery WHERE id_cliente = :id_cliente';
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(':recovery', $json, PDO::PARAM_STR);
+            $stmt->bindParam(':id_cliente', $id_cliente, PDO::PARAM_INT);
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+
+    public function getRecoveryHashes($id_cliente)
+    {
+        try {
+            $sql = 'SELECT 2fa_recovery FROM cliente WHERE id_cliente = :id_cliente LIMIT 1';
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(':id_cliente', $id_cliente, PDO::PARAM_INT);
+            $stmt->execute();
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            if (!$row || empty($row['2fa_recovery'])) return [];
+            $decoded = json_decode($row['2fa_recovery'], true);
+            return is_array($decoded) ? $decoded : [];
+        } catch (PDOException $e) {
+            return [];
+        }
+    }
+
+    public function consumeRecoveryCode($id_cliente, $code)
+    {
+        try {
+            $hashes = $this->getRecoveryHashes($id_cliente);
+            if (empty($hashes)) return false;
+
+            $foundIndex = null;
+            foreach ($hashes as $i => $hash) {
+                if (password_verify($code, $hash)) {
+                    $foundIndex = $i;
+                    break;
+                }
+            }
+            if ($foundIndex === null) return false;
+
+            // remove o código usado e salva novamente
+            array_splice($hashes, $foundIndex, 1);
+            $json = json_encode($hashes);
+            $sql = 'UPDATE cliente SET 2fa_recovery = :recovery WHERE id_cliente = :id_cliente';
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(':recovery', $json, PDO::PARAM_STR);
+            $stmt->bindParam(':id_cliente', $id_cliente, PDO::PARAM_INT);
+            $stmt->execute();
+            return true;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+    public function disable2FA($id_cliente) {
+        try {
+            // Limpa o segredo, os códigos de recuperação e desativa a flag
+            $sql = 'UPDATE cliente SET 2fa_secret = NULL, 2fa_enabled = 0, 2fa_recovery = NULL WHERE id_cliente = :id_cliente';
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(':id_cliente', $id_cliente, PDO::PARAM_INT);
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            // Em um ambiente real, você logaria o erro
+            return false;
+        }
+    }
+
 }
 ?>
