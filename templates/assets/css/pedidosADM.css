@@ -1,0 +1,1270 @@
+@import "global.css";
+
+header {
+    width: 100%;
+    background-color: var(--VermelhoCereja);
+}
+
+.cabecalho {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 2.6rem;
+    margin-right: 2.6rem;
+}
+
+.menu {
+    width: 8rem !important;
+    padding-left: 4rem;
+    cursor: pointer;
+}
+
+.menu:hover {
+    transition: 500ms;
+    opacity: 70%;
+}
+
+.sandwich {
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    gap: 3.2rem;
+    position: absolute;
+    top: 1.5rem;
+    left: 0;
+    width: fit-content;
+}
+
+.options {
+    background-color: var(--VermelhoCereja);
+    width: 25.5rem;
+    border-style: solid;
+    border-left-style: none;
+    border-width: 0.2rem;
+    transform: translateX(-100%);
+    transition: 500ms;
+    border-top-right-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+}
+
+.optionActive {
+    transform: translateX(0%);
+    transition: 500ms;
+}
+
+.option {
+    display: flex;
+    justify-content: baseline;
+    align-items: center;
+    height: 6.4rem;
+    border-style: solid;
+    border-left-style: none;
+    border-width: 0.1rem;
+    border-color: var(--Preto);
+    color: var(--Branco);
+    padding-left: 1.6rem;
+    gap: 2.1rem;
+    cursor: pointer;
+    transition: 500ms;
+}
+
+.option:hover {
+    padding-left: 2.5rem;
+    transition: 500ms;
+}
+
+h5 {
+    font-size: 2.1rem;
+    font-weight: 400;
+}
+
+.sombra {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
+    background-color: var(--Preto);
+    opacity: 0%;
+    transition: 500ms;
+    pointer-events: none;
+}
+
+.shadowActive {
+    opacity: 40%;
+    transition: 500ms;
+    pointer-events: all;
+}
+
+.logo {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.logo img {
+    width: 9rem;
+    height: 7rem;
+}
+
+.perfil img {
+    width: 4rem;
+    height: 4rem;
+}
+
+.voltar img {
+    width: 3.5rem;
+    height: 3.5rem;
+    transition: all 0.3s ease;
+}
+
+.voltar:hover {
+    border-radius: 50rem;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.lateral {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.infortitulo {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+}
+
+.infortitulo h1 {
+    margin-top: 4.6rem;
+    font-size: 3rem;
+    margin-bottom: 3rem;
+}
+
+.pesquisa {
+    display: flex;
+    margin-bottom: 8.4rem;
+    gap: 1rem;
+}
+
+.conjunto {
+    width: 90%;
+    position: relative;
+}
+
+input {
+    width: 100%;
+    height: 4rem;
+    border-radius: 1.5rem;
+    padding-left: 5rem;
+    border: .5px solid rgb(162, 162, 162);
+}
+
+.conjunto img {
+    width: 2.5rem;
+    height: 2.5rem;
+    position: absolute;
+    left: 15px;
+    top: 7px;
+}
+
+input::placeholder {
+    font-weight: bold;
+}
+
+button.btn {
+    width: 7rem;
+    height: 3.5rem;
+    border-radius: 2rem;
+    background-color: var(--AmareloSecundario);
+    border: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    background-color: var(--VermelhoCereja);
+    color: var(--Branco);
+}
+
+.pedidos {
+    width: 60%;
+}
+
+.pedido {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 12.2rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 1.5rem;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.ilustracao {
+    position: relative;
+}
+
+.statusok {
+    width: 8.1rem;
+    height: 2.4rem;
+    background-color: var(--Branco);
+    color: var(--VermelhoCereja);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    font-weight: bold;
+    position: absolute;
+    top: 80px;
+    left: 2px;
+    border-radius: 2rem;
+}
+
+.statusretirado {
+    display: none;
+}
+
+.statuspendente {
+    display: block;
+}
+
+.statuspend {
+    width: 8.1rem;
+    height: 2.4rem;
+    background-color: var(--Branco);
+    color: #007A37;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    font-weight: bold;
+    position: absolute;
+    top: 80px;
+    left: 2px;
+    border-radius: 2rem;
+}
+
+.ilustracao img {
+    width: 9rem;
+    height: 11rem;
+}
+
+.central {
+    display: flex;
+    align-items: center;
+    gap: 8%;
+}
+
+.centralline1,
+.centralline2 {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.codigopedidos,
+.horapedidos,
+.datapedidos {
+    display: flex;
+    gap: 1.9rem;
+    align-items: center;
+}
+
+.totalpedidos {
+    display: flex;
+    gap: 3.3rem;
+    align-items: center;
+}
+
+.horapedidos img,
+.datapedidos img {
+    width: 2rem;
+    height: 2rem;
+}
+
+.inforcodigo,
+.infortotal {
+    color: var(--VermelhoCereja);
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.codigo,
+.total,
+.hora,
+.data {
+    width: 10.1rem;
+    height: 3.2rem;
+    background-color: var(--AmareloPrimario);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 1rem;
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.botoes {
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+}
+
+button.detalhes,
+button.statusbtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 18rem;
+    height: 3.6rem;
+    border-radius: .5rem;
+    font-weight: bold;
+    border: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button.detalhes {
+    background-color: var(--VermelhoCereja);
+    color: var(--Branco);
+}
+
+button.statusbtn {
+    background-color: #f0f0f0;
+}
+
+button.detalhes:hover,
+button.statusbtn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+button.statusbtn.statusbtndesabilitado {
+    transform: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    cursor: not-allowed;
+    opacity: 0.6;
+    background-color: #f0f0f0;
+    color: #000000;
+}
+
+button.statusbtn.statusbtndesabilitado:hover {
+    transform: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    background-color: #f0f0f0;
+}
+
+.modaldetalhes {
+    position: fixed;
+    z-index: 2;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+}
+
+.conteudomodaldetalhes {
+    width: 55rem;
+    height: 60rem;
+    border-radius: 2rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    background-color: var(--Branco);
+    margin-top: 5%;
+    margin-left: 33%;
+}
+
+.fechar {
+    width: 97%;
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 2rem;
+    padding-bottom: 3rem;
+}
+
+.fechar img {
+    width: 3rem;
+    height: 3rem;
+}
+
+.modaldados {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 2rem;
+    margin-right: 2rem;
+    margin-bottom: 4rem;
+}
+
+.modalilustracao img {
+    width: 8rem;
+    height: 9rem;
+}
+
+.modalcodigopedidos {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .2rem;
+}
+
+.codigotitulo {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--VermelhoCereja);
+}
+
+.codigotexto {
+    font-size: 1.5rem;
+    font-weight: bold;
+    width: 8rem;
+    height: 3rem;
+    background-color: var(--AmareloPrimario);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 1rem;
+}
+
+.modaldata,
+.modalhora {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.modaldata p,
+.modalhora p {
+    font-size: 1.5rem;
+    font-weight: bold;
+    width: 10rem;
+    height: 3rem;
+    background-color: var(--AmareloPrimario);
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modaldata img,
+.modalhora img {
+    width: 3rem;
+    height: 3rem;
+}
+
+.resumopedido {
+    margin-left: 2rem;
+    margin-right: 2rem;
+    border-radius: .5rem;
+    background-color: var(--RosaClaro);
+    height: 50%;
+    padding: 2rem;
+}
+
+.resumotitulo {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    font-weight: bold;
+    color: var(--VermelhoCereja);
+}
+
+.resumolanche {
+    padding-left: .5rem;
+    padding-right: .5rem;
+    padding-bottom: .5rem;
+    padding-top: 1rem;
+    display: flex;
+    font-size: 1.2rem;
+    justify-content: space-between;
+    width: 100%;
+    border-bottom: 1px solid rgba(153, 146, 146, 0.3);
+}
+
+.modalstatus {
+    margin-top: 3rem;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 3rem;
+}
+
+.modalstatus p {
+    width: 25rem;
+    height: 4rem;
+    font-size: 2rem;
+    font-weight: 700;
+    background-color: var(--VermelhoCereja);
+    color: var(--Branco);
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modalconfirm {
+    position: fixed;
+    z-index: 2;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+}
+
+.conteudomodalconfirm {
+    width: 35rem;
+    height: 20rem;
+    border-radius: 2rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    z-index: 2;
+    background-color: var(--Branco);
+    margin-top: 17%;
+    margin-left: 39%;
+}
+
+.conteudomodalconfirm h2 {
+    font-weight: bold;
+    font-size: 2rem;
+    color: var(--VermelhoCereja);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 4rem;
+}
+
+.conteudomodalconfirm p {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 2rem;
+    font-size: 1.5rem;
+}
+
+.modalbotoes {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 5rem;
+    margin-bottom: 2rem;
+    gap: 4rem;
+}
+
+.sim {
+    width: 7rem;
+    height: 3rem;
+    border: none;
+    color: var(--Branco);
+    font-weight: bold;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    background-color: #007A37;
+    border-radius: .5rem;
+    cursor: pointer;
+}
+
+.nao {
+    width: 7rem;
+    height: 3rem;
+    color: var(--Branco);
+    font-weight: bold;
+    border: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    background-color: var(--VermelhoCereja);
+    border-radius: .5rem;
+    cursor: pointer;
+}
+
+
+@media screen and (min-width: 1024px) and (max-width:1250px) {
+    .infortitulo h1 {
+        font-size: 2.5rem;
+    }
+
+    .pedidos {
+        width: 80%;
+    }
+
+    .central {
+        gap: 4rem;
+    }
+
+    button.detalhes,
+    button.statusbtn {
+        width: 15rem;
+        height: 3.6rem;
+        font-size: 1.2rem;
+    }
+
+    .codigopedidos,
+    .horapedidos,
+    .datapedidos {
+        gap: 2rem;
+    }
+
+    .totalpedidos {
+        gap: 3.5rem;
+    }
+
+    .conteudomodaldetalhes {
+        width: 55rem;
+        height: 57rem;
+        margin-top: 5%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .fechar {
+        padding-bottom: 1rem;
+    }
+
+    .modaldados {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-left: 2rem;
+        margin-right: 2rem;
+        margin-bottom: 4rem;
+    }
+
+    .conteudomodalconfirm {
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+@media screen and (min-width: 840px) and (max-width:1024px) {
+    .logo img {
+        margin-left: 5rem;
+    }
+
+    .menu img {
+        width: 3rem;
+        height: 3rem;
+    }
+
+    .sandwich {
+        top: 2rem;
+    }
+
+    .options {
+        width: 20rem;
+    }
+
+    h5 {
+        font-size: 1.6rem;
+    }
+
+    .voltar img,
+    .perfil img {
+        width: 3.5rem;
+        height: 3.5rem;
+    }
+
+    .infortitulo {
+        width: 80%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .infortitulo h1 {
+        font-size: 2.5rem;
+    }
+
+    .pedidos {
+        width: 80%;
+    }
+
+    .central {
+        gap: .5rem;
+    }
+
+    button.detalhes,
+    button.statusbtn {
+        width: 15rem;
+        height: 3.6rem;
+        font-size: 1.2rem;
+    }
+
+    .codigopedidos,
+    .horapedidos,
+    .datapedidos {
+        gap: .8rem;
+    }
+
+    .totalpedidos {
+        gap: 2.3rem;
+    }
+
+    .conteudomodaldetalhes {
+        width: 45rem;
+        height: 58rem;
+        margin-top: 5%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .fechar {
+        padding-bottom: 1rem;
+    }
+
+    .fechar img {
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+
+    .modalcodigopedidos {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+        margin-top: 2rem;
+    }
+
+    .modaldata,
+    .modalhora {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+    }
+
+    .conteudomodalconfirm {
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 10%;
+    }
+}
+
+@media screen and (min-width: 600px) and (max-width:840px) {
+    .cabecalho {
+        margin-right: .5rem;
+        margin-left: 5rem;
+    }
+
+    .menu img {
+        width: 3rem;
+        height: 3rem;
+    }
+
+    .logo img {
+        margin-left: 2rem;
+    }
+
+    .sandwich {
+        top: 2rem;
+    }
+
+    .infortitulo h1 {
+        font-size: 2.3rem;
+    }
+
+    .infortitulo {
+        width: 85%;
+    }
+
+    .pedidos {
+        width: 95%;
+    }
+
+    .central {
+        gap: .5rem;
+    }
+
+    button.detalhes,
+    button.statusbtn {
+        width: 14rem;
+        height: 3.6rem;
+        font-size: 1.1rem;
+    }
+
+    .codigopedidos,
+    .horapedidos,
+    .datapedidos {
+        gap: .8rem;
+    }
+
+    .inforcodigo,
+    .infortotal {
+        font-size: 1.3rem;
+    }
+
+    .codigo,
+    .total,
+    .hora,
+    .data {
+        width: 8.8rem;
+        font-size: 1.2rem;
+    }
+
+    .totalpedidos {
+        gap: 1.7rem;
+    }
+
+    .conteudomodaldetalhes {
+        width: 40rem;
+        height: 50rem;
+        margin-top: 8%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .fechar {
+        width: 95%;
+        padding-bottom: 2rem;
+    }
+
+    .fechar img {
+        width: 3rem;
+        height: 3rem;
+    }
+
+    .modaldata,
+    .modalhora {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .modalcodigopedidos {
+        gap: 1rem;
+        margin-top: 2rem;
+    }
+
+    .modalilustracao img {
+        display: none;
+    }
+
+    .resumopedido {
+        height: 40%;
+    }
+
+    .conteudomodalconfirm {
+        width: 30rem;
+        height: 18rem;
+        margin-top: 15%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .modalbotoes{
+        margin-top: 2.8rem;
+    }
+}
+
+@media screen and (min-width: 400px) and (max-width:600px) {
+    .cabecalho {
+        margin-right: .5rem;
+        margin-left: 5rem;
+    }
+
+    .perfil img {
+        width: 3.4rem;
+        height: 3.4rem;
+    }
+
+    .voltar img {
+        width: 3rem;
+        height: 3em;
+    }
+
+    .logo img {
+        margin-left: 2rem;
+    }
+
+    .menu img {
+        width: 3rem;
+        height: 3em;
+    }
+
+    .sandwich {
+        top: 2rem;
+    }
+
+    .infortitulo {
+        width: 85%;
+    }
+
+    .infortitulo h1 {
+        font-size: 1.5rem;
+    }
+
+    .conjunto {
+        width: 95%;
+    }
+
+    .conjunto img {
+        width: 2rem;
+        height: 2rem;
+        top: 8px;
+        left: 9px;
+    }
+
+    button.btn {
+        width: 8rem;
+        height: 3rem;
+        font-size: 1.2rem;
+    }
+
+    .pesquisa {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+        margin-bottom: 3rem;
+    }
+
+    input {
+        padding-left: 3.5rem;
+    }
+
+    input::placeholder {
+        font-size: 1.1rem;
+    }
+
+    .pedidos {
+        width: 95%;
+    }
+
+    .central {
+        gap: .5rem;
+    }
+
+    button.detalhes,
+    button.statusbtn {
+        width: 14rem;
+        height: 3.6rem;
+        font-size: 1.1rem;
+    }
+
+    .datapedidos,
+    .horapedidos,
+    .totalpedidos {
+        display: none;
+    }
+
+    .codigopedidos {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+    }
+
+    .codigo {
+        width: 8.8rem;
+        font-size: 1.5rem;
+    }
+
+    .conteudomodaldetalhes {
+        width: 35rem;
+        height: 50rem;
+        margin-top: 10%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .fechar {
+        padding-bottom: 1rem;
+        width: 95%;
+    }
+
+    .fechar img {
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+
+    .modalilustracao img {
+        display: none;
+    }
+
+    .modaldados {
+        margin-bottom: 2rem;
+    }
+
+    .modalcodigopedidos {
+        margin-top: 2rem;
+        gap: 2rem;
+    }
+
+    .modaldata,
+    .modalhora {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .resumopedido {
+        height: 45%;
+        padding: 1.5rem;
+    }
+
+    .modalstatus p {
+        width: 20rem;
+        font-size: 1.6rem;
+    }
+
+    .conteudomodalconfirm h2 {
+        font-size: 1.8rem;
+        padding-top: 3rem;
+    }
+
+    .conteudomodalconfirm p {
+        font-size: 1.3rem;
+        padding-top: 1.5rem;
+    }
+
+    .modalbotoes {
+        margin-top: 3rem;
+        gap: 3rem;
+    }
+
+    .conteudomodalconfirm {
+        width: 28rem;
+        height: 16rem;
+        margin-top: 20%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+}
+
+@media screen and (min-width: 340px) and (max-width:400px) {
+    .cabecalho {
+        margin-right: .5rem;
+        margin-left: 5rem;
+    }
+
+    .perfil img {
+        width: 3.4rem;
+        height: 3.4rem;
+    }
+
+    .voltar img {
+        width: 3rem;
+        height: 3em;
+    }
+
+    .logo img {
+        margin-left: 2rem;
+    }
+
+    .menu img {
+        width: 2.5rem;
+        height: 2.5em;
+    }
+
+    .sandwich {
+        top: 2.5rem;
+    }
+
+    .infortitulo {
+        width: 85%;
+    }
+
+    .infortitulo h1 {
+        font-size: 1.5rem;
+    }
+
+    .conjunto {
+        width: 95%;
+    }
+
+    .conjunto img {
+        width: 2rem;
+        height: 2rem;
+        top: 8px;
+        left: 9px;
+    }
+
+    button.btn {
+        width: 8rem;
+        height: 3rem;
+        font-size: 1.2rem;
+    }
+
+    .pesquisa {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+        margin-bottom: 3rem;
+    }
+
+    input {
+        padding-left: 3.5rem;
+    }
+
+    input::placeholder {
+        font-size: 1rem;
+    }
+
+    .ilustracao img {
+        width: 8rem;
+        height: 9rem;
+    }
+
+    .pedidos {
+        width: 95%;
+    }
+
+    .statusok {
+        width: 6.9rem;
+        height: 2.4rem;
+        font-size: 1.2rem;
+        top: 65px;
+        left: 3px;
+    }
+
+    .statusretirado {
+        display: none;
+    }
+
+    .statuspendente {
+        display: block;
+    }
+
+    .statuspend {
+        width: 6.9rem;
+        height: 2.4rem;
+        font-size: 1.2rem;
+        top: 65px;
+        left: 3px;
+    }
+
+    button.detalhes,
+    button.statusbtn {
+        width: 12rem;
+        height: 3.6rem;
+        font-size: 1rem;
+    }
+
+    .central {
+        margin-left: 1rem;
+        margin-right: 1rem;
+    }
+
+    .datapedidos,
+    .horapedidos,
+    .totalpedidos {
+        display: none;
+    }
+
+    .codigopedidos {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+    }
+
+    .codigo {
+        width: 7.5rem;
+        font-size: 1.2rem;
+    }
+
+    .conteudomodaldetalhes {
+        width: 25rem;
+        height: 50rem;
+        margin-top: 10%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .fechar {
+        padding-bottom: .5rem;
+        width: 90%;
+    }
+
+    .fechar img {
+        width: 2rem;
+        height: 2rem;
+    }
+
+    .modalilustracao img {
+        display: none;
+    }
+
+    .modaldados {
+        margin-bottom: 2rem;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .modalcodigopedidos {
+        gap: 2rem;
+    }
+
+    .modaldata,
+    .modalhora {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .modalcodigopedidos {
+        gap: .5rem;
+    }
+    .codigotexto{
+        width: 15rem;
+    }
+    .resumopedido {
+        height: 40%;
+        padding: 1.5rem;
+    }
+
+    .modalstatus p {
+        width: 20rem;
+        font-size: 1.6rem;
+    }
+
+    .conteudomodalconfirm h2 {
+        font-size: 1.8rem;
+        padding-top: 3rem;
+    }
+
+    .conteudomodalconfirm p {
+        font-size: 1.3rem;
+        padding-top: 1.5rem;
+    }
+
+    .modalbotoes {
+        margin-top: 3rem;
+        gap: 3rem;
+    }
+
+    .conteudomodalconfirm {
+        width: 28rem;
+        height: 16rem;
+        margin-top: 20%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+        .sombra {
+        position: fixed;
+        height: 100%;
+    }
+}
