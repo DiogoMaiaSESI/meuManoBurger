@@ -1,14 +1,16 @@
 <?php
+
+use Controller\AdmController;
 session_start();
 
 require_once __DIR__ . '/../Controller/ClienteController.php';
+require_once __DIR__ . '/../Controller/AdmController.php';
 require_once __DIR__ . '/../Model/Cliente.php';
 
-// --- LÓGICA DE PROCESSAMENTO DO LOGIN ---
 $errorMessage = $_SESSION['error_message'] ?? null;
 unset($_SESSION['error_message']);
 
-$show2FAModal = false;
+$show2FAModal = false; // Garante que a variável exista
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'] ?? null;
@@ -20,25 +22,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
+    // --- ESTRUTURA LÓGICA CORRIGIDA ---
+
+    // PASSO 1: Tentar logar como Administrador
+    if ($email === 'mariane.mmb.admin@gmail.com') {
+        $admModel = new \Model\Adm();
+        $admController = new \Controller\AdmController($admModel);
+        
+        // O método login do AdmController já cria a sessão e retorna true/false
+        if ($admController->login($email, $senha) === true) {
+            // SUCESSO! Redireciona para o perfil do ADM e PARA a execução.
+            header('Location: Perfil_adm.php');
+            exit;
+        }
+        // Se a senha do ADM estiver errada, o script continuará e cairá no erro genérico no final.
+    } 
+    
+    // PASSO 2: Se não for o ADM (ou se a senha dele falhou), tentar logar como Cliente
     $clienteModel = new \Model\Cliente();
     $clienteController = new \Controller\ClienteController($clienteModel);
-
     $result = $clienteController->login($email, $senha);
 
     if ($result === '2fa_required') {
-        // não redireciona — abre o modal de 2FA na renderização da mesma página
-        // espera-se que o controller já tenha colocado $_SESSION['pending_2fa'] e pending_id_cliente
+        // Cliente precisa de 2FA, mostra o modal na própria página de login.
         $show2FAModal = true;
     } elseif ($result === true) {
-        unset($_SESSION['error_message']);
+        // Login de cliente normal bem-sucedido.
         header('Location: Perfil.php');
         exit;
     } else {
-        $_SESSION['error_message'] = "E-mail ou senha inválidos. Verifique seus dados ou cadastre-se.";
+        // FALHA TOTAL: Se chegou aqui, o login falhou para ADM e para Cliente.
+        $_SESSION['error_message'] = "E-mail ou senha inválidos.";
         header('Location: login.php');
         exit;
     }
-
 }
 ?>
 <!DOCTYPE html>

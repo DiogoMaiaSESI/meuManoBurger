@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
 
     // --- LÓGICA PARA TROCA DE ABAS (SINCRONIZADA) ---
     const navLinks = document.querySelectorAll('.nav-link');
@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     navLinks.forEach(link => {
-        link.addEventListener('click', function(event) {
+        link.addEventListener('click', function (event) {
             event.preventDefault();
             let targetId = this.id || '';
             if (targetId.startsWith('m-')) {
@@ -89,11 +89,11 @@ document.addEventListener('DOMContentLoaded', function() {
         if (formFileInput) {
             editPicBtn.addEventListener('click', () => formFileInput.click());
 
-            formFileInput.addEventListener('change', function() {
+            formFileInput.addEventListener('change', function () {
                 const file = this.files[0];
                 if (file) {
                     const reader = new FileReader();
-                    reader.onload = function(e) {
+                    reader.onload = function (e) {
                         if (profilePicPreview) profilePicPreview.src = e.target.result;
                     }
                     reader.readAsDataURL(file);
@@ -121,10 +121,10 @@ document.addEventListener('DOMContentLoaded', function() {
     function openPaymentModalForAdd() {
         isEditing = false;
         if (cardForm) cardForm.reset();
-        if(brandButtons) brandButtons.forEach(btn => btn.classList.remove('selected'));
-        if(typeButtons) typeButtons.forEach(btn => btn.classList.remove('selected'));
-        if(modalTitle) modalTitle.textContent = 'Adicionar novo cartão';
-        if(modalSubmitBtn) modalSubmitBtn.textContent = 'Salvar Cartão';
+        if (brandButtons) brandButtons.forEach(btn => btn.classList.remove('selected'));
+        if (typeButtons) typeButtons.forEach(btn => btn.classList.remove('selected'));
+        if (modalTitle) modalTitle.textContent = 'Adicionar novo cartão';
+        if (modalSubmitBtn) modalSubmitBtn.textContent = 'Salvar Cartão';
         if (paymentModal) paymentModal.classList.add('active');
     }
 
@@ -137,13 +137,13 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('card-cvv').value = cardElement.dataset.cvv;
         document.getElementById('card-holder-name').value = cardElement.dataset.holder;
         const brand = cardElement.dataset.brand;
-        if(selectedCardInput) selectedCardInput.value = brand;
-        if(brandButtons) brandButtons.forEach(btn => { btn.classList.toggle('selected', btn.dataset.brand === brand); });
+        if (selectedCardInput) selectedCardInput.value = brand;
+        if (brandButtons) brandButtons.forEach(btn => { btn.classList.toggle('selected', btn.dataset.brand === brand); });
         const type = cardElement.dataset.type;
-        if(selectedTypeInput) selectedTypeInput.value = type;
-        if(typeButtons) typeButtons.forEach(btn => { btn.classList.toggle('selected', btn.dataset.type === type); });
-        if(modalTitle) modalTitle.textContent = 'Editar Cartão';
-        if(modalSubmitBtn) modalSubmitBtn.textContent = 'Salvar Alterações';
+        if (selectedTypeInput) selectedTypeInput.value = type;
+        if (typeButtons) typeButtons.forEach(btn => { btn.classList.toggle('selected', btn.dataset.type === type); });
+        if (modalTitle) modalTitle.textContent = 'Editar Cartão';
+        if (modalSubmitBtn) modalSubmitBtn.textContent = 'Salvar Alterações';
         if (paymentModal) paymentModal.classList.add('active');
     }
 
@@ -161,7 +161,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (deleteModal) deleteModal.classList.remove('active');
     }
 
-    document.addEventListener('click', function(event) {
+    document.addEventListener('click', function (event) {
         const addBtn = event.target.closest('.add-payment-btn');
         const editBtn = event.target.closest('.edit-card-btn');
         const deleteBtn = event.target.closest('.delete-card-btn');
@@ -174,27 +174,27 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     if (paymentModal) paymentModal.addEventListener('click', (event) => { if (event.target === paymentModal) closePaymentModal(); });
-    
-    if(brandButtons) brandButtons.forEach(button => {
+
+    if (brandButtons) brandButtons.forEach(button => {
         button.addEventListener('click', () => {
             brandButtons.forEach(btn => btn.classList.remove('selected'));
             button.classList.add('selected');
-            if(selectedCardInput) selectedCardInput.value = button.dataset.brand;
+            if (selectedCardInput) selectedCardInput.value = button.dataset.brand;
         });
     });
 
-    if(typeButtons) typeButtons.forEach(button => {
+    if (typeButtons) typeButtons.forEach(button => {
         button.addEventListener('click', () => {
             typeButtons.forEach(btn => btn.classList.remove('selected'));
             button.classList.add('selected');
-            if(selectedTypeInput) selectedTypeInput.value = button.dataset.type;
+            if (selectedTypeInput) selectedTypeInput.value = button.dataset.type;
         });
     });
 
-     if (cardForm) {
-        cardForm.addEventListener('submit', function(event) {
+    if (cardForm) {
+        cardForm.addEventListener('submit', function (event) {
             event.preventDefault();
-            
+
             const cardNickname = document.getElementById('card-nickname').value;
             const cardNumber = document.getElementById('card-number').value;
             const cardExpiry = document.getElementById('card-expiry').value;
@@ -272,8 +272,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (paymentListContainer) paymentListContainer.appendChild(newCardElement);
             }
             cardForm.reset();
-            if(brandButtons) brandButtons.forEach(btn => btn.classList.remove('selected'));
-            if(typeButtons) typeButtons.forEach(btn => btn.classList.remove('selected')); // Adicionado
+            if (brandButtons) brandButtons.forEach(btn => btn.classList.remove('selected'));
+            if (typeButtons) typeButtons.forEach(btn => btn.classList.remove('selected')); // Adicionado
             closePaymentModal();
         });
     }
@@ -281,8 +281,8 @@ document.addEventListener('DOMContentLoaded', function() {
     if (deleteModal) {
         const btnDeleteNao = document.getElementById('btn-delete-nao');
         const btnDeleteSim = document.getElementById('btn-delete-sim');
-        if(btnDeleteNao) btnDeleteNao.addEventListener('click', closeDeleteModal);
-        if(btnDeleteSim) btnDeleteSim.addEventListener('click', () => {
+        if (btnDeleteNao) btnDeleteNao.addEventListener('click', closeDeleteModal);
+        if (btnDeleteSim) btnDeleteSim.addEventListener('click', () => {
             if (cardToDelete) {
                 cardToDelete.remove();
             }
@@ -302,7 +302,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // --- LÓGICA PARA MOSTRAR/OCULTAR SENHA ---
     const togglePasswordIcons = document.querySelectorAll('.password-toggle-icon');
     togglePasswordIcons.forEach(icon => {
-        icon.addEventListener('click', function() {
+        icon.addEventListener('click', function () {
             const passwordInput = this.previousElementSibling;
             if (passwordInput && passwordInput.type === 'password') {
                 passwordInput.type = 'text';
@@ -322,7 +322,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const errorCodeMessage = document.getElementById('2fa-error-message');
 
     if (open2FAModalBtn) {
-        open2FAModalBtn.addEventListener('click', async function(event) {
+        open2FAModalBtn.addEventListener('click', async function (event) {
             event.preventDefault();
             qrCodeContainer.innerHTML = '<p>Gerando QR Code...</p>';
             if (errorCodeMessage) errorCodeMessage.textContent = '';
@@ -338,7 +338,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 const text = await resp.text();
                 let data;
-                try { data = JSON.parse(text); } 
+                try { data = JSON.parse(text); }
                 catch (err) { throw new Error('Resposta inválida do servidor: ' + text.substring(0, 300)); }
 
                 if (!resp.ok) throw new Error('HTTP ' + resp.status + ' — ' + (data.message || 'Erro no servidor'));
@@ -395,7 +395,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     if (disable2FAForm) {
-        disable2FAForm.addEventListener('submit', async function(e) {
+        disable2FAForm.addEventListener('submit', async function (e) {
             e.preventDefault();
             const passwordInput = document.getElementById('disable-2fa-password');
             const password = passwordInput.value;
@@ -427,7 +427,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function close2FAModal() {
-        if(modal2FA) modal2FA.classList.remove('active');
+        if (modal2FA) modal2FA.classList.remove('active');
     }
 
     if (close2FAModalBtn) {
@@ -442,7 +442,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     if (verifyForm) {
-        verifyForm.addEventListener('submit', async function(event) {
+        verifyForm.addEventListener('submit', async function (event) {
             event.preventDefault();
             const code = document.getElementById('2fa-code').value;
             const secret = secretInput.value;
@@ -460,7 +460,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 const text = await response.text();
                 let data;
-                try { data = JSON.parse(text); } 
+                try { data = JSON.parse(text); }
                 catch (err) { throw new Error('Resposta inválida do servidor: ' + text.substring(0, 300)); }
 
                 if (!response.ok) throw new Error('HTTP ' + response.status + ' — ' + (data.message || 'Erro no servidor'));

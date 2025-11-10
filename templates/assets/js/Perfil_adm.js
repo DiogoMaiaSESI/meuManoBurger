@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
 
     // --- LÓGICA PARA TROCA DE ABAS (SINCRONIZADA) ---
     const navLinks = document.querySelectorAll('.nav-link');
@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function activateTab(targetId) {
         if (!targetId) return;
-
         navLinks.forEach(nav => nav.classList.remove('active'));
         contentTabs.forEach(tab => tab.classList.remove('active'));
 
@@ -25,23 +24,16 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     navLinks.forEach(link => {
-        link.addEventListener('click', function(event) {
-            event.preventDefault()
-
-            // Normaliza ids mobile ("m-btn-dados") para ids da sidebar ("btn-dados")
-            let targetId = this.id || ''
+        link.addEventListener('click', function (event) {
+            event.preventDefault();
+            let targetId = this.id || '';
+            // Normaliza o ID do menu mobile para corresponder ao da sidebar
             if (targetId.startsWith('m-')) {
-                targetId = targetId.replace(/^m-/, '')
+                targetId = 'btn-' + targetId.substring(targetId.indexOf('-') + 1);
             }
-
-            if (!targetId.startsWith('btn-') && !targetId.startsWith('m-btn-') && targetId !== '') {
-                targetId = 'btn-' + targetId.replace(/^btn-/, '')
-            }
-
-
-            activateTab(targetId)
-        })
-    })
+            activateTab(targetId);
+        });
+    });
 
     // --- LÓGICA DO MENU SANDUÍCHE ---
     const sandwichMenu = document.querySelector('.sandwich-menu-btn');
@@ -53,13 +45,8 @@ document.addEventListener('DOMContentLoaded', function() {
         if (sandwichSombra) sandwichSombra.classList.toggle('shadowActive');
     }
 
-    if (sandwichMenu) {
-        sandwichMenu.addEventListener('click', toggleMenu);
-    }
-    if (sandwichSombra) {
-        sandwichSombra.addEventListener('click', toggleMenu);
-    }
-
+    if (sandwichMenu) sandwichMenu.addEventListener('click', toggleMenu);
+    if (sandwichSombra) sandwichSombra.addEventListener('click', toggleMenu);
 
     // --- LÓGICA DO MODAL DE LOGOUT ---
     const logoutModal = document.getElementById('modal-confirm-logout');
@@ -84,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     if (confirmLogoutBtn) {
         confirmLogoutBtn.addEventListener('click', () => {
-            window.location.href = '/meuManoBurger/logout.php';
+            window.location.href = 'Perfil.php?action=logout';
         });
     }
     if (logoutModal) {
@@ -96,48 +83,24 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // --- LÓGICA PARA TROCA DE FOTO DE PERFIL ---
     const editPicBtn = document.getElementById('edit-pic-btn');
-    const fileUploadInput = document.getElementById('file-upload-input');
+    const profileForm = document.getElementById('profile-form');
     const profilePicPreview = document.getElementById('profile-pic-preview');
-    const picActionButtons = document.getElementById('pic-action-buttons');
-    const savePicBtn = document.getElementById('save-pic-btn');
-    const cancelPicBtn = document.getElementById('cancel-pic-btn');
-    if (profilePicPreview) {
-        let originalPicSrc = profilePicPreview.src;
-        if (editPicBtn) {
-            editPicBtn.addEventListener('click', () => fileUploadInput.click());
-        }
-        if (fileUploadInput) {
-            fileUploadInput.addEventListener('change', function() {
+
+    if (editPicBtn && profileForm) {
+        const formFileInput = profileForm.querySelector('input[name="imagem_adm"]');
+        if (formFileInput) {
+            editPicBtn.addEventListener('click', () => formFileInput.click());
+
+            formFileInput.addEventListener('change', function () {
                 const file = this.files[0];
                 if (file) {
                     const reader = new FileReader();
-                    reader.onload = function(e) {
-                        profilePicPreview.src = e.target.result;
-                        if(picActionButtons) picActionButtons.classList.add('visible');
-                        if(editPicBtn) editPicBtn.style.display = 'none';
+                    reader.onload = function (e) {
+                        if (profilePicPreview) profilePicPreview.src = e.target.result;
                     }
                     reader.readAsDataURL(file);
                 }
-            });
-        }
-        if (cancelPicBtn) {
-            cancelPicBtn.addEventListener('click', () => {
-                profilePicPreview.src = originalPicSrc;
-                fileUploadInput.value = '';
-                if(picActionButtons) picActionButtons.classList.remove('visible');
-                if(editPicBtn) editPicBtn.style.display = 'flex';
-            });
-        }
-        if (savePicBtn) {
-            savePicBtn.addEventListener('click', () => {
-                const file = fileUploadInput.files[0];
-                if (!file) return;
-                console.log("Simulando upload da imagem:", file.name);
-                originalPicSrc = profilePicPreview.src;
-                if(picActionButtons) picActionButtons.classList.remove('visible');
-                if(editPicBtn) editPicBtn.style.display = 'flex';
             });
         }
     }
@@ -145,69 +108,189 @@ document.addEventListener('DOMContentLoaded', function() {
     // --- LÓGICA PARA MOSTRAR/OCULTAR SENHA ---
     const togglePasswordIcons = document.querySelectorAll('.password-toggle-icon');
     togglePasswordIcons.forEach(icon => {
-        icon.addEventListener('click', function() {
+        icon.addEventListener('click', function () {
             const passwordInput = this.previousElementSibling;
-            const isPassword = passwordInput.type === 'password';
-            if (isPassword) {
+            if (passwordInput && passwordInput.type === 'password') {
                 passwordInput.type = 'text';
                 this.src = '/meuManoBurger/templates/assets/img/olho.png';
-            } else {
+            } else if (passwordInput) {
                 passwordInput.type = 'password';
                 this.src = '/meuManoBurger/templates/assets/img/olhofechado.png';
             }
         });
     });
+    const open2FAModalBtn = document.querySelector('.add-2fa-link');
+    const modal2FA = document.getElementById('modal-2fa');
+    const close2FAModalBtn = document.getElementById('close-2fa-modal-btn');
+    const qrCodeContainer = document.getElementById('qr-code-container');
+    const secretInput = document.getElementById('2fa-secret-input');
+    const verifyForm = document.getElementById('2fa-verify-form');
+    const errorCodeMessage = document.getElementById('2fa-error-message');
 
-    // --- LÓGICA DOS FORMULÁRIOS DA PÁGINA ---
-    const profileForm = document.getElementById('profile-form');
-    if (profileForm) {
-        profileForm.addEventListener('submit', function(event) {
+    if (open2FAModalBtn) {
+        open2FAModalBtn.addEventListener('click', async function (event) {
             event.preventDefault();
-            const submitBtn = this.querySelector('.submit-btn');
-            const originalText = submitBtn.textContent;
-            submitBtn.textContent = 'Salvo!';
-            setTimeout(() => {
-                submitBtn.textContent = originalText;
-            }, 2000);
-        });
-    }
+            qrCodeContainer.innerHTML = '<p>Gerando QR Code...</p>';
+            if (errorCodeMessage) errorCodeMessage.textContent = '';
+            const codeInput = document.getElementById('2fa-code');
+            if (codeInput) codeInput.value = '';
+            if (modal2FA) modal2FA.classList.add('active');
 
-    const securityForm = document.getElementById('security-form');
-    if (securityForm) {
-        const novaSenhaInput = document.getElementById('nova-senha');
-        const confirmarSenhaInput = document.getElementById('confirmar-senha');
-        const savePasswordBtn = document.getElementById('btn-salvar-senha');
-        const errorMessage = document.getElementById('password-error-message');
-        function validatePasswords() {
-            const senha1 = novaSenhaInput.value;
-            const senha2 = confirmarSenhaInput.value;
-            if (senha1 || senha2) {
-                if (senha1 === senha2 && senha1.length > 0) {
-                    errorMessage.textContent = '';
-                    savePasswordBtn.disabled = false;
+            try {
+                const resp = await fetch('/meuManoBurger/View/api_adm.php?action=generate-2fa', {
+                    method: 'GET',
+                    credentials: 'same-origin'
+                });
+
+                const text = await resp.text();
+                let data;
+                try { data = JSON.parse(text); }
+                catch (err) { throw new Error('Resposta inválida do servidor: ' + text.substring(0, 300)); }
+
+                if (!resp.ok) throw new Error('HTTP ' + resp.status + ' — ' + (data.message || 'Erro no servidor'));
+
+                if (data.success) {
+                    const qr = data.qrCodeUrl || '';
+                    if (/^\s*(data:|https?:\/\/)/i.test(qr)) {
+                        qrCodeContainer.innerHTML = `<img src="${qr}" alt="QR Code para 2FA">`;
+                    }
+                    else if (/^\s*</.test(qr)) {
+                        qrCodeContainer.innerHTML = qr;
+                    }
+                    else {
+                        qrCodeContainer.innerHTML = `<p>${qr}</p>`;
+                    }
+                    if (typeof secretInput !== 'undefined' && secretInput) {
+                        secretInput.value = data.secret || '';
+                    }
                 } else {
-                    errorMessage.textContent = 'As senhas não coincidem.';
-                    savePasswordBtn.disabled = true;
+                    qrCodeContainer.innerHTML = `<p style="color: red;">${data.message || 'Erro ao gerar QR Code.'}</p>`;
                 }
-            } else {
-                errorMessage.textContent = '';
-                savePasswordBtn.disabled = true;
+            } catch (error) {
+                console.error('generate-2fa error:', error);
+                qrCodeContainer.innerHTML = '<p style="color: red;">Erro de comunicação com o servidor.</p>';
             }
-        }
-        if (novaSenhaInput) novaSenhaInput.addEventListener('keyup', validatePasswords);
-        if (confirmarSenhaInput) confirmarSenhaInput.addEventListener('keyup', validatePasswords);
-        if (savePasswordBtn) savePasswordBtn.disabled = true;
-        securityForm.addEventListener('submit', function(event) {
-            event.preventDefault();
-            if (savePasswordBtn.disabled) return;
-            const originalText = savePasswordBtn.textContent;
-            savePasswordBtn.textContent = 'Senha Alterada!';
-            novaSenhaInput.value = '';
-            confirmarSenhaInput.value = '';
-            savePasswordBtn.disabled = true;
-            setTimeout(() => {
-                savePasswordBtn.textContent = originalText;
-            }, 2000);
         });
     }
+    // --- LÓGICA PARA DESATIVAÇÃO DO 2FA ---
+    const openDisableModalBtn = document.getElementById('btn-open-disable-2fa');
+    const disable2FAModal = document.getElementById('modal-disable-2fa');
+    const closeDisableModalBtn = document.getElementById('close-disable-2fa-modal-btn');
+    const disable2FAForm = document.getElementById('disable-2fa-form');
+    const disableErrorMsg = document.getElementById('disable-2fa-error-message');
+
+    if (openDisableModalBtn) {
+        openDisableModalBtn.addEventListener('click', () => {
+            if (disable2FAModal) disable2FAModal.classList.add('active');
+        });
+    }
+
+    function closeDisableModal() {
+        if (disable2FAModal) disable2FAModal.classList.remove('active');
+        if (disableErrorMsg) disableErrorMsg.textContent = '';
+        if (disable2FAForm) disable2FAForm.reset();
+    }
+
+    if (closeDisableModalBtn) {
+        closeDisableModalBtn.addEventListener('click', closeDisableModal);
+    }
+    if (disable2FAModal) {
+        disable2FAModal.addEventListener('click', (e) => {
+            if (e.target === disable2FAModal) closeDisableModal();
+        });
+    }
+
+    if (disable2FAForm) {
+        disable2FAForm.addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const passwordInput = document.getElementById('disable-2fa-password');
+            const password = passwordInput.value;
+
+            if (!password) {
+                disableErrorMsg.textContent = 'Por favor, digite sua senha.';
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('password', password);
+
+            try {
+                const response = await fetch('/meuManoBurger/View/api.php?action=disable-2fa', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await response.json();
+
+                if (data.success) {
+                    window.location.reload();
+                } else {
+                    disableErrorMsg.textContent = data.message || 'Ocorreu um erro.';
+                }
+            } catch (error) {
+                disableErrorMsg.textContent = 'Erro de comunicação com o servidor.';
+            }
+        });
+    }
+
+    function close2FAModal() {
+        if (modal2FA) modal2FA.classList.remove('active');
+    }
+
+    if (close2FAModalBtn) {
+        close2FAModalBtn.addEventListener('click', close2FAModal);
+    }
+    if (modal2FA) {
+        modal2FA.addEventListener('click', (event) => {
+            if (event.target === modal2FA) {
+                close2FAModal();
+            }
+        });
+    }
+
+    if (verifyForm) {
+        verifyForm.addEventListener('submit', async function (event) {
+            event.preventDefault();
+            const code = document.getElementById('2fa-code').value;
+            const secret = secretInput.value;
+
+            const formData = new FormData();
+            formData.append('secret', secret);
+            formData.append('code', code);
+
+            try {
+                const response = await fetch('/meuManoBurger/View/api_adm.php?action=verify-2fa', {
+                    method: 'POST',
+                    body: formData,
+                    credentials: 'same-origin'
+                });
+
+                const text = await response.text();
+                let data;
+                try { data = JSON.parse(text); }
+                catch (err) { throw new Error('Resposta inválida do servidor: ' + text.substring(0, 300)); }
+
+                if (!response.ok) throw new Error('HTTP ' + response.status + ' — ' + (data.message || 'Erro no servidor'));
+
+                if (data.success) {
+                    fetch('/meuManoBurger/View/api.php?action=set-flash-message', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                        body: new URLSearchParams({
+                            type: 'success',
+                            message: 'Autenticação de 2 Fatores ativada com sucesso!'
+                        })
+                    }).then(() => {
+                        window.location.reload();
+                    });
+
+                } else {
+                    errorCodeMessage.textContent = data.message || 'Erro desconhecido.';
+                }
+            } catch (error) {
+                console.error('verify-2fa error:', error);
+                errorCodeMessage.textContent = 'Erro de comunicação com o servidor.';
+            }
+        });
+    }
+
 });
