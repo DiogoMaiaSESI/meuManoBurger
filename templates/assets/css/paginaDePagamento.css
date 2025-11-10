@@ -1,0 +1,312 @@
+@import 'global.css';
+
+header {
+    background-color: var(--VermelhoCereja);
+    display: flex;
+    height: 10.6rem;
+    width: 100%;
+    align-items: center;
+    justify-content: end;
+    padding-right: 4.9rem;
+    position: relative;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+.headerButtons {
+    display: flex;
+    gap: 4.6rem;
+    align-items: end;
+}
+.headerButtons figure {
+    transition: 500ms;
+    cursor: pointer;
+}
+.headerButtons figure:hover {
+    transition: 500ms;
+    opacity: 70%;
+    transform: scale(110%, 110%);
+}
+.logo{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+figure img{
+    display: block;
+}
+figure{
+    width: fit-content;
+    height: fit-content;
+}
+.menu {
+    width: 8rem !important;
+    padding-left: 4rem;
+    cursor: pointer;
+    pointer-events: all;
+}
+.menu:hover {
+    transition: 500ms;
+    opacity: 70%;
+}
+.sandwich {
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    gap: 3.2rem;
+    position: absolute;
+    top: 3.3rem;
+    left: 0;
+    width: fit-content;
+    pointer-events: none;
+}
+.options {
+    background-color: var(--VermelhoCereja);
+    width: 25.5rem;
+    border-style: solid;
+    border-left-style: none;
+    border-width: 0.2rem;
+    transform: translateX(-100%);
+    transition: 500ms;
+    border-top-right-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+}
+.optionActive {
+    transform: translateX(0%);
+    transition: 500ms;
+}
+.option {
+    display: flex;
+    justify-content: baseline;
+    align-items: center;
+    height: 6.4rem;
+    border-style: solid;
+    border-left-style: none;
+    border-width: 0.1rem;
+    border-color: var(--Preto);
+    color: var(--Branco);
+    padding-left: 1.6rem;
+    gap: 2.1rem;
+    cursor: pointer;
+    transition: 500ms;
+}
+.option:hover {
+    padding-left: 2.5rem;
+    transition: 500ms;
+}
+h5 {
+    font-size: 2.1rem;
+    font-weight: 400;
+}
+.sombra {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
+    background-color: var(--Preto);
+    opacity: 0%;
+    transition: 500ms;
+    pointer-events: none;
+}
+.shadowActive {
+    opacity: 40%;
+    transition: 500ms;
+    pointer-events: all;
+}
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80rem;
+    height: fit-content;
+    box-shadow: 0 0 3.06rem 0 rgba(0, 0, 0, 0.2);
+    border-radius: 1.1rem;
+    padding: 3.4rem 3rem;
+    background-color: var(--Branco);
+    gap: 1rem;
+}
+body {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 10rem;
+    padding-top: 19rem;
+    background-color: #F4F4F4;
+}
+.orderSummary {
+    display: flex;
+    flex-direction: column;
+    gap: 3.7rem;
+    width: 100%;
+}
+.titleDiv {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+}
+.line {
+    width: 100%;
+    height: 0.1rem;
+    background-color: var(--VermelhoCereja);
+}
+h2 {
+    font-size: 4.5rem;
+    font-weight: 700;
+    color: var(--VermelhoCereja);
+}
+.backgroundDiv {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    background-color: var(--RosaClaro);
+    padding: 1.4rem 2.6rem;
+    border-radius: 1rem;
+}
+.lineDiv {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+}
+.tinyLine {
+    width: 100%;
+    height: 0.1rem;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+.unitDiv {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.priceDiv {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+}
+.priceDiv h5 {
+    font-size: 1.4rem;
+    font-weight: 400;
+}
+.unitDiv h4 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--VermelhoCereja);
+}
+.backgroundDiv h3 {
+    width: 100%;
+    text-align: end;
+    font-size: 2.4rem;
+    font-weight: 400;
+}
+.backgroundDiv h3 span {
+    font-weight: 700;
+}
+.paymentMethod {
+    display: flex;
+    gap: 1.7rem;
+}
+.card {
+    width: 16rem;
+    height: 16rem;
+    border-radius: 0.8rem;
+    box-shadow: 0 0 1.25rem 0 rgba(0, 0, 0, 0.07);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: 500ms;
+}
+.card:hover {
+    transition: 500ms;
+    border-style: solid;
+    border-color: var(--AmareloSecundario);
+    border-width: 0.1rem;
+    transform: scale(105%, 105%);
+}
+.cardContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 3.3rem;
+    align-items: center;
+}
+.cardContainer h4 {
+    width: 100%;
+}
+button {
+    width: 30rem;
+    height: 6rem;
+    background-color: var(--AmareloSecundario);
+    color: var(--Preto);
+    border-radius: 1.5rem;
+    font-size: 2rem;
+    font-weight: 600;
+    border-style: none;
+    cursor: pointer;
+    transition: 500ms;
+}
+button:hover {
+    background-color: var(--AmareloPrimario);
+    border-style: solid;
+    border-width: 0.1rem;
+    transition: 500ms;
+}
+@media screen and (max-width: 834px) {
+    main {
+        max-width: 56.5rem;
+        width: 90%;
+    }
+    header {
+        padding-right: 1rem;
+    }
+    h2 {
+        text-align: center;
+        font-size: 3.2rem;
+    }
+    .paymentMethod {
+        width: 100%;
+        flex-direction: column;
+    }
+    .card {
+        width: 100%;
+        padding-left: 1.5rem;
+        height: 7.5rem;
+    }
+    .cardContainer {
+        width: 100%;
+        height: 100%;
+        flex-direction: row;
+        gap: 1.5rem;
+    }
+    .headerButtons {
+        gap: 0.5rem;
+    }
+    .headerButtons figure {
+        transform: scale(70%, 70%);
+    }
+    .headerButtons figure:hover {
+    transform: scale(80%, 80%);
+    }
+    .logo img{
+        width: 8rem;
+    }
+}
+@media screen and (max-width: 445px) {
+    h2 {
+        font-size: 2.6rem;
+    }
+    .backgroundDiv h3 {
+    font-size: 1.8rem;
+    }
+    .logo{
+        left: 40%;
+        
+    }
+}

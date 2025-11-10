@@ -1,0 +1,69 @@
+.favorites-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+    gap: 3rem;
+}
+
+.favorite-card {
+    background-color: #fff;
+    border: 1px solid var(--Cinza);
+    border-radius: 1.8rem;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    text-align: center;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.favorite-card figure {
+    width: 100%;
+    margin-bottom: 1.5rem;
+}
+
+.favorite-card img {
+    width: 100%;
+    height: 12rem;
+    object-fit: contain;
+}
+
+.favorite-card h3 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    flex-grow: 1;
+}
+
+.favorite-card .price {
+    font-size: 1.8rem;
+    font-weight: 500;
+    color: var(--VermelhoCereja);
+    margin-bottom: 1.5rem;
+}
+
+.details-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 1rem;
+    background-color: var(--VermelhoCereja);
+    color: var(--Branco);
+    border: none;
+    border-radius: 1rem;
+    font-size: 1.4rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    white-space: nowrap;
+}
+
+.details-btn:hover {
+    opacity: 0.9;
+}
+
+.details-btn img {
+    height: 1.6rem;
+    margin-right: 0.8rem;
+    filter: brightness(0) invert(1);
+}
