@@ -4,6 +4,7 @@ namespace Controller;
 
 use Exception;
 use Model\Product;
+use PDOException;
 
 class ProductController {
     private $productModel;
@@ -93,6 +94,14 @@ class ProductController {
         }
 
         return $this->productModel->getFavoritesByUser($userId);
+    }
+    public function getProductsByType ($type) {
+        try {
+            $sanitizedType = filter_var($type, FILTER_SANITIZE_SPECIAL_CHARS);
+            return $this->productModel->getProductsByType($sanitizedType);
+        } catch (PDOException $e) {
+            throw new Exception('Erro ao selecionar produtos pelo tipo: ' . $e);
+        }
     }
 }
 ?>
