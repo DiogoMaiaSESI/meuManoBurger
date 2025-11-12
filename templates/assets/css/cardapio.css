@@ -289,6 +289,11 @@ section h1{
     height: 18.0rem; 
 }
 
+.product-image img{
+    max-width: 16rem;
+    max-height: 16rem;
+}
+
 .informacoes_config {
     padding: 10px 15px;
     flex-grow: 1; 

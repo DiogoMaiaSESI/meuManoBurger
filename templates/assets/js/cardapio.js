@@ -208,3 +208,11 @@ sombra.addEventListener('click', () => {
     sombra.classList.toggle('shadowActive')
     sandwich.classList.toggle('sandwichActive')
 })
+
+const addProduto = document.querySelectorAll('.adicionar_produto')
+
+addProduto.forEach(botao => {
+    botao.addEventListener('click' , () => {
+        window.location.href = 'cadastro_produto.php'
+    })
+})

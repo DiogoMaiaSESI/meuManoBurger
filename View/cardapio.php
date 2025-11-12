@@ -1,5 +1,48 @@
 <?php
-    
+require_once('../vendor/autoload.php');
+use Controller\ProductController;
+
+// Inicia o controller de produtos
+$productController = new ProductController();
+$newProduct = null;
+$targetCategoryClass = '';
+
+// Verifica se um novo produto foi cadastrado e os parâmetros estão na URL
+if (isset($_GET['new_product_id']) && isset($_GET['category_class'])) {
+    $newProductId = filter_var($_GET['new_product_id'], FILTER_VALIDATE_INT);
+    $targetCategoryClass = htmlspecialchars($_GET['category_class']);
+
+    if ($newProductId) {
+        // Busca os dados do produto recém-cadastrado pelo ID
+        $newProduct = $productController->findById($newProductId);
+    }
+}
+// Função para gerar o HTML de um card de produto
+function renderProductCard($product) {
+    // Formata o preço para o padrão brasileiro (R$ X,XX)
+    $formattedPrice = 'R$ ' . number_format($product['preco_produto'], 2, ',', '.');
+    // Converte a imagem (BLOB) para um formato que o HTML entende (Base64)
+    $imageBase64 = 'data:image/jpeg;base64,' . base64_encode($product['imagem_produto']);
+
+    // Retorna a estrutura HTML do card com os dados do produto
+    return '
+        <div class="config_card">
+            <div class="product-image">
+                <img src="' . $imageBase64 . '" alt="' . htmlspecialchars($product['nome_produto']) . '">
+            </div>
+            <div class="informacoes_config">
+                <h3 class="product-title">' . htmlspecialchars($product['nome_produto']) . '</h3>
+                <p class="product-price">' . $formattedPrice . '</p>
+                <button class="add-to-cart">
+                    <figure>
+                        <img src="../templates/assets/img/detalhes.png" alt="Ícone de detalhes">
+                    </figure>
+                    Ver Detalhes
+                </button>
+            </div>
+        </div>
+    ';
+}
 ?>
 
 <!DOCTYPE html>
@@ -146,17 +189,20 @@
             <h1>Hambúrgueres</h1>
 
             <figure>
-                <img src="../templates/assets/img/adicionar.png" alt="">
+                <img class="adicionar_produto" src="../templates/assets/img/adicionar.png" alt="">
             </figure>
         </div>
         <div class="container">
-                <div class="config_card">
+            <?php 
+            $hambs = $productController->getProductsByType('Hamburgueres');
+            foreach ($hambs as $hamb => $value) {
+                echo '<div class="config_card">
                     <div class="product-image">
-                        <img src="../templates/assets/img/classico.png" alt="Hambúrguer Clássico">
+                        <img src="' . 'data:image/jpeg;base64,' . base64_encode($value['imagem_produto']) . '" alt="' . htmlspecialchars($value['nome_produto']) . '" alt="Hambúrguer X-Tudo">
                     </div>
                     <div class="informacoes_config">
-                        <h3 class="product-title">Clássico</h3>
-                        <p class="product-price">R$ 7,00</p>
+                        <h3 class="product-title">' . htmlspecialchars($value['nome_produto']) . '</h3>
+                        <p class="product-price">R$ '. number_format($value['preco_produto'], 2) .'</p>
                         <button class="add-to-cart">
                             <figure>
                                 <img src="../templates/assets/img/detalhes.png" alt="">
@@ -164,144 +210,30 @@
                             Ver Detalhes
                         </button>
                     </div>
-                </div>
-
-                <div class="config_card">
-                    <div class="product-image">
-                        <img src="../templates/assets/img/duplobacon.png"
-                            alt="Hambúrguer Duplo Bacon">
-                    </div>
-                    <div class="informacoes_config">
-                        <h3 class="product-title">Duplo Bacon</h3>
-                        <p class="product-price">R$ 7,00</p>
-                        <button class="add-to-cart">
-                            <figure>
-                                <img src="../templates/assets/img/detalhes.png" alt="">
-                            </figure>
-                            Ver Detalhes
-                        </button>
-                    </div>
-                </div>
-
-                <div class="config_card">
-                    <div class="product-image">
-                        <img src="../templates/assets/img/triplocheddar.png"
-                            alt="Hambúrguer Triplo Cheddar">
-                    </div>
-                    <div class="informacoes_config">
-                        <h3 class="product-title">Triplo Cheddar</h3>
-                        <p class="product-price">R$ 7,00</p>
-                        <button class="add-to-cart">
-                            <figure>
-                                <img src="../templates/assets/img/detalhes.png" alt="">
-                            </figure>
-                            Ver Detalhes
-                        </button>
-                    </div>
-                </div>
-
-                <div class="config_card">
-                    <div class="product-image">
-                        <img src="../templates/assets/img/xtudo.png" alt="Hambúrguer X-Tudo">
-                    </div>
-                    <div class="informacoes_config">
-                        <h3 class="product-title">X-Tudo</h3>
-                        <p class="product-price">R$ 7,00</p>
-                        <button class="add-to-cart">
-                            <figure>
-                                <img src="../templates/assets/img/detalhes.png" alt="">
-                            </figure>
-                            Ver Detalhes
-                        </button>
-                    </div>
-                </div>
-
-
-                <div class="config_card">
-                    <div class="product-image">
-                        <img src="../templates/assets/img/duploburguer.png" alt="Hambúrguer Clássico">
-                    </div>
-                    <div class="informacoes_config">
-                        <h3 class="product-title">Duplo Burguer</h3>
-                        <p class="product-price">R$ 7,00</p>
-                        <button class="add-to-cart">
-                            <figure>
-                                <img src="../templates/assets/img/detalhes.png" alt="">
-                            </figure>
-                            Ver Detalhes
-                        </button>
-                    </div>
-                </div>
-
-                <div class="config_card">
-                    <div class="product-image">
-                        <img src="../templates/assets/img/xegg.png"
-                            alt="Hambúrguer Duplo Bacon">
-                    </div>
-                    <div class="informacoes_config">
-                        <h3 class="product-title">X-Egg</h3>
-                        <p class="product-price">R$ 7,00</p>
-                        <button class="add-to-cart">
-                            <figure>
-                                <img src="../templates/assets/img/detalhes.png" alt="">
-                            </figure>
-                            Ver Detalhes
-                        </button>
-                    </div>
-                </div>
-
-                <div class="config_card">
-                    <div class="product-image">
-                        <img src="../templates/assets/img/xbacon.png"
-                            alt="Hambúrguer Triplo Cheddar">
-                    </div>
-                    <div class="informacoes_config">
-                        <h3 class="product-title">X-Bacon</h3>
-                        <p class="product-price">R$ 7,00</p>
-                        <button class="add-to-cart">
-                            <figure>
-                                <img src="../templates/assets/img/detalhes.png" alt="">
-                            </figure>
-                            Ver Detalhes
-                        </button>
-                    </div>
-                </div>
-
-                <div class="config_card">
-                    <div class="product-image">
-                        <img src="../templates/assets/img/xsalada.png" alt="Hambúrguer X-Tudo">
-                    </div>
-                    <div class="informacoes_config">
-                        <h3 class="product-title">X-Salada</h3>
-                        <p class="product-price">R$ 7,00</p>
-                        <button class="add-to-cart">
-                            <figure>
-                                <img src="../templates/assets/img/detalhes.png" alt="">
-                            </figure>
-                            Ver Detalhes
-                        </button>
-                    </div>
-                </div>
-
+                </div>';
+            } ?>
         </div>
     </section>
     <section class="lanc">
        <div class="add-product">
-            <h1>Hambúrgueres</h1>
+            <h1>Lanches</h1>
 
             <figure>
-                <img src="../templates/assets/img/adicionar.png" alt="">
+                <img class="adicionar_produto" src="../templates/assets/img/adicionar.png" alt="">
             </figure>
         </div>
 
        <div class="container">
-                <div class="config_card">
+            <?php 
+            $lancs = $productController->getProductsByType('Lanches');
+            foreach ($lancs as $lanc => $value) {
+                echo '<div class="config_card">
                     <div class="product-image">
-                        <img src="../templates/assets/img/pastel_carne.png" alt="Pastel de carne">
+                        <img src="' . 'data:image/jpeg;base64,' . base64_encode($value['imagem_produto']) . '" alt="' . htmlspecialchars($value['nome_produto']) . '" alt="Hambúrguer X-Tudo">
                     </div>
                     <div class="informacoes_config">
-                        <h3 class="product-title">Pastel de Carne</h3>
-                        <p class="product-price">R$ 7,00</p>
+                        <h3 class="product-title">' . htmlspecialchars($value['nome_produto']) . '</h3>
+                        <p class="product-price">R$ '. number_format($value['preco_produto'], 2) .'</p>
                         <button class="add-to-cart">
                             <figure>
                                 <img src="../templates/assets/img/detalhes.png" alt="">
@@ -309,144 +241,30 @@
                             Ver Detalhes
                         </button>
                     </div>
-                </div>
-
-                <div class="config_card">
-                    <div class="product-image">
-                        <img src="../templates/assets/img/Bauru_frango.png"
-                            alt="Bauru de Frango">
-                    </div>
-                    <div class="informacoes_config">
-                        <h3 class="product-title">Bauru de Frango</h3>
-                        <p class="product-price">R$ 7,00</p>
-                        <button class="add-to-cart">
-                            <figure>
-                                <img src="../templates/assets/img/detalhes.png" alt="">
-                            </figure>
-                            Ver Detalhes
-                        </button>
-                    </div>
-                </div>
-
-                <div class="config_card">
-                    <div class="product-image">
-                        <img src="../templates/assets/img/coxinha.png"
-                            alt="Coxinha">
-                    </div>
-                    <div class="informacoes_config">
-                        <h3 class="product-title">Coxinha</h3>
-                        <p class="product-price">R$ 7,00</p>
-                        <button class="add-to-cart">
-                            <figure>
-                                <img src="../templates/assets/img/detalhes.png" alt="">
-                            </figure>
-                            Ver Detalhes
-                        </button>
-                    </div>
-                </div>
-
-                <div class="config_card">
-                    <div class="product-image">
-                        <img src="../templates/assets/img/esfirra.png" alt="Esfirra">
-                    </div>
-                    <div class="informacoes_config">
-                        <h3 class="product-title">Esfirra</h3>
-                        <p class="product-price">R$ 7,00</p>
-                        <button class="add-to-cart">
-                            <figure>
-                                <img src="../templates/assets/img/detalhes.png" alt="">
-                            </figure>
-                            Ver Detalhes
-                        </button>
-                    </div>
-                </div>
-        
-
-                <div class="config_card">
-                    <div class="product-image">
-                        <img src="../templates/assets/img/quibe.png" alt="Quibe">
-                    </div>
-                    <div class="informacoes_config">
-                    <h3 class="product-title">Quibe</h3>
-                        <p class="product-price">R$ 7,00</p>
-                        <button class="add-to-cart">
-                            <figure>
-                                <img src="../templates/assets/img/detalhes.png" alt="">
-                            </figure>
-                            Ver Detalhes
-                        </button>
-                    </div>
-                </div>
-
-                <div class="config_card">
-                    <div class="product-image">
-                        <img src="../templates/assets/img/empada.png"
-                            alt="Empada">
-                    </div>
-                    <div class="informacoes_config">
-                        <h3 class="product-title">Empada</h3>
-                        <p class="product-price">R$ 7,00</p>
-                        <button class="add-to-cart">
-                            <figure>
-                                <img src="../templates/assets/img/detalhes.png" alt="">
-                            </figure>
-                            Ver Detalhes
-                        </button>
-                    </div>
-                </div>
-
-                <div class="config_card">
-                    <div class="product-image">
-                        <img src="../templates/assets/img/enroladinho_salsicha.png"
-                            alt="Enroladinho de Salsicha">
-                    </div>
-                    <div class="informacoes_config">
-                        <h3 class="product-title">Enroladinho de Salsicha</h3>
-                        <p class="product-price">R$ 7,00</p>
-                        <button class="add-to-cart">
-                            <figure>
-                                <img src="../templates/assets/img/detalhes.png" alt="">
-                            </figure>
-                            Ver Detalhes
-                        </button>
-                    </div>
-                </div>
-
-                <div class="config_card">
-                    <div class="product-image">
-                        <img src="../templates/assets/img/pao_pizza.png" alt="Pão de Pizza">
-                    </div>
-                    <div class="informacoes_config">
-                        <h3 class="product-title">Pão Pizza</h3>
-                        <p class="product-price">R$ 7,00</p>
-                        <button class="add-to-cart">
-                            <figure>
-                                <img src="../templates/assets/img/detalhes.png" alt="">
-                            </figure>
-                            Ver Detalhes
-                        </button>
-                    </div>
-                </div>
+                </div>';
+            } ?>
         </div>
     </section>
     <section class="beb">
         <div class="add-product">
-            <h1>Hambúrgueres</h1>
+            <h1>Bebidas</h1>
 
             <figure>
-                <img src="../templates/assets/img/adicionar.png" alt="">
+                <img class="adicionar_produto" src="../templates/assets/img/adicionar.png" alt="">
             </figure>
         </div>
         
         <div class="container">
-
-                <div class="config_card">
+                <?php 
+            $bebs = $productController->getProductsByType('Bebidas');
+            foreach ($bebs as $beb => $value) {
+                echo '<div class="config_card">
                     <div class="product-image">
-                        <img src="../templates/assets/img/coca_cola.png" alt="Coca-Cola">
+                        <img src="' . 'data:image/jpeg;base64,' . base64_encode($value['imagem_produto']) . '" alt="' . htmlspecialchars($value['nome_produto']) . '" alt="Hambúrguer X-Tudo">
                     </div>
                     <div class="informacoes_config">
-                        <h3 class="product-title">Coca-Cola (350ml)</h3>
-                        <p class="product-price">R$ 7,00</p>
+                        <h3 class="product-title">' . htmlspecialchars($value['nome_produto']) . '</h3>
+                        <p class="product-price">R$ '. number_format($value['preco_produto'], 2) .'</p>
                         <button class="add-to-cart">
                             <figure>
                                 <img src="../templates/assets/img/detalhes.png" alt="">
@@ -454,143 +272,30 @@
                             Ver Detalhes
                         </button>
                     </div>
-                </div>
-
-                <div class="config_card">
-                    <div class="product-image">
-                        <img src="../templates/assets/img/guarana.png"
-                            alt="Guaraná Antarctica">
-                    </div>
-                    <div class="informacoes_config">
-                        <h3 class="product-title">Guaraná (350ml)</h3>
-                        <p class="product-price">R$ 7,00</p>
-                        <button class="add-to-cart">
-                            <figure>
-                                <img src="../templates/assets/img/detalhes.png" alt="">
-                            </figure>
-                            Ver Detalhes
-                        </button>
-                    </div>
-                </div>
-
-                <div class="config_card">
-                    <div class="product-image">
-                        <img src="../templates/assets/img/fys_guarana.png"
-                            alt="Fys Guaraná">
-                    </div>
-                    <div class="informacoes_config">
-                        <h3 class="product-title">Fys Guaraná (350ml)</h3>
-                        <p class="product-price">R$ 7,00</p>
-                        <button class="add-to-cart">
-                            <figure>
-                                <img src="../templates/assets/img/detalhes.png" alt="">
-                            </figure>
-                            Ver Detalhes
-                        </button>
-                    </div>
-                </div>
-
-                <div class="config_card">
-                    <div class="product-image">
-                        <img src="../templates/assets/img/fys_limao.png" alt="Fys Limão (350ml)">
-                    </div>
-                    <div class="informacoes_config">
-                        <h3 class="product-title">Fys Limão (350ml)</h3>
-                        <p class="product-price">R$ 7,00</p>
-                        <button class="add-to-cart">
-                            <figure>
-                                <img src="../templates/assets/img/detalhes.png" alt="">
-                            </figure>
-                            Ver Detalhes
-                        </button>
-                    </div>
-                </div>
-
-                <div class="config_card">
-                    <div class="product-image">
-                        <img src="../templates/assets/img/agua.png" alt="Água Mineral">
-                    </div>
-                    <div class="informacoes_config">
-                    <h3 class="product-title">Água (500ml)</h3>
-                        <p class="product-price">R$ 7,00</p>
-                        <button class="add-to-cart">
-                            <figure>
-                                <img src="../templates/assets/img/detalhes.png" alt="">
-                            </figure>
-                            Ver Detalhes
-                        </button>
-                    </div>
-                </div>
-
-                <div class="config_card">
-                    <div class="product-image">
-                        <img src="../templates/assets/img/suco_acerola.png"
-                            alt="Suco de Acerola">
-                    </div>
-                    <div class="informacoes_config">
-                        <h3 class="product-title">Suco de Acerola</h3>
-                        <p class="product-price">R$ 7,00</p>
-                        <button class="add-to-cart">
-                            <figure>
-                                <img src="../templates/assets/img/detalhes.png" alt="">
-                            </figure>
-                            Ver Detalhes
-                        </button>
-                    </div>
-                </div>
-
-                <div class="config_card">
-                    <div class="product-image">
-                        <img src="../templates/assets/img/suco_maracuja.png"
-                            alt="Suco de Maracujá">
-                    </div>
-                    <div class="informacoes_config">
-                        <h3 class="product-title">Suco de Maracujá</h3>
-                        <p class="product-price">R$ 7,00</p>
-                        <button class="add-to-cart">
-                            <figure>
-                                <img src="../templates/assets/img/detalhes.png" alt="">
-                            </figure>
-                            Ver Detalhes
-                        </button>
-                    </div>
-                </div>
-
-                <div class="config_card">
-                    <div class="product-image">
-                        <img src="../templates/assets/img/coca_zero.png" alt="Coca-Cola Zero">
-                    </div>
-                    <div class="informacoes_config">
-                        <h3 class="product-title">Coca-Cola Zero</h3>
-                        <p class="product-price">R$ 7,00</p>
-                        <button class="add-to-cart">
-                            <figure>
-                                <img src="../templates/assets/img/detalhes.png" alt="">
-                            </figure>
-                            Ver Detalhes
-                        </button>
-                    </div>
-                </div>
+                </div>';
+            } ?>
             </div>
 
     </section>
     <section class="cafe">
         <div class="add-product">
-            <h1>Hambúrgueres</h1>
-
+            <h1>Café da Manhã</h1>
             <figure>
-                <img src="../templates/assets/img/adicionar.png" alt="">
+                <img class="adicionar_produto" src="../templates/assets/img/adicionar.png" alt="">
             </figure>
         </div>
 
        <div class="container">
-                <div class="config_card">
+            <?php 
+            $cafes = $productController->getProductsByType('Cafe da manha');
+            foreach ($cafes as $cafe => $value) {
+                echo '<div class="config_card">
                     <div class="product-image">
-                        <img src="../templates/assets/img/cuscuz_cardapio.png" alt="Cuscuz">
+                        <img src="' . 'data:image/jpeg;base64,' . base64_encode($value['imagem_produto']) . '" alt="' . htmlspecialchars($value['nome_produto']) . '" alt="Hambúrguer X-Tudo">
                     </div>
                     <div class="informacoes_config">
-                        <h3 class="product-title">Cuscuz</h3>
-                        <p class="product-price">R$ 7,00</p>
+                        <h3 class="product-title">' . htmlspecialchars($value['nome_produto']) . '</h3>
+                        <p class="product-price">R$ '. number_format($value['preco_produto'], 2) .'</p>
                         <button class="add-to-cart">
                             <figure>
                                 <img src="../templates/assets/img/detalhes.png" alt="">
@@ -598,95 +303,30 @@
                             Ver Detalhes
                         </button>
                     </div>
-                </div>
-
-                <div class="config_card">
-                    <div class="product-image">
-                        <img src="../templates/assets/img/pao_ovo.png"
-                            alt="Pão com Ovo">
-                    </div>
-                    <div class="informacoes_config">
-                        <h3 class="product-title">Pão com Ovo</h3>
-                        <p class="product-price">R$ 7,00</p>
-                        <button class="add-to-cart">
-                            <figure>
-                                <img src="../templates/assets/img/detalhes.png" alt="">
-                            </figure>
-                            Ver Detalhes
-                        </button>
-                    </div>
-                </div>
-
-                <div class="config_card">
-                    <div class="product-image">
-                        <img src="../templates/assets/img/pao_manteiga.png"
-                            alt="Pão com Manteiga">
-                    </div>
-                    <div class="informacoes_config">
-                        <h3 class="product-title">Pão com Manteiga</h3>
-                        <p class="product-price">R$ 7,00</p>
-                        <button class="add-to-cart">
-                            <figure>
-                                <img src="../templates/assets/img/detalhes.png" alt="">
-                            </figure>
-                            Ver Detalhes
-                        </button>
-                    </div>
-                </div>
-
-                <div class="config_card">
-                    <div class="product-image">
-                        <img src="../templates/assets/img/pao_queijo.png" alt="Pão de Queijo">
-                    </div>
-                    <div class="informacoes_config">
-                        <h3 class="product-title">Pão de Queijo</h3>
-                        <p class="product-price">R$ 7,00</p>
-                        <button class="add-to-cart">
-                            <figure>
-                                <img src="../templates/assets/img/detalhes.png" alt="">
-                            </figure>
-                            Ver Detalhes
-                        </button>
-                    </div>
-                </div>
-
-                <div class="config_card">
-                    <div class="product-image">
-                        <img src="../templates/assets/img/torrada.png" alt="Torrada">
-                    </div>
-                    <div class="informacoes_config">
-                    <h3 class="product-title">Torrada</h3>
-                        <p class="product-price">R$ 7,00</p>
-                        <button class="add-to-cart">
-                            <figure>
-                                <img src="../templates/assets/img/detalhes.png" alt="">
-                            </figure>
-                            Ver Detalhes
-                        </button>
-                    </div>
-                </div>
+                </div>';
+            } ?>
             </div>
-
-        </div>
     </section>
     <section class="doces">
         <div class="add-product">
-            <h1>Hambúrgueres</h1>
+            <h1>Doces</h1>
 
             <figure>
-                <img src="../templates/assets/img/adicionar.png" alt="">
+                <img class="adicionar_produto" src="../templates/assets/img/adicionar.png" alt="">
             </figure>
         </div>
 
          <div class="container">
-
-                <div class="config_card">
+        <?php 
+            $doces = $productController->getProductsByType('Doces');
+            foreach ($doces as $doce => $value) {
+                echo '<div class="config_card">
                     <div class="product-image">
-                        <img src="../templates/assets/img/pacoquita.png" alt="Paçoquita">
+                        <img src="' . 'data:image/jpeg;base64,' . base64_encode($value['imagem_produto']) . '" alt="' . htmlspecialchars($value['nome_produto']) . '" alt="Hambúrguer X-Tudo">
                     </div>
                     <div class="informacoes_config">
-                        <h3 class="product-title">Paçoquita</h3>
-                        <p class="product-price">R$ 7,00</p>
+                        <h3 class="product-title">' . htmlspecialchars($value['nome_produto']) . '</h3>
+                        <p class="product-price">R$ '. number_format($value['preco_produto'], 2) .'</p>
                         <button class="add-to-cart">
                             <figure>
                                 <img src="../templates/assets/img/detalhes.png" alt="">
@@ -694,112 +334,32 @@
                             Ver Detalhes
                         </button>
                     </div>
-                </div>
-
-                <div class="config_card">
-                    <div class="product-image">
-                        <img src="../templates/assets/img/trident.png"
-                            alt="Trident">
-                    </div>
-                    <div class="informacoes_config">
-                        <h3 class="product-title">Trident</h3>
-                        <p class="product-price">R$ 7,00</p>
-                        <button class="add-to-cart">
-                            <figure>
-                                <img src="../templates/assets/img/detalhes.png" alt="">
-                            </figure>
-                            Ver Detalhes
-                        </button>
-                    </div>
-                </div>
-
-                <div class="config_card">
-                    <div class="product-image">
-                        <img src="../templates/assets/img/bolo_pote.png"
-                            alt="Bolo de Pote">
-                    </div>
-                    <div class="informacoes_config">
-                        <h3 class="product-title">Bolo de Pote</h3>
-                        <p class="product-price">R$ 7,00</p>
-                        <button class="add-to-cart">
-                            <figure>
-                                <img src="../templates/assets/img/detalhes.png" alt="">
-                            </figure>
-                            Ver Detalhes
-                        </button>
-                    </div>
-                </div>
-
-                <div class="config_card">
-                    <div class="product-image">
-                        <img src="../templates/assets/img/bala_caramelo.png" alt="Bala de Caramelo">
-                    </div>
-                    <div class="informacoes_config">
-                        <h3 class="product-title">Bala de Caramelo</h3>
-                        <p class="product-price">R$ 7,00</p>
-                        <button class="add-to-cart">
-                            <figure>
-                                <img src="../templates/assets/img/detalhes.png" alt="">
-                            </figure>
-                            Ver Detalhes
-                        </button>
-                    </div>
-                </div>
-
-                <div class="config_card">
-                    <div class="product-image">
-                        <img src="../templates/assets/img/snickers.png" alt="Snickers">
-                    </div>
-                    <div class="informacoes_config">
-                    <h3 class="product-title">Snickers</h3>
-                        <p class="product-price">R$ 7,00</p>
-                        <button class="add-to-cart">
-                            <figure>
-                                <img src="../templates/assets/img/detalhes.png" alt="">
-                            </figure>
-                            Ver Detalhes
-                        </button>
-                    </div>
-                </div>
-
-                <div class="config_card">
-                    <div class="product-image">
-                        <img src="../templates/assets/img/acai.png"
-                            alt="Açaí">
-                    </div>
-                    <div class="informacoes_config">
-                        <h3 class="product-title">Açaí (500ml)</h3>
-                        <p class="product-price">R$ 7,00</p>
-                        <button class="add-to-cart">
-                            <figure>
-                                <img src="../templates/assets/img/detalhes.png" alt="">
-                            </figure>
-                            Ver Detalhes
-                        </button>
-                    </div>
-                </div>
+                </div>';
+            } ?>
             </div>
 
 
     </section>
     <section class="tap">
         <div class="add-product">
-            <h1>Hambúrgueres</h1>
+            <h1>Tapioca</h1>
 
             <figure>
-                <img src="../templates/assets/img/adicionar.png" alt="">
+                <img class="adicionar_produto" src="../templates/assets/img/adicionar.png" alt="">
             </figure>
         </div>
 
          <div class="container">
-
-                <div class="config_card">
+            <?php
+            $taps = $productController->getProductsByType('Tapioca');
+            foreach ($taps as $tap => $value) {
+                echo '<div class="config_card">
                     <div class="product-image">
-                        <img src="../templates/assets/img/tapioca_charque.png" alt="Tapioca de Charque">
+                        <img src="' . 'data:image/jpeg;base64,' . base64_encode($value['imagem_produto']) . '" alt="' . htmlspecialchars($value['nome_produto']) . '" alt="Hambúrguer X-Tudo">
                     </div>
                     <div class="informacoes_config">
-                        <h3 class="product-title">Tapioca de Charque</h3>
-                        <p class="product-price">R$ 7,00</p>
+                        <h3 class="product-title">' . htmlspecialchars($value['nome_produto']) . '</h3>
+                        <p class="product-price">R$ '. number_format($value['preco_produto'], 2) .'</p>
                         <button class="add-to-cart">
                             <figure>
                                 <img src="../templates/assets/img/detalhes.png" alt="">
@@ -807,62 +367,31 @@
                             Ver Detalhes
                         </button>
                     </div>
-                </div>
-
-                <div class="config_card">
-                    <div class="product-image">
-                        <img src="../templates/assets/img/tapioca_mussarela.png"
-                            alt="Tapioca de Mussarela">
-                    </div>
-                    <div class="informacoes_config">
-                        <h3 class="product-title">Tapioca de Mussarela</h3>
-                        <p class="product-price">R$ 7,00</p>
-                        <button class="add-to-cart">
-                            <figure>
-                                <img src="../templates/assets/img/detalhes.png" alt="">
-                            </figure>
-                            Ver Detalhes
-                        </button>
-                    </div>
-                </div>
-
-                <div class="config_card">
-                    <div class="product-image">
-                        <img src="../templates/assets/img/tapioca_frango.png"
-                            alt="Tapioca de Frango">
-                    </div>
-                    <div class="informacoes_config">
-                        <h3 class="product-title">Tapioca de Frango</h3>
-                        <p class="product-price">R$ 7,00</p>
-                        <button class="add-to-cart">
-                            <figure>
-                                <img src="../templates/assets/img/detalhes.png" alt="">
-                            </figure>
-                            Ver Detalhes
-                        </button>
-                    </div>
-                </div>
+                </div>';
+            } ?>
         </div>
 
     </section>
     <section class="prom">
         <div class="add-product">
-            <h1>Hambúrgueres</h1>
+            <h1>Promoções</h1>
 
             <figure>
-                <img src="../templates/assets/img/adicionar.png" alt="">
+                <img class="adicionar_produto" src="../templates/assets/img/adicionar.png" alt="">
             </figure>
         </div>
 
         <div class="container">
-
-                <div class="config_card">
+    <?php
+            $proms = $productController->getProductsByType('Promocoes');
+            foreach ($proms as $prom => $value) {
+                echo '<div class="config_card">
                     <div class="product-image">
-                        <img src="../templates/assets/img/Combo_aluno.png" alt="Combo Aluno">
+                        <img src="' . 'data:image/jpeg;base64,' . base64_encode($value['imagem_produto']) . '" alt="' . htmlspecialchars($value['nome_produto']) . '" alt="Hambúrguer X-Tudo">
                     </div>
                     <div class="informacoes_config">
-                        <h3 class="product-title">Combo Aluno</h3>
-                        <p class="product-price">R$ 7,00</p>
+                        <h3 class="product-title">' . htmlspecialchars($value['nome_produto']) . '</h3>
+                        <p class="product-price">R$ '. number_format($value['preco_produto'], 2) .'</p>
                         <button class="add-to-cart">
                             <figure>
                                 <img src="../templates/assets/img/detalhes.png" alt="">
@@ -870,57 +399,8 @@
                             Ver Detalhes
                         </button>
                     </div>
-                </div>
-
-                <div class="config_card">
-                    <div class="product-image">
-                        <img src="../templates/assets/img/combo_professor.png"
-                            alt="Combo Professor">
-                    </div>
-                    <div class="informacoes_config">
-                        <h3 class="product-title">Combo Professor</h3>
-                        <p class="product-price">R$ 7,00</p>
-                        <button class="add-to-cart">
-                            <figure>
-                                <img src="../templates/assets/img/detalhes.png" alt="">
-                            </figure>
-                            Ver Detalhes
-                        </button>
-                    </div>
-                </div>
-
-                <div class="config_card">
-                    <div class="product-image">
-                        <img src="../templates/assets/img/almoco_completo.png"
-                            alt="Almoço Completo">
-                    </div>
-                    <div class="informacoes_config">
-                        <h3 class="product-title">Almoço Completo</h3>
-                        <p class="product-price">R$ 7,00</p>
-                        <button class="add-to-cart">
-                            <figure>
-                                <img src="../templates/assets/img/detalhes.png" alt="">
-                            </figure>
-                            Ver Detalhes
-                        </button>
-                    </div>
-                </div>
-
-                <div class="config_card">
-                    <div class="product-image">
-                        <img src="../templates/assets/img/Lanche_suco.png" alt="Lanche + Suco">
-                    </div>
-                    <div class="informacoes_config">
-                        <h3 class="product-title">Lanche + Suco</h3>
-                        <p class="product-price">R$ 7,00</p>
-                        <button class="add-to-cart">
-                            <figure>
-                                <img src="../templates/assets/img/detalhes.png" alt="">
-                            </figure>
-                            Ver Detalhes
-                        </button>
-                    </div>
-                </div>
+                </div>';
+            } ?>
         </div>
     </section>
 
