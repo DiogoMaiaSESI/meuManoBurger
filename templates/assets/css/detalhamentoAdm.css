@@ -35,6 +35,10 @@ header {
     top: 50%;
     transform: translate(-50%, -50%);
 }
+.logo img {
+    width: 14.0rem;
+    height: 12.0rem;
+}
 figure img{
     display: block;
 }
