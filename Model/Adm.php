@@ -15,7 +15,6 @@ class Adm
         $this->db = Connection::getInstance();
     }
 
-    // Este método não é usado no fluxo atual, mas o mantemos para consistência.
     public function registerAdm($nome_adm, $email_adm, $senha_adm, $imagem_adm)
     {
         try {

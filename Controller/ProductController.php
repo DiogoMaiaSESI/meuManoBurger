@@ -3,12 +3,15 @@
 namespace Controller;
 
 use Model\Product;
+use Model\Estoque;
 
 class ProductController {
     private $productModel;
+    private $estoqueModel;
 
     public function __construct() {
         $this->productModel = new Product();
+        $this->estoqueModel = new Estoque();
     }
 
     public function create() {
@@ -21,7 +24,7 @@ class ProductController {
         $tipo = filter_input(INPUT_POST, 'tipo_produto', FILTER_SANITIZE_SPECIAL_CHARS);
         $descricao = filter_input(INPUT_POST, 'descricao_produto', FILTER_SANITIZE_SPECIAL_CHARS);
         $id_adm_fk = filter_input(INPUT_POST, 'id_adm_fk', FILTER_VALIDATE_INT);
-
+        
         $imagem = null;
         if (isset($_FILES['imagem_produto']) && $_FILES['imagem_produto']['error'] == UPLOAD_ERR_OK) {
             $fileType = mime_content_type($_FILES['imagem_produto']['tmp_name']);
@@ -29,8 +32,49 @@ class ProductController {
                  $imagem = file_get_contents($_FILES['imagem_produto']['tmp_name']);
             }
         }
+        $nome = filter_input(INPUT_POST, 'nome_produto', FILTER_SANITIZE_SPECIAL_CHARS);
+        $preco = filter_input(INPUT_POST, 'preco_produto', FILTER_VALIDATE_FLOAT);
+        $tipo = filter_input(INPUT_POST, 'tipo_produto', FILTER_SANITIZE_SPECIAL_CHARS);
+        $descricao = filter_input(INPUT_POST, 'descricao_produto', FILTER_SANITIZE_SPECIAL_CHARS);
+        $quantidade = filter_input(INPUT_POST, 'quantidade', FILTER_VALIDATE_INT);
+        $id_adm_fk = $_SESSION['id_adm'] ?? null;
+        if (!$id_adm_fk) {
+            $_SESSION['error_message'] = "Erro de autenticação. Faça login novamente.";
+            header('Location: cadastro_produto.php');
+            exit;
+        }
 
-        return $this->productModel->createProduct($nome, $preco, $tipo, $descricao, $imagem, $id_adm_fk);
+        $imagem = null;
+        if (isset($_FILES['imagem_produto']) && $_FILES['imagem_produto']['error'] == UPLOAD_ERR_OK) {
+            $imagem = file_get_contents($_FILES['imagem_produto']['tmp_name']);
+        }
+
+        // 1. Tenta criar o produto
+        $result = $this->productModel->createProduct($nome, $preco, $tipo, $descricao, $imagem, $id_adm_fk);
+
+        if ($result['success']) {
+            // 2. Se o produto foi criado, pega o ID do novo produto
+            $id_produto_criado = $result['last_id'];
+            
+            // 3. Insere a quantidade inicial no estoque
+            $estoqueSuccess = $this->estoqueModel->insertestoque($quantidade, $id_produto_criado);
+
+            if ($estoqueSuccess) {
+                $_SESSION['success_message'] = "Produto e estoque cadastrados com sucesso!";
+            } else {
+                // Opcional: Lidar com o caso onde o produto foi criado mas o estoque falhou.
+                $_SESSION['error_message'] = "Produto criado, mas falha ao cadastrar o estoque.";
+            }
+        } else {
+            // Se a criação do produto falhou, pega os erros
+            $errors = implode(', ', $result['errors']);
+            $_SESSION['error_message'] = "Erro ao cadastrar produto: " . $errors;
+        }
+
+        // Redireciona de volta para a página de cadastro para mostrar a mensagem
+        header('Location: cadastro_produto.php');
+        exit;
+
     }
 
     public function update() {

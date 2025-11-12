@@ -11,52 +11,58 @@ use PDOException;
 use Exception;
 
 
-class Estoque {
+class Estoque
+{
 
-     //atributo privado criado para realizar a conexão com o banco de dados
-      private $estoque;
+    //atributo privado criado para realizar a conexão com o banco de dados
+    private $estoque;
 
-      // construct vai automatimaticamente ser executado toda vez que necessitar da classe Estoque
-      public function __construct() {
-        
+    // construct vai automatimaticamente ser executado toda vez que necessitar da classe Estoque
+    public function __construct()
+    {
+
         //THIS ACESSA ATRIBUTOS
         // PEGUE O UNICO ATRBUTO DA CLASSE CONNECTION 
         $this->estoque = Connection::getInstance();
-      }
+    }
 
-        public function insertestoque ($qtd_produto, $id_produto_fk){
-         try {
+    public function insertestoque($qtd_produto, $id_produto_fk)
+    {
+        try {
 
-           $sql = "INSERT INTO estoque (qtd_produto, id_produto_fk) VALUES (:qtd_produto, :id_produto_fk)"; 
-           //PREPARAR O BANCO DE DADOS PARA RECEBER O COMANDO ACIMA
-           // ACESSANDO O BD E O PREPARANDO PARA RECEBER O COMANDO 'INSERT INTO
-           $stmt = $this->estoque->prepare($sql);
-           //Vincula um parâmetro ao nome da variável especificada
-           $stmt->bindParam(":qtd_produto", $qtd_produto, PDO::PARAM_INT);
-           $stmt->bindParam(":id_produto_fk", $id_produto_fk, PDO::PARAM_INT);
-           return $stmt->execute();
+            $sql = "INSERT INTO estoque (qtd_produto, id_produto_fk) VALUES (:qtd_produto, :id_produto_fk)";
+            //PREPARAR O BANCO DE DADOS PARA RECEBER O COMANDO ACIMA
+            // ACESSANDO O BD E O PREPARANDO PARA RECEBER O COMANDO 'INSERT INTO
+            $stmt = $this->estoque->prepare($sql);
+            //Vincula um parâmetro ao nome da variável especificada
+            $stmt->bindParam(":qtd_produto", $qtd_produto, PDO::PARAM_INT);
+            $stmt->bindParam(":id_produto_fk", $id_produto_fk, PDO::PARAM_INT);
+            return $stmt->execute();
 
 
-        }catch(PDOException $error) {
+        } catch (PDOException $error) {
             throw new Exception("Erro ao cadastrar produto no estoque: " . $error->getMessage());
         }
-         }
+    }
 
 
 
 
     // Subtracao  do estoque com base no pedido
-    public function subtracaoEstoque($id_pedido) {
+    public function subtracaoEstoque($id_pedido)
+    {
         // Busca os dados do pedido
         $pedido = $this->getQuantidadePedido($id_pedido);
-        if (!$pedido) return "Pedido não encontrado.";
+        if (!$pedido)
+            return "Pedido não encontrado.";
 
         $id_produto = $pedido['id_produto_fk'];
         $qtd_pedido = $pedido['qtd'];
 
         // Busca o estoque do produto
         $estoque = $this->getEstoque($id_produto);
-        if (!$estoque) return "Produto não encontrado no estoque.";
+        if (!$estoque)
+            return "Produto não encontrado no estoque.";
 
         $qtd_estoque = $estoque['qtd_produto'];
 
@@ -75,34 +81,44 @@ class Estoque {
         return "Pedido processado. Estoque atualizado de $qtd_estoque para $novo_estoque.";
     }
 
-        // Função para obter a quantidade do pedido
-        private function getQuantidadePedido($id_pedido) {
+    // Função para obter a quantidade do pedido
+    private function getQuantidadePedido($id_pedido)
+    {
         $sql = "SELECT id_produto_fk, qtd FROM pedidos WHERE id_pedido = ?";
         $stmt = $this->estoque->prepare($sql);
         $stmt->execute([$id_pedido]);
-         return $stmt->fetch(PDO::FETCH_ASSOC);
-        }
-
-
-
-
-
-        //estoque atual do produto
-       public function getEstoque($id_produto_fk) {
-        $sql = "SELECT * FROM estoque WHERE id_produto_fk = ?";
-        $stmt = $this->estoque->prepare($sql);
-        $stmt->execute([$id_produto_fk]);
-
-        //PDO::FETCH_ASSOC retorna apenas um único valor por nome de coluna.
-       //FETCH_ASSOC TRANSFORMA OS DADOS EM UM ARRAY ASSOCIATIVO E RETORNA ESSES DADOS NA TELA.
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
 
 
 
-            //atualizando o estoque do produto
-            public function atualizarEstoque($new_qtd, $id_produto_fk) {
+
+    //estoque atual do produto
+    public function getEstoque($id_produto_fk) {
+    try {
+        $sql = "SELECT * FROM estoque WHERE id_produto_fk = :id_produto_fk";
+        $stmt = $this->estoque->prepare($sql);
+        // Use bindParam para mais clareza
+        $stmt->bindParam(":id_produto_fk", $id_produto_fk, PDO::PARAM_INT);
+        $stmt->execute();
+        
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+
+    } catch (PDOException $e) {
+        // Em caso de erro de banco de dados, logue o erro e retorne false.
+        // Nunca dê "echo" ou "die" em um Model.
+        error_log("Erro ao obter estoque: " . $e->getMessage());
+        return false;
+    }
+}
+
+
+
+
+    //atualizando o estoque do produto
+    public function atualizarEstoque($new_qtd, $id_produto_fk)
+    {
         try {
             $sql = "UPDATE estoque SET qtd_produto = :new_qtd WHERE id_produto_fk = :id_produto_fk";
             $stmt = $this->estoque->prepare($sql);
@@ -111,7 +127,7 @@ class Estoque {
             return $stmt->execute();
         } catch (PDOException $error) {
             throw new Exception("Erro ao atualizar estoque: " . $error->getMessage());
-    
+
         }
 
     }
@@ -123,4 +139,4 @@ class Estoque {
 
 
 
- ?>
+?>

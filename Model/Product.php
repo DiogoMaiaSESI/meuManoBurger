@@ -5,14 +5,17 @@ namespace Model;
 use PDO;
 use PDOException;
 
-class Product {
+class Product
+{
     private $conn;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->conn = Connection::getInstance();
     }
 
-    private function validate($nome, $preco, $tipo, $descricao, $id_adm_fk) {
+    private function validate($nome, $preco, $tipo, $descricao, $id_adm_fk)
+    {
         $errors = [];
 
         if (empty($nome)) {
@@ -33,11 +36,12 @@ class Product {
         if ($id_adm_fk === false || $id_adm_fk <= 0) {
             $errors[] = "O administrador responsável é inválido.";
         }
-        
+
         return $errors;
     }
 
-    public function createProduct($nome, $preco, $tipo, $descricao, $imagem, $id_adm_fk) {
+    public function createProduct($nome, $preco, $tipo, $descricao, $imagem, $id_adm_fk)
+    {
         $validationErrors = $this->validate($nome, $preco, $tipo, $descricao, $id_adm_fk);
         if (!empty($validationErrors)) {
             return ['success' => false, 'errors' => $validationErrors];
@@ -51,10 +55,16 @@ class Product {
             $stmt->bindParam(':descricao', $descricao, PDO::PARAM_STR);
             $stmt->bindParam(':imagem', $imagem, PDO::PARAM_LOB);
             $stmt->bindParam(':id_adm_fk', $id_adm_fk, PDO::PARAM_INT);
-            
+
             $success = $stmt->execute();
-            
+
             return ['success' => $success];
+            if ($success) {
+                // --- CORREÇÃO: Retorna o ID do último produto inserido ---
+                $lastId = $this->conn->lastInsertId();
+                return ['success' => true, 'last_id' => $lastId];
+            }
+
 
         } catch (PDOException $e) {
             error_log("Erro ao criar produto: " . $e->getMessage());
@@ -62,7 +72,8 @@ class Product {
         }
     }
 
-    public function updateProduct($id, $nome, $preco, $tipo, $descricao, $imagem, $id_adm_fk) {
+    public function updateProduct($id, $nome, $preco, $tipo, $descricao, $imagem, $id_adm_fk)
+    {
         $validationErrors = $this->validate($nome, $preco, $tipo, $descricao, $id_adm_fk);
         if (empty($id) || $id <= 0) {
             $validationErrors[] = "O ID do produto para atualização é inválido.";
@@ -70,7 +81,7 @@ class Product {
         if (!empty($validationErrors)) {
             return ['success' => false, 'errors' => $validationErrors];
         }
-        
+
         try {
             $sql = "UPDATE produto SET nome_produto = :nome, preco_produto = :preco, tipo_produto = :tipo, descricao_produto = :descricao, id_adm_fk = :id_adm_fk";
             if ($imagem !== null) {
@@ -92,9 +103,9 @@ class Product {
             }
 
             $success = $stmt->execute();
-            
+
             if ($stmt->rowCount() === 0) {
-                 return ['success' => true, 'message' => 'Nenhum dado foi alterado.'];
+                return ['success' => true, 'message' => 'Nenhum dado foi alterado.'];
             }
 
             return ['success' => $success];
@@ -105,7 +116,8 @@ class Product {
         }
     }
 
-    public function deleteProduct($id) {
+    public function deleteProduct($id)
+    {
         if (empty($id) || $id <= 0) {
             return ['success' => false, 'errors' => ['ID do produto inválido.']];
         }
@@ -124,7 +136,8 @@ class Product {
         }
     }
 
-    public function getAllProducts() {
+    public function getAllProducts()
+    {
         try {
             $stmt = $this->conn->prepare("SELECT * FROM produto");
             $stmt->execute();
@@ -135,7 +148,8 @@ class Product {
         }
     }
 
-    public function getProductById($id) {
+    public function getProductById($id)
+    {
         try {
             $stmt = $this->conn->prepare("SELECT * FROM produto WHERE id_produto = :id");
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
@@ -146,7 +160,8 @@ class Product {
             return null;
         }
     }
-    private function isFavorite($userId, $productId) {
+    private function isFavorite($userId, $productId)
+    {
         $stmt = $this->conn->prepare("SELECT id_favorito FROM favoritos WHERE id_cliente_fk = :userId AND id_produto_fk = :productId");
         $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
         $stmt->bindParam(':productId', $productId, PDO::PARAM_INT);
@@ -156,7 +171,8 @@ class Product {
     }
 
 
-    public function toggleFavorite($userId, $productId) {
+    public function toggleFavorite($userId, $productId)
+    {
         if (empty($userId) || empty($productId)) {
             return ['success' => false, 'errors' => ['Usuário ou produto inválido.']];
         }
@@ -190,7 +206,8 @@ class Product {
         }
     }
 
-    public function getFavoritesByUser($userId) {
+    public function getFavoritesByUser($userId)
+    {
         if (empty($userId)) {
             return [];
         }
