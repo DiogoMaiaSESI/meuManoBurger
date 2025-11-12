@@ -1,0 +1,117 @@
+.security-section {
+    margin-bottom: 4rem;
+}
+.security-section h3, .security-form h3 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.add-2fa-link {
+    font-size: 1.6rem;
+    color: var(--VermelhoCereja);
+    text-decoration: none;
+    font-weight: 500;
+}
+.add-2fa-link:hover {
+    text-decoration: underline;
+}
+
+.security-form .form-group {
+    margin-bottom: 2.5rem;
+}
+
+/* --- ESTILOS PARA O ÍCONE DE MOSTRAR/OCULTAR SENHA --- */
+
+.password-group {
+    position: relative; 
+}
+
+/* --- INÍCIO DA CORREÇÃO IMPORTANTE --- */
+
+/* Esconde o ícone de olho padrão do navegador (Chrome, Edge, etc.) */
+.password-group input::-ms-reveal,
+.password-group input::-ms-clear {
+    display: none;
+}
+.password-group input::-webkit-reveal,
+.password-group input::-webkit-clear-button {
+    display: none !important; /* !important é necessário para Chrome */
+}
+/* No Firefox, o ícone não é um pseudo-elemento, então essa é a melhor abordagem */
+.password-group input {
+    padding-right: 5rem; /* Adiciona espaço à direita no input para o nosso ícone não sobrepor o texto */
+}
+
+/* --- FIM DA CORREÇÃO IMPORTANTE --- */
+
+
+.password-toggle-icon {
+    position: absolute;
+    right: 2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 2.4rem;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+}
+
+.password-toggle-icon:hover {
+    opacity: 1;
+}
+.error-message {
+    color: var(--VermelhoCereja);
+    font-size: 1.4rem;
+    font-weight: 500;
+    text-align: center;
+    margin-top: 1.5rem;
+    height: 1.6rem; /* Garante que o layout não "pule" quando a mensagem aparece */
+    transition: opacity 0.2s;
+}
+
+/* Estilo para o botão desabilitado */
+#btn-salvar-senha:disabled {
+    background-color: #a0a0a0; /* Um cinza para indicar que está inativo */
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+.status-2fa {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #e8f5e9; /* Verde claro */
+    color: #2e7d32; /* Verde escuro */
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    border: 1px solid #a5d6a7;
+}
+
+.status-2fa span {
+    font-weight: 600;
+}
+
+.disable-2fa-btn {
+    background-color: transparent;
+    border: 1px solid var(--VermelhoCereja);
+    color: var(--VermelhoCereja);
+    padding: 0.8rem 1.2rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.disable-2fa-btn:hover {
+    background-color: var(--VermelhoCereja);
+    color: var(--Branco);
+}
+
+.submit-btn.danger {
+    background-color: var(--VermelhoCereja);
+}
+
+.submit-btn.danger:hover {
+    background-color: #a02d31;
+}

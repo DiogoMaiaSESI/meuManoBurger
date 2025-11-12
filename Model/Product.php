@@ -2,6 +2,7 @@
 
 namespace Model;
 
+require_once __DIR__ . '/../Model/Connection.php';
 use PDO;
 use PDOException;
 
@@ -41,36 +42,32 @@ class Product
     }
 
     public function createProduct($nome, $preco, $tipo, $descricao, $imagem, $id_adm_fk)
-    {
-        $validationErrors = $this->validate($nome, $preco, $tipo, $descricao, $id_adm_fk);
-        if (!empty($validationErrors)) {
-            return ['success' => false, 'errors' => $validationErrors];
+{
+    
+    // A validação já acontece no Controller, o Model confia nos dados.
+    try {
+        $stmt = $this->conn->prepare("INSERT INTO produto (nome_produto, preco_produto, tipo_produto, descricao_produto, imagem_produto, id_adm_fk) VALUES (:nome, :preco, :tipo, :descricao, :imagem, :id_adm_fk)");
+        
+        $stmt->bindParam(':nome', $nome, PDO::PARAM_STR);
+        $stmt->bindParam(':preco', $preco, PDO::PARAM_STR);
+        $stmt->bindParam(':tipo', $tipo, PDO::PARAM_STR);
+        $stmt->bindParam(':descricao', $descricao, PDO::PARAM_STR);
+        $stmt->bindValue(':imagem', $imagem, PDO::PARAM_LOB);
+        $stmt->bindParam(':id_adm_fk', $id_adm_fk, PDO::PARAM_INT);
+
+        
+        if ($stmt->execute()) {
+            // Retorna o ID do produto criado para o Controller usar.
+            return $this->conn->lastInsertId();
         }
+        return false;
 
-        try {
-            $stmt = $this->conn->prepare("INSERT INTO produto (nome_produto, preco_produto, tipo_produto, descricao_produto, imagem_produto, id_adm_fk) VALUES (:nome, :preco, :tipo, :descricao, :imagem, :id_adm_fk)");
-            $stmt->bindParam(':nome', $nome, PDO::PARAM_STR);
-            $stmt->bindParam(':preco', $preco, PDO::PARAM_STR);
-            $stmt->bindParam(':tipo', $tipo, PDO::PARAM_STR);
-            $stmt->bindParam(':descricao', $descricao, PDO::PARAM_STR);
-            $stmt->bindParam(':imagem', $imagem, PDO::PARAM_LOB);
-            $stmt->bindParam(':id_adm_fk', $id_adm_fk, PDO::PARAM_INT);
-
-            $success = $stmt->execute();
-
-            return ['success' => $success];
-            if ($success) {
-                // --- CORREÇÃO: Retorna o ID do último produto inserido ---
-                $lastId = $this->conn->lastInsertId();
-                return ['success' => true, 'last_id' => $lastId];
-            }
-
-
-        } catch (PDOException $e) {
-            error_log("Erro ao criar produto: " . $e->getMessage());
-            return ['success' => false, 'errors' => ['Ocorreu um erro no servidor ao tentar criar o produto.']];
-        }
+    } catch (PDOException $e) {
+        error_log("Erro no Model/Product: " . $e->getMessage());
+        return false;
     }
+   
+}
 
     public function updateProduct($id, $nome, $preco, $tipo, $descricao, $imagem, $id_adm_fk)
     {

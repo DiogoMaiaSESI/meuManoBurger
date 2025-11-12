@@ -1,0 +1,202 @@
+<?php
+
+use Controller\AdmController;
+session_start();
+
+require_once __DIR__ . '/../Controller/ClienteController.php';
+require_once __DIR__ . '/../Controller/AdmController.php';
+require_once __DIR__ . '/../Model/Cliente.php';
+
+$errorMessage = $_SESSION['error_message'] ?? null;
+unset($_SESSION['error_message']);
+
+$show2FAModal = false; // Garante que a variável exista
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email = $_POST['email'] ?? null;
+    $senha = $_POST['password'] ?? null;
+
+    if (empty($email) || empty($senha)) {
+        $_SESSION['error_message'] = "E-mail e senha são obrigatórios.";
+        header('Location: login.php');
+        exit;
+    }
+
+    // --- ESTRUTURA LÓGICA CORRIGIDA ---
+
+    // PASSO 1: Tentar logar como Administrador
+    if ($email === 'mariane.mmb.admin@gmail.com') {
+        $admModel = new \Model\Adm();
+        $admController = new \Controller\AdmController($admModel);
+        
+        // O método login do AdmController já cria a sessão e retorna true/false
+        if ($admController->login($email, $senha) === true) {
+            // SUCESSO! Redireciona para o perfil do ADM e PARA a execução.
+            header('Location: Perfil_adm.php');
+            exit;
+        }
+        // Se a senha do ADM estiver errada, o script continuará e cairá no erro genérico no final.
+    } 
+    
+    // PASSO 2: Se não for o ADM (ou se a senha dele falhou), tentar logar como Cliente
+    $clienteModel = new \Model\Cliente();
+    $clienteController = new \Controller\ClienteController($clienteModel);
+    $result = $clienteController->login($email, $senha);
+
+    if ($result === '2fa_required') {
+        // Cliente precisa de 2FA, mostra o modal na própria página de login.
+        $show2FAModal = true;
+    } elseif ($result === true) {
+        // Login de cliente normal bem-sucedido.
+        header('Location: Perfil.php');
+        exit;
+    } else {
+        // FALHA TOTAL: Se chegou aqui, o login falhou para ADM e para Cliente.
+        $_SESSION['error_message'] = "E-mail ou senha inválidos.";
+        header('Location: login.php');
+        exit;
+    }
+}
+?>
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../templates/assets/css/login.css">
+    <link rel="icon" href="../templates/assets/img/Logo.png">
+    <title>Login | MeuManoBurger</title>
+
+    <style>
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: #fff;
+            padding: 1.5rem;
+            border-radius: 8px;
+            width: 42.0rem;
+            max-width: 100%;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal h2 {
+            margin: 0 0 0.5rem 0;
+        }
+
+        .modal .error {
+            color: #b00020;
+            margin-top: 0.5rem;
+        }
+
+        .modal .actions {
+            margin-top: 1rem;
+            display: flex;
+            gap: 0.5rem;
+            justify-content: flex-end;
+        }
+
+        .modal input[type="text"] {
+            width: 100%;
+            padding: 0.6rem;
+            font-size: 1.1rem;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+
+        .btn-primary {
+            background: #8b1f23;
+            color: #fff;
+            padding: 0.6rem 1rem;
+            border: 0;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 15.0rem;
+            margin-left: 5.0rem;
+            font-size: 1.2rem;
+        }
+
+        .btn-secondary {
+            background: #eee;
+            color: #333;
+            padding: 0.5rem 0.8rem;
+            border: 0;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <div class="container">
+            <div class="imagem_login">
+                <img src="../templates/assets/img/imglogin-cadastro.png" alt="Uma mulher sentada...">
+            </div>
+
+            <div class="form_login">
+                <h1>Seja Bem-Vindo ao MeuManoBurger</h1>
+                <h2>Realize o Login</h2>
+
+                <form method="POST" action="login.php" id="login-form">
+                    <div class="inputs">
+                        <p>Email</p>
+                        <input type="email" name="email" id="email" required>
+                        <p class="msg_erro">Este campo é obrigatório</p>
+
+                        <p>Senha</p>
+                        <input type="password" name="password" id="password" required>
+                        <p class="msg_erro">Este campo é obrigatório</p>
+                    </div>
+
+                    <?php if ($errorMessage): ?>
+                        <div class="login-error-message">
+                            <?php echo htmlspecialchars($errorMessage); ?>
+                        </div>
+                    <?php endif; ?>
+                    <div class="btn_entrar">
+                        <button type="submit">Entrar</button>
+                    </div>
+                </form>
+
+                <p class="cadastre-se">Não tem uma conta? <span>Cadastre-se</span></p>
+                <footer></footer>
+            </div>
+        </div>
+    </main>
+
+    <!-- 2FA Modal -->
+    <div id="modal-2fa" class="modal-overlay <?php echo $show2FAModal ? 'active' : ''; ?>"
+        aria-hidden="<?php echo $show2FAModal ? 'false' : 'true'; ?>">
+        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-2fa-title">
+            <h2 id="modal-2fa-title">Verificação em 2 Etapas</h2>
+            <p>Digite o código do seu aplicativo autenticador (6 dígitos).</p>
+
+            <input id="twofa-code" type="text" inputmode="numeric" pattern="\d{6}" maxlength="6" placeholder="123456"
+                autocomplete="one-time-code">
+
+            <div class="error" id="twofa-error" style="display:none;"></div>
+
+            <div class="actions">
+                <button id="twofa-cancel" class="btn-secondary">Cancelar</button>
+                <button id="twofa-submit" class="btn-primary">Verificar e entrar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../templates/assets/js/login.js"></script>
+</body>
+
+</html>

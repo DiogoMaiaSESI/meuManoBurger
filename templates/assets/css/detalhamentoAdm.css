@@ -83,6 +83,14 @@ main {
     border-top-left-radius: 2rem;
     border-bottom-left-radius: 2rem;
 }
+.leftDiv figure {
+    width: 100%;
+    height: 40.3rem;
+}
+.leftDiv figure img {
+    width: 100%;
+    height: 100%;
+}
 .rightDiv {
     padding: 2.2rem 4.6rem;
     gap: 2.7rem;

@@ -6,23 +6,6 @@ document.addEventListener('DOMContentLoaded', function () {
   const previewImagem = document.getElementById("previewImagem"); // Elemento de pré-visualização da imagem
 
 
-  form.addEventListener("submit", function (event) { 
-         event.preventDefault();
-      
-  const imagem = document.getElementById('imagemProduto').files.length; // Pega a quantidade de arquivos selecionados no input de imagem
-  if (imagem === 0) { // Se nenhum arquivo foi selecionado
-  alert('Por favor, selecione uma imagem do produto.');
-  return;
-  }else {
-      window.location.href = "cardapiouser.php";
-    }
-  });
-
-
-  const card = document.querySelector('.voltar')
-  card.addEventListener('click', () => {
-    window.location.href = 'cardapiouser.php'
-})
 
 
 

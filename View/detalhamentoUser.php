@@ -9,7 +9,7 @@ require_once __DIR__ . '/../Controller/EstoqueController.php';
 
 $productModel = new \Model\Product();
 $estoqueModel = new \Model\Estoque();
-$productController = new \Controller\ProductController();
+$productController = new \Controller\ProductController($productModel, $estoqueModel);
 $estoqueController = new \Controller\EstoqueController();
 
 // --- 2. LÓGICA PARA BUSCAR O PRODUTO ---

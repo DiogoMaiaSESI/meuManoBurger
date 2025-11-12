@@ -3,6 +3,7 @@
 // CONFIGURAÇÕES DE USO
 namespace Model;
 use Model\Connection;
+require_once __DIR__ . '/../Model/Connection.php';
 
 // IMPORTANDO A CLASSE PDO EXCEPTION PARA TRATAR ERROS DE CONEXÃO,
 // OU SEJA, CASO TENHA ERROS NO BANCO DE DADOS ELE IRÁ MOSTRAR O MESMO
@@ -27,23 +28,18 @@ class Estoque
     }
 
     public function insertestoque($qtd_produto, $id_produto_fk)
-    {
-        try {
-
-            $sql = "INSERT INTO estoque (qtd_produto, id_produto_fk) VALUES (:qtd_produto, :id_produto_fk)";
-            //PREPARAR O BANCO DE DADOS PARA RECEBER O COMANDO ACIMA
-            // ACESSANDO O BD E O PREPARANDO PARA RECEBER O COMANDO 'INSERT INTO
-            $stmt = $this->estoque->prepare($sql);
-            //Vincula um parâmetro ao nome da variável especificada
-            $stmt->bindParam(":qtd_produto", $qtd_produto, PDO::PARAM_INT);
-            $stmt->bindParam(":id_produto_fk", $id_produto_fk, PDO::PARAM_INT);
-            return $stmt->execute();
-
-
-        } catch (PDOException $error) {
-            throw new Exception("Erro ao cadastrar produto no estoque: " . $error->getMessage());
-        }
+{
+    try {
+        $sql = "INSERT INTO estoque (qtd_produto, id_produto_fk) VALUES (:qtd_produto, :id_produto_fk)";
+        $stmt = $this->estoque->prepare($sql);
+        $stmt->bindParam(":qtd_produto", $qtd_produto, PDO::PARAM_INT);
+        $stmt->bindParam(":id_produto_fk", $id_produto_fk, PDO::PARAM_INT);
+        return $stmt->execute();
+    } catch (PDOException $error) {
+        error_log("Erro no Model/Estoque: " . $error->getMessage());
+        return false;
     }
+}
 
 
 

@@ -5,79 +5,78 @@ namespace Controller;
 use Model\Product;
 use Model\Estoque;
 
-class ProductController {
+class ProductController
+{
     private $productModel;
     private $estoqueModel;
+    private $db; // Conexão para a transação
 
-    public function __construct() {
-        $this->productModel = new Product();
-        $this->estoqueModel = new Estoque();
+    public function __construct(Product $productModel, Estoque $estoqueModel) {
+        $this->productModel = $productModel;
+        $this->estoqueModel = $estoqueModel;
+        // Pega a instância da conexão para controlar a transação
+        $this->db = \Model\Connection::getInstance();
     }
 
-    public function create() {
-        if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-            return ['success' => false, 'errors' => ['Requisição inválida.']];
+    // O novo método, inspirado no registerClienteUser
+    public function createProductWithStock($dadosProduto) {
+        // Validação dos dados recebidos
+        if (empty($dadosProduto['nome']) || empty($dadosProduto['preco']) || empty($dadosProduto['quantidade']) || empty($dadosProduto['id_adm_fk'])) {
+            $_SESSION['error_message'] = "Todos os campos são obrigatórios.";
+            return false;
         }
 
-        $nome = filter_input(INPUT_POST, 'nome_produto', FILTER_SANITIZE_SPECIAL_CHARS);
-        $preco = filter_input(INPUT_POST, 'preco_produto', FILTER_VALIDATE_FLOAT);
-        $tipo = filter_input(INPUT_POST, 'tipo_produto', FILTER_SANITIZE_SPECIAL_CHARS);
-        $descricao = filter_input(INPUT_POST, 'descricao_produto', FILTER_SANITIZE_SPECIAL_CHARS);
-        $id_adm_fk = filter_input(INPUT_POST, 'id_adm_fk', FILTER_VALIDATE_INT);
-        
-        $imagem = null;
-        if (isset($_FILES['imagem_produto']) && $_FILES['imagem_produto']['error'] == UPLOAD_ERR_OK) {
-            $fileType = mime_content_type($_FILES['imagem_produto']['tmp_name']);
-            if (in_array($fileType, ['image/jpeg', 'image/png', 'image/gif'])) {
-                 $imagem = file_get_contents($_FILES['imagem_produto']['tmp_name']);
+        try {
+            // --- TRANSAÇÃO DE BANCO DE DADOS ---
+            $this->db->beginTransaction();
+
+            // 1. Cria o produto
+            $id_produto_criado = $this->productModel->createProduct(
+                $dadosProduto['nome'],
+                $dadosProduto['preco'],
+                $dadosProduto['tipo'],
+                $dadosProduto['descricao'],
+                $dadosProduto['imagem'],
+                $dadosProduto['id_adm_fk']
+            );
+
+            // Se a criação do produto falhou, desfaz tudo e retorna erro.
+            if (!$id_produto_criado) {
+                $this->db->rollBack();
+                $_SESSION['error_message'] = "Falha ao criar o produto no banco de dados.";
+                return false;
             }
-        }
-        $nome = filter_input(INPUT_POST, 'nome_produto', FILTER_SANITIZE_SPECIAL_CHARS);
-        $preco = filter_input(INPUT_POST, 'preco_produto', FILTER_VALIDATE_FLOAT);
-        $tipo = filter_input(INPUT_POST, 'tipo_produto', FILTER_SANITIZE_SPECIAL_CHARS);
-        $descricao = filter_input(INPUT_POST, 'descricao_produto', FILTER_SANITIZE_SPECIAL_CHARS);
-        $quantidade = filter_input(INPUT_POST, 'quantidade', FILTER_VALIDATE_INT);
-        $id_adm_fk = $_SESSION['id_adm'] ?? null;
-        if (!$id_adm_fk) {
-            $_SESSION['error_message'] = "Erro de autenticação. Faça login novamente.";
-            header('Location: cadastro_produto.php');
-            exit;
-        }
 
-        $imagem = null;
-        if (isset($_FILES['imagem_produto']) && $_FILES['imagem_produto']['error'] == UPLOAD_ERR_OK) {
-            $imagem = file_get_contents($_FILES['imagem_produto']['tmp_name']);
-        }
+            // 2. Cria o estoque para o produto recém-criado
+            $estoqueSuccess = $this->estoqueModel->insertestoque(
+                $dadosProduto['quantidade'],
+                $id_produto_criado
+            );
 
-        // 1. Tenta criar o produto
-        $result = $this->productModel->createProduct($nome, $preco, $tipo, $descricao, $imagem, $id_adm_fk);
+            // Se a criação do estoque falhou, desfaz tudo e retorna erro.
+            if (!$estoqueSuccess) {
+                $this->db->rollBack();
+                $_SESSION['error_message'] = "Produto criado, mas falha ao registrar o estoque.";
+                return false;
+            }
 
-        if ($result['success']) {
-            // 2. Se o produto foi criado, pega o ID do novo produto
-            $id_produto_criado = $result['last_id'];
+            // 3. Se tudo deu certo, confirma as operações no banco.
+            $this->db->commit();
+            $_SESSION['success_message'] = "Produto cadastrado com sucesso!";
             
-            // 3. Insere a quantidade inicial no estoque
-            $estoqueSuccess = $this->estoqueModel->insertestoque($quantidade, $id_produto_criado);
+            // Retorna o ID para o redirecionamento
+            return $id_produto_criado;
 
-            if ($estoqueSuccess) {
-                $_SESSION['success_message'] = "Produto e estoque cadastrados com sucesso!";
-            } else {
-                // Opcional: Lidar com o caso onde o produto foi criado mas o estoque falhou.
-                $_SESSION['error_message'] = "Produto criado, mas falha ao cadastrar o estoque.";
-            }
-        } else {
-            // Se a criação do produto falhou, pega os erros
-            $errors = implode(', ', $result['errors']);
-            $_SESSION['error_message'] = "Erro ao cadastrar produto: " . $errors;
+        } catch (\Exception $e) {
+            // Se qualquer erro inesperado ocorrer, desfaz tudo.
+            $this->db->rollBack();
+            $_SESSION['error_message'] = "Ocorreu um erro inesperado: " . $e->getMessage();
+            return false;
         }
-
-        // Redireciona de volta para a página de cadastro para mostrar a mensagem
-        header('Location: cadastro_produto.php');
-        exit;
-
     }
 
-    public function update() {
+    public function update()
+    {
         if ($_SERVER["REQUEST_METHOD"] !== "POST") {
             return ['success' => false, 'errors' => ['Requisição inválida.']];
         }
@@ -97,25 +96,29 @@ class ProductController {
         return $this->productModel->updateProduct($id, $nome, $preco, $tipo, $descricao, $imagem, $id_adm_fk);
     }
 
-    public function delete() {
+    public function delete()
+    {
         if ($_SERVER["REQUEST_METHOD"] !== "POST") {
             return ['success' => false, 'errors' => ['Requisição inválida.']];
         }
-        
+
         $id = filter_input(INPUT_POST, 'id_produto', FILTER_VALIDATE_INT);
 
         return $this->productModel->deleteProduct($id);
     }
 
-    public function listAll() {
+    public function listAll()
+    {
         return $this->productModel->getAllProducts();
     }
 
-    public function findById($id) {
+    public function findById($id)
+    {
         $cleanId = filter_var($id, FILTER_VALIDATE_INT);
         return $this->productModel->getProductById($cleanId);
     }
-    public function toggleFavoriteAction() {
+    public function toggleFavoriteAction()
+    {
         if ($_SERVER["REQUEST_METHOD"] !== "POST") {
             return ['success' => false, 'errors' => ['Requisição inválida.']];
         }
@@ -132,12 +135,13 @@ class ProductController {
     }
 
 
-    public function listFavorites() {
+    public function listFavorites()
+    {
 
         $userId = $_SESSION['user_id'] ?? null;
-        
+
         if (!$userId) {
-            return []; 
+            return [];
         }
 
         return $this->productModel->getFavoritesByUser($userId);
