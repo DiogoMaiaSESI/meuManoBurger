@@ -1,0 +1,406 @@
+@import 'global.css';
+
+body {
+    min-height: 78.2rem;
+}
+
+header {
+    background-color: var(--VermelhoCereja);
+    display: flex;
+    height: 10.6rem;
+    width: 100%;
+    align-items: center;
+    justify-content: end;
+    padding-right: 4.9rem;
+    position: relative;
+    position: fixed;
+}
+.headerButtons {
+    display: flex;
+    gap: 4.6rem;
+    align-items: end;
+}
+.headerButtons figure {
+    transition: 500ms;
+    cursor: pointer;
+}
+.headerButtons figure:hover {
+    transition: 500ms;
+    opacity: 70%;
+    transform: scale(110%, 110%);
+}
+.logo{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+figure img{
+    display: block;
+}
+figure{
+    width: fit-content;
+    height: fit-content;
+}
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 10.6rem;
+    height: 100%;
+    background-color: #F4F4F4;
+}
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 3.7rem;
+    max-width: 92.6rem;
+    width: 80%;
+    min-width: 79rem;
+}
+.mainDiv, .secondDiv {
+    width: 100%;
+    background-color: var(--Branco);
+}
+.mainDiv {
+    display: flex;
+    height: 40.3rem;
+    box-shadow: 0 0 1.5rem 0 rgba(0, 0, 0, 0.25);
+    border-radius: 2rem;
+}
+.leftDiv, .rightDiv {
+    width: 100%;
+    height: 100%;
+}
+.leftDiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #F4F4F4;
+    border-top-left-radius: 2rem;
+    border-bottom-left-radius: 2rem;
+}
+.leftDiv figure {
+    max-width: 38.9rem;
+    width: 90%;
+}
+.leftDiv figure img {
+    width: 100%;
+    height: 30.3rem;
+}
+.rightDiv {
+    padding: 2.2rem 2rem;
+    gap: 2.7rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--Branco);
+    border-top-right-radius: 2rem;
+    border-bottom-right-radius: 2rem;
+    min-width: 41rem;
+}
+.title {
+    font-size: 3.6rem;
+    width: 100%;
+}
+h2 {
+    font-weight: 700;
+    color: var(--VermelhoCereja);
+}
+.price {
+    font-size: 3rem;
+    width: 100%;
+}
+p {
+    font-size: 1.6rem;
+    font-weight: 400;
+    text-align: justify;
+    line-height: 1.9rem;
+}
+.buttons {
+    display: flex;
+    gap: 3rem;
+}
+.cart {
+    width: 17.9rem;
+    height: 4.7rem;
+    border-radius: 0.8rem;
+    background-color: var(--VermelhoCereja);
+    box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
+    color: var(--Branco);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 1.4rem;
+    font-weight: 700;
+    border-style: none;
+    transition: 500ms;
+    cursor: pointer;
+}
+.cart:hover  {
+    border-style: solid;
+    border-width: 0.1rem;
+    border-color: var(--Preto);
+    box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.25);
+    transition: 500ms;
+    background-color: #c0222f;
+}
+.favorite {
+    cursor: pointer;
+    width: 17.2rem;
+    height: 4.7rem;
+    border-radius: 0.8rem;
+    background-color: var(--AmareloPrimario);
+    box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
+    color: var(--Preto);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 1.4rem;
+    font-weight: 700;
+    border-style: none;
+    transition: 500ms;
+}
+.favorite:hover {
+    background-color: var(--AmareloSecundario);
+    border-style: solid;
+    border-width: 0.1rem;
+    box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.25);
+    transition: 500ms;
+    border-color: var(--Preto);
+}
+.secondDiv {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 0 1.5rem 0 rgba(0, 0, 0, 0.25);
+    border-radius: 2rem;
+    height: 13.7rem;
+    padding: 0 6rem;
+}
+.secondDiv div {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: center;
+}
+.subtitle {
+    font-size: 2.5rem;
+    color: var(--VermelhoCereja);
+    font-weight: 700;
+}
+.subtitle2 {
+    font-size: 2.4rem;
+    font-weight: normal;
+}
+.menu {
+    width: 8rem !important;
+    padding-left: 4rem;
+    cursor: pointer;
+}
+.menu:hover {
+    transition: 500ms;
+    opacity: 70%;
+}
+.sandwich {
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    gap: 3.2rem;
+    position: absolute;
+    top: 3.3rem;
+    left: 0;
+    width: fit-content;
+}
+.options {
+    background-color: var(--VermelhoCereja);
+    width: 25.5rem;
+    border-style: solid;
+    border-left-style: none;
+    border-width: 0.2rem;
+    transform: translateX(-100%);
+    transition: 500ms;
+    border-top-right-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+}
+.optionActive {
+    transform: translateX(0%);
+    transition: 500ms;
+}
+.option {
+    display: flex;
+    justify-content: baseline;
+    align-items: center;
+    height: 6.4rem;
+    border-style: solid;
+    border-left-style: none;
+    border-width: 0.1rem;
+    border-color: var(--Preto);
+    color: var(--Branco);
+    padding-left: 1.6rem;
+    gap: 2.1rem;
+    cursor: pointer;
+    transition: 500ms;
+}
+.option:hover {
+    padding-left: 2.5rem;
+    transition: 500ms;
+}
+h5 {
+    font-size: 2.1rem;
+    font-weight: 400;
+}
+.sombra {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
+    background-color: var(--Preto);
+    opacity: 0%;
+    transition: 500ms;
+    pointer-events: none;
+}
+.shadowActive {
+    opacity: 40%;
+    transition: 500ms;
+    pointer-events: all;
+}
+@media screen and (max-width: 824px) and (min-width: 393px){
+    html {
+        height: 100%;
+    }
+    body {
+        background-color: #F4F4F4;
+    }
+    main {
+        padding-top: 40rem;
+        padding-bottom: 10rem;
+        height: 100%;
+    }
+    .mainDiv {
+        flex-direction: column;
+        height: fit-content;
+        background-color: var(--Branco);
+        border-radius: 2rem;
+    }
+    .leftDiv, .rightDiv{
+        border-radius: 2rem;
+        background-color: var(--Branco);
+    }
+    .container {
+        max-width: 54.8rem;
+        width: 80%;
+        min-width: 33.6rem;
+        padding-bottom: 2rem;
+    }
+    .rightDiv {
+        width: 100%;
+        min-width: auto !important;
+        max-width: auto !important;
+        height: fit-content;
+    }
+    .headerButtons {
+        gap: 1rem;
+    }
+    .menu, .menu img, .headerButtons figure img {
+        width: 3.5rem;
+    }
+    .logo img {
+        width: 10rem;
+    }
+    header {
+        padding-right: 2rem;
+    }
+    .menu {
+        width: 6rem !important;
+        padding-left: 2rem;
+    }
+    .buttons {
+        width: 100%;
+        justify-content: center;
+    }
+    .leftDiv figure img {
+        height: auto;
+    }
+    .secondDiv {
+        padding: 0 2rem;
+    }
+    .leftDiv {
+        padding: 2rem;
+        height: fit-content;
+    }
+}
+@media screen and (max-width: 392px){
+    .mainDiv {
+        flex-direction: column;
+        height: fit-content;
+        background-color: var(--Branco);
+        border-radius: 2rem;
+    }
+    .leftDiv, .rightDiv{
+        border-radius: 2rem;
+        background-color: var(--Branco);
+    }
+    .container {
+        max-width: 54.8rem;
+        width: 80%;
+        min-width: 33.6rem;
+        padding-bottom: 2rem;
+    }
+    .rightDiv {
+        width: 100%;
+        min-width: auto !important;
+        max-width: auto !important;
+        height: fit-content;
+    }
+    .headerButtons {
+        gap: 1rem;
+    }
+    .menu, .menu img, .headerButtons figure img {
+        width: 3.5rem;
+    }
+    .logo {
+        left: 40%;
+    }
+    body {
+        background-color: #F4F4F4;
+    }
+    main {
+        padding-top: 20rem;
+    }
+    .logo img {
+        width: 10rem;
+    }
+    header {
+        padding-right: 2rem;
+    }
+    .menu {
+        width: 6rem !important;
+        padding-left: 2rem;
+    }
+    .buttons {
+        width: 100%;
+        justify-content: center;
+    }
+    .leftDiv figure img {
+        height: auto;
+    }
+    .secondDiv {
+        padding: 0 2rem;
+    }
+    .leftDiv {
+        padding: 2rem;
+        height: fit-content;
+    }
+    p {
+        font-size: 1.4rem;
+        line-height: 1.7rem;
+    }
+}
