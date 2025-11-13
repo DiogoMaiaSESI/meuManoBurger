@@ -8,8 +8,8 @@ use Controller\EstoqueController;
 session_start();
 
 $productController = new ProductController();
-$admController = new AdmController();
-$estoqueController = new EstoqueController();
+// $admController = new AdmController();
+// $estoqueController = new EstoqueController();
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['nome_produto'],$_POST['tipo_produto'],$_POST['descricao_produto'],$_POST['quantidade'],$_POST['preco_produto']) && $_FILES['imagem_produto']['error'] === UPLOAD_ERR_OK) {
         $nome = $_POST['nome_produto'];
@@ -21,10 +21,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $imagem = file_get_contents($foto);
         $id_adm_fk = $_SESSION['idAdm'];
         $productController->create($nome, $preco, $opcoes, $descricao, $imagem, $id_adm_fk);
-        $produtos = $productController->listAll();
-        $ultimoProduto = end($produtos);
-        $id_produto = $ultimoProduto['id_produto'];
-        $estoqueController->insEstoque($quantidade, $id_produto);
+        // $produtos = $productController->listAll();
+        // $ultimoProduto = end($produtos);
+        // $id_produto = $ultimoProduto['id_produto'];
+        // $estoqueController->insEstoque($quantidade, $id_produto);
     }
 }
 
