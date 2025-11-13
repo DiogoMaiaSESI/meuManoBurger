@@ -21,8 +21,11 @@ const labelTap = document.querySelector('#Tapioca h2')
 const labelProm = document.querySelector('#promocoes h2')
 const promHeader = document.querySelector('.h1_promocoes')
 const cardaHeader = document.querySelector('.h1_cardapio')
-
-
+const addToCartButtons = document.querySelectorAll('.add-to-cart')
+const imgs = document.querySelectorAll('.product-image img')
+const form = document.querySelector('form')
+const inputDetails = document.querySelector('#product_id_details')
+const inputCart = document.querySelector('#product_id_cart')
 hambBtn.addEventListener('click', () => {
     hambSection.style.display = 'block'
     lancSection.style.display = 'none'
@@ -207,4 +210,20 @@ sombra.addEventListener('click', () => {
     opcoes.classList.toggle('optionActive')
     sombra.classList.toggle('shadowActive')
     sandwich.classList.toggle('sandwichActive')
+})
+
+addToCartButtons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+        console.log('clicado')
+        inputCart.value = btn.id
+        inputDetails.value = null
+        form.submit()
+    })
+})
+imgs.forEach((img) => {
+    img.addEventListener('click', () => {
+        inputDetails.value = img.id
+        inputCart.value = null
+        form.submit()
+    })
 })

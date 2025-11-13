@@ -1,3 +1,14 @@
+<?php
+
+session_start();
+require_once('../vendor/autoload.php');
+use Controller\ProductController;
+$productController = new ProductController();
+$productId = $_SESSION['product_id_details'];
+$product = $productController->findById($productId);
+$imageBase64 = 'data:image/jpeg;base64,' . base64_encode($product['imagem_produto']);
+?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -60,13 +71,13 @@
                 <div class="mainDiv">
                     <div class="leftDiv">
                         <figure>
-                            <img src="../templates/assets/img/coxinha.png" alt="">
+                            <img src="<?php echo $imageBase64; ?>" alt="<?php echo $product['descricao_produto'];?>">
                         </figure>
                     </div>
                     <div class="rightDiv">
-                        <h2 class="title">Coxinha</h2>
-                        <p>Uma coxinha crocante por fora e macia por dentro, recheada com frango desfiado temperado na medida certa e um toque cremoso de catupiry. Preparada com massa leve e dourada, é perfeita para matar a fome a qualquer hora do dia.</p>
-                        <h2 class="price">R$ 7,00</h2>
+                        <h2 class="title"><?php echo $product['nome_produto']; ?></h2>
+                        <p><?php echo $product['descricao_produto'];?></p>
+                        <h2 class="price"><?php echo number_format($product['preco_produto'],2,',','.'); ?></h2>
                         <div class="buttons">
                             <button class="cart">Adicionar ao carrinho</button>
                             <button class="favorite">Adicionar aos favoritos</button>
@@ -74,7 +85,7 @@
                     </div>
                 </div>
                 <div class="secondDiv">
-                    <div><h4 class="subtitle">Tipo</h4><h4 class="subtitle2">Lanche</h4></div>
+                    <div><h4 class="subtitle">Tipo</h4><h4 class="subtitle2"><?php echo $product['tipo_produto']; ?></h4></div>
                     <div><h4 class="subtitle">Quantidade</h4><h4 class="subtitle2">30</h4></div>
                 </div>
             </div>

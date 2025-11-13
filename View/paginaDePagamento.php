@@ -1,3 +1,31 @@
+<?php
+
+session_start();
+use Controller\ProductController;
+use Controller\PedidoController;
+require_once('../vendor/autoload.php');
+$productController = new ProductController();
+$pedidoController = new PedidoController();
+$products = $_SESSION['cart'];
+$sair = false;
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $codigo = substr(str_shuffle('abcdefghijklmnopqrstuvwxyz0123456789'), 0, 3) . '-' . substr(str_shuffle('abcdefghijklmnopqrstuvwxyz0123456789'), 0, 1);
+    while($sair !== true) {
+        if(empty($pedidoController->getPedidoByCodigo($codigo))) {
+            foreach ($products as $product => $value) {
+                $pedidoController->criarPedido($value, 1, $codigo, 4, 1);
+            }
+            $sair = true;
+            header('Location: pedidosUser.php');
+            exit();   
+        }else{
+            $codigo = substr(str_shuffle('abcdefghijklmnopqrstuvwxyz0123456789'), 0, 3) . '-' . substr(str_shuffle('abcdefghijklmnopqrstuvwxyz0123456789'), 0, 1);
+            $sair = false;
+        }
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -62,27 +90,24 @@
                     <div class="line"></div>
                 </div>
                 <div class="backgroundDiv">
-                    <div class="lineDiv">
+                    <?php 
+                    $total = 0;
+                    foreach ($products as $product => $value) {
+                        $prod = $productController->findById($value);
+                        $total += $prod['preco_produto'];
+                        $imageBase64 = 'data:image/jpeg;base64,' . base64_encode($prod['imagem_produto']);
+                        echo '<div class="lineDiv">
                         <div class="unitDiv">
                             <div class="priceDiv">
-                                <figure><img src="../templates/assets/img/Burger.png" alt=""></figure>
-                                <h5>Hambúrguer</h5>
+                                <figure><img class="imagemLanche" src="'. $imageBase64 .'" alt="'. $prod['descricao_produto'] .'" ></figure>
+                                <h5>'. $prod['nome_produto'] .'</h5>
                             </div>
-                            <h4>R$ 12,00</h4>
+                            <h4>R$ '. number_format($prod['preco_produto'], 2, ',', '.') .'</h4>
                         </div>
                         <div class="tinyLine"></div>
-                    </div>
-                    <div class="lineDiv">
-                        <div class="unitDiv">
-                            <div class="priceDiv">
-                                <figure><img src="../templates/assets/img/Coxinha.png" alt=""></figure>
-                                <h5>Coxinha</h5>
-                            </div>
-                            <h4>R$ 7,00</h4>
-                        </div>
-                        <div class="tinyLine"></div>
-                    </div>
-                    <h3>Total: <span>R$ 19,00</span></h3>
+                    </div>';
+                    } ?>
+                    <h3>Total: <span>R$ <?php echo $total; ?></span></h3>
                 </div>
             </div>
             <div class="titleDiv">
@@ -115,6 +140,7 @@
                     </div>
                 </div>
             </div>
+            <form method="post"></form>
             <button>Finalizar pagamento</button>
         </main>
         <script src="../templates/assets/js/paginaDePagamento.js"></script>

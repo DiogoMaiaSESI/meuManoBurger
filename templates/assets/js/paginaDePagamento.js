@@ -5,6 +5,8 @@ const back = document.querySelector('.back')
 const cartPage = document.querySelector('.cartPage')
 const profileButton = document.querySelector('.profileButton')
 const sandwich = document.querySelector('.sandwich')
+const finalizarCompra = document.querySelector('button')
+const form = document.querySelector('form')
 
 menu.addEventListener('click', () => {
     opcoes.classList.toggle('optionActive')
@@ -23,4 +25,8 @@ sombra.addEventListener('click', () => {
 
 back.addEventListener('click', () => {
     window.location.href = '../index.php'
+})
+
+finalizarCompra.addEventListener('click', () => {
+    form.submit()
 })

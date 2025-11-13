@@ -1,5 +1,9 @@
 <?php
-
+session_start();
+use Controller\ProductController;
+require_once('../vendor/autoload.php');
+$productController = new ProductController();
+$products = $_SESSION['cart'];
 ?>
 
 <!DOCTYPE html>
@@ -48,22 +52,19 @@
                     <!-- Div para o fundo rosa claro -->
                     <div class="cart-items-background">
                         <ul class="cart-item-list">
-                            <!-- Item 1 -->
-                            <li class="cart-item">
+                            <?php
+                            foreach ($products as $product => $value) {
+                                $prod = $productController->findById($value);
+                                $imageBase64 = 'data:image/jpeg;base64,' . base64_encode($prod['imagem_produto']);
+                                echo '<li class="cart-item">
                                 <div class="item-info">
-                                    <img src="/meuManoBurger/templates/assets/img/Hamburguer.png" alt="Hambúrguer" class="item-image">
-                                    <span class="item-name">Hambúrguer</span>
+                                    <img src="'. $imageBase64 .'" alt="Hambúrguer" class="item-image">
+                                    <span class="item-name">'. $prod['nome_produto'] .'</span>
                                 </div>
-                                <span class="item-price">R$ 12,00</span>
-                            </li>
-                            <!-- Item 2 -->
-                            <li class="cart-item">
-                                <div class="item-info">
-                                    <img src="/meuManoBurger/templates/assets/img/Coxinha.png" alt="Coxinha" class="item-image">
-                                    <span class="item-name">Coxinha</span>
-                                </div>
-                                <span class="item-price">R$ 7,00</span>
-                            </li>
+                                <span class="item-price">R$ '. number_format($prod['preco_produto'],2,',','.') .'</span>
+                            </li>';
+                            }
+                            ?>
                         </ul>
                     </div>
 
@@ -112,6 +113,6 @@
         </div>
 
     </main>
-
+    <script src="../templates/assets/js/Carrinho.js"></script>
 </body>
 </html>

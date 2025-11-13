@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once('../vendor/autoload.php');
 use Controller\ProductController;
 
@@ -17,6 +18,22 @@ if (isset($_GET['new_product_id']) && isset($_GET['category_class'])) {
         $newProduct = $productController->findById($newProductId);
     }
 }
+
+if($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if(!empty($_POST['product_id_details']) and empty($_POST['product_id_cart'])) {
+        $_SESSION['product_id_details'] = $_POST['product_id_details'];
+        header('Location: detalhamentoUser.php');
+        exit;
+    } else if (!empty($_POST['product_id_cart']) and empty($_POST['product_id_details'])) {
+        if (!isset($_SESSION['cart'])) {
+            $_SESSION['cart'] = [];
+        }
+        $_SESSION['cart'][] = $_POST['product_id_cart'];
+        header('Location: Carrinho.php');
+        exit;
+    }
+}
+
 // Função para gerar o HTML de um card de produto
 function renderProductCard($product) {
     // Formata o preço para o padrão brasileiro (R$ X,XX)
@@ -182,7 +199,10 @@ function renderProductCard($product) {
             </div>
         </div>
     </main>
-
+    <form method="POST">
+        <input type="hidden" name="product_id_details" id="product_id_details">
+        <input type="hidden" name="product_id_cart" id="product_id_cart">
+    </form>
     <section class="hamb">
        
         <div class="add-product">
@@ -198,16 +218,16 @@ function renderProductCard($product) {
             foreach ($hambs as $hamb => $value) {
                 echo '<div class="config_card">
                     <div class="product-image">
-                        <img src="' . 'data:image/jpeg;base64,' . base64_encode($value['imagem_produto']) . '" alt="' . htmlspecialchars($value['nome_produto']) . '" alt="Hambúrguer X-Tudo">
+                        <img src="' . 'data:image/jpeg;base64,' . base64_encode($value['imagem_produto']) . '" alt="' . htmlspecialchars($value['nome_produto']) . ' " id="'. $value['id_produto'] .'">
                     </div>
                     <div class="informacoes_config">
                         <h3 class="product-title">' . htmlspecialchars($value['nome_produto']) . '</h3>
-                        <p class="product-price">R$ '. number_format($value['preco_produto'], 2) .'</p>
-                        <button class="add-to-cart">
+                        <p class="product-price">R$ '. number_format($value['preco_produto'], 2, ',','.') .'</p>
+                        <button class="add-to-cart" id="'. $value['id_produto'] .'">
                             <figure>
-                                <img src="../templates/assets/img/detalhes.png" alt="">
+                                <img src="../templates/assets/img/carrinho.png" alt="">
                             </figure>
-                            Ver Detalhes
+                            Adicionar ao carrinho
                         </button>
                     </div>
                 </div>';
@@ -229,16 +249,16 @@ function renderProductCard($product) {
             foreach ($lancs as $lanc => $value) {
                 echo '<div class="config_card">
                     <div class="product-image">
-                        <img src="' . 'data:image/jpeg;base64,' . base64_encode($value['imagem_produto']) . '" alt="' . htmlspecialchars($value['nome_produto']) . '" alt="Hambúrguer X-Tudo">
+                        <img src="' . 'data:image/jpeg;base64,' . base64_encode($value['imagem_produto']) . '" alt="' . htmlspecialchars($value['nome_produto']) . ' " id="'. $value['id_produto'] .'">
                     </div>
                     <div class="informacoes_config">
                         <h3 class="product-title">' . htmlspecialchars($value['nome_produto']) . '</h3>
                         <p class="product-price">R$ '. number_format($value['preco_produto'], 2) .'</p>
-                        <button class="add-to-cart">
+                        <button class="add-to-cart" id="'. $value['id_produto'] .'">
                             <figure>
-                                <img src="../templates/assets/img/detalhes.png" alt="">
+                                <img src="../templates/assets/img/carrinho.png" alt="">
                             </figure>
-                            Ver Detalhes
+                            Adicionar ao carrinho
                         </button>
                     </div>
                 </div>';
@@ -260,16 +280,16 @@ function renderProductCard($product) {
             foreach ($bebs as $beb => $value) {
                 echo '<div class="config_card">
                     <div class="product-image">
-                        <img src="' . 'data:image/jpeg;base64,' . base64_encode($value['imagem_produto']) . '" alt="' . htmlspecialchars($value['nome_produto']) . '" alt="Hambúrguer X-Tudo">
+                        <img src="' . 'data:image/jpeg;base64,' . base64_encode($value['imagem_produto']) . '" alt="' . htmlspecialchars($value['nome_produto']) . ' " id="'. $value['id_produto'] .'">
                     </div>
                     <div class="informacoes_config">
                         <h3 class="product-title">' . htmlspecialchars($value['nome_produto']) . '</h3>
                         <p class="product-price">R$ '. number_format($value['preco_produto'], 2) .'</p>
-                        <button class="add-to-cart">
+                        <button class="add-to-cart" id="'. $value['id_produto'] .'">
                             <figure>
-                                <img src="../templates/assets/img/detalhes.png" alt="">
+                                <img src="../templates/assets/img/carrinho.png" alt="">
                             </figure>
-                            Ver Detalhes
+                            Adicionar ao carrinho
                         </button>
                     </div>
                 </div>';
@@ -291,16 +311,16 @@ function renderProductCard($product) {
             foreach ($cafes as $cafe => $value) {
                 echo '<div class="config_card">
                     <div class="product-image">
-                        <img src="' . 'data:image/jpeg;base64,' . base64_encode($value['imagem_produto']) . '" alt="' . htmlspecialchars($value['nome_produto']) . '" alt="Hambúrguer X-Tudo">
+                        <img src="' . 'data:image/jpeg;base64,' . base64_encode($value['imagem_produto']) . '" alt="' . htmlspecialchars($value['nome_produto']) . ' " id="'. $value['id_produto'] .'">
                     </div>
                     <div class="informacoes_config">
                         <h3 class="product-title">' . htmlspecialchars($value['nome_produto']) . '</h3>
                         <p class="product-price">R$ '. number_format($value['preco_produto'], 2) .'</p>
-                        <button class="add-to-cart">
+                        <button class="add-to-cart" id="'. $value['id_produto'] .'">
                             <figure>
-                                <img src="../templates/assets/img/detalhes.png" alt="">
+                                <img src="../templates/assets/img/carrinho.png" alt="">
                             </figure>
-                            Ver Detalhes
+                            Adicionar ao carrinho
                         </button>
                     </div>
                 </div>';
@@ -322,16 +342,16 @@ function renderProductCard($product) {
             foreach ($doces as $doce => $value) {
                 echo '<div class="config_card">
                     <div class="product-image">
-                        <img src="' . 'data:image/jpeg;base64,' . base64_encode($value['imagem_produto']) . '" alt="' . htmlspecialchars($value['nome_produto']) . '" alt="Hambúrguer X-Tudo">
+                        <img src="' . 'data:image/jpeg;base64,' . base64_encode($value['imagem_produto']) . '" alt="' . htmlspecialchars($value['nome_produto']) . ' " id="'. $value['id_produto'] .'">
                     </div>
                     <div class="informacoes_config">
                         <h3 class="product-title">' . htmlspecialchars($value['nome_produto']) . '</h3>
                         <p class="product-price">R$ '. number_format($value['preco_produto'], 2) .'</p>
-                        <button class="add-to-cart">
+                        <button class="add-to-cart" id="'. $value['id_produto'] .'">
                             <figure>
-                                <img src="../templates/assets/img/detalhes.png" alt="">
+                                <img src="../templates/assets/img/carrinho.png" alt="">
                             </figure>
-                            Ver Detalhes
+                            Adicionar ao carrinho
                         </button>
                     </div>
                 </div>';
@@ -355,16 +375,16 @@ function renderProductCard($product) {
             foreach ($taps as $tap => $value) {
                 echo '<div class="config_card">
                     <div class="product-image">
-                        <img src="' . 'data:image/jpeg;base64,' . base64_encode($value['imagem_produto']) . '" alt="' . htmlspecialchars($value['nome_produto']) . '" alt="Hambúrguer X-Tudo">
+                        <img src="' . 'data:image/jpeg;base64,' . base64_encode($value['imagem_produto']) . '" alt="' . htmlspecialchars($value['nome_produto']) . ' " id="'. $value['id_produto'] .'">
                     </div>
                     <div class="informacoes_config">
                         <h3 class="product-title">' . htmlspecialchars($value['nome_produto']) . '</h3>
                         <p class="product-price">R$ '. number_format($value['preco_produto'], 2) .'</p>
-                        <button class="add-to-cart">
+                        <button class="add-to-cart" id="'. $value['id_produto'] .'">
                             <figure>
-                                <img src="../templates/assets/img/detalhes.png" alt="">
+                                <img src="../templates/assets/img/carrinho.png" alt="">
                             </figure>
-                            Ver Detalhes
+                            Adicionar ao carrinho
                         </button>
                     </div>
                 </div>';
@@ -387,16 +407,16 @@ function renderProductCard($product) {
             foreach ($proms as $prom => $value) {
                 echo '<div class="config_card">
                     <div class="product-image">
-                        <img src="' . 'data:image/jpeg;base64,' . base64_encode($value['imagem_produto']) . '" alt="' . htmlspecialchars($value['nome_produto']) . '" alt="Hambúrguer X-Tudo">
+                        <img src="' . 'data:image/jpeg;base64,' . base64_encode($value['imagem_produto']) . '" alt="' . htmlspecialchars($value['nome_produto']) . ' " id="'. $value['id_produto'] .'">
                     </div>
                     <div class="informacoes_config">
                         <h3 class="product-title">' . htmlspecialchars($value['nome_produto']) . '</h3>
                         <p class="product-price">R$ '. number_format($value['preco_produto'], 2) .'</p>
-                        <button class="add-to-cart">
+                        <button class="add-to-cart" id="'. $value['id_produto'] .'">
                             <figure>
-                                <img src="../templates/assets/img/detalhes.png" alt="">
+                                <img src="../templates/assets/img/carrinho.png" alt="">
                             </figure>
-                            Ver Detalhes
+                            Adicionar ao carrinho
                         </button>
                     </div>
                 </div>';

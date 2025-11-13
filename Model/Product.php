@@ -103,8 +103,7 @@ class Product {
             $stmt->execute();
             return $stmt->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
-            error_log("Erro ao buscar produto por ID: " . $e->getMessage());
-            return null;
+            throw new Exception("Erro ao buscar produto por ID: " . $e);
         }
     }
     private function isFavorite($userId, $productId) {

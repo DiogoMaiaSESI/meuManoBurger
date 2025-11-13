@@ -71,5 +71,16 @@ class Pedido {
             throw new Exception('Erro ao tentar pegar produtos pelo id do pedido: ' . $e);
         }
     }
+    public function getEqualsCodigos ($codigo) {
+        try{
+            $sql = 'SELECT codigo FROM pedido WHERE codigo = :codigo';
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(':codigo', $codigo, PDO::PARAM_STR);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            throw new Exception('Erro ao pegar códigos iguais: ' . $e);
+        }
+    }
 }
 ?>
