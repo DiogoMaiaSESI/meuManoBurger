@@ -10,6 +10,9 @@ $_SESSION['idAdm'] = 1;
 $productController = new ProductController();
 // $admController = new AdmController();
 $estoqueController = new EstoqueController();
+
+
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['nome_produto'],$_POST['tipo_produto'],$_POST['descricao_produto'],$_POST['quantidade'],$_POST['preco_produto']) && $_FILES['imagem_produto']['error'] === UPLOAD_ERR_OK) {
         $nome = $_POST['nome_produto'];
@@ -20,11 +23,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $foto = $_FILES['imagem_produto']['tmp_name'];
         $imagem = file_get_contents($foto);
         $id_adm_fk = $_SESSION['idAdm'];
-        $productController->create($nome, $preco, $opcoes, $descricao, $imagem, $id_adm_fk);
         $produtos = $productController->listAll();
-        $ultimoProduto = end($produtos);
-        $id_produto = $ultimoProduto['id_produto'];
-        $estoqueController->insEstoque($quantidade, $id_produto);
+        $igual = false;
+        foreach($produtos as $produto){
+            if($produto['nome_produto'] === $nome || $produto['descricao_produto'] === $descricao){
+                $igual = true;
+                break;
+            }
+        }
+        if(!$igual) {
+            $productController->create($nome, $preco, $opcoes, $descricao, $imagem, $id_adm_fk);
+            $produtos = $productController->listAll();
+            $ultimoProduto = end($produtos);
+            $id_produto = $ultimoProduto['id_produto'];
+            $estoqueController->insEstoque($quantidade, $id_produto);
+        } else {
+            echo "<script>alert('Erro! Produto já existe!')</script>";
+        }
     }
 }
 

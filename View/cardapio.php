@@ -3,63 +3,7 @@ session_start();
 require_once('../vendor/autoload.php');
 use Controller\ProductController;
 
-// Inicia o controller de produtos
 $productController = new ProductController();
-$newProduct = null;
-$targetCategoryClass = '';
-
-// Verifica se um novo produto foi cadastrado e os parâmetros estão na URL
-if (isset($_GET['new_product_id']) && isset($_GET['category_class'])) {
-    $newProductId = filter_var($_GET['new_product_id'], FILTER_VALIDATE_INT);
-    $targetCategoryClass = htmlspecialchars($_GET['category_class']);
-
-    if ($newProductId) {
-        // Busca os dados do produto recém-cadastrado pelo ID
-        $newProduct = $productController->findById($newProductId);
-    }
-}
-
-if($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if(!empty($_POST['product_id_details']) and empty($_POST['product_id_cart'])) {
-        $_SESSION['product_id_details'] = $_POST['product_id_details'];
-        header('Location: detalhamentoUser.php');
-        exit;
-    } else if (!empty($_POST['product_id_cart']) and empty($_POST['product_id_details'])) {
-        if (!isset($_SESSION['cart'])) {
-            $_SESSION['cart'] = [];
-        }
-        $_SESSION['cart'][] = $_POST['product_id_cart'];
-        header('Location: Carrinho.php');
-        exit;
-    }
-}
-
-// Função para gerar o HTML de um card de produto
-function renderProductCard($product) {
-    // Formata o preço para o padrão brasileiro (R$ X,XX)
-    $formattedPrice = 'R$ ' . number_format($product['preco_produto'], 2, ',', '.');
-    // Converte a imagem (BLOB) para um formato que o HTML entende (Base64)
-    $imageBase64 = 'data:image/jpeg;base64,' . base64_encode($product['imagem_produto']);
-
-    // Retorna a estrutura HTML do card com os dados do produto
-    return '
-        <div class="config_card">
-            <div class="product-image">
-                <img src="' . $imageBase64 . '" alt="' . htmlspecialchars($product['nome_produto']) . '">
-            </div>
-            <div class="informacoes_config">
-                <h3 class="product-title">' . htmlspecialchars($product['nome_produto']) . '</h3>
-                <p class="product-price">' . $formattedPrice . '</p>
-                <button class="add-to-cart">
-                    <figure>
-                        <img src="../templates/assets/img/detalhes.png" alt="Ícone de detalhes">
-                    </figure>
-                    Ver Detalhes
-                </button>
-            </div>
-        </div>
-    ';
-}
 ?>
 
 <!DOCTYPE html>
@@ -253,7 +197,7 @@ function renderProductCard($product) {
                     </div>
                     <div class="informacoes_config">
                         <h3 class="product-title">' . htmlspecialchars($value['nome_produto']) . '</h3>
-                        <p class="product-price">R$ '. number_format($value['preco_produto'], 2) .'</p>
+                        <p class="product-price">R$ '. number_format($value['preco_produto'], 2, ',', '.') .'</p>
                         <button class="add-to-cart" id="'. $value['id_produto'] .'">
                             <figure>
                                 <img src="../templates/assets/img/carrinho.png" alt="">
@@ -284,7 +228,7 @@ function renderProductCard($product) {
                     </div>
                     <div class="informacoes_config">
                         <h3 class="product-title">' . htmlspecialchars($value['nome_produto']) . '</h3>
-                        <p class="product-price">R$ '. number_format($value['preco_produto'], 2) .'</p>
+                        <p class="product-price">R$ '. number_format($value['preco_produto'], 2, ',', '.') .'</p>
                         <button class="add-to-cart" id="'. $value['id_produto'] .'">
                             <figure>
                                 <img src="../templates/assets/img/carrinho.png" alt="">
@@ -315,7 +259,7 @@ function renderProductCard($product) {
                     </div>
                     <div class="informacoes_config">
                         <h3 class="product-title">' . htmlspecialchars($value['nome_produto']) . '</h3>
-                        <p class="product-price">R$ '. number_format($value['preco_produto'], 2) .'</p>
+                        <p class="product-price">R$ '. number_format($value['preco_produto'], 2, ',', '.') .'</p>
                         <button class="add-to-cart" id="'. $value['id_produto'] .'">
                             <figure>
                                 <img src="../templates/assets/img/carrinho.png" alt="">
@@ -346,7 +290,7 @@ function renderProductCard($product) {
                     </div>
                     <div class="informacoes_config">
                         <h3 class="product-title">' . htmlspecialchars($value['nome_produto']) . '</h3>
-                        <p class="product-price">R$ '. number_format($value['preco_produto'], 2) .'</p>
+                        <p class="product-price">R$ '. number_format($value['preco_produto'], 2, ',', '.') .'</p>
                         <button class="add-to-cart" id="'. $value['id_produto'] .'">
                             <figure>
                                 <img src="../templates/assets/img/carrinho.png" alt="">
@@ -379,7 +323,7 @@ function renderProductCard($product) {
                     </div>
                     <div class="informacoes_config">
                         <h3 class="product-title">' . htmlspecialchars($value['nome_produto']) . '</h3>
-                        <p class="product-price">R$ '. number_format($value['preco_produto'], 2) .'</p>
+                        <p class="product-price">R$ '. number_format($value['preco_produto'], 2, ',', '.') .'</p>
                         <button class="add-to-cart" id="'. $value['id_produto'] .'">
                             <figure>
                                 <img src="../templates/assets/img/carrinho.png" alt="">
@@ -411,7 +355,7 @@ function renderProductCard($product) {
                     </div>
                     <div class="informacoes_config">
                         <h3 class="product-title">' . htmlspecialchars($value['nome_produto']) . '</h3>
-                        <p class="product-price">R$ '. number_format($value['preco_produto'], 2) .'</p>
+                        <p class="product-price">R$ '. number_format($value['preco_produto'], 2, ',', '.') .'</p>
                         <button class="add-to-cart" id="'. $value['id_produto'] .'">
                             <figure>
                                 <img src="../templates/assets/img/carrinho.png" alt="">

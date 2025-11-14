@@ -4,6 +4,8 @@ use Controller\ProductController;
 require_once('../vendor/autoload.php');
 $productController = new ProductController();
 $products = $_SESSION['cart'];
+$uniqueProducts = array_unique($products);
+$total = 0;
 ?>
 
 <!DOCTYPE html>
@@ -55,13 +57,18 @@ $products = $_SESSION['cart'];
                             <?php
                             foreach ($products as $product => $value) {
                                 $prod = $productController->findById($value);
+                                $total += $prod['preco_produto'];
+                            }
+                            foreach ($uniqueProducts as $product => $value) {
+                                $qtd = count(array_filter($products, fn($product) => $product == $value));
+                                $prod = $productController->findById($value);
                                 $imageBase64 = 'data:image/jpeg;base64,' . base64_encode($prod['imagem_produto']);
                                 echo '<li class="cart-item">
                                 <div class="item-info">
                                     <img src="'. $imageBase64 .'" alt="Hambúrguer" class="item-image">
-                                    <span class="item-name">'. $prod['nome_produto'] .'</span>
+                                    <span class="item-name">' . $qtd . 'x ' . $prod['nome_produto'] . '</span>
                                 </div>
-                                <span class="item-price">R$ '. number_format($prod['preco_produto'],2,',','.') .'</span>
+                                <span class="item-price">R$ '. number_format($prod['preco_produto'],2,',','.') . '</span>
                             </li>';
                             }
                             ?>
@@ -80,7 +87,7 @@ $products = $_SESSION['cart'];
                 <div class="summary-card">
                     <div class="summary-total">
                         <span>Total Estimado:</span>
-                        <span class="total-price">R$ 19,00</span>
+                        <span class="total-price">R$ <?php echo number_format($total,2,',','.'); ?></span>
                     </div>
                     <p class="summary-description">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
