@@ -20,5 +20,8 @@
         "ext-mbstring": "*",
         "pragmarx/google2fa-qrcode": "^3.0",
         "bacon/bacon-qr-code": "dev-main"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "*"
     }
 }
