@@ -10,11 +10,17 @@ document.addEventListener('DOMContentLoaded', function () {
   const modalconfirm = document.querySelector('.modalconfirm')
   const btnsim = document.querySelector('.sim')
   const btnnao = document.querySelector('.nao')
+
+  forms = document.querySelectorAll('form')
   let Pedidoatual = null
   let StatusBtnatual = null
   let Statusdetalhesatual = null
 
-
+  forms.forEach((form)=>{
+    form.addEventListener('submit', (e)=>{
+      e.preventDefault()
+    })
+  })
 
   menu.addEventListener('click', () => {
     opcoes.classList.toggle('optionActive')
@@ -87,6 +93,13 @@ document.addEventListener('DOMContentLoaded', function () {
       let horamodal = document.querySelector('.modaldetalhes .modalhora p')
       horamodal.textContent = horaatual.textContent
 
+      let array = JSON.parse(detalhesBtn.dataset.array)
+
+      const resumos = document.querySelector('.resumos')
+      resumos.innerHTML = ''
+      array.forEach((item)=>{
+        resumos.innerHTML = resumos.innerHTML + `<div class="resumolanche"><p class="nomelanche">${item.nome_produto}</p><p class="qtdlanche">${item.qtd}x</p></div>`
+      })
       let statuspedido
 
       if (statusPendente.style.display !== 'none') {
@@ -134,7 +147,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     localStorage.setItem(`pedido_${codigo}`, 'retirado')
-
+    inputPost = document.querySelectorAll('.postPedido')
+    inputPost.forEach((input)=>{
+      input.value = codigo
+    })
+    forms.forEach((form)=>{
+      form.submit()
+    })
     Pedidoatual = null
     StatusBtnatual = null
     Statusdetalhesatual = null

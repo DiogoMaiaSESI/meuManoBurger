@@ -5,41 +5,70 @@ use Controller\ProductController;
 use Controller\PedidoController;
 use Controller\EstoqueController;
 require_once('../vendor/autoload.php');
+
 $productController = new ProductController();
 $pedidoController = new PedidoController();
 $estoqueController = new EstoqueController();
-$products = $_SESSION['cart'];
-if($products !== null) {
+
+$products = $_SESSION['cart'] ?? [];
+
+if (!empty($products)) {
     $uniqueProducts = array_unique($products);
 }
+
 $horario = $_SESSION['horario'];
 $horarioFormatado = str_replace('T', ' ', $horario) . ':00';
-$sair = false;
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $codigo = substr(str_shuffle('abcdefghijklmnopqrstuvwxyz0123456789'), 0, 3) . '-' . substr(str_shuffle('abcdefghijklmnopqrstuvwxyz0123456789'), 0, 1);
-    while($sair !== true) {
-        if(empty($pedidoController->getPedidoByCodigo($codigo))) {
-            foreach ($uniqueProducts as $product => $value) {
-                $precoTotal = 0;
-                foreach ($products as $product => $value) {
-                    $prod = $productController->findById($value);
-                    $precoTotal += $prod['preco_produto'];
-                }
-                $qtd = count(array_filter($products, fn($product) => $product == $value));
-                $pedidoController->criarPedido($value, 7, $codigo, $qtd, $precoTotal, $horarioFormatado);
-                $pedidoCriado = $pedidoController->getPedidoByCodigo($codigo);
-                $estoqueController->subEstoque($pedidoCriado['id_pedido']);
-            }
-            $sair = true;
-            header('Location: pedidosUser.php');
-            exit();   
-        }else{
-            $codigo = substr(str_shuffle('abcdefghijklmnopqrstuvwxyz0123456789'), 0, 3) . '-' . substr(str_shuffle('abcdefghijklmnopqrstuvwxyz0123456789'), 0, 1);
-            $sair = false;
-        }
+
+    // Gera o código inicial
+    $codigo = substr(str_shuffle('abcdefghijklmnopqrstuvwxyz0123456789'), 0, 3)
+            . '-' .
+              substr(str_shuffle('abcdefghijklmnopqrstuvwxyz0123456789'), 0, 1);
+
+    // Garante que o código não existe
+    while (!empty($pedidoController->getPedidoByCodigo($codigo))) {
+        $codigo = substr(str_shuffle('abcdefghijklmnopqrstuvwxyz0123456789'), 0, 3)
+                . '-' .
+                  substr(str_shuffle('abcdefghijklmnopqrstuvwxyz0123456789'), 0, 1);
     }
+
+    // Calcula o preço total apenas UMA VEZ (não precisa fazer dentro do foreach)
+    $precoTotal = 0;
+    foreach ($products as $prodId) {
+        $prod = $productController->findById($prodId);
+        $precoTotal += $prod['preco_produto'];
+    }
+
+    // Cria o pedido e os itens
+    foreach ($uniqueProducts as $productId) {
+
+        // Conta quantas vezes esse produto aparece
+        $qtd = count(array_filter($products, fn($item) => $item == $productId));
+
+        // Cria o pedido com o produto e quantidade correta
+        $pedidoController->criarPedido(
+            $productId,
+            7,
+            $codigo,
+            $qtd,
+            $precoTotal,
+            $horarioFormatado,
+            'A retirar'
+        );
+
+        // Pega o pedido criado
+        $pedidoCriado = $pedidoController->getPedidoByCodigo($codigo);
+
+        // Atualiza o estoque do pedido
+        $estoqueController->subEstoque($pedidoCriado['id_pedido']);
+    }
+
+    header('Location: pedidosUser.php');
+    exit();
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">

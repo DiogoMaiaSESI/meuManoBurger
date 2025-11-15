@@ -10,17 +10,18 @@ class Pedido {
     public function __construct() {
         $this->db = Connection::getInstance();
     }
-    public function criarPedido ($id_produto, $id_cliente, $codigo, $qtd, $total, $retirada) {
+    public function criarPedido ($id_produto, $id_cliente, $codigo, $qtd, $total, $retirada, $status) {
         try {
             $pedido_existente = $this->getPedidoByCodigo($codigo);
             $id_pedido_existente = $pedido_existente['id_pedido'];
             if($id_pedido_existente===null){
-                $sql = 'INSERT INTO pedido (codigo, id_cliente_fk, total, retirada) VALUES (:codigo, :id_cliente_fk, :total, :retirada)';
+                $sql = 'INSERT INTO pedido (codigo, id_cliente_fk, total, retirada, status) VALUES (:codigo, :id_cliente_fk, :total, :retirada, :status)';
                 $stmt = $this->db->prepare($sql);
                 $stmt->bindParam(':codigo', $codigo, PDO::PARAM_STR);
                 $stmt->bindParam(':id_cliente_fk', $id_cliente, PDO::PARAM_INT);
                 $stmt->bindParam(':total', $total, PDO::PARAM_STR);
                 $stmt->bindParam(':retirada', $retirada, PDO::PARAM_STR);
+                $stmt->bindParam(':status', $status, PDO::PARAM_STR);
                 $stmt->execute();
 
                 $sql = 'SELECT id_pedido FROM pedido ORDER BY id_pedido DESC LIMIT 1';
@@ -91,6 +92,40 @@ class Pedido {
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             throw new Exception('Erro ao tentar pegar todos os pedidos: ' . $e);
+        }
+    }
+    public function getIdPedidoByCodigo ($codigo) {
+        try {
+            $sql = 'SELECT id_pedido FROM pedido WHERE codigo = :codigo';
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(':codigo', $codigo, PDO::PARAM_STR);
+            $stmt->execute();
+            return $stmt->fetchColumn();
+        } catch (PDOException $e) {
+            throw new Exception('Erro ao pegar id do pedido: ' . $e);
+        }
+    }
+    public function getPedidoProdutoById ($id) {
+        try {
+            $sql = 'SELECT * FROM pedido_produto WHERE id_pedido_fk = :id_pedido_fk';
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(':id_pedido_fk', $id, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            throw new Exception('Erro ao pegar pedido_produto: ' . $e);
+        }
+    }
+    public function updateStatusPedido ($codigo, $status) {
+        try {
+            $sql = 'UPDATE pedido SET status = :status WHERE codigo = :codigo';
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(':status', $status, PDO::PARAM_STR);
+            $stmt->bindParam(':codigo', $codigo, PDO::PARAM_STR);
+            $stmt->execute();
+            return true;
+        } catch (PDOException $e) {
+            throw new Exception('Erro ao atualizar status do pedido: ' . $e);
         }
     }
 }
