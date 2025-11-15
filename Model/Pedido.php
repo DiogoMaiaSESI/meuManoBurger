@@ -128,5 +128,17 @@ class Pedido {
             throw new Exception('Erro ao atualizar status do pedido: ' . $e);
         }
     }
+
+    public function deletePedidoByCodigo ($codigo) {
+        try {
+            $sql = 'DELETE FROM pedido WHERE codigo = :codigo';
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(':codigo', $codigo, PDO::PARAM_STR);
+            $stmt->execute();
+            return true;
+        } catch (PDOException $e) {
+            throw new Exception('Erro ao deletar pedido pelo código: ' . $e);
+        }
+    }
 }
 ?>

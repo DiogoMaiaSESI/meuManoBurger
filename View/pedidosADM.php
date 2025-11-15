@@ -9,9 +9,17 @@ $productController = new ProductController();
 $pedidos = $pedidoController->getAllPedidos();
 
 if($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $codigo = $_POST['codigo'];
-    $pedidoController->updateStatusPedido($codigo, 'Retirado');
+    if(!empty($_POST['codigo'])){
+        $codigo = $_POST['codigo'];
+        $pedidoController->updateStatusPedido($codigo, 'Retirado');
+    }
+    if(!empty($_POST['codigoApagar'])){
+        $codigo = $_POST['codigoApagar'];
+        $pedidoController->deletePedidoByCodigo($codigo);
+    }
 }
+
+
 
 ?>
 <!DOCTYPE html>
@@ -238,8 +246,11 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
 
                     <div class="botoes">
-                        <button class="detalhes" data-array="' . htmlspecialchars(json_encode($arrayPedidosQtd), ENT_QUOTES, 'UTF-8') . '">Ver Detalhes</button>
-                        <form method="POST"><input class="postPedido" name="codigo" type="hidden"><button class="statusbtn">O pedido foi retirado?</button></form>
+                        <div class="org">
+                            <button class="detalhes" data-array="' . htmlspecialchars(json_encode($arrayPedidosQtd), ENT_QUOTES, 'UTF-8') . '">Ver Detalhes</button>
+                            <button class="lixeira"><img src="../templates/assets/img/Lixeira.png"></button>
+                        </div>
+                        <form method="POST"><input class="postPedido" name="codigo" type="hidden"><input class="apagarPedido" name="codigoApagar" type="hidden"><button class="statusbtn">O pedido foi retirado?</button></form>
                     </div>
                 </div>
                     ';

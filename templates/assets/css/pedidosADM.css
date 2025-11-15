@@ -126,6 +126,7 @@ h5 {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
 }
 
+
 .lateral {
     display: flex;
     align-items: center;
@@ -328,12 +329,31 @@ button.btn:hover {
     gap: 1.1rem;
 }
 
+
+.org {
+    display: flex;
+    width: 18rem;
+    gap: 2rem;
+}
+
+.lixeira {
+    height: 3.6rem;
+    border: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    border-radius: .5rem;
+    transition: all 0.3s ease;
+}
+.lixeira img {
+    height: 100%;
+}
+
 button.detalhes,
 button.statusbtn {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 18rem;
+    
     height: 3.6rem;
     border-radius: .5rem;
     font-weight: bold;
@@ -346,14 +366,16 @@ button.statusbtn {
 button.detalhes {
     background-color: var(--VermelhoCereja);
     color: var(--Branco);
+    width: 100%;
 }
 
 button.statusbtn {
     background-color: #f0f0f0;
+    width: 18rem;
 }
 
 button.detalhes:hover,
-button.statusbtn:hover {
+button.statusbtn:hover, .lixeira:hover {
     transform: translateY(-3px);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
 }
@@ -619,6 +641,9 @@ button.statusbtn.statusbtndesabilitado:hover {
         height: 3.6rem;
         font-size: 1.2rem;
     }
+    .org {
+        width: 15rem;
+    }
 
     .codigopedidos,
     .horapedidos,
@@ -708,6 +733,9 @@ button.statusbtn.statusbtndesabilitado:hover {
         width: 15rem;
         height: 3.6rem;
         font-size: 1.2rem;
+    }
+    .org {
+        width: 15rem;
     }
 
     .codigopedidos,
@@ -801,6 +829,9 @@ button.statusbtn.statusbtndesabilitado:hover {
         width: 14rem;
         height: 3.6rem;
         font-size: 1.1rem;
+    }
+    .org {
+        width: 14rem;
     }
 
     .codigopedidos,
@@ -960,7 +991,10 @@ button.statusbtn.statusbtndesabilitado:hover {
         height: 3.6rem;
         font-size: 1.1rem;
     }
-
+    .org {
+        width: 14rem;
+        gap: 1rem;
+    }
     .datapedidos,
     .horapedidos,
     .totalpedidos {

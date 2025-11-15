@@ -74,14 +74,20 @@ document.addEventListener('DOMContentLoaded', function () {
   carregarEstados()
 
   pedidos.forEach((pedido) => {
+    const form = pedido.querySelector('form')
     const detalhesBtn = pedido.querySelector('.detalhes')
     const statusBtn = pedido.querySelector('.statusbtn')
     const statusPendente = pedido.querySelector('.statuspendente')
+    const lixeiraBtn = pedido.querySelector('.lixeira')
 
     let codigoatual = pedido.querySelector('.codigo')
     let horaatual = pedido.querySelector('.hora')
     let dataatual = pedido.querySelector('.data')
 
+
+    form.addEventListener('submit', (e)=>{
+      e.preventDefault()
+    })
     detalhesBtn.addEventListener('click', () => {
 
       let codigomodal = document.querySelector('.modaldetalhes .codigotexto')
@@ -121,6 +127,15 @@ document.addEventListener('DOMContentLoaded', function () {
       Statusdetalhesatual = document.querySelector('.modaldetalhes .modalstatus p')
       modalconfirm.style.display = 'block'
     })
+    
+    lixeiraBtn.addEventListener('click',()=>{
+      const codigo = pedido.querySelector('.codigo').textContent
+      inputApagar = pedido.querySelector('.apagarPedido')
+      inputPost = pedido.querySelector('.postPedido')
+      inputPost.value = null
+      inputApagar.value = codigo
+      form.submit()
+    })
   })
 
   btnnao.addEventListener('click', () => {
@@ -148,17 +163,23 @@ document.addEventListener('DOMContentLoaded', function () {
 
     localStorage.setItem(`pedido_${codigo}`, 'retirado')
     inputPost = document.querySelectorAll('.postPedido')
+    inputApagar = document.querySelectorAll('.apagarPedido')
+    inputApagar.forEach((input)=>{
+      input.value = null
+    })
     inputPost.forEach((input)=>{
       input.value = codigo
     })
+    
     forms.forEach((form)=>{
       form.submit()
     })
+
     Pedidoatual = null
     StatusBtnatual = null
     Statusdetalhesatual = null
   })
-
+  
   const barraPesquisa = document.querySelector('input')
   const btnBuscar = document.querySelector('.btn')
 

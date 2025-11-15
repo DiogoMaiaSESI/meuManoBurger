@@ -56,6 +56,13 @@ class PedidoController {
             throw new Exception('Erro ao atualizar status do pedido: ' . $e);
         }
     }
+    public function deletePedidoByCodigo ($codigo) {
+        try {
+            return $this->pedidoModel->deletePedidoByCodigo($codigo);
+        } catch (PDOException $e) {
+            throw new Exception('Erro ao deletar pedido pelo código: ' . $e);
+        }
+    }
 }
 
 ?>
