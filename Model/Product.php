@@ -42,32 +42,29 @@ class Product
     }
 
     public function createProduct($nome, $preco, $tipo, $descricao, $imagem, $id_adm_fk)
-{
-    
-    // A validação já acontece no Controller, o Model confia nos dados.
-    try {
-        $stmt = $this->conn->prepare("INSERT INTO produto (nome_produto, preco_produto, tipo_produto, descricao_produto, imagem_produto, id_adm_fk) VALUES (:nome, :preco, :tipo, :descricao, :imagem, :id_adm_fk)");
-        
-        $stmt->bindParam(':nome', $nome, PDO::PARAM_STR);
-        $stmt->bindParam(':preco', $preco, PDO::PARAM_STR);
-        $stmt->bindParam(':tipo', $tipo, PDO::PARAM_STR);
-        $stmt->bindParam(':descricao', $descricao, PDO::PARAM_STR);
-        $stmt->bindValue(':imagem', $imagem, PDO::PARAM_LOB);
-        $stmt->bindParam(':id_adm_fk', $id_adm_fk, PDO::PARAM_INT);
+    {
+        try {
+            $sql = "INSERT INTO produto (nome_produto, preco_produto, tipo_produto, descricao_produto, imagem_produto, id_adm_fk) VALUES (:nome, :preco, :tipo, :descricao, :imagem, :id_adm_fk)";
+            $stmt = $this->conn->prepare($sql);
 
-        
-        if ($stmt->execute()) {
-            // Retorna o ID do produto criado para o Controller usar.
-            return $this->conn->lastInsertId();
+            $stmt->bindParam(':nome', $nome, PDO::PARAM_STR);
+            $stmt->bindParam(':preco', $preco, PDO::PARAM_STR);
+            $stmt->bindParam(':tipo', $tipo, PDO::PARAM_STR);
+            $stmt->bindParam(':descricao', $descricao, PDO::PARAM_STR);
+            $stmt->bindValue(':imagem', $imagem, PDO::PARAM_LOB); // Usar bindValue para LOB é mais seguro
+            $stmt->bindParam(':id_adm_fk', $id_adm_fk, PDO::PARAM_INT);
+
+            if ($stmt->execute()) {
+                return $this->conn->lastInsertId(); // Retorna o ID do produto criado
+            }
+            return false; // Retorna false se a execução falhar
+
+        } catch (PDOException $e) {
+            // Em um ambiente real, logar o erro é crucial.
+            error_log("Erro ao criar produto no Model: " . $e->getMessage());
+            return false;
         }
-        return false;
-
-    } catch (PDOException $e) {
-        error_log("Erro no Model/Product: " . $e->getMessage());
-        return false;
     }
-   
-}
 
     public function updateProduct($id, $nome, $preco, $tipo, $descricao, $imagem, $id_adm_fk)
     {

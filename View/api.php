@@ -13,9 +13,7 @@ use Controller\ClienteController;
 
 $action = $_GET['action'] ?? ($_POST['action'] ?? null); // Aceita action via GET ou POST
 
-// --- ROTAS PÚBLICAS (antes da verificação de login) ---
 
-// ROTA PARA VERIFICAR O CÓDIGO 2FA DURANTE O LOGIN
 if ($action === 'verify-login-2fa') {
     if (empty($_SESSION['pending_2fa']) || empty($_SESSION['pending_id_cliente'])) {
         echo json_encode(['success' => false, 'message' => 'Sessão de verificação 2FA não iniciada.']);
@@ -30,7 +28,6 @@ if ($action === 'verify-login-2fa') {
 }
 
 
-// --- ROTAS PROTEGIDAS (exigem login completo) ---
 
 if (!isset($_SESSION['id_cliente'])) {
     http_response_code(401 );

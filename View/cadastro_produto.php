@@ -1,41 +1,30 @@
 <?php
 session_start();
 
+// 1. VERIFICAÇÃO DE SEGURANÇA
 if (!isset($_SESSION['id_adm']) || !isset($_SESSION['is_admin']) || $_SESSION['is_admin'] !== true) {
     header('Location: login.php');
     exit;
 }
 
+// 2. INCLUSÕES
+require_once __DIR__ . '/../Model/Connection.php';
 require_once __DIR__ . '/../Model/Product.php';
 require_once __DIR__ . '/../Model/Estoque.php';
 require_once __DIR__ . '/../Controller/ProductController.php';
 
+// 3. PROCESSAMENTO DO FORMULÁRIO
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $productModel = new Model\Product();
-    $estoqueModel = new Model\Estoque();
-    $productController = new Controller\ProductController($productModel, $estoqueModel);
-
-    $dadosProduto = [
-        'nome' => $_POST['nome_produto'] ?? null,
-        'preco' => $_POST['preco_produto'] ?? null,
-        'tipo' => $_POST['tipo_produto'] ?? null,
-        'descricao' => $_POST['descricao_produto'] ?? null,
-        'quantidade' => $_POST['quantidade'] ?? null,
-        'imagem' => (isset($_FILES['imagem_produto']) && $_FILES['imagem_produto']['error'] == UPLOAD_ERR_OK) ? file_get_contents($_FILES['imagem_produto']['tmp_name']) : null,
-        'id_adm_fk' => $_SESSION['id_adm'] ?? null
-    ];
-
-    $result = $productController->createProductWithStock($dadosProduto);
-
-    if ($result !== false) {
-        // Sucesso! Redireciona para a página de detalhes com o ID retornado.
-        header('Location: detalhamentoAdm.php?id=' . $result);
-        exit;
-    } else {
-        // Falha! Redireciona de volta para o formulário para mostrar o erro.
-        header('Location: cadastro_produto.php');
-        exit;
-    }
+    // Instancia os Models
+    $productModel = new \Model\Product();
+    $estoqueModel = new \Model\Estoque();
+    
+    // Instancia o Controller, passando os Models
+    $productController = new \Controller\ProductController($productModel, $estoqueModel);
+    
+    // --- CHAMADA CORRETA ---
+    // Chama o método create(), que agora cuida de tudo internamente.
+    $productController->create();
 }
 ?>
 

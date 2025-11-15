@@ -19,61 +19,63 @@ class ProductController
     }
 
     // O novo método, inspirado no registerClienteUser
-    public function createProductWithStock($dadosProduto) {
-        // Validação dos dados recebidos
-        if (empty($dadosProduto['nome']) || empty($dadosProduto['preco']) || empty($dadosProduto['quantidade']) || empty($dadosProduto['id_adm_fk'])) {
-            $_SESSION['error_message'] = "Todos os campos são obrigatórios.";
-            return false;
+    public function create() {
+        $dadosProduto = [
+            'nome' => filter_input(INPUT_POST, 'nome_produto', FILTER_SANITIZE_SPECIAL_CHARS),
+            'preco' => filter_input(INPUT_POST, 'preco_produto', FILTER_VALIDATE_FLOAT),
+            'tipo' => filter_input(INPUT_POST, 'tipo_produto', FILTER_SANITIZE_SPECIAL_CHARS),
+            'descricao' => filter_input(INPUT_POST, 'descricao_produto', FILTER_SANITIZE_SPECIAL_CHARS),
+            'quantidade' => filter_input(INPUT_POST, 'quantidade', FILTER_VALIDATE_INT),
+            'imagem' => (isset($_FILES['imagem_produto']) && $_FILES['imagem_produto']['error'] == UPLOAD_ERR_OK) ? file_get_contents($_FILES['imagem_produto']['tmp_name']) : null,
+            'id_adm_fk' => $_SESSION['id_adm'] ?? null
+        ];
+
+        if (in_array(null, [$dadosProduto['nome'], $dadosProduto['preco'], $dadosProduto['tipo'], $dadosProduto['quantidade'], $dadosProduto['id_adm_fk']], true)) {
+            $_SESSION['error_message'] = "Erro: Todos os campos obrigatórios devem ser preenchidos.";
+            header('Location: cadastro_produto.php');
+            exit;
         }
 
         try {
-            // --- TRANSAÇÃO DE BANCO DE DADOS ---
             $this->db->beginTransaction();
 
-            // 1. Cria o produto
             $id_produto_criado = $this->productModel->createProduct(
-                $dadosProduto['nome'],
-                $dadosProduto['preco'],
-                $dadosProduto['tipo'],
-                $dadosProduto['descricao'],
-                $dadosProduto['imagem'],
-                $dadosProduto['id_adm_fk']
+                $dadosProduto['nome'], $dadosProduto['preco'], $dadosProduto['tipo'],
+                $dadosProduto['descricao'], $dadosProduto['imagem'], $dadosProduto['id_adm_fk']
             );
 
-            // Se a criação do produto falhou, desfaz tudo e retorna erro.
             if (!$id_produto_criado) {
                 $this->db->rollBack();
-                $_SESSION['error_message'] = "Falha ao criar o produto no banco de dados.";
-                return false;
+                $_SESSION['error_message'] = "Falha crítica ao salvar o produto no banco de dados.";
+                header('Location: cadastro_produto.php');
+                exit;
             }
 
-            // 2. Cria o estoque para o produto recém-criado
             $estoqueSuccess = $this->estoqueModel->insertestoque(
                 $dadosProduto['quantidade'],
                 $id_produto_criado
             );
 
-            // Se a criação do estoque falhou, desfaz tudo e retorna erro.
             if (!$estoqueSuccess) {
                 $this->db->rollBack();
                 $_SESSION['error_message'] = "Produto criado, mas falha ao registrar o estoque.";
-                return false;
+                header('Location: cadastro_produto.php');
+                exit;
             }
 
-            // 3. Se tudo deu certo, confirma as operações no banco.
             $this->db->commit();
             $_SESSION['success_message'] = "Produto cadastrado com sucesso!";
-            
-            // Retorna o ID para o redirecionamento
-            return $id_produto_criado;
+            header('Location: detalhamentoAdm.php?id=' . $id_produto_criado);
+            exit;
 
         } catch (\Exception $e) {
-            // Se qualquer erro inesperado ocorrer, desfaz tudo.
             $this->db->rollBack();
             $_SESSION['error_message'] = "Ocorreu um erro inesperado: " . $e->getMessage();
-            return false;
+            header('Location: cadastro_produto.php');
+            exit;
         }
     }
+    
 
     public function update()
     {

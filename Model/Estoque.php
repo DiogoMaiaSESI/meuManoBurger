@@ -127,6 +127,17 @@ class Estoque
         }
 
     }
+    public function deleteEstoque($id_produto_fk) {
+    try {
+        $sql = "DELETE FROM estoque WHERE id_produto_fk = :id_produto_fk";
+        $stmt = $this->estoque->prepare($sql);
+        $stmt->bindParam(":id_produto_fk", $id_produto_fk, PDO::PARAM_INT);
+        return $stmt->execute();
+    } catch (PDOException $e) {
+        error_log("Erro ao deletar estoque: " . $e->getMessage());
+        return false;
+    }
+}
 
 
 
