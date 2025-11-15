@@ -4,7 +4,9 @@ use Controller\ProductController;
 require_once('../vendor/autoload.php');
 $productController = new ProductController();
 $products = $_SESSION['cart'];
-$uniqueProducts = array_unique($products);
+if($products !== null) {
+    $uniqueProducts = array_unique($products);
+}
 $total = 0;
 ?>
 

@@ -7,6 +7,7 @@ const profileButton = document.querySelector('.profileButton')
 const sandwich = document.querySelector('.sandwich')
 const finalizarCompra = document.querySelector('button')
 const form = document.querySelector('form')
+const input = document.querySelector('input')
 
 menu.addEventListener('click', () => {
     opcoes.classList.toggle('optionActive')

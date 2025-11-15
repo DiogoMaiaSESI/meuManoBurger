@@ -48,43 +48,36 @@ class Estoque {
     // Subtracao  do estoque com base no pedido
     public function subtracaoEstoque($id_pedido) {
         // Busca os dados do pedido
-        $pedido = $this->getQuantidadePedido($id_pedido);
-        if (!$pedido) return "Pedido não encontrado.";
+        $produtos = $this->getQuantidadePedido($id_pedido);
+        if (!$produtos || count($produtos) === 0) return "Pedido não encontrado.";
 
-        $id_produto = $pedido['id_produto_fk'];
-        $qtd_pedido = $pedido['qtd'];
-
-        // Busca o estoque do produto
-        $estoque = $this->getEstoque($id_produto);
-        if (!$estoque) return "Produto não encontrado no estoque.";
-
-        $qtd_estoque = $estoque['qtd_produto'];
-
-        // Verifica se há estoque suficiente
-        if ($qtd_estoque < $qtd_pedido) {
-            return "Estoque insuficiente: disponível $qtd_estoque, pedido $qtd_pedido.";
+        foreach ($produtos as $produto) {
+            $id_produto = $produto['id_produto_fk'];
+            $qtd_pedido = $produto['qtd'];
+            // Busca o estoque do produto
+            $estoque = $this->getEstoque($id_produto);
+            if (!$estoque) return "Produto não encontrado no estoque.";
+            $qtd_estoque = $estoque['qtd_produto'];
+            // Verifica se há estoque suficiente
+            if ($qtd_estoque < $qtd_pedido) {
+                return "Estoque insuficiente: disponível $qtd_estoque, pedido $qtd_pedido.";
+            }
+            // Faz a subtração
+            $novo_estoque = $qtd_estoque - $qtd_pedido;
+            // Atualiza a tabela estoque
+            $update = $this->estoque->prepare("UPDATE estoque SET qtd_produto = ? WHERE id_produto_fk = ?");
+            $update->execute([$novo_estoque, $id_produto]);
         }
-
-        // Faz a subtração
-        $novo_estoque = $qtd_estoque - $qtd_pedido;
-
-        // Atualiza a tabela estoque
-        $update = $this->estoque->prepare("UPDATE estoque SET qtd_produto = ? WHERE id_produto_fk = ?");
-        $update->execute([$novo_estoque, $id_produto]);
-
         return "Pedido processado. Estoque atualizado de $qtd_estoque para $novo_estoque.";
     }
 
         // Função para obter a quantidade do pedido
         private function getQuantidadePedido($id_pedido) {
-        $sql = "SELECT id_produto_fk, qtd FROM pedidos WHERE id_pedido = ?";
+        $sql = "SELECT id_produto_fk, qtd FROM pedido_produto WHERE id_pedido_fk = ?";
         $stmt = $this->estoque->prepare($sql);
         $stmt->execute([$id_pedido]);
-         return $stmt->fetch(PDO::FETCH_ASSOC);
+         return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
-
-
-
 
 
         //estoque atual do produto

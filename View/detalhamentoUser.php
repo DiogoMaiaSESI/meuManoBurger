@@ -2,11 +2,14 @@
 
 session_start();
 require_once('../vendor/autoload.php');
+use Controller\EstoqueController;
 use Controller\ProductController;
+$estoqueController = new EstoqueController();
 $productController = new ProductController();
 $productId = $_SESSION['product_id_details'];
 $product = $productController->findById($productId);
 $imageBase64 = 'data:image/jpeg;base64,' . base64_encode($product['imagem_produto']);
+$estoque = $estoqueController->obtEstoque($product['id_produto']);
 ?>
 
 <!DOCTYPE html>
@@ -77,7 +80,7 @@ $imageBase64 = 'data:image/jpeg;base64,' . base64_encode($product['imagem_produt
                     <div class="rightDiv">
                         <h2 class="title"><?php echo $product['nome_produto']; ?></h2>
                         <p><?php echo $product['descricao_produto'];?></p>
-                        <h2 class="price"><?php echo number_format($product['preco_produto'],2,',','.'); ?></h2>
+                        <h2 class="price">R$ <?php echo number_format($product['preco_produto'],2,',','.'); ?></h2>
                         <div class="buttons">
                             <button class="cart">Adicionar ao carrinho</button>
                             <button class="favorite">Adicionar aos favoritos</button>
@@ -86,7 +89,7 @@ $imageBase64 = 'data:image/jpeg;base64,' . base64_encode($product['imagem_produt
                 </div>
                 <div class="secondDiv">
                     <div><h4 class="subtitle">Tipo</h4><h4 class="subtitle2"><?php echo $product['tipo_produto']; ?></h4></div>
-                    <div><h4 class="subtitle">Quantidade</h4><h4 class="subtitle2">30</h4></div>
+                    <div><h4 class="subtitle">Quantidade</h4><h4 class="subtitle2"><?php echo $estoque['qtd_produto']; ?></h4></div>
                 </div>
             </div>
         </main>

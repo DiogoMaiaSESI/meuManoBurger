@@ -3,17 +3,30 @@
 session_start();
 use Controller\ProductController;
 use Controller\PedidoController;
+use Controller\EstoqueController;
 require_once('../vendor/autoload.php');
 $productController = new ProductController();
 $pedidoController = new PedidoController();
+$estoqueController = new EstoqueController();
 $products = $_SESSION['cart'];
+if($products !== null) {
+    $uniqueProducts = array_unique($products);
+}
 $sair = false;
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $codigo = substr(str_shuffle('abcdefghijklmnopqrstuvwxyz0123456789'), 0, 3) . '-' . substr(str_shuffle('abcdefghijklmnopqrstuvwxyz0123456789'), 0, 1);
     while($sair !== true) {
         if(empty($pedidoController->getPedidoByCodigo($codigo))) {
-            foreach ($products as $product => $value) {
-                $pedidoController->criarPedido($value, 1, $codigo, 4, 1);
+            foreach ($uniqueProducts as $product => $value) {
+                $precoTotal = 0;
+                foreach ($products as $product => $value) {
+                    $prod = $productController->findById($value);
+                    $precoTotal += $prod['preco_produto'];
+                }
+                $qtd = count(array_filter($products, fn($product) => $product == $value));
+                $pedidoController->criarPedido($value, 7, $codigo, $qtd, $precoTotal);
+                $pedidoCriado = $pedidoController->getPedidoByCodigo($codigo);
+                $estoqueController->subEstoque($pedidoCriado['id_pedido']);
             }
             $sair = true;
             header('Location: pedidosUser.php');
@@ -95,19 +108,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     foreach ($products as $product => $value) {
                         $prod = $productController->findById($value);
                         $total += $prod['preco_produto'];
+                    }
+                    foreach ($uniqueProducts as $product => $value) {
+                        $prod = $productController->findById($value);
+                        $qtd = count(array_filter($products, fn($product) => $product == $value));
                         $imageBase64 = 'data:image/jpeg;base64,' . base64_encode($prod['imagem_produto']);
                         echo '<div class="lineDiv">
                         <div class="unitDiv">
                             <div class="priceDiv">
                                 <figure><img class="imagemLanche" src="'. $imageBase64 .'" alt="'. $prod['descricao_produto'] .'" ></figure>
-                                <h5>'. $prod['nome_produto'] .'</h5>
+                                <h5>'. $qtd . 'x ' . $prod['nome_produto'] .'</h5>
                             </div>
                             <h4>R$ '. number_format($prod['preco_produto'], 2, ',', '.') .'</h4>
                         </div>
                         <div class="tinyLine"></div>
                     </div>';
                     } ?>
-                    <h3>Total: <span>R$ <?php echo $total; ?></span></h3>
+                    <h3>Total: <span>R$ <?php echo number_format($total, 2, ',', '.'); ?></span></h3>
                 </div>
             </div>
             <div class="titleDiv">

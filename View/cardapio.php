@@ -4,6 +4,22 @@ require_once('../vendor/autoload.php');
 use Controller\ProductController;
 
 $productController = new ProductController();
+
+if($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if(!empty($_POST['product_id_details']) and empty($_POST['product_id_cart'])) {
+        $_SESSION['product_id_details'] = $_POST['product_id_details'];
+        header('Location: detalhamentoUser.php');
+        exit;
+    } else if (!empty($_POST['product_id_cart']) and empty($_POST['product_id_details'])) {
+        if (!isset($_SESSION['cart'])) {
+            $_SESSION['cart'] = [];
+        }
+        $_SESSION['cart'][] = $_POST['product_id_cart'];
+        header('Location: Carrinho.php');
+        exit;
+    }
+}
+
 ?>
 
 <!DOCTYPE html>

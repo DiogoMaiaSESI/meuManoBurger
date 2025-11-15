@@ -11,9 +11,9 @@ class PedidoController {
         $this->pedidoModel = new Pedido();
     }
 
-    public function criarPedido ($id_produto, $id_cliente, $codigo, $id_estoque, $qtd) {
+    public function criarPedido ($id_produto, $id_cliente, $codigo, $qtd, $total) {
         try {
-            return $this->pedidoModel->criarPedido($id_produto, $id_cliente, $codigo, $id_estoque, $qtd);
+            return $this->pedidoModel->criarPedido($id_produto, $id_cliente, $codigo, $qtd, $total);
         } catch (PDOException $e) {
             throw new PDOException("Erro ao criar pedido: " . $e->getMessage());
         }
