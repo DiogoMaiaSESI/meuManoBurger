@@ -216,5 +216,17 @@ class Product
             return [];
         }
     }
+
+    public function getProductsByType ($type) {
+        try {
+            $sql = 'SELECT * FROM produto WHERE tipo_produto = :tipo_produto';
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':tipo_produto', $type, PDO::PARAM_STR);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            throw new Exception('Erro ao selecionar produtos pelo tipo: ' . $e);
+        }
+    }
 }
 ?>

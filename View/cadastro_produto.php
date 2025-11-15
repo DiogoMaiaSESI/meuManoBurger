@@ -66,13 +66,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <p class="labelInput">Categoria</p>
                     <select name="tipo_produto" id="opcoes_cardapio" required>
                         <option value="">Selecione</option>
-                        <option value="2">Hambúrgueres</option>
-                        <option value="3">Lanches</option>   
-                        <option value="4">Bebidas</option>
-                        <option value="5">Café da manhã</option>
-                        <option value="6">Doces</option>
-                        <option value="7">Tapioca</option>
-                        <option value="8">Promoções</option>
+                        <option value="Hamburgueres">Hambúrgueres</option>
+                        <option value="Lanches">Lanches</option>   
+                        <option value="Bebidas">Bebidas</option>
+                        <option value="Cafe da manha">Café da manhã</option>
+                        <option value="Doces">Doces</option>
+                        <option value="Tapioca">Tapioca</option>
+                        <option value="Promocoes">Promoções</option>
                     </select>
                     <p class="labelInput">Descrição</p>
                     <textarea name="descricao_produto" id="descricao" placeholder ="Descreva o seu produto aqui" required></textarea>

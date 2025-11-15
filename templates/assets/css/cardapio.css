@@ -1,0 +1,947 @@
+@import url('global.css');
+
+header{
+    background-color: var(--VermelhoCereja);
+}
+
+.menu {
+    width: 8rem !important;
+    padding-left: 4rem;
+    cursor: pointer;
+}
+.menu:hover {
+    transition: 500ms;
+    opacity: 70%;
+}
+.sandwich {
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    gap: 3.2rem;
+    position: absolute;
+    top: 3.3rem;
+    left: 0;
+    width: fit-content;
+}
+.sandwichActive {
+    z-index: 4 !important;
+}
+.options {
+    background-color: var(--VermelhoCereja);
+    width: 25.5rem;
+    border-style: solid;
+    border-left-style: none;
+    border-width: 0.2rem;
+    transform: translateX(-100%);
+    transition: 500ms;
+    border-top-right-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+}
+.optionActive {
+    transform: translateX(0%);
+    transition: 500ms;
+}
+.option {
+    display: flex;
+    justify-content: baseline;
+    align-items: center;
+    height: 6.4rem;
+    border-style: solid;
+    border-left-style: none;
+    border-width: 0.1rem;
+    border-color: var(--Preto);
+    color: var(--Branco);
+    padding-left: 1.6rem;
+    gap: 2.1rem;
+    cursor: pointer;
+    transition: 500ms;
+}
+.option:hover {
+    padding-left: 2.5rem;
+    transition: 500ms;
+}
+h5 {
+    font-size: 2.1rem;
+    font-weight: 400;
+}
+.sombra {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 3;
+    background-color: var(--Preto);
+    opacity: 0%;
+    transition: 500ms;
+    pointer-events: none;
+}
+.shadowActive {
+    opacity: 40%;
+    transition: 500ms;
+    pointer-events: all;
+}
+
+.container_header{
+    padding-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.menu_logo{
+    display: flex;
+    align-items: center;
+    margin-left: 3rem;
+}
+
+.menu_logo img:hover{
+    transform: scale(1.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.menu img{
+    width: 3.5rem;
+    height: 3.5rem;
+}
+
+.logo{
+    margin-left: 8rem;
+}
+
+.logo img{
+    width: 10.4rem;
+    height: 8rem;
+}
+
+.voltar_perfil{
+    margin-right: 3rem;
+    align-items: center;
+    display: flex;
+    gap: 2rem;
+}
+
+.voltar_perfil img{
+    width: 4rem;
+    height: 4rem;
+    cursor: pointer;
+}
+
+.voltar_perfil img:hover{
+    transform: scale(1.1);
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.cardapio_promocoes{
+    display: flex;
+    margin-left: 10rem;
+    z-index: 2;
+    gap: 5rem;
+    padding: 2rem 0;
+    position: sticky;
+}
+
+.cardapio_promocoes h1{
+    font-size: 1.7rem;
+    font-weight: normal;
+}
+
+.cardapio_promocoes h1:hover{
+    transform: scale(1.1);
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+
+.h1_cardapio{
+    color: var(--AmareloSecundario);
+    text-align: center;
+    width: 9rem;
+    border-bottom: 0.1rem solid var(--Branco);
+    padding-bottom: 0.5rem;
+}
+
+.h1_promocoes{
+    color: #FFEEB3;
+    padding-bottom: 0.5rem;
+    text-align: center;
+    width: 10rem;
+}
+
+.container_menu{
+    display: flex;
+    gap: 6rem;
+    justify-content: center;
+    align-items: center;
+    margin-top: 4rem;
+    z-index: 2;
+    position: sticky;
+}
+
+.container_menu h2{
+    justify-content: center;
+    display: flex;
+    text-align: center;
+    width: 7rem;
+    margin-top: .5rem;
+    font-weight: 400;
+}
+
+.container_menu img{
+    width: 7rem;
+    height: 7rem;
+    cursor: pointer;
+}
+
+.config_menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 7rem;
+}
+
+.add-product{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.add-product figure img{
+    width: 3.5rem;
+    height: 3.5rem;
+    margin-top: 5rem;
+    margin-right: 6rem;
+    cursor: pointer;
+}
+
+.add-product figure img:hover{
+    transform: scale(1.1);
+    transition: all 0.3s ease;
+}
+
+.config_menu:hover{
+    transform: scale(1.1);
+    transition: all 0.3s ease;
+}
+
+#cafe_manha{
+    margin-top: 2.4rem;
+}
+
+#hamburgueres h2{
+    border-bottom: 2px solid var(--AmareloSecundario);
+    width: fit-content;
+}
+
+.container_menu figure {
+    display: flex;
+    justify-content: center;
+}
+.lanc, .beb, .cafe, .doces, .tap, .prom {
+    display: none;
+}
+
+section h1{
+    margin-top: 6rem;
+    margin-left: 6rem;
+    font-size: 3rem;
+    color: var(--VermelhoCereja);
+    font-weight: bold;
+}
+
+.container {
+    place-items: center;
+    margin-top: 5rem;
+    max-width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.config_card {
+    background-color: #fff;
+    border-radius: 8px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    overflow: hidden;
+    width: 25.0rem; 
+    height: 33rem;
+    text-align: center;
+    margin-top: 4rem;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s;
+    cursor: pointer;
+}
+
+.config_card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.product-image {
+    background-color: #f7f7f7;
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 18.0rem; 
+}
+
+.product-image img{
+    max-width: 16rem;
+    max-height: 16rem;
+}
+
+.informacoes_config {
+    padding: 10px 15px;
+    flex-grow: 1; 
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.product-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 5px 0;
+    color: #333;
+}
+
+.product-price {
+    font-size: 1.3rem;
+    color: #666;
+    margin: 5px 0 15px 0;
+}
+
+
+.add-to-cart {
+    background-color: var(--VermelhoCereja);
+    color: #fff;
+    margin-left: 3rem;
+    margin-bottom: 2rem;
+    border: none;
+    border-radius: 4px;
+    width: 15rem;
+    height: 4rem;
+    gap: .5rem;
+    font-family: 'Inter';
+    cursor: pointer;
+    font-size: 1.2rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+}
+
+.add-to-cart:hover {
+    background-color: #A52A2A;
+}
+
+.add-to-cart img {
+    margin-left: 1rem;
+    width: 2.5rem;
+    height: 2.5rem;
+}
+
+footer{
+    margin-top: 20rem;
+    justify-content: center;
+    display: flex;
+    background-color: var(--VermelhoCereja);
+    height: 4rem;
+    align-items: center;
+    
+}
+
+footer h2{
+    color: white;
+    font-family: 'Inter';
+    font-weight: normal;
+}
+
+@media screen and (max-width: 1232px) and (min-width: 814px) {
+    .product-grid {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .container {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .option img{
+        width: 3.5rem;
+        height: 3.5rem;
+    }
+
+    h5{
+        font-size: 1.7rem;
+    }
+
+    .add-product figure img{
+        width: 2.4rem;
+        height: 2.4rem;
+    }
+
+    .options{
+        width: 23rem;
+    }
+
+    .config_card{
+        width: 20rem;
+        height: 30rem;
+    }
+
+    .product-image img{
+        width: 16rem;
+        height: 12rem;
+    }
+
+    .add-to-cart{
+        width: 12rem;
+        height: 3.5rem;
+        font-size: 1rem;
+    }
+
+    .container_menu{
+        gap: 4rem;
+    }
+
+    .logo img{
+        width: 8rem;
+        height: 6rem;
+    }
+}
+
+
+@media screen and (max-width: 813px) and (min-width: 658px) {
+    #hamburgueres img, #lanches img, #bebidas img, #cafe_manha img, #doces img, #Tapioca img, #promocoes img{
+        width: 6rem;
+        height: 6rem;
+    }
+    
+    .menu{
+        top: 0;
+    }
+
+    .option img{
+        width: 3rem;
+        height: 3rem;
+    }
+
+    h5{
+        font-size: 1.7rem;
+    }
+
+    .add-product figure img{
+        width: 2.4rem;
+        height: 2.4rem;
+    }
+
+    .options{
+        width: 22rem;
+    }
+
+    .option{
+        height: 5.5rem;
+    }
+    .container {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .config_card{
+        width: 18rem;
+        height: 28rem;
+    }
+
+    .product-image img{
+        width: 14rem;
+        height: 10rem;
+    }
+
+    .add-to-cart{
+        width: 10rem;
+        height: 3rem;
+        font-size: 0.9rem;
+    }
+
+    .add-to-cart img{
+        width: 2rem;
+        height: 2rem;
+    }
+
+    .container_menu{
+        gap: 2rem;
+    }
+
+    .logo img{
+        width: 6rem;
+        height: 5rem;
+    }
+
+    .menu img{
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+
+    .cardapio_promocoes{
+        gap: 3rem;
+    }
+
+    .h1_cardapio{
+        width: 7rem;
+        font-size: 1.5rem;
+    }
+
+    .h1_promocoes{
+        width: 8rem;
+        font-size: 1.5rem;
+    }
+
+    .voltar_perfil img{
+        width: 3rem;
+        height: 3rem;
+    }
+
+    .config_menu img{
+        width: 5rem;
+        height: 5rem;
+    }
+    
+    .config_menu h2{
+        width: 5rem;
+        font-size: 1.2rem;
+    }
+}
+
+@media screen and (max-width: 657px) and (min-width: 609px) {
+
+    #hamburgueres img, #lanches img, #bebidas img, #cafe_manha img, #doces img, #Tapioca img, #promocoes img{
+        width: 6rem;
+        height: 6rem;
+    }
+
+    #cafe_manha{
+        margin-bottom: 1rem;
+    }
+
+    .container_menu{
+        gap: 8rem;
+    }
+
+    .menu{
+        margin-top: 2rem;
+    }
+
+    .sandwich{
+        top: 0;
+        gap: 1.5rem;
+    }
+
+    .add-product figure img{
+        width: 2.4rem;
+        height: 2.4rem;
+    }
+
+    .option img{
+        width: 2.6rem;
+        height: 2.6rem;
+    }
+
+    h5{
+        font-size: 1.5rem;
+    }
+
+    .options{
+        width: 21rem;
+    }
+
+    .option{
+        height: 5rem;
+    }
+
+    .product-grid {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .container {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .config_card{
+        width: 18rem;
+        height: 28rem;
+    }
+
+    .product-image img{
+        width: 14rem;
+        height: 10rem;
+    }
+
+    .add-to-cart{
+        width: 10rem;
+        height: 3rem;
+        font-size: 0.9rem;
+    }
+
+    .add-to-cart img{
+        width: 2rem;
+        height: 2rem;
+    }
+
+    .container_menu{
+        gap: 1rem;
+    }
+
+    .config_menu img{
+        width: 5rem;
+        height: 5rem;
+    }
+
+    .logo img{
+        width: 6rem;
+        height: 5rem;
+    }
+
+    .menu img{
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+
+    .cardapio_promocoes{
+        gap: 3rem;
+    }
+
+    .h1_cardapio{
+        width: 7rem;
+        font-size: 1.3rem;
+    }
+
+    .h1_promocoes{
+        width: 8rem;
+        font-size: 1.3rem;
+    }
+
+    .voltar_perfil img{
+        width: 3rem;
+        height: 3rem;
+    }
+
+    .config_menu img{
+        width: 4rem;
+        height: 4rem;
+    }
+    
+    .config_menu h2{
+        width: 5rem;
+        font-size: 1.2rem;
+    }
+
+    section h1{
+        font-size: 2.5rem;
+        margin-left: 3rem;
+    }
+
+    footer h2{
+        font-size: 1.2rem;
+    }
+}
+
+@media screen and (max-width: 609px) and (min-width: 521px) {
+    
+    .container_menu{
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding: 2rem 0 2rem 12rem;
+        scrollbar-width: thin;
+        scrollbar-color: var(--VermelhoCereja) #f1f1f1;
+        max-width: 100vw;
+        gap: 2rem;
+    }
+
+    .config_menu{
+        flex-shrink: 0;
+    }
+
+    #hamburgueres img, #lanches img, #bebidas img, #cafe_manha img, #doces img, #Tapioca img, #promocoes img{
+        width: 6rem;
+        height: 6rem;
+    }
+
+    #cafe_manha img{
+        margin-top: 1.5rem;
+    }
+    .logo{
+        margin-bottom: 1rem;
+        margin-left: 5rem;
+    }
+
+    .voltar_perfil{
+        margin-bottom: 2rem;
+    }
+
+    .voltar_perfil img{
+        width: 2rem;
+        height: 2rem;
+    }
+
+    .add-product figure img{
+        width: 2.4rem;
+        height: 2.4rem;
+    }
+
+    header{
+        height: 7rem;
+    }
+    
+    .menu{
+        margin-top: 2rem;
+    }
+
+    .sandwich{
+        top: 0;
+        gap: 1.5rem;
+    }
+
+    .option img{
+        width: 2.6rem;
+        height: 2.6rem;
+    }
+
+    h5{
+        font-size: 1.5rem;
+    }
+
+    .options{
+        width: 21rem;
+    }
+
+    .option{
+        height: 5rem;
+    }
+
+    .container {
+        margin-left: 4rem;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .config_card{
+        width: 18rem;
+        height: 28rem;
+    }
+
+    .product-image img{
+        width: 14rem;
+        height: 10rem;
+    }
+
+    .add-to-cart{
+        width: 10rem;
+        height: 3rem;
+        font-size: 0.9rem;
+    }
+
+    .add-to-cart img{   
+        width: 2rem;
+        height: 2rem;
+    }
+
+    #cafe_manha{
+        margin-top: 0rem;
+    }
+
+    .config_menu img{
+        width: 5rem;
+        height: 5rem;
+    }
+
+    .logo img{
+        width: 6rem;
+        height: 5rem;
+    }
+
+    .menu img{
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+
+    .cardapio_promocoes{
+        display: none;
+    }
+    .voltar_perfil img{
+        width: 3rem;
+        height: 3rem;
+    }
+
+    .config_menu img{
+        width: 4rem;
+        height: 4rem;
+    }
+    
+    .config_menu h2{
+        width: 5rem;
+        font-size: 1.2rem;
+    }
+
+    section h1{
+        font-size: 2.5rem;
+        margin-left: 3rem;
+    }
+
+    footer h2{
+        font-size: 1.2rem;
+    }
+}
+
+@media screen and (max-width: 521px){
+    .container_menu{
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding: 2rem 0 2rem 30rem;
+        scrollbar-width: thin;
+        scrollbar-color: var(--VermelhoCereja) #f1f1f1;
+        max-width: 100vw;
+    }
+
+    .config_menu{
+        flex-shrink: 0;
+        margin-left: 2.5rem;
+    }
+
+    #hamburgueres img, #lanches img, #bebidas img, #cafe_manha img, #doces img, #Tapioca img, #promocoes img{
+        width: 6rem;
+        height: 6rem;
+    }
+
+    #cafe_manha img{
+        margin-top: 1.5rem;
+    }
+
+    .logo{
+        margin-bottom: 1rem;
+        margin-left: 5rem;
+    }
+
+    .add-product figure img{
+        margin-right: 2rem;
+        margin-top: 6rem;
+        width: 2rem;
+        height: 2rem;
+    }
+
+    .voltar_perfil{
+        margin-bottom: 2rem;
+    }
+
+    .voltar_perfil img{
+        width: 2rem;
+        height: 2rem;
+    }
+
+    header{
+        height: 7rem;
+    }
+    
+    .menu{
+        margin-top: 2rem;
+    }
+
+    .sandwich{
+        top: 0;
+        gap: 1.5rem;
+    }
+
+    .option img{
+        width: 2.6rem;
+        height: 2.6rem;
+    }
+
+    h5{
+        font-size: 1.5rem;
+    }
+
+    .options{
+        width: 21rem;
+    }
+
+    .option{
+        height: 5rem;
+    }
+
+    .container {
+        margin-left: 2rem;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .config_card{
+        width: 15rem;
+        height: 25rem;
+    }
+
+    .product-image img{
+        width: 11rem;
+        height: 7rem;
+    }
+
+    .add-to-cart{
+        width: 7rem;
+        height: 3rem;
+        font-size: 0.9rem;
+    }
+
+    .add-to-cart img{   
+        display: none;
+    }
+
+    .container_menu{
+        gap: 0;
+    }
+
+    #cafe_manha{
+        margin-top: 0rem;
+    }
+
+    .config_menu img{
+        width: 5rem;
+        height: 5rem;
+    }
+
+    .logo img{
+        width: 6rem;
+        height: 5rem;
+    }
+
+    .menu img{
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+
+    .cardapio_promocoes{
+        display: none;
+    }
+    .voltar_perfil img{
+        width: 3rem;
+        height: 3rem;
+    }
+
+    .config_menu img{
+        width: 4rem;
+        height: 4rem;
+    }
+    
+    .config_menu h2{
+        width: 5rem;
+        font-size: 1.2rem;
+    }
+
+    section h1{
+        font-size: 2.5rem;
+        margin-left: 3rem;
+    }
+
+    footer h2{
+        font-size: 1rem;
+    }
+}
