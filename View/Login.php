@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (empty($email) || empty($senha)) {
         $_SESSION['error_message'] = "E-mail e senha são obrigatórios.";
-        header('Location: login.php');
+        header('Location: Login.php');
         exit;
     }
 
@@ -26,8 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // PASSO 1: Tentar logar como Administrador
     if ($email === 'mariane.mmb.admin@gmail.com') {
-        $admModel = new \Model\Adm();
-        $admController = new \Controller\AdmController($admModel);
+        $admController = new AdmController();
         
         // O método login do AdmController já cria a sessão e retorna true/false
         if ($admController->login($email, $senha) === true) {
@@ -53,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         // FALHA TOTAL: Se chegou aqui, o login falhou para ADM e para Cliente.
         $_SESSION['error_message'] = "E-mail ou senha inválidos.";
-        header('Location: login.php');
+        header('Location: Login.php');
         exit;
     }
 }
@@ -150,7 +149,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <h1>Seja Bem-Vindo ao MeuManoBurger</h1>
                 <h2>Realize o Login</h2>
 
-                <form method="POST" action="login.php" id="login-form">
+                <form method="POST" action="Login.php" id="login-form">
                     <div class="inputs">
                         <p>Email</p>
                         <input type="email" name="email" id="email" required>

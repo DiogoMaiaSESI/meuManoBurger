@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (loginLink) {
         loginLink.addEventListener('click', function() {
             // Redireciona para a página de login
-            window.location.href = 'login.php';
+            window.location.href = 'Login.php';
         });
     }
 

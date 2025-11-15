@@ -31,8 +31,10 @@ class Cliente
             $stmt->bindParam(":email_cliente", $email_cliente, PDO::PARAM_STR);
             $stmt->bindParam(":senha_cliente", $hashedPassword, PDO::PARAM_STR);
             $stmt->bindParam(":imagem_cliente", $imagem_cliente, PDO::PARAM_LOB);
-            $stmt->execute();
-            return $this->getClienteByEmail($email_cliente);
+            if($stmt->execute()) {
+                return true;
+            }
+            return false;
         } catch (PDOException $error) {
             echo "Erro ao executar comando:  " . $error->getMessage();
             return false;

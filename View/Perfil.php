@@ -550,7 +550,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
     </div>
 
 
-    <script src="/meuManoBurger/templates/assets/js/perfil.js"></script>
+    <script src="/meuManoBurger/templates/assets/js/Perfil.js"></script>
     <?php
     // Verifica se existe uma mensagem de sucesso ou erro na sessão
     if (isset($_SESSION['success_message']) || isset($_SESSION['error_message'])) {

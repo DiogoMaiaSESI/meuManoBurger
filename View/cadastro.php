@@ -33,17 +33,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
     // Usa o Controller para criar o cliente
     $clienteModel = new \Model\Cliente();
-    $clienteController = new \Controller\ClienteController($clienteModel);
-    $success = $clienteController->createCliente($nome, $email, $senha, $imagem);
-
-    if ($success) {
-        $_SESSION['success_message'] = "Login realizado com sucesso!";
-        header('Location: login.php');
-        exit;
+    $clienteController = new \Controller\ClienteController();
+    if (!$clienteController->checkClienteByEmail($email)) {
+        $success = $clienteController->createCliente($nome, $email, $senha, $imagem);
+        if ($success) {
+            $_SESSION['success_message'] = "Login realizado com sucesso!";
+            header('Location: Login.php');
+            exit;
+        } else {
+            $_SESSION['error_message'] = "Erro ao cadastrar. O e-mail já está em uso.";
+            header('Location: cadastro.php');
+            exit;
+        }
     } else {
-        $_SESSION['error_message'] = "Erro ao cadastrar. O e-mail já pode estar em uso.";
-        header('Location: cadastro.php');
-        exit;
+        echo '<script>alert("Usuário já cadastrado, tente fazer login.")</script>';
     }
 }
 
