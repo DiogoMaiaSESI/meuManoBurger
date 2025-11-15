@@ -246,10 +246,37 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
                 ?>
             </div>
-
+            
 
         </div>
     </main>
+    <audio id="notificationSound" src="../templates/assets/audio/notification.mp3" preload="auto"></audio>
+
+<script>
+let lastId = null;
+
+function verificarPedidos() {
+    fetch("../Model/NovoPedido.php")
+        .then(response => response.text())
+        .then(id => {
+            id = Number(id);
+            
+            if (lastId === null) {
+                lastId = id; // primeira vez carregando
+            } else if (id > lastId) {
+                // Novo pedido detectado!
+                lastId = id;
+                document.getElementById("notificationSound").play();
+                document.getElementById("notificationSound").onended = () => {
+                    location.reload();
+                }
+            }
+        });
+}
+
+// verificar a cada 3 segundos
+setInterval(verificarPedidos, 3000);
+</script>
     <script src="../templates/assets/js/pedidosADM.js"></script>
 </body>
 
