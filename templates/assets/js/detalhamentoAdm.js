@@ -1,176 +1,111 @@
-const opcoes = document.querySelector('.options')
-const menu = document.querySelector('.menu')
-const sombra = document.querySelector('.sombra')
-const sombraForm = document.querySelector('.sombraForm')
-const deleteForm = document.querySelector('.deleteForm')
-const back = document.querySelector('.back')
-const profileButton = document.querySelector('.profileButton')
-const lapis = document.querySelector('.lapis')
-const lixeira = document.querySelector('.lixeira')
-const form = document.querySelector('form')
-const apagar = document.querySelector('.apagar')
-const cancelar = document.querySelector('.cancelar')
-const cancelar2 = document.querySelector('.cancelar2')
-const editar = document.querySelector('.editar')
-const deletar = document.querySelector('.deletar')
-const figImg = document.querySelector('.foto figure img')
-const fotoInput = document.querySelector('#foto')
-const lapisIcon = document.querySelector('.lapis');
-const lixeiraIcon = document.querySelector('.lixeira');
-const editModal = document.getElementById('edit-product-form');
-const deleteModal = document.querySelector('.apagar');
-const deleteFormOverlay = document.querySelector('.deleteForm');
-const btnCancelarEdit = editModal.querySelector('.cancelar');
-const btnCancelarDelete = deleteModal.querySelector('.cancelar2');
+// [BLOCO DE SEGURANÇA] Espera o HTML inteiro ser carregado antes de executar qualquer coisa.
+document.addEventListener('DOMContentLoaded', function () {
 
-menu.addEventListener('click', () => {
-    opcoes.classList.toggle('optionActive')
-    sombra.classList.toggle('shadowActive')
-})
-sombra.addEventListener('click', () => {
-    opcoes.classList.toggle('optionActive')
-    sombra.classList.toggle('shadowActive')
-})
+    // --- Seletores Únicos e Centralizados ---
+    // [NOTA] Cada variável aponta para um único elemento no seu HTML. Sem duplicatas.
+    const menuIcon = document.querySelector('.menu');
+    const backButton = document.querySelector('.back');
+    const lapisIcon = document.querySelector('.lapis');
+    const lixeiraIcon = document.querySelector('.lixeira');
+    
+    const optionsMenu = document.querySelector('.options');
+    const sombraMenu = document.querySelector('.sombra');
+    const sombraForm = document.querySelector('.sombraForm');
+    const deleteFormOverlay = document.querySelector('.deleteForm');
 
-sombraForm.addEventListener('click', () => {
-    form.classList.toggle('formActive')
-    sombraForm.classList.toggle('shadowFormActive')
-})
-deleteForm.addEventListener('click', () => {
-    apagar.classList.toggle('apagarActive')
-    deleteForm.classList.toggle('deleteFormActive')
-})
+    // [PONTO CRÍTICO] Seleciona os modais pelos IDs e classes que definimos no HTML.
+    const editModal = document.getElementById('edit-product-form');
+    const deleteModal = document.querySelector('.apagar');
 
-back.addEventListener('click', () => {
-    window.location.href = '../index.php'
-})
-lapis.addEventListener('click', () => {
-    form.classList.toggle('formActive')
-    sombraForm.classList.toggle('shadowFormActive')
-})
-cancelar.addEventListener('click', () => {
-    form.classList.toggle('formActive')
-    sombraForm.classList.toggle('shadowFormActive')
-})
-editar.addEventListener('click', () => {
-    alert('Lanche editado com sucesso!')
-    form.classList.toggle('formActive')
-    sombraForm.classList.toggle('shadowFormActive')
-})
-lixeira.addEventListener('click', () => {
-    apagar.classList.toggle('apagarActive')
-    deleteForm.classList.toggle('deleteFormActive')
-})
-cancelar2.addEventListener('click', () => {
-    apagar.classList.toggle('apagarActive')
-    deleteForm.classList.toggle('deleteFormActive')
-})
-deletar.addEventListener('click', () => {
-    alert('Lanche deletado com sucesso!')
-    apagar.classList.toggle('apagarActive')
-    deleteForm.classList.toggle('deleteFormActive')
-})
+    if (!menuIcon || !backButton || !lapisIcon || !lixeiraIcon || !editModal || !deleteModal) {
+        console.error("ERRO FATAL: Um ou mais elementos essenciais da página (ícones, modais) não foram encontrados. O script não pode continuar. Verifique os seletores e o HTML.");
+        return;
+    }
 
-form.addEventListener('submit', (e) => {
-    e.preventDefault()
-})
+    const btnCancelarEdit = editModal.querySelector('.cancelar');
+    const btnConfirmEdit = editModal.querySelector('.editar');
+    const btnCancelarDelete = deleteModal.querySelector('.cancelar2');
+    const btnConfirmDelete = deleteModal.querySelector('.deletar');
+    const figContainerEdit = editModal.querySelector('.foto figure');
+    const fotoInputEdit = editModal.querySelector('#edit-foto-input');
 
-figImg.addEventListener('click', () => {
-    fotoInput.click()
-})
-function toggleEditModal() {
-    editModal.classList.toggle('formActive');
-    sombraForm.classList.toggle('shadowFormActive');
-}
+    const toggleSideMenu = () => {
+        optionsMenu.classList.toggle('optionActive');
+        sombraMenu.classList.toggle('shadowActive');
+    };
+    const toggleEditModal = () => {
+        editModal.classList.toggle('formActive');
+        sombraForm.classList.toggle('shadowFormActive');
+    };
+    const toggleDeleteModal = () => {
+        deleteModal.classList.toggle('apagarActive');
+        deleteFormOverlay.classList.toggle('deleteFormActive');
+    };
 
-function toggleDeleteModal() {
-    deleteModal.classList.toggle('apagarActive');
-    deleteFormOverlay.classList.toggle('deleteFormActive');
-}
+    menuIcon.addEventListener('click', toggleSideMenu);
+    sombraMenu.addEventListener('click', toggleSideMenu);
+    backButton.addEventListener('click', () => window.history.back());
 
-lapisIcon.addEventListener('click', () => {
-    const nomeAtual = document.querySelector('.rightDiv .title h2').textContent.trim();
-    const descricaoAtual = document.querySelector('.rightDiv p').textContent.trim();
-    const precoAtual = document.querySelector('.rightDiv .price').textContent.replace('R$', '').replace(',', '.').trim();
-    const tipoAtual = document.querySelector('.secondDiv div:nth-child(1) .subtitle2').textContent.trim();
-    const quantidadeAtual = document.querySelector('.secondDiv div:nth-child(2) .subtitle2').textContent.trim();
-    const imagemAtualSrc = document.querySelector('.leftDiv img').src;
-
-    const urlParams = new URLSearchParams(window.location.search);
-    const productId = urlParams.get('id');
-
-    document.getElementById('edit-nome').value = nomeAtual;
-    document.getElementById('edit-descricao').value = descricaoAtual;
-    document.getElementById('edit-preco').value = parseFloat(precoAtual);
-    document.getElementById('edit-quantidade').value = parseInt(quantidadeAtual);
-    document.getElementById('edit-tipo').value = tipoAtual; // O <select> vai selecionar a option com este value
-    document.getElementById('edit-id-produto').value = productId;
-    document.getElementById('edit-preview-img').src = imagemAtualSrc;
-
-    toggleEditModal();
-});
-
-lixeiraIcon.addEventListener('click', toggleDeleteModal);
-
-btnCancelarEdit.addEventListener('click', toggleEditModal);
-btnCancelarDelete.addEventListener('click', toggleDeleteModal);
-sombraForm.addEventListener('click', () => {
-    if (editModal.classList.contains('formActive')) {
+    lapisIcon.addEventListener('click', () => {
+        document.getElementById('edit-nome').value = document.querySelector('.rightDiv .title h2').textContent.trim();
+        document.getElementById('edit-descricao').value = document.querySelector('.rightDiv p').textContent.trim();
+        document.getElementById('edit-preco').value = parseFloat(document.querySelector('.rightDiv .price').textContent.replace('R$', '').replace(',', '.').trim());
+        document.getElementById('edit-quantidade').value = parseInt(document.querySelector('.secondDiv div:nth-child(2) .subtitle2').textContent.trim());
+        document.getElementById('edit-tipo').value = document.querySelector('.secondDiv div:nth-child(1) .subtitle2').textContent.trim();
+        document.getElementById('edit-id-produto').value = new URLSearchParams(window.location.search).get('id');
+        figContainerEdit.src = document.querySelector('.leftDiv img').src;
         toggleEditModal();
-    }
-});
-deleteFormOverlay.addEventListener('click', () => {
-    if (deleteModal.classList.contains('apagarActive')) {
-        toggleDeleteModal();
-    }
-});
+    });
+    lixeiraIcon.addEventListener('click', toggleDeleteModal);
 
-editModal.addEventListener('submit', async (e) => {
-    e.preventDefault();
+    btnCancelarEdit.addEventListener('click', toggleEditModal);
+    sombraForm.addEventListener('click', () => editModal.classList.contains('formActive') && toggleEditModal());
+    btnCancelarDelete.addEventListener('click', toggleDeleteModal);
+    deleteFormOverlay.addEventListener('click', () => deleteModal.classList.contains('apagarActive') && toggleDeleteModal());
 
-    const formData = new FormData(editModal);
-
-    try {
-        const response = await fetch('/meuManoBurger/View/api_adm.php?action=update_product', {
-            method: 'POST',
-            body: formData
-        });
-
-        const result = await response.json();
-
-        if (result.success) {
-            alert('Produto atualizado com sucesso!');
-            window.location.reload();
-            alert('Erro ao atualizar o produto: ' + (result.message || 'Verifique os campos.'));
+    figContainerEdit.addEventListener('click', () => fotoInputEdit.click());
+    fotoInputEdit.addEventListener('change', function() {
+        if (this.files && this.files[0]) {
+            const reader = new FileReader();
+            reader.onload = (e) => { figContainerEdit.src = e.target.result; };
+            reader.readAsDataURL(this.files[0]);
         }
-    } catch (error) {
-        console.error('Erro na requisição:', error);
-        alert('Ocorreu um erro de comunicação. Tente novamente.');
-    }
-});
+    });
 
-const btnDeletar = deleteModal.querySelector('.deletar');
-btnDeletar.addEventListener('click', async () => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const productId = urlParams.get('id');
-
-    try {
-        const response = await fetch('/meuManoBurger/View/api_adm.php?action=delete_product', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ id_produto: productId })
-        });
-
-        const result = await response.json();
-
-        if (result.success) {
-            alert('Produto deletado com sucesso!');
-            window.location.href = 'cardapioAdm.php';
-        } else {
-            alert('Erro ao deletar o produto: ' + (result.message || 'Tente novamente.'));
+    editModal.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formData = new FormData(editModal);
+        try {
+            const response = await fetch('/meuManoBurger/View/api_adm.php?action=update_product', { method: 'POST', body: formData });
+            const result = await response.json();
+            if (result.success) {
+                alert('Produto atualizado com sucesso!');
+                window.location.reload();
+            } else {
+                alert('Erro ao atualizar: ' + (result.message || 'Verifique os campos.'));
+            }
+        } catch (error) {
+            alert('Erro de comunicação ao editar.');
         }
-    } catch (error) {
-        console.error('Erro na requisição:', error);
-        alert('Ocorreu um erro de comunicação.');
-    }
+    });
+
+    btnConfirmDelete.addEventListener('click', async () => {
+        const productId = new URLSearchParams(window.location.search).get('id');
+        try {
+            const response = await fetch('/meuManoBurger/View/api_adm.php?action=delete_product', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id_produto: productId })
+            });
+            const result = await response.json();
+            if (result.success) {
+                alert('Produto deletado com sucesso!');
+                window.location.href = 'cardapioAdm.php';
+            } else {
+                alert('Erro ao deletar: ' + (result.message || 'Tente novamente.'));
+            }
+        } catch (error) {
+            alert('Erro de comunicação ao deletar.');
+        }
+    });
 });

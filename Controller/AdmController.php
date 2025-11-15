@@ -37,43 +37,27 @@ public function createAdm($nome_adm, $email_adm, $senha_adm, $imagem_adm = null)
     }
 
     public function login($email_adm, $senha_adm)
-    {
-        // 1. Busca o administrador pelo e-mail.
-        $adm = $this->AdmModel->getAdmByEmail($email_adm);
+{
+    $adm = $this->AdmModel->getAdmByEmail($email_adm);
 
-        // 2. Verifica se o ADM existe e se a senha está correta.
-        if ($adm && password_verify($senha_adm, $adm['senha_adm'])) {
-            
-            // --- CORREÇÃO CRÍTICA ---
-            // 3. Se a senha estiver correta, CRIA A SESSÃO COMPLETA.
-            session_regenerate_id(true); // Medida de segurança para evitar session fixation.
-            $_SESSION['id_adm'] = $adm['id_adm'];
-            $_SESSION['nome_adm'] = $adm['nome_adm'];
-            $_SESSION['email_adm'] = $adm['email_adm'];
-            $_SESSION['imagem_adm'] = $adm['imagem_adm'];
-            $_SESSION['is_admin'] = true; // A flag de segurança mais importante.
-
-            // 4. Agora que a sessão está criada, retorna true para o login.php.
-            return true;
-        }
-
-        // 5. Se a verificação falhar, retorna false.
-        return false;
+    if ($adm && password_verify($senha_adm, $adm['senha_adm'])) {
+        return $adm;
     }
+
+    return false;
+}
     public function verifylogin()
     {
         return isset($_SESSION['id_adm']);
     }
 
 
-    public function getAdmData($id_adm, $nome_adm, $email_adm)
+    public function getAdmData($id_adm)
     {
-        return $this->AdmModel->getAdmInfo($id_adm, $nome_adm, $email_adm);
+        return $this->AdmModel->getAdmById($id_adm);
     }
     public function generate2FASecret($id_adm, $email_adm)
     {
-        // Este método pode ser copiado diretamente do ClienteController,
-        // apenas garantindo que ele chame o set2FASecret do AdmModel.
         try {
             $google2fa = new \PragmaRX\Google2FAQRCode\Google2FA();
             $secret = $google2fa->generateSecretKey();

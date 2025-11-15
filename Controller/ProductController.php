@@ -11,7 +11,8 @@ class ProductController
     private $estoqueModel;
     private $db; // Conexão para a transação
 
-    public function __construct(Product $productModel, Estoque $estoqueModel) {
+    public function __construct(Product $productModel, Estoque $estoqueModel)
+    {
         $this->productModel = $productModel;
         $this->estoqueModel = $estoqueModel;
         // Pega a instância da conexão para controlar a transação
@@ -19,7 +20,8 @@ class ProductController
     }
 
     // O novo método, inspirado no registerClienteUser
-    public function create() {
+    public function create()
+    {
         $dadosProduto = [
             'nome' => filter_input(INPUT_POST, 'nome_produto', FILTER_SANITIZE_SPECIAL_CHARS),
             'preco' => filter_input(INPUT_POST, 'preco_produto', FILTER_VALIDATE_FLOAT),
@@ -40,8 +42,12 @@ class ProductController
             $this->db->beginTransaction();
 
             $id_produto_criado = $this->productModel->createProduct(
-                $dadosProduto['nome'], $dadosProduto['preco'], $dadosProduto['tipo'],
-                $dadosProduto['descricao'], $dadosProduto['imagem'], $dadosProduto['id_adm_fk']
+                $dadosProduto['nome'],
+                $dadosProduto['preco'],
+                $dadosProduto['tipo'],
+                $dadosProduto['descricao'],
+                $dadosProduto['imagem'],
+                $dadosProduto['id_adm_fk']
             );
 
             if (!$id_produto_criado) {
@@ -75,38 +81,111 @@ class ProductController
             exit;
         }
     }
-    
+
 
     public function update()
     {
         if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-            return ['success' => false, 'errors' => ['Requisição inválida.']];
+            return ['success' => false, 'message' => 'Requisição inválida.'];
         }
 
-        $id = filter_input(INPUT_POST, 'id_produto', FILTER_VALIDATE_INT);
+        $id_produto = filter_input(INPUT_POST, 'id_produto', FILTER_VALIDATE_INT);
         $nome = filter_input(INPUT_POST, 'nome_produto', FILTER_SANITIZE_SPECIAL_CHARS);
         $preco = filter_input(INPUT_POST, 'preco_produto', FILTER_VALIDATE_FLOAT);
         $tipo = filter_input(INPUT_POST, 'tipo_produto', FILTER_SANITIZE_SPECIAL_CHARS);
         $descricao = filter_input(INPUT_POST, 'descricao_produto', FILTER_SANITIZE_SPECIAL_CHARS);
-        $id_adm_fk = filter_input(INPUT_POST, 'id_adm_fk', FILTER_VALIDATE_INT);
+        $quantidade = filter_input(INPUT_POST, 'quantidade', FILTER_VALIDATE_INT);
+        $id_adm_fk = $_SESSION['id_adm'];
 
-        $imagem = null;
-        if (isset($_FILES['imagem_produto']) && $_FILES['imagem_produto']['error'] == UPLOAD_ERR_OK) {
-            $imagem = file_get_contents($_FILES['imagem_produto']['tmp_name']);
+        if (!$id_produto || !$nome || $preco === false || !$tipo || $quantidade === false) {
+            return ['success' => false, 'message' => 'Dados inválidos ou faltando. Verifique os campos.'];
         }
 
-        return $this->productModel->updateProduct($id, $nome, $preco, $tipo, $descricao, $imagem, $id_adm_fk);
+        // [CORREÇÃO] Lógica explícita para a imagem
+        $imagem_conteudo = null;
+        $atualizar_imagem = false;
+        if (isset($_FILES['imagem_produto']) && $_FILES['imagem_produto']['error'] == UPLOAD_ERR_OK) {
+            $imagem_conteudo = file_get_contents($_FILES['imagem_produto']['tmp_name']);
+            $atualizar_imagem = true; // Sinaliza que uma nova imagem foi enviada.
+        }
+
+        try {
+            $this->db->beginTransaction();
+
+            // 1. Atualiza a tabela 'produto'
+            $productUpdateResult = $this->productModel->updateProduct(
+                $id_produto,
+                $nome,
+                $preco,
+                $tipo,
+                $descricao,
+                $imagem_conteudo,
+                $atualizar_imagem,
+                $id_adm_fk
+            );
+            if (!$productUpdateResult['success']) {
+                $this->db->rollBack();
+                return ['success' => false, 'message' => 'Erro ao atualizar os dados do produto.'];
+            }
+
+            // 2. Atualiza a tabela 'estoque'
+            $estoqueController = new \Controller\EstoqueController();
+            $estoqueUpdateResult = $estoqueController->atEstoque($id_produto, $quantidade);
+            if (!$estoqueUpdateResult) {
+                $this->db->rollBack();
+                return ['success' => false, 'message' => 'Erro ao atualizar a quantidade em estoque.'];
+            }
+
+            $this->db->commit();
+            return ['success' => true];
+
+        } catch (\Exception $e) {
+            $this->db->rollBack();
+            return ['success' => false, 'message' => 'Erro inesperado no servidor: ' . $e->getMessage()];
+        }
     }
 
     public function delete()
     {
+        // [CORREÇÃO] Verifica se a requisição é POST.
         if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-            return ['success' => false, 'errors' => ['Requisição inválida.']];
+            return ['success' => false, 'message' => 'Requisição inválida.'];
         }
 
-        $id = filter_input(INPUT_POST, 'id_produto', FILTER_VALIDATE_INT);
+        // [CORREÇÃO] Lê o corpo JSON da requisição.
+        $json_data = file_get_contents('php://input');
+        $data = json_decode($json_data, true);
+        $id_produto = filter_var($data['id_produto'] ?? null, FILTER_VALIDATE_INT);
 
-        return $this->productModel->deleteProduct($id);
+        if (!$id_produto) {
+            return ['success' => false, 'message' => 'ID do produto inválido ou não fornecido.'];
+        }
+
+        try {
+            $this->db->beginTransaction();
+
+            // 1. Deleta da tabela 'estoque' primeiro (por causa da chave estrangeira)
+            $estoqueModel = new \Model\Estoque();
+            $estoqueDeleteResult = $estoqueModel->deleteEstoque($id_produto);
+            if (!$estoqueDeleteResult) {
+                // Não tratamos como erro fatal, pois o estoque pode não existir.
+                // Apenas logamos se necessário.
+            }
+
+            // 2. Deleta da tabela 'produto'
+            $productDeleteResult = $this->productModel->deleteProduct($id_produto);
+            if (!$productDeleteResult['success']) {
+                $this->db->rollBack();
+                return ['success' => false, 'message' => 'Erro ao deletar o produto principal.'];
+            }
+
+            $this->db->commit();
+            return ['success' => true];
+
+        } catch (\Exception $e) {
+            $this->db->rollBack();
+            return ['success' => false, 'message' => 'Erro inesperado no servidor: ' . $e->getMessage()];
+        }
     }
 
     public function listAll()

@@ -75,8 +75,29 @@ main {
     width: 50%;
     height: 100%;
 }
-.leftDiv {
-    display: flex;
+.rightDiv p {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+    margin-bottom: 1.5rem;
+    line-height: 1.0; 
+}
+#edit-product-form .foto label {
+    display: block;
+    width: 120px;
+    height: 120px;
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    cursor: pointer;
+    overflow: hidden;
+    justify-content: center;
+    background-color: #f9f9f9;
+}
+
+#edit-product-form .foto img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
     justify-content: center;
     align-items: center;
     background-color: #F4F4F4;

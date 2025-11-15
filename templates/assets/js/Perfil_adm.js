@@ -151,7 +151,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 if (data.success) {
                     const qr = data.qrCodeUrl || '';
-                    if (/^\s*(data:|https?:\/\/)/i.test(qr)) {
+                    if (/^\s*(data:|https?:\/\/ )/i.test(qr)) {
                         qrCodeContainer.innerHTML = `<img src="${qr}" alt="QR Code para 2FA">`;
                     }
                     else if (/^\s*</.test(qr)) {
@@ -215,7 +215,7 @@ document.addEventListener('DOMContentLoaded', function () {
             formData.append('password', password);
 
             try {
-                const response = await fetch('/meuManoBurger/View/api.php?action=disable-2fa', {
+                const response = await fetch('/meuManoBurger/View/api_adm.php?action=disable-2fa', {
                     method: 'POST',
                     body: formData
                 });

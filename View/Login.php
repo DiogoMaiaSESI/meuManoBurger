@@ -10,7 +10,7 @@ require_once __DIR__ . '/../Model/Cliente.php';
 $errorMessage = $_SESSION['error_message'] ?? null;
 unset($_SESSION['error_message']);
 
-$show2FAModal = false; // Garante que a variável exista
+$show2FAModal = false;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'] ?? null;
@@ -22,39 +22,55 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    // --- ESTRUTURA LÓGICA CORRIGIDA ---
-
-    // PASSO 1: Tentar logar como Administrador
+    // --- CAMINHO DO ADMINISTRADOR ---
     if ($email === 'mariane.mmb.admin@gmail.com') {
         $admModel = new \Model\Adm();
-        $admController = new \Controller\AdmController($admModel);
-        
-        // O método login do AdmController já cria a sessão e retorna true/false
-        if ($admController->login($email, $senha) === true) {
-            // SUCESSO! Redireciona para o perfil do ADM e PARA a execução.
-            header('Location: Perfil_adm.php');
+        $admController = new AdmController($admModel);
+        $admin = $admController->login($email, $senha);
+
+        if ($admin) {
+            if ($admin['2fa_enabled']) {
+                // Precisa de 2FA, prepara a sessão e o modal.
+                $_SESSION['pending_2fa_adm'] = true;
+                $_SESSION['pending_id_adm'] = $admin['id_adm'];
+                $show2FAModal = true; 
+                // O script continua para renderizar o HTML com o modal ativo.
+            } else {
+                // Login de ADM sem 2FA, cria a sessão e redireciona.
+                $_SESSION['id_adm'] = $admin['id_adm'];
+                $_SESSION['nome_adm'] = $admin['nome_adm'];
+                $_SESSION['email_adm'] = $admin['email_adm'];
+                $_SESSION['is_admin'] = true;
+                header('Location: perfil_Adm.php');
+                exit;
+            }
+        } else {
+            // Credenciais de ADM inválidas.
+            $_SESSION['error_message'] = "Credenciais de administrador inválidas.";
+            header('Location: login.php');
             exit;
         }
-        // Se a senha do ADM estiver errada, o script continuará e cairá no erro genérico no final.
-    } 
     
-    // PASSO 2: Se não for o ADM (ou se a senha dele falhou), tentar logar como Cliente
-    $clienteModel = new \Model\Cliente();
-    $clienteController = new \Controller\ClienteController($clienteModel);
-    $result = $clienteController->login($email, $senha);
+    // --- CAMINHO DO CLIENTE ---
+    } else { 
+        // Se o e-mail NÃO é de administrador, então tenta como cliente.
+        $clienteModel = new \Model\Cliente();
+        $clienteController = new \Controller\ClienteController($clienteModel);
+        $result = $clienteController->login($email, $senha);
 
-    if ($result === '2fa_required') {
-        // Cliente precisa de 2FA, mostra o modal na própria página de login.
-        $show2FAModal = true;
-    } elseif ($result === true) {
-        // Login de cliente normal bem-sucedido.
-        header('Location: Perfil.php');
-        exit;
-    } else {
-        // FALHA TOTAL: Se chegou aqui, o login falhou para ADM e para Cliente.
-        $_SESSION['error_message'] = "E-mail ou senha inválidos.";
-        header('Location: login.php');
-        exit;
+        if ($result === '2fa_required') {
+            // Cliente precisa de 2FA.
+            $show2FAModal = true;
+        } elseif ($result === true) {
+            // Login de cliente normal bem-sucedido.
+            header('Location: Perfil.php');
+            exit;
+        } else {
+            // E-mail e senha não correspondem a ADM nem a Cliente.
+            $_SESSION['error_message'] = "E-mail ou senha inválidos.";
+            header('Location: login.php');
+            exit;
+        }
     }
 }
 ?>

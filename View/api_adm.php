@@ -3,10 +3,11 @@ session_start();
 header('Content-Type: application/json');
 
 if (!isset($_SESSION['id_adm']) || !isset($_SESSION['is_admin']) || $_SESSION['is_admin'] !== true) {
-    http_response_code(403 ); // Forbidden
+    http_response_code(403 );
     echo json_encode(['success' => false, 'message' => 'Acesso não autorizado.']);
     exit;
 }
+
 require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../Model/Adm.php';
 require_once __DIR__ . '/../Controller/AdmController.php';
@@ -34,7 +35,8 @@ if ($action === 'update_product' || $action === 'delete_product') {
     }
 }
 
-if ($action === 'generate-2fa' || $action === 'verify-2fa') {
+// [CORREÇÃO] Adicionamos 'disable-2fa' à condição principal deste bloco.
+if ($action === 'generate-2fa' || $action === 'verify-2fa' || $action === 'disable-2fa') {
     $admModel = new \Model\Adm();
     $admController = new \Controller\AdmController($admModel);
     $id_adm = $_SESSION['id_adm'];
@@ -52,7 +54,15 @@ if ($action === 'generate-2fa' || $action === 'verify-2fa') {
         echo json_encode($response);
         exit;
     }
+
+    // [O QUE FALTAVA] Adicionamos o bloco para tratar a ação de desativar.
+    if ($action === 'disable-2fa') {
+        $password = $_POST['password'] ?? '';
+        $response = $admController->disable2FA($id_adm, $password);
+        echo json_encode($response);
+        exit;
+    }
 }
 
-http_response_code(400 );
+http_response_code(400  );
 echo json_encode(['success' => false, 'message' => 'Ação de administrador inválida.']);

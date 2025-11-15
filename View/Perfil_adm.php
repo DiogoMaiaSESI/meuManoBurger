@@ -1,16 +1,9 @@
 <?php
 session_start();
 
-function isAdmLoggedIn()
-{
-    return isset($_SESSION['id_adm']) && isset($_SESSION['is_admin']) && $_SESSION['is_admin'] === true;
-}
-
-if (!isAdmLoggedIn()) {
-    session_unset();
-    session_destroy();
+if (!isset($_SESSION['id_adm']) || !isset($_SESSION['is_admin']) || $_SESSION['is_admin'] !== true) {
     header('Location: login.php');
-    exit; // Para a execução aqui. Nada abaixo será processado.
+    exit;
 }
 
 require_once __DIR__ . '/../Controller/AdmController.php';
@@ -18,6 +11,7 @@ require_once __DIR__ . '/../Model/Adm.php';
 
 $admModel = new \Model\Adm();
 $admController = new \Controller\AdmController($admModel);
+$admin_info = $admController->getAdmData($_SESSION['id_adm']);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['action']) && $_POST['action'] === 'update_profile') {
@@ -38,8 +32,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-$nomeAdm = $_SESSION['nome_adm'] ?? 'Admin';
-$emailAdm = $_SESSION['email_adm'] ?? 'admin@exemplo.com';
+$nomeAdm = htmlspecialchars($admin_info['nome_adm'] ?? 'Admin');
+$emailAdm = htmlspecialchars($admin_info['email_adm'] ?? 'admin@exemplo.com');
 
 $imagemAdm = '/meuManoBurger/templates/assets/img/FotoPerfil.png'; // Imagem padrão
 if (isset($_SESSION['imagem_adm']) && !empty($_SESSION['imagem_adm'])) {

@@ -52,20 +52,21 @@ $imagemProduto = 'data:image/jpeg;base64,' . base64_encode($product['imagem_prod
 </head>
 
 <body>
-    <form>
+    <form id="edit-product-form" class="modal-form" method="POST" enctype="multipart/form-data">
         <div class="formLeft">
             <h2>Editar lanche</h2>
             <div class="inputs">
                 <div class="foto">
                     <h3>Foto</h3>
-                    <figure>
-                        <img src="../templates/assets/img/camera.png" alt="">
-                    </figure>
-                    <input type="file" name="foto" id="foto">
+                        <figure>
+                            <img id="edit-preview-img" src="../templates/assets/img/camera.png" alt="Preview da imagem">
+                        </figure>
+                    <input type="file" name="imagem_produto" id="edit-foto-input" style="display: none;">
                 </div>
                 <div class="input">
                     <h4>Nome</h4>
-                    <input type="text" placeholder="Digite o nome do lanche">
+                    <input type="text" id="edit-nome" name="nome_produto" placeholder="Digite o nome do lanche"
+                        required>
                 </div>
                 <div class="input">
                     <h4>Tipo</h4>
@@ -85,20 +86,21 @@ $imagemProduto = 'data:image/jpeg;base64,' . base64_encode($product['imagem_prod
         <div class="formRight">
             <div class="input">
                 <h4>Descrição</h4>
-                <textarea name="descricao" id="descricao" placeholder="Digite a descrição"></textarea>
+                <textarea id="edit-descricao" name="descricao_produto" placeholder="Digite a descrição"
+                    required></textarea>
             </div>
             <div class="input">
                 <h4>Quantidade</h4>
-                <input type="number" placeholder="Ex: 35">
+                <input type="number" id="edit-quantidade" name="quantidade" placeholder="Ex: 35" required>
             </div>
             <div class="input">
-                <h4>Preco</h4>
-                <input type="number" placeholder="Ex: 7.00" step="0.01">
+                <h4>Preço</h4>
+                <input type="number" id="edit-preco" name="preco_produto" placeholder="Ex: 7.00" step="0.01" required>
             </div>
             <div class="submitBtns">
                 <input type="hidden" id="edit-id-produto" name="id_produto">
-                <button class="cancelar">Cancelar</button>
-                <button class="editar">Editar</button>
+                <button type="button" class="cancelar">Cancelar</button>
+                <button type="submit" class="editar">Editar</button>
             </div>
         </div>
     </form>

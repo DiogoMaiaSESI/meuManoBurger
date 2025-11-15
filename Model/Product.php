@@ -66,21 +66,19 @@ class Product
         }
     }
 
-    public function updateProduct($id, $nome, $preco, $tipo, $descricao, $imagem, $id_adm_fk)
+    public function updateProduct($id, $nome, $preco, $tipo, $descricao, $imagem_conteudo, $update_image, $id_adm_fk)
     {
-        $validationErrors = $this->validate($nome, $preco, $tipo, $descricao, $id_adm_fk);
-        if (empty($id) || $id <= 0) {
-            $validationErrors[] = "O ID do produto para atualização é inválido.";
-        }
-        if (!empty($validationErrors)) {
-            return ['success' => false, 'errors' => $validationErrors];
-        }
+        // ... (validações, se houver) ...
 
         try {
+            // A query base
             $sql = "UPDATE produto SET nome_produto = :nome, preco_produto = :preco, tipo_produto = :tipo, descricao_produto = :descricao, id_adm_fk = :id_adm_fk";
-            if ($imagem !== null) {
+
+            // [CORREÇÃO] Adiciona a atualização da imagem APENAS se o sinalizador for verdadeiro
+            if ($update_image) {
                 $sql .= ", imagem_produto = :imagem";
             }
+
             $sql .= " WHERE id_produto = :id";
 
             $stmt = $this->conn->prepare($sql);
@@ -92,21 +90,18 @@ class Product
             $stmt->bindParam(':id_adm_fk', $id_adm_fk, PDO::PARAM_INT);
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
 
-            if ($imagem !== null) {
-                $stmt->bindParam(':imagem', $imagem, PDO::PARAM_LOB);
+            // [CORREÇÃO] Faz o bind do parâmetro da imagem APENAS se o sinalizador for verdadeiro
+            if ($update_image) {
+                $stmt->bindParam(':imagem', $imagem_conteudo, PDO::PARAM_LOB);
             }
 
             $success = $stmt->execute();
-
-            if ($stmt->rowCount() === 0) {
-                return ['success' => true, 'message' => 'Nenhum dado foi alterado.'];
-            }
 
             return ['success' => $success];
 
         } catch (PDOException $e) {
             error_log("Erro ao atualizar produto: " . $e->getMessage());
-            return ['success' => false, 'errors' => ['Ocorreu um erro no servidor ao tentar atualizar o produto.']];
+            return ['success' => false, 'errors' => ['Ocorreu um erro no servidor.']];
         }
     }
 

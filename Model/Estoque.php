@@ -113,20 +113,19 @@ class Estoque
 
 
     //atualizando o estoque do produto
-    public function atualizarEstoque($new_qtd, $id_produto_fk)
-    {
-        try {
-            $sql = "UPDATE estoque SET qtd_produto = :new_qtd WHERE id_produto_fk = :id_produto_fk";
-            $stmt = $this->estoque->prepare($sql);
-            $stmt->bindParam(":new_qtd", $new_qtd, PDO::PARAM_INT);
-            $stmt->bindParam(":id_produto_fk", $id_produto_fk, PDO::PARAM_INT);
-            return $stmt->execute();
-        } catch (PDOException $error) {
-            throw new Exception("Erro ao atualizar estoque: " . $error->getMessage());
-
-        }
-
+    public function atualizarEstoque($id_produto_fk, $new_qtd)
+{
+    try {
+        $sql = "UPDATE estoque SET qtd_produto = :new_qtd WHERE id_produto_fk = :id_produto_fk";
+        $stmt = $this->estoque->prepare($sql);
+        $stmt->bindParam(":new_qtd", $new_qtd, PDO::PARAM_INT);
+        $stmt->bindParam(":id_produto_fk", $id_produto_fk, PDO::PARAM_INT);
+        return $stmt->execute();
+    } catch (PDOException $error) {
+        error_log("Erro ao atualizar estoque: " . $error->getMessage());
+        return false;
     }
+}
     public function deleteEstoque($id_produto_fk) {
     try {
         $sql = "DELETE FROM estoque WHERE id_produto_fk = :id_produto_fk";

@@ -43,12 +43,11 @@ class EstoqueController {
 
     // Função para atualizar o estoque
 public function atEstoque($id_produto_fk, $new_qtd) {
-        try {
-            return $this->estoqueModel->atualizarEstoque($id_produto_fk, $new_qtd);
-        } catch (Exception $e) {
-            return "Erro ao atualizar estoque: " . $e->getMessage();
-        }
-
+    try {
+        return $this->estoqueModel->atualizarEstoque($id_produto_fk, $new_qtd); 
+    } catch (Exception $e) {
+        return "Erro ao atualizar estoque: " . $e->getMessage();
+    }
 }
 
 //Função para obter o estoque de um produto

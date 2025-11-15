@@ -61,11 +61,8 @@ if (!$clienteController->isLoggedIn()) {
 $nomeUsuario = $_SESSION['nome_cliente'] ?? 'Usuário';
 $emailUsuario = $_SESSION['email_cliente'] ?? 'email@exemplo.com';
 
-// CORREÇÃO PRINCIPAL AQUI: Lógica para exibir a imagem de perfil
 $imagemUsuario = '../templates/assets/img/FotoPerfil.png'; // Caminho para a imagem padrão (Alanzoka)
-// Verifica se a sessão contém o dado da imagem e se não está vazio
 if (isset($_SESSION['imagem_cliente']) && !empty($_SESSION['imagem_cliente'])) {
-    // Se tiver, converte o dado BLOB (binário) para uma string base64 que o HTML entende
     $imagemUsuario = 'data:image/jpeg;base64,' . base64_encode($_SESSION['imagem_cliente']);
 }
 $clienteModel = new \Model\Cliente(); // Precisamos de uma instância do model
@@ -74,10 +71,8 @@ $is2FAEnabled = ($cliente2FAData && $cliente2FAData['2fa_enabled'] == 1);
 // --- LÓGICA DE LOGOUT ---
 
 if (isset($_GET['action']) && $_GET['action'] === 'logout') {
-    // Limpa todas as variáveis da sessão.
     $_SESSION = array();
 
-    // Destrói o cookie de sessão no navegador.
     if (ini_get("session.use_cookies")) {
         $params = session_get_cookie_params();
         setcookie(session_name(), '', time() - 42000,
@@ -86,7 +81,6 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
          );
     }
 
-    // Finalmente, destrói a sessão no servidor.
     session_destroy();
 
     header("Location: login.php");
