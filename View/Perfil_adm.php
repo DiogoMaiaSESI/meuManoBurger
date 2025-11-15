@@ -12,6 +12,28 @@ require_once __DIR__ . '/../Model/Adm.php';
 $admModel = new \Model\Adm();
 $admController = new \Controller\AdmController($admModel);
 $admin_info = $admController->getAdmData($_SESSION['id_adm']);
+if (isset($_GET['action']) && $_GET['action'] === 'logout') {
+    
+    $_SESSION = array();
+
+    if (ini_get("session.use_cookies")) {
+        $params = session_get_cookie_params();
+        setcookie(
+            session_name(),
+            '',
+            time() - 42000,
+            $params["path"],
+            $params["domain"],
+            $params["secure"],
+            $params["httponly"]
+         );
+    }
+
+    session_destroy();
+
+    header("Location: login.php");
+    exit; 
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['action']) && $_POST['action'] === 'update_profile') {
@@ -44,10 +66,9 @@ $adm2FAData = $admModel->get2FAData($_SESSION['id_adm']);
 $is2FAEnabled = ($adm2FAData && $adm2FAData['2fa_enabled'] == 1);
 
 if (isset($_GET['action']) && $_GET['action'] === 'logout') {
-    // Limpa todas as variáveis da sessão.
+    
     $_SESSION = array();
 
-    // Destrói o cookie de sessão no navegador.
     if (ini_get("session.use_cookies")) {
         $params = session_get_cookie_params();
         setcookie(
@@ -58,13 +79,17 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
             $params["domain"],
             $params["secure"],
             $params["httponly"]
-        );
+         );
     }
 
-    // Finalmente, destrói a sessão no servidor.
     session_destroy();
 
     header("Location: login.php");
+    exit; 
+}
+
+if (!isset($_SESSION['id_adm']) || !isset($_SESSION['is_admin']) || $_SESSION['is_admin'] !== true) {
+    header('Location: login.php');
     exit;
 }
 
@@ -211,7 +236,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
                 </li>
                 <li class="mobile-only"><a href="#" id="m-btn-seguranca" class="nav-link hide-on-desktop">Segurança</a>
                 </li>
-                <li class="mobile-only"><a href="#" id="m-btn-sair" class="nav-link hide-on-desktop">Sair</a></li>
+                <li><a href="perfil_adm.php?action=logout">Sair da Conta</a></li>
 
                 <!-- Ícones de Ação (Sempre visíveis, no final) -->
                 <li class="nav-right">
@@ -241,7 +266,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
                     <li><a href="#" id="btn-dados" class="nav-link active">Meus dados</a></li>
                     <li><a href="#" id="btn-historico" class="nav-link">Histórico de Pedidos</a></li>
                     <li><a href="#" id="btn-seguranca" class="nav-link">Segurança</a></li>
-                    <li><a href="#" id="btn-sair" class="nav-link">Sair da Conta</a></li>
+                    <li><a href="perfil_adm.php?action=logout" id="btn-sair" class="nav-link">Sair da Conta</a></li>
                 </ul>
             </nav>
         </aside>

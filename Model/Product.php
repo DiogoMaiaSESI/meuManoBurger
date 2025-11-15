@@ -68,7 +68,6 @@ class Product
 
     public function updateProduct($id, $nome, $preco, $tipo, $descricao, $imagem_conteudo, $update_image, $id_adm_fk)
     {
-        // ... (validações, se houver) ...
 
         try {
             // A query base
@@ -225,7 +224,7 @@ class Product
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
-            throw new Exception('Erro ao selecionar produtos pelo tipo: ' . $e);
+            throw new \Exception('Erro ao selecionar produtos pelo tipo: ' . $e);
         }
     }
 }

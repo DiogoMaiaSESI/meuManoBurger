@@ -1,47 +1,24 @@
 <?php
-require_once('../vendor/autoload.php');
-use Controller\ProductController;
+session_start();
 
-// Inicia o controller de produtos
-$productController = new ProductController();
-$newProduct = null;
-$targetCategoryClass = '';
+require_once __DIR__ . '/../Model/Product.php';
+require_once __DIR__ . '/../Model/Estoque.php';
+require_once __DIR__ . '/../Controller/ProductController.php';
 
-// Verifica se um novo produto foi cadastrado e os parâmetros estão na URL
-if (isset($_GET['new_product_id']) && isset($_GET['category_class'])) {
-    $newProductId = filter_var($_GET['new_product_id'], FILTER_VALIDATE_INT);
-    $targetCategoryClass = htmlspecialchars($_GET['category_class']);
+$productModel = new \Model\Product();
+$estoqueModel = new \Model\Estoque();
+$productController = new \Controller\ProductController($productModel, $estoqueModel);
 
-    if ($newProductId) {
-        // Busca os dados do produto recém-cadastrado pelo ID
-        $newProduct = $productController->findById($newProductId);
-    }
+$isAdmin = (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] === true);
+$urlPerfil = 'login.php'; // Se não estiver logado, o botão de perfil leva para o login.
+
+// 2. Verificamos se é um administrador.
+if (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] === true) {
+    $urlPerfil = 'perfil_adm.php'; // Se for admin, o link aponta para o perfil do admin.
 }
-// Função para gerar o HTML de um card de produto
-function renderProductCard($product) {
-    // Formata o preço para o padrão brasileiro (R$ X,XX)
-    $formattedPrice = 'R$ ' . number_format($product['preco_produto'], 2, ',', '.');
-    // Converte a imagem (BLOB) para um formato que o HTML entende (Base64)
-    $imageBase64 = 'data:image/jpeg;base64,' . base64_encode($product['imagem_produto']);
-
-    // Retorna a estrutura HTML do card com os dados do produto
-    return '
-        <div class="config_card">
-            <div class="product-image">
-                <img src="' . $imageBase64 . '" alt="' . htmlspecialchars($product['nome_produto']) . '">
-            </div>
-            <div class="informacoes_config">
-                <h3 class="product-title">' . htmlspecialchars($product['nome_produto']) . '</h3>
-                <p class="product-price">' . $formattedPrice . '</p>
-                <button class="add-to-cart">
-                    <figure>
-                        <img src="../templates/assets/img/detalhes.png" alt="Ícone de detalhes">
-                    </figure>
-                    Ver Detalhes
-                </button>
-            </div>
-        </div>
-    ';
+// 3. Se não for admin, verificamos se é um cliente.
+elseif (isset($_SESSION['id_cliente'])) {
+    $urlPerfil = 'Perfil.php'; // Se for cliente, aponta para o perfil do cliente.
 }
 ?>
 
@@ -62,37 +39,37 @@ function renderProductCard($product) {
 
             <div class="menu_logo">
                 <div class="sandwich">
-                <figure class="menu">
-                    <img src="../templates/assets/img/menuSanduiche.png" alt="">
-                </figure>
-                <div class="options">
-                    <div class="option">
-                        <figure>
-                            <img src="../templates/assets/img/cutlery.png" alt="">
-                        </figure>
-                        <h5>Cardápio</h5>
-                    </div>
-                    <div class="option">
-                        <figure>
-                            <img src="../templates/assets/img/coxinhaIcon.png" alt="">
-                        </figure>
-                        <h5>Pedidos</h5>
-                    </div>
-                    <div class="option">
-                        <figure>
-                            <img src="../templates/assets/img/chat.png" alt="">
-                        </figure>
-                        <h5>Feedbacks</h5>
-                    </div>
-                    <div class="option" id="carrinho_sandwich">
-                        <figure>
-                            <img src="../templates/assets/img/shoppingCart.png" alt="">
-                        </figure>
-                        <h5>Carrinho</h5>
+                    <figure class="menu">
+                        <img src="../templates/assets/img/menuSanduiche.png" alt="">
+                    </figure>
+                    <div class="options">
+                        <div class="option">
+                            <figure>
+                                <img src="../templates/assets/img/cutlery.png" alt="">
+                            </figure>
+                            <h5>Cardápio</h5>
+                        </div>
+                        <div class="option">
+                            <figure>
+                                <img src="../templates/assets/img/coxinhaIcon.png" alt="">
+                            </figure>
+                            <h5>Pedidos</h5>
+                        </div>
+                        <div class="option">
+                            <figure>
+                                <img src="../templates/assets/img/chat.png" alt="">
+                            </figure>
+                            <h5>Feedbacks</h5>
+                        </div>
+                        <div class="option" id="carrinho_sandwich">
+                            <figure>
+                                <img src="../templates/assets/img/shoppingCart.png" alt="">
+                            </figure>
+                            <h5>Carrinho</h5>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="sombra"></div>
+                <div class="sombra"></div>
 
                 <figure class="logo">
                     <img src="../templates/assets/img/Logo.png" alt="Logo MeuManoBurger" />
@@ -108,9 +85,11 @@ function renderProductCard($product) {
                     <img src="../templates/assets/img/carrinho.png" alt="Carrinho" />
                 </figure>
 
-                <figure class="perfil_header">
-                    <img src="../templates/assets/img/perfil.png" alt="Foto de perfil" />
-                </figure>
+                <a href="<?php echo $urlPerfil; ?>">
+                    <figure class="perfil_header">
+                        <img src="../templates/assets/img/perfil.png" alt="Foto de perfil" />
+                    </figure>
+                </a>
             </div>
         </div>
 
@@ -119,7 +98,7 @@ function renderProductCard($product) {
             <h1 class="h1_promocoes">Promoções</h1>
         </div>
 
-        
+
     </header>
 
     <main>
@@ -184,221 +163,295 @@ function renderProductCard($product) {
     </main>
 
     <section class="hamb">
-       
+
         <div class="add-product">
             <h1>Hambúrgueres</h1>
-
-            <figure>
-                <img class="adicionar_produto" src="../templates/assets/img/adicionar.png" alt="">
-            </figure>
+            <?php if ($isAdmin): ?>
+                <a href="cadastro_produto.php">
+                    <figure>
+                        <img class="adicionar_produto" src="../templates/assets/img/adicionar.png" alt="Adicionar Produto">
+                    </figure>
+                </a>
+            <?php endif; ?>
         </div>
         <div class="container">
-            <?php 
+            <?php
             $hambs = $productController->getProductsByType('Hamburgueres');
             foreach ($hambs as $hamb => $value) {
-                echo '<div class="config_card">
-                    <div class="product-image">
-                        <img src="' . 'data:image/jpeg;base64,' . base64_encode($value['imagem_produto']) . '" alt="' . htmlspecialchars($value['nome_produto']) . '" alt="Hambúrguer X-Tudo">
-                    </div>
-                    <div class="informacoes_config">
-                        <h3 class="product-title">' . htmlspecialchars($value['nome_produto']) . '</h3>
-                        <p class="product-price">R$ '. number_format($value['preco_produto'], 2) .'</p>
-                        <button class="add-to-cart">
-                            <figure>
-                                <img src="../templates/assets/img/detalhes.png" alt="">
-                            </figure>
-                            Ver Detalhes
-                        </button>
-                    </div>
+                if ($isAdmin) {
+                    $urlDestino = 'detalhamentoAdm.php?id=' . $value['id_produto'];
+                } else {
+                    $urlDestino = 'detalhamentoUser.php?id=' . $value['id_produto'];
+                }
+                echo '
+                <div class="config_card">
+                    <a href="' . $urlDestino . '" class="product-link">
+                        <div class="product-image">
+                            <img src="data:image/jpeg;base64,' . base64_encode($value['imagem_produto']) . '" alt="' . htmlspecialchars($value['nome_produto']) . '">
+                        </div>
+                        <div class="informacoes_config">
+                            <h3 class="product-title">' . htmlspecialchars($value['nome_produto']) . '</h3>
+                            <p class="product-price">R$ ' . number_format($value['preco_produto'], 2, ',', '.') . '</p>
+                            <div class="add-to-cart">
+                                <figure>
+                                    <img src="../templates/assets/img/detalhes.png" alt="">
+                                </figure>
+                                <span>Ver Detalhes</span>
+                            </div>
+                        </div>
+                    </a>
                 </div>';
             } ?>
         </div>
     </section>
+
     <section class="lanc">
-       <div class="add-product">
+        <div class="add-product">
             <h1>Lanches</h1>
-
-            <figure>
-                <img class="adicionar_produto" src="../templates/assets/img/adicionar.png" alt="">
-            </figure>
+            <?php if ($isAdmin): ?>
+                <a href="cadastro_produto.php">
+                    <figure>
+                        <img class="adicionar_produto" src="../templates/assets/img/adicionar.png" alt="Adicionar Produto">
+                    </figure>
+                </a>
+            <?php endif; ?>
         </div>
-
-       <div class="container">
-            <?php 
+        <div class="container">
+            <?php
             $lancs = $productController->getProductsByType('Lanches');
             foreach ($lancs as $lanc => $value) {
-                echo '<div class="config_card">
-                    <div class="product-image">
-                        <img src="' . 'data:image/jpeg;base64,' . base64_encode($value['imagem_produto']) . '" alt="' . htmlspecialchars($value['nome_produto']) . '" alt="Hambúrguer X-Tudo">
-                    </div>
-                    <div class="informacoes_config">
-                        <h3 class="product-title">' . htmlspecialchars($value['nome_produto']) . '</h3>
-                        <p class="product-price">R$ '. number_format($value['preco_produto'], 2) .'</p>
-                        <button class="add-to-cart">
-                            <figure>
-                                <img src="../templates/assets/img/detalhes.png" alt="">
-                            </figure>
-                            Ver Detalhes
-                        </button>
-                    </div>
+                if ($isAdmin) {
+                    $urlDestino = 'detalhamentoAdm.php?id=' . $value['id_produto'];
+                } else {
+                    $urlDestino = 'detalhamentoUser.php?id=' . $value['id_produto'];
+                }
+                echo '
+                <div class="config_card">
+                    <a href="' . $urlDestino . '" class="product-link">
+                        <div class="product-image">
+                            <img src="data:image/jpeg;base64,' . base64_encode($value['imagem_produto']) . '" alt="' . htmlspecialchars($value['nome_produto']) . '">
+                        </div>
+                        <div class="informacoes_config">
+                            <h3 class="product-title">' . htmlspecialchars($value['nome_produto']) . '</h3>
+                            <p class="product-price">R$ ' . number_format($value['preco_produto'], 2, ',', '.') . '</p>
+                            <div class="add-to-cart">
+                                <figure>
+                                    <img src="../templates/assets/img/detalhes.png" alt="">
+                                </figure>
+                                <span>Ver Detalhes</span>
+                            </div>
+                        </div>
+                    </a>
                 </div>';
             } ?>
         </div>
     </section>
+
     <section class="beb">
         <div class="add-product">
             <h1>Bebidas</h1>
-
-            <figure>
-                <img class="adicionar_produto" src="../templates/assets/img/adicionar.png" alt="">
-            </figure>
+            <?php if ($isAdmin): ?>
+                <a href="cadastro_produto.php">
+                    <figure>
+                        <img class="adicionar_produto" src="../templates/assets/img/adicionar.png" alt="Adicionar Produto">
+                    </figure>
+                </a>
+            <?php endif; ?>
         </div>
-        
         <div class="container">
-                <?php 
+            <?php
             $bebs = $productController->getProductsByType('Bebidas');
             foreach ($bebs as $beb => $value) {
-                echo '<div class="config_card">
-                    <div class="product-image">
-                        <img src="' . 'data:image/jpeg;base64,' . base64_encode($value['imagem_produto']) . '" alt="' . htmlspecialchars($value['nome_produto']) . '" alt="Hambúrguer X-Tudo">
-                    </div>
-                    <div class="informacoes_config">
-                        <h3 class="product-title">' . htmlspecialchars($value['nome_produto']) . '</h3>
-                        <p class="product-price">R$ '. number_format($value['preco_produto'], 2) .'</p>
-                        <button class="add-to-cart">
-                            <figure>
-                                <img src="../templates/assets/img/detalhes.png" alt="">
-                            </figure>
-                            Ver Detalhes
-                        </button>
-                    </div>
+                if ($isAdmin) {
+                    $urlDestino = 'detalhamentoAdm.php?id=' . $value['id_produto'];
+                } else {
+                    $urlDestino = 'detalhamentoUser.php?id=' . $value['id_produto'];
+                }
+                echo '
+                <div class="config_card">
+                    <a href="' . $urlDestino . '" class="product-link">
+                        <div class="product-image">
+                            <img src="data:image/jpeg;base64,' . base64_encode($value['imagem_produto']) . '" alt="' . htmlspecialchars($value['nome_produto']) . '">
+                        </div>
+                        <div class="informacoes_config">
+                            <h3 class="product-title">' . htmlspecialchars($value['nome_produto']) . '</h3>
+                            <p class="product-price">R$ ' . number_format($value['preco_produto'], 2, ',', '.') . '</p>
+                            <div class="add-to-cart">
+                                <figure>
+                                    <img src="../templates/assets/img/detalhes.png" alt="">
+                                </figure>
+                                <span>Ver Detalhes</span>
+                            </div>
+                        </div>
+                    </a>
                 </div>';
             } ?>
-            </div>
-
+        </div>
     </section>
+
     <section class="cafe">
         <div class="add-product">
             <h1>Café da Manhã</h1>
-            <figure>
-                <img class="adicionar_produto" src="../templates/assets/img/adicionar.png" alt="">
-            </figure>
+            <?php if ($isAdmin): ?>
+                <a href="cadastro_produto.php">
+                    <figure>
+                        <img class="adicionar_produto" src="../templates/assets/img/adicionar.png" alt="Adicionar Produto">
+                    </figure>
+                </a>
+            <?php endif; ?>
         </div>
-
-       <div class="container">
-            <?php 
+        <div class="container">
+            <?php
             $cafes = $productController->getProductsByType('Cafe da manha');
             foreach ($cafes as $cafe => $value) {
-                echo '<div class="config_card">
-                    <div class="product-image">
-                        <img src="' . 'data:image/jpeg;base64,' . base64_encode($value['imagem_produto']) . '" alt="' . htmlspecialchars($value['nome_produto']) . '" alt="Hambúrguer X-Tudo">
-                    </div>
-                    <div class="informacoes_config">
-                        <h3 class="product-title">' . htmlspecialchars($value['nome_produto']) . '</h3>
-                        <p class="product-price">R$ '. number_format($value['preco_produto'], 2) .'</p>
-                        <button class="add-to-cart">
-                            <figure>
-                                <img src="../templates/assets/img/detalhes.png" alt="">
-                            </figure>
-                            Ver Detalhes
-                        </button>
-                    </div>
+                if ($isAdmin) {
+                    $urlDestino = 'detalhamentoAdm.php?id=' . $value['id_produto'];
+                } else {
+                    $urlDestino = 'detalhamentoUser.php?id=' . $value['id_produto'];
+                }
+                echo '
+                <div class="config_card">
+                    <a href="' . $urlDestino . '" class="product-link">
+                        <div class="product-image">
+                            <img src="data:image/jpeg;base64,' . base64_encode($value['imagem_produto']) . '" alt="' . htmlspecialchars($value['nome_produto']) . '">
+                        </div>
+                        <div class="informacoes_config">
+                            <h3 class="product-title">' . htmlspecialchars($value['nome_produto']) . '</h3>
+                            <p class="product-price">R$ ' . number_format($value['preco_produto'], 2, ',', '.') . '</p>
+                            <div class="add-to-cart">
+                                <figure>
+                                    <img src="../templates/assets/img/detalhes.png" alt="">
+                                </figure>
+                                <span>Ver Detalhes</span>
+                            </div>
+                        </div>
+                    </a>
                 </div>';
             } ?>
-            </div>
+        </div>
     </section>
+
     <section class="doces">
         <div class="add-product">
             <h1>Doces</h1>
-
-            <figure>
-                <img class="adicionar_produto" src="../templates/assets/img/adicionar.png" alt="">
-            </figure>
+            <?php if ($isAdmin): ?>
+                <a href="cadastro_produto.php">
+                    <figure>
+                        <img class="adicionar_produto" src="../templates/assets/img/adicionar.png" alt="Adicionar Produto">
+                    </figure>
+                </a>
+            <?php endif; ?>
         </div>
-
-         <div class="container">
-        <?php 
+        <div class="container">
+            <?php
             $doces = $productController->getProductsByType('Doces');
             foreach ($doces as $doce => $value) {
-                echo '<div class="config_card">
-                    <div class="product-image">
-                        <img src="' . 'data:image/jpeg;base64,' . base64_encode($value['imagem_produto']) . '" alt="' . htmlspecialchars($value['nome_produto']) . '" alt="Hambúrguer X-Tudo">
-                    </div>
-                    <div class="informacoes_config">
-                        <h3 class="product-title">' . htmlspecialchars($value['nome_produto']) . '</h3>
-                        <p class="product-price">R$ '. number_format($value['preco_produto'], 2) .'</p>
-                        <button class="add-to-cart">
-                            <figure>
-                                <img src="../templates/assets/img/detalhes.png" alt="">
-                            </figure>
-                            Ver Detalhes
-                        </button>
-                    </div>
+                if ($isAdmin) {
+                    $urlDestino = 'detalhamentoAdm.php?id=' . $value['id_produto'];
+                } else {
+                    $urlDestino = 'detalhamentoUser.php?id=' . $value['id_produto'];
+                }
+                echo '
+                <div class="config_card">
+                    <a href="' . $urlDestino . '" class="product-link">
+                        <div class="product-image">
+                            <img src="data:image/jpeg;base64,' . base64_encode($value['imagem_produto']) . '" alt="' . htmlspecialchars($value['nome_produto']) . '">
+                        </div>
+                        <div class="informacoes_config">
+                            <h3 class="product-title">' . htmlspecialchars($value['nome_produto']) . '</h3>
+                            <p class="product-price">R$ ' . number_format($value['preco_produto'], 2, ',', '.') . '</p>
+                            <div class="add-to-cart">
+                                <figure>
+                                    <img src="../templates/assets/img/detalhes.png" alt="">
+                                </figure>
+                                <span>Ver Detalhes</span>
+                            </div>
+                        </div>
+                    </a>
                 </div>';
             } ?>
-            </div>
-
-
+        </div>
     </section>
+
     <section class="tap">
         <div class="add-product">
             <h1>Tapioca</h1>
-
-            <figure>
-                <img class="adicionar_produto" src="../templates/assets/img/adicionar.png" alt="">
-            </figure>
+            <?php if ($isAdmin): ?>
+                <a href="cadastro_produto.php">
+                    <figure>
+                        <img class="adicionar_produto" src="../templates/assets/img/adicionar.png" alt="Adicionar Produto">
+                    </figure>
+                </a>
+            <?php endif; ?>
         </div>
-
-         <div class="container">
+        <div class="container">
             <?php
             $taps = $productController->getProductsByType('Tapioca');
             foreach ($taps as $tap => $value) {
-                echo '<div class="config_card">
-                    <div class="product-image">
-                        <img src="' . 'data:image/jpeg;base64,' . base64_encode($value['imagem_produto']) . '" alt="' . htmlspecialchars($value['nome_produto']) . '" alt="Hambúrguer X-Tudo">
-                    </div>
-                    <div class="informacoes_config">
-                        <h3 class="product-title">' . htmlspecialchars($value['nome_produto']) . '</h3>
-                        <p class="product-price">R$ '. number_format($value['preco_produto'], 2) .'</p>
-                        <button class="add-to-cart">
-                            <figure>
-                                <img src="../templates/assets/img/detalhes.png" alt="">
-                            </figure>
-                            Ver Detalhes
-                        </button>
-                    </div>
+                if ($isAdmin) {
+                    $urlDestino = 'detalhamentoAdm.php?id=' . $value['id_produto'];
+                } else {
+                    $urlDestino = 'detalhamentoUser.php?id=' . $value['id_produto'];
+                }
+                echo '
+                <div class="config_card">
+                    <a href="' . $urlDestino . '" class="product-link">
+                        <div class="product-image">
+                            <img src="data:image/jpeg;base64,' . base64_encode($value['imagem_produto']) . '" alt="' . htmlspecialchars($value['nome_produto']) . '">
+                        </div>
+                        <div class="informacoes_config">
+                            <h3 class="product-title">' . htmlspecialchars($value['nome_produto']) . '</h3>
+                            <p class="product-price">R$ ' . number_format($value['preco_produto'], 2, ',', '.') . '</p>
+                            <div class="add-to-cart">
+                                <figure>
+                                    <img src="../templates/assets/img/detalhes.png" alt="">
+                                </figure>
+                                <span>Ver Detalhes</span>
+                            </div>
+                        </div>
+                    </a>
                 </div>';
             } ?>
         </div>
-
     </section>
+
     <section class="prom">
         <div class="add-product">
             <h1>Promoções</h1>
-
-            <figure>
-                <img class="adicionar_produto" src="../templates/assets/img/adicionar.png" alt="">
-            </figure>
+            <?php if ($isAdmin): ?>
+                <a href="cadastro_produto.php">
+                    <figure>
+                        <img class="adicionar_produto" src="../templates/assets/img/adicionar.png" alt="Adicionar Produto">
+                    </figure>
+                </a>
+            <?php endif; ?>
         </div>
-
         <div class="container">
-    <?php
+            <?php
             $proms = $productController->getProductsByType('Promocoes');
             foreach ($proms as $prom => $value) {
-                echo '<div class="config_card">
-                    <div class="product-image">
-                        <img src="' . 'data:image/jpeg;base64,' . base64_encode($value['imagem_produto']) . '" alt="' . htmlspecialchars($value['nome_produto']) . '" alt="Hambúrguer X-Tudo">
-                    </div>
-                    <div class="informacoes_config">
-                        <h3 class="product-title">' . htmlspecialchars($value['nome_produto']) . '</h3>
-                        <p class="product-price">R$ '. number_format($value['preco_produto'], 2) .'</p>
-                        <button class="add-to-cart">
-                            <figure>
-                                <img src="../templates/assets/img/detalhes.png" alt="">
-                            </figure>
-                            Ver Detalhes
-                        </button>
-                    </div>
+                if ($isAdmin) {
+                    $urlDestino = 'detalhamentoAdm.php?id=' . $value['id_produto'];
+                } else {
+                    $urlDestino = 'detalhamentoUser.php?id=' . $value['id_produto'];
+                }
+                echo '
+                <div class="config_card">
+                    <a href="' . $urlDestino . '" class="product-link">
+                        <div class="product-image">
+                            <img src="data:image/jpeg;base64,' . base64_encode($value['imagem_produto']) . '" alt="' . htmlspecialchars($value['nome_produto']) . '">
+                        </div>
+                        <div class="informacoes_config">
+                            <h3 class="product-title">' . htmlspecialchars($value['nome_produto']) . '</h3>
+                            <p class="product-price">R$ ' . number_format($value['preco_produto'], 2, ',', '.') . '</p>
+                            <div class="add-to-cart">
+                                <figure>
+                                    <img src="../templates/assets/img/detalhes.png" alt="">
+                                </figure>
+                                <span>Ver Detalhes</span>
+                            </div>
+                        </div>
+                    </a>
                 </div>';
             } ?>
         </div>

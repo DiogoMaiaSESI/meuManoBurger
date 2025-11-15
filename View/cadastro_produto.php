@@ -26,6 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Chama o método create(), que agora cuida de tudo internamente.
     $productController->create();
 }
+
 ?>
 
 <!DOCTYPE html>

@@ -32,13 +32,20 @@ if (!$product) {
     die('Erro: Produto não encontrado.');
 }
 
-// --- 4. PREPARAÇÃO DAS VARIÁVEIS PARA O HTML ---
 $nomeProduto = htmlspecialchars($product['nome_produto']);
 $descricaoProduto = htmlspecialchars($product['descricao_produto']);
 $precoProduto = 'R$ ' . number_format($product['preco_produto'], 2, ',', '.');
 $tipoProduto = htmlspecialchars($product['tipo_produto']);
 $quantidadeEstoque = $stock ? $stock['qtd_produto'] : 0;
 $imagemProduto = 'data:image/jpeg;base64,' . base64_encode($product['imagem_produto']);
+$urlPerfil = 'login.php'; 
+if (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] === true) {
+    $urlPerfil = 'perfil_adm.php'; // Se for admin, o link aponta para o perfil do admin.
+}
+// 3. Se não for admin, verificamos se é um cliente.
+elseif (isset($_SESSION['id_cliente'])) {
+    $urlPerfil = 'Perfil.php'; // Se for cliente, aponta para o perfil do cliente.
+}
 ?>
 
 <!DOCTYPE html>
@@ -58,9 +65,9 @@ $imagemProduto = 'data:image/jpeg;base64,' . base64_encode($product['imagem_prod
             <div class="inputs">
                 <div class="foto">
                     <h3>Foto</h3>
-                        <figure>
-                            <img id="edit-preview-img" src="../templates/assets/img/camera.png" alt="Preview da imagem">
-                        </figure>
+                    <figure>
+                        <img id="edit-preview-img" src="../templates/assets/img/camera.png" alt="Preview da imagem">
+                    </figure>
                     <input type="file" name="imagem_produto" id="edit-foto-input" style="display: none;">
                 </div>
                 <div class="input">
@@ -156,9 +163,11 @@ $imagemProduto = 'data:image/jpeg;base64,' . base64_encode($product['imagem_prod
             <figure>
                 <img class="back" src="../templates/assets/img/volte.png" alt="">
             </figure>
+            <a href="<?php echo $urlPerfil; ?>">
             <figure>
                 <img class="profileButton" src="../templates/assets/img/Profile.png" alt="">
             </figure>
+            </a>
         </div>
     </header>
 

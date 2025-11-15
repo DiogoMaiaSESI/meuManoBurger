@@ -3,6 +3,7 @@
 namespace Controller;
 
 use Exception;
+use PDOException;
 use Model\Product;
 use Model\Estoque;
 
@@ -206,34 +207,35 @@ class ProductController
         }
 
         $userId = $_SESSION['user_id'] ?? null;
-        $productId_sanitizado = filter_var($productId, FILTER_VALIDATE_INT);
+        // [CORREÇÃO] Lê o ID do produto do POST, que é como o front-end envia.
+        $productId = filter_input(INPUT_POST, 'id_produto', FILTER_VALIDATE_INT);
 
         if (!$userId) {
             return ['success' => false, 'errors' => ['Você precisa estar logado para gerenciar favoritos.']];
         }
+        if (!$productId) {
+            return ['success' => false, 'errors' => ['ID do produto inválido.']];
+        }
 
-
-        return $this->productModel->toggleFavorite($userId, $productId_sanitizado);
+        return $this->productModel->toggleFavorite($userId, $productId);
     }
-
 
     public function listFavorites()
     {
-
         $userId = $_SESSION['user_id'] ?? null;
-
         if (!$userId) {
             return [];
         }
-
         return $this->productModel->getFavoritesByUser($userId);
     }
-    public function getProductsByType ($type) {
+
+    public function getProductsByType($type)
+    {
         try {
             $sanitizedType = filter_var($type, FILTER_SANITIZE_SPECIAL_CHARS);
             return $this->productModel->getProductsByType($sanitizedType);
-        } catch (PDOException $e) {
-            throw new Exception('Erro ao selecionar produtos pelo tipo: ' . $e);
+        } catch (PDOException $e) { // O 'use PDOException' no topo do arquivo resolve o erro.
+            throw new Exception('Erro ao selecionar produtos pelo tipo: ' . $e->getMessage());
         }
     }
 }
