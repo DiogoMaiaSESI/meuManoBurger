@@ -269,6 +269,10 @@ section h1{
     align-items: center;
     height: 18.0rem; 
 }
+.product-image img{
+    max-width: 16rem;
+    max-height: 12rem;
+}
 
 .informacoes_config {
     padding: 10px 15px;
