@@ -1,6 +1,10 @@
 <?php
 
-
+require_once '../vendor/autoload.php';
+use Controller\PedidoController;
+session_start();
+$pedidoController = new PedidoController();
+$pedidos = $pedidoController->getAllPedidos();
 
 ?>
 <!DOCTYPE html>

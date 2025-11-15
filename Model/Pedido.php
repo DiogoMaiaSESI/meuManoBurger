@@ -10,16 +10,17 @@ class Pedido {
     public function __construct() {
         $this->db = Connection::getInstance();
     }
-    public function criarPedido ($id_produto, $id_cliente, $codigo, $qtd, $total) {
+    public function criarPedido ($id_produto, $id_cliente, $codigo, $qtd, $total, $retirada) {
         try {
             $pedido_existente = $this->getPedidoByCodigo($codigo);
             $id_pedido_existente = $pedido_existente['id_pedido'];
             if($id_pedido_existente===null){
-                $sql = 'INSERT INTO pedido (codigo, id_cliente_fk, total) VALUES (:codigo, :id_cliente_fk, :total)';
+                $sql = 'INSERT INTO pedido (codigo, id_cliente_fk, total, retirada) VALUES (:codigo, :id_cliente_fk, :total, :retirada)';
                 $stmt = $this->db->prepare($sql);
                 $stmt->bindParam(':codigo', $codigo, PDO::PARAM_STR);
                 $stmt->bindParam(':id_cliente_fk', $id_cliente, PDO::PARAM_INT);
                 $stmt->bindParam(':total', $total, PDO::PARAM_STR);
+                $stmt->bindParam(':retirada', $retirada, PDO::PARAM_STR);
                 $stmt->execute();
 
                 $sql = 'SELECT id_pedido FROM pedido ORDER BY id_pedido DESC LIMIT 1';
@@ -80,6 +81,16 @@ class Pedido {
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             throw new Exception('Erro ao pegar códigos iguais: ' . $e);
+        }
+    }
+    public function getAllPedidos () {
+        try {
+            $sql = 'SELECT * FROM pedido';
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            throw new Exception('Erro ao tentar pegar todos os pedidos: ' . $e);
         }
     }
 }

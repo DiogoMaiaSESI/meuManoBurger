@@ -4,6 +4,11 @@ use Controller\ProductController;
 require_once('../vendor/autoload.php');
 $productController = new ProductController();
 $products = $_SESSION['cart'];
+if($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $_SESSION['horario'] = $_POST['horario'];
+    header('Location: paginaDePagamento.php');
+    exit;
+}
 if($products !== null) {
     $uniqueProducts = array_unique($products);
 }
@@ -91,10 +96,14 @@ $total = 0;
                         <span>Total Estimado:</span>
                         <span class="total-price">R$ <?php echo number_format($total,2,',','.'); ?></span>
                     </div>
-                    <p class="summary-description">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                    </p>
                     <button class="checkout-btn">Continuar para o pagamento</button>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-total">
+                        <span>Agende a retirada do seu pedido!</span>
+                    </div>
+                    <form method="POST"><input class="datetime-input" type="datetime-local" name="horario" id="horario"></form>
+                    <p>Por favor, insira os dados para retirada</p>
                 </div>
             </div>
         </div>

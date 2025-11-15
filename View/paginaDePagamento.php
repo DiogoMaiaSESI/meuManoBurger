@@ -12,6 +12,8 @@ $products = $_SESSION['cart'];
 if($products !== null) {
     $uniqueProducts = array_unique($products);
 }
+$horario = $_SESSION['horario'];
+$horarioFormatado = str_replace('T', ' ', $horario) . ':00';
 $sair = false;
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $codigo = substr(str_shuffle('abcdefghijklmnopqrstuvwxyz0123456789'), 0, 3) . '-' . substr(str_shuffle('abcdefghijklmnopqrstuvwxyz0123456789'), 0, 1);
@@ -24,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $precoTotal += $prod['preco_produto'];
                 }
                 $qtd = count(array_filter($products, fn($product) => $product == $value));
-                $pedidoController->criarPedido($value, 7, $codigo, $qtd, $precoTotal);
+                $pedidoController->criarPedido($value, 7, $codigo, $qtd, $precoTotal, $horarioFormatado);
                 $pedidoCriado = $pedidoController->getPedidoByCodigo($codigo);
                 $estoqueController->subEstoque($pedidoCriado['id_pedido']);
             }
