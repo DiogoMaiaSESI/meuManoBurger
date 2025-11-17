@@ -1,0 +1,648 @@
+@import 'global.css';
+
+body {
+    padding-top: 10.6rem;
+}
+main {
+    height: 64.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12.6rem;
+}
+main h1{
+    width: 44.7rem;
+    font-size: 4.8rem;
+    text-align: justify;
+    color: var(--VermelhoCereja);
+    font-weight: bold;
+}
+main h1 span {
+    color: var(--AmareloSecundario);
+}
+header {
+    width: 100%;
+    height: 10.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    background-color: var(--VermelhoCereja);
+}
+
+.cabecalho {
+    display: flex;
+    gap: 5.2rem;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    right: 5.2rem;
+    top: 50%;
+    transform: translateY(-50%);
+}
+figure {
+    display: flex;
+    margin: 0 !important;
+    height: fit-content;
+}
+.cabecalho figure {
+    width: fit-content;
+    height: fit-content;
+}
+
+.logo img{
+    width: 10.6rem;
+    height: 8.5rem;
+}
+
+.perfil img{
+    width: 5.5rem;
+    height: 5.5rem;
+}
+
+main {
+    padding-top: 15rem;
+    z-index: 1;
+    margin-bottom: 20rem;
+}
+
+section {
+    z-index: 1;
+    margin-bottom: 5rem;
+}
+
+h2 {
+    font-size: 5.6rem;
+    font-weight: bold;
+    text-align: center;
+    color: var(--VermelhoCereja);
+}
+
+.textoft{
+    display: flex;
+    justify-content: center;
+    gap: 7.4rem;
+    margin-bottom: 2rem;
+    margin-top: 2rem;
+}
+
+.textbtn{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: baseline;
+    gap: 4.4rem;
+    width: 40.6rem;
+}
+
+.cardapioDiv {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5.1rem;
+    width: 100%rem;
+}
+
+.textomenu{
+    font-size: 4rem;
+    font-weight: normal;
+    text-align: justify;
+}
+
+
+.foto {
+    display: flex;
+    justify-content: right;
+
+}
+
+.foto img {
+    width: 63.4rem;
+    height: 50.7rem;
+}
+
+.btncardapio{
+    width: 100%;
+    height: 8.5rem;
+    justify-content: center;
+    background-color: var(--VermelhoCereja);
+    border-radius: 1.4rem;
+    font-weight: bold;
+    font-size: 2.6rem;
+    border: none;
+    color: var(--Branco);
+    cursor: pointer;
+    
+}
+
+
+.btncardapio:hover {
+    background-color: var(--VermelhoCereja);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.decoracao1 {
+    display: flex;
+    justify-content: end;
+    padding-right: 5rem;
+}
+
+
+.decoracao1 img{
+    width: 15rem;
+    height: 15rem;
+}
+
+.decoracao2 {
+    display: flex;
+    justify-content:baseline;
+    padding-left: 5rem;
+}
+
+.decoracao2 img{
+    width: 15rem;
+    height: 15rem;
+}
+
+
+
+.feedback {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 8rem;
+}
+
+.textostitulo{
+    justify-content: left;
+    text-align: left;
+    align-items: left;
+    width: 80%;
+}
+.frase {
+    font-size: 4rem;
+    font-weight: 300;
+    margin-top: 3.5rem;
+    margin-bottom: 6rem;
+}
+
+.feed {
+    font-size: 4.5rem;
+    color: var(--VermelhoCereja); ;
+    font-weight: bold;
+    text-align: left;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+
+}
+
+.word {
+    color: var(--VermelhoCereja);
+}
+
+.feedbackcontainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.lineone {
+    display: flex;
+    gap: 5rem;
+    margin-bottom: 4rem;
+}
+
+.linetwo {
+    display: flex;
+    gap: 5rem;
+}
+
+.caixa {
+    display: flex;
+    flex-direction: column;
+    width: 46.8rem;
+    height: 27.5rem;
+    padding-top: 2.7rem;
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    background-color: var(--Branco);
+}
+.decTab, .decCel {
+    display: none;
+}
+.decComp {
+    display: block;
+}
+.dados {
+    display: flex;
+    align-items: center;
+    gap: 2.2rem;
+    margin-bottom: 2.9rem;
+}
+
+.dados img {
+    width: 6rem;
+    height: 5rem;
+}
+
+.dados p {
+    font-size: 2.5rem;
+    color: var(--VermelhoCereja);
+    font-weight: bold;
+}
+
+.textofeedback {
+    width: fit-content;
+    height: 14.4rem;
+    font-size: 1.8rem;
+    font-weight: bold;
+    text-align: justify;
+}
+
+.textofeedback p {
+    font-size: 2.3rem;
+    font-weight: bold;
+}
+
+hr{
+    margin: 4rem;
+}
+
+
+footer {
+    width: 100%;
+    height: 6.6rem;
+    background-color: var(--VermelhoCereja);
+    color: var(--Branco);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+footer h4 {
+    display: flex;
+    justify-content: center;
+    font-weight: normal;
+    font-size: 1.5rem;
+}
+
+.menu {
+    width: 8rem ;
+    padding-left: 4rem;
+    cursor: pointer;
+}
+.menu:hover {
+    transition: 500ms;
+    opacity: 70%;
+}
+.sandwich {
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    gap: 3rem;
+    position: absolute;
+    top: 3.3rem;
+    left: 0;
+    width: fit-content;
+}
+.options {
+    background-color: var(--VermelhoCereja);
+    width: 25.5rem;
+    border-style: solid;
+    border-left-style: none;
+    border-width: 0.2rem;
+    transform: translateX(-100%);
+    transition: 500ms;
+    border-top-right-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+}
+.optionActive {
+    transform: translateX(0%);
+    transition: 500ms;
+}
+.option {
+    display: flex;
+    justify-content: baseline;
+    align-items: center;
+    height: 6.4rem;
+    border-style: solid;
+    border-left-style: none;
+    border-width: 0.1rem;
+    border-color: var(--Preto);
+    color: var(--Branco);
+    padding-left: 1.6rem;
+    gap: 2.1rem;
+    cursor: pointer;
+    transition: 500ms;
+}
+.option:hover {
+    padding-left: 2.5rem;
+    transition: 500ms;
+}
+h5 {
+    font-size: 2.1rem;
+    font-weight: 400;
+}
+.sombra {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
+    background-color: var(--Preto);
+    opacity: 0%;
+    transition: 500ms;
+    pointer-events: none;
+}
+.shadowActive {
+    opacity: 40%;
+    transition: 500ms;
+    pointer-events: all;
+}
+
+@media screen and (max-width: 1172px) and (min-width: 889px){
+    .hambImg {
+        width: 32.4rem;
+    }
+    .title {
+        width: 29.1rem;
+        font-size: 3.2rem;
+    }
+    main {
+        padding-top: 10rem;
+        margin-bottom: 10rem;
+        height: fit-content;
+    }
+    h2 {
+        font-size: 5rem;
+    }
+    .textomenu{
+        font-size: 3rem;
+    }
+    .btncardapio {
+        width: 23rem;
+        height: 4.9rem;
+        font-size: 2.4rem;
+        font-weight: normal;
+    }
+    .textbtn {
+        width: 32.5rem;
+        gap: 2.1rem;
+    }
+    .cardapioDiv {
+        gap: 3.1rem;
+    }
+    .foto figure img {
+        width: 35.4rem;
+        height: 28.4rem;
+    }
+    .decoracao1 figure img, .decoracao2 figure img {
+        width: 7rem;
+        height: 7rem;
+    }
+    .feed {
+        font-size: 3.8rem;
+    }
+    .frase {
+        font-size: 3rem;
+    }
+    .caixa {
+        width: 30.2rem;
+        height: 26rem;
+    }
+    .dados figure img {
+        width: 4.8rem;
+        height: 4.8rem;
+    }
+    .dados p {
+        font-size: 2.5rem;
+    }
+    .textofeedback p {
+        font-size: 1.8rem;
+        width: 25.7rem;
+    }
+}
+
+@media screen and (min-width: 501px) and (max-width: 888px){
+    .decComp, .decCel {
+        display: none;
+    }
+    .decTab {
+        display: block;
+    }
+    .menu {
+        padding-left: 0;
+    }
+    .hambImg {
+        width: 20rem;
+    }
+    .title {
+        width: 23rem;
+        font-size: 2.5rem;
+    }
+    main {
+        height: fit-content;
+        gap: 3.4rem;
+        padding-top: 10rem;
+        margin-bottom: 5rem;
+    }
+    h2 {
+        font-size: 3.2rem;
+    }
+    .textomenu{
+        font-size: 2.2rem;
+    }
+    .btncardapio {
+        width: 15.5rem;
+        height: 3.5rem;
+        font-size: 1.5rem;
+        font-weight: normal;
+    }
+    .textoft{
+        gap: 3.5rem;
+        align-items: end;
+    }
+    .textbtn {
+        width: 22rem;
+        gap: 2.1rem;
+    }
+    .cardapioDiv {
+        gap: 3.1rem;
+    }
+    .foto figure img {
+        width: 20rem;
+        height: 15.5rem;
+    }
+    .decoracao1 figure img, .decoracao2 figure img {
+        width: 3.7rem;
+        height: 5rem;
+    }
+    .feed {
+        margin-top: 0;
+        margin-bottom: 0rem;
+        font-size: 3.8rem;
+    }
+    .frase {
+        margin-top: 2rem;
+        font-size: 2.6rem;
+        width: 44rem;
+    }
+    .caixa {
+        width: 22.2rem;
+        height: 24rem;
+    }
+    .dados figure img {
+        width: 4.8rem;
+        height: 4.8rem;
+    }
+    .dados p {
+        font-size: 2.2rem;
+    }
+    .textofeedback p {
+        font-size: 1.2rem;
+        width: 100%;
+    }
+    .lineone, .linetwo {
+        gap: 2.5rem;
+    }
+    .feedback {
+        margin-bottom: 4rem;
+    }
+}
+
+@media screen and (max-width: 500px){
+    .decComp, .decTab {
+        display: none;
+    }
+    .decCel {
+        display: block;
+    }
+    .cabecalho {
+        right: 3rem;
+        gap: 7rem;   
+    }
+    .sandwich {
+        top: 4.5rem;
+    }
+    .menu {
+        padding-left: 0;
+    }
+    .menu img {
+        width: 6rem;
+        height: auto;
+    }
+    .hambImg {
+        width: 15.3rem;
+    }
+    .title {
+        width: 25.8rem;
+        font-size: 2.4rem;
+    }
+    main {
+        height: fit-content;
+        flex-direction: column;
+        gap: 2.3rem;
+        padding-top: 5rem;
+        margin-bottom: 10rem;
+    }
+
+    .logo img {
+        width: 8rem;
+        height: auto;
+    }
+
+    .perfil img {
+        width: 4rem;
+        height: 4rem;
+    }
+
+    h2 {
+        font-size: 2.5rem;
+    }
+    .textomenu{
+        font-size: 1.5rem;
+    }
+    .btncardapio {
+        width: 12.5rem;
+        height: 2.7rem;
+        font-size: 1.3rem;
+        font-weight: normal;
+    }
+    .textoft{
+        margin-top: 0;
+        gap: 1.7rem;
+        align-items: center;
+    }
+    .textbtn {
+        width: 14rem;
+        gap: 2.1rem;
+    }
+    .cardapioDiv {
+        gap: 3.1rem;
+    }
+    .foto figure img {
+        width: 16.5rem;
+        height: 13.2rem;
+    }
+    .decoracao1 figure img, .decoracao2 figure img {
+        width: 3.7rem;
+        height: 5rem;
+    }
+    .decoracao1 {
+        padding-right: 3rem;
+    }
+    .decoracao2 {
+        padding-left: 3rem;
+    }
+    .feed {
+        font-size: 2.8rem;
+        margin-bottom: 0;
+    }
+    .frase {
+        font-size: 1.6rem;
+        margin-top: 1.2rem;
+        margin-bottom: 2.3rem;
+    }
+    .caixa {
+        width: 15rem;
+        height: 16rem;
+        padding-left: 1.1rem;
+        padding-top: 1.6rem;
+        padding-right: 0.8rem;
+    }
+    .dados{
+        gap: 0.9rem;
+        margin-bottom: 0.9rem;
+    }
+    .dados figure img {
+        width: 2.7rem;
+        height: 2.7rem;
+    }
+    .dados p {
+        font-size: 1.8rem;
+    }
+    .textofeedback p {
+        font-size: 0.9rem;
+        width: 100%;
+    }
+    .lineone, .linetwo {
+        gap: 2.2rem;
+    }
+    footer h4 {
+        font-size: 1rem;
+    }
+    .options {
+        width: 20rem;
+    }
+    .option h5 {
+        font-size: 1.8rem;
+    }
+}
