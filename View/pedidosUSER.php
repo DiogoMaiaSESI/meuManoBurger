@@ -5,8 +5,11 @@ use Controller\PedidoController;
 use Controller\ProductController;
 session_start();
 
-$_SESSION['id_cliente'] = 7;
-$id_cliente = $_SESSION['id_cliente'];
+if($_SESSION['id_cliente'] !== null) {
+    $id_cliente = $_SESSION['id_cliente'];
+} else {
+    header('Location: login.php');
+}
 
 $pedidoController = new PedidoController();
 $productController = new ProductController();

@@ -4,12 +4,28 @@ session_start();
 require_once('../vendor/autoload.php');
 use Controller\EstoqueController;
 use Controller\ProductController;
+use Controller\CarrinhoController;
 $estoqueController = new EstoqueController();
 $productController = new ProductController();
+$carrinhoController = new CarrinhoController();
+if($_SESSION['id_cliente'] !== null) {
+    $id_cliente = $_SESSION['id_cliente'];
+} else {
+    header('Location: login.php');
+}
 $productId = $_SESSION['product_id_details'];
 $product = $productController->findById($productId);
 $imageBase64 = 'data:image/jpeg;base64,' . base64_encode($product['imagem_produto']);
 $estoque = $estoqueController->obtEstoque($product['id_produto']);
+
+if($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if (!empty($_POST['product_id'])) {
+        $id_produto = $_POST['product_id'];
+        $carrinhoController->addProductToCart($id_produto, $id_cliente);
+        header('Location: carrinho.php');
+        exit;
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -82,7 +98,7 @@ $estoque = $estoqueController->obtEstoque($product['id_produto']);
                         <p><?php echo $product['descricao_produto'];?></p>
                         <h2 class="price">R$ <?php echo number_format($product['preco_produto'],2,',','.'); ?></h2>
                         <div class="buttons">
-                            <button class="cart">Adicionar ao carrinho</button>
+                            <button class="cart" id="<?php echo $product['id_produto'];?>">Adicionar ao carrinho</button>
                             <button class="favorite">Adicionar aos favoritos</button>
                         </div>
                     </div>
@@ -92,6 +108,7 @@ $estoque = $estoqueController->obtEstoque($product['id_produto']);
                     <div><h4 class="subtitle">Quantidade</h4><h4 class="subtitle2"><?php echo $estoque['qtd_produto']; ?></h4></div>
                 </div>
             </div>
+            <form method="POST"><input class="product_id" type="hidden" name="product_id"></form>
         </main>
         <script src="../templates/assets/js/detalhamentoUser.js"></script>
     </body>

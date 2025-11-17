@@ -2,8 +2,12 @@
 
 session_start();
 
-$_SESSION['id_cliente'] = 7;
-$id_cliente = $_SESSION['id_cliente'];
+if($_SESSION['id_cliente'] !== null) {
+    $id_cliente = $_SESSION['id_cliente'];
+} else {
+    header('Location: login.php');
+}
+
 use Controller\ProductController;
 use Controller\CarrinhoController;
 require_once('../vendor/autoload.php');
@@ -32,7 +36,7 @@ $total = 0;
     
     <!-- Carregando o CSS global e o novo CSS do carrinho -->
     <link rel="stylesheet" href="/meuManoBurger/templates/assets/css/global.css"> 
-    <link rel="stylesheet" href="/meuManoBurger/templates/assets/css/Carrinho.css">
+    <link rel="stylesheet" href="/meuManoBurger/templates/assets/css/carrinho.css">
 </head>
 
 <body>
@@ -69,22 +73,26 @@ $total = 0;
                     <div class="cart-items-background">
                         <ul class="cart-item-list">
                             <?php
-                            foreach ($products as $product => $value) {
-                                $prod = $productController->findById($value);
-                                $qtd = $carrinhoController->getProductById($value, $id_cliente)[0]['qtd_produto'];
-                                $total += $prod['preco_produto'] * $qtd;
-                            }
-                            foreach ($products as $product => $value) {
-                                $qtd = $carrinhoController->getProductById($value, $id_cliente)[0]['qtd_produto'];
-                                $prod = $productController->findById($value);
-                                $imageBase64 = 'data:image/jpeg;base64,' . base64_encode($prod['imagem_produto']);
-                                echo '<li class="cart-item">
-                                <div class="item-info">
-                                    <img src="'. $imageBase64 .'" alt="Hambúrguer" class="item-image">
-                                    <span class="item-name">' . $qtd . 'x ' . $prod['nome_produto'] . '</span>
-                                </div>
-                                <span class="item-price">R$ '. number_format($prod['preco_produto'],2,',','.') . '</span>
-                            </li>';
+                            if(!empty($products)){
+                                foreach ($products as $product => $value) {
+                                    $prod = $productController->findById($value);
+                                    $qtd = $carrinhoController->getProductById($value, $id_cliente)[0]['qtd_produto'];
+                                    $total += $prod['preco_produto'] * $qtd;
+                                }
+                                foreach ($products as $product => $value) {
+                                    $qtd = $carrinhoController->getProductById($value, $id_cliente)[0]['qtd_produto'];
+                                    $prod = $productController->findById($value);
+                                    $imageBase64 = 'data:image/jpeg;base64,' . base64_encode($prod['imagem_produto']);
+                                    echo '<li class="cart-item">
+                                    <div class="item-info">
+                                        <img src="'. $imageBase64 .'" alt="Hambúrguer" class="item-image">
+                                        <span class="item-name">' . $qtd . 'x ' . $prod['nome_produto'] . '</span>
+                                    </div>
+                                    <span class="item-price">R$ '. number_format($prod['preco_produto'],2,',','.') . '</span>
+                                </li>';
+                                }
+                            } else {
+                                echo '<h2 class="aviso">Seu carrinho está vazio!</h2>';
                             }
                             ?>
                         </ul>
@@ -139,6 +147,6 @@ $total = 0;
         </div>
 
     </main>
-    <script src="../templates/assets/js/Carrinho.js"></script>
+    <script src="../templates/assets/js/carrinho.js"></script>
 </body>
 </html>

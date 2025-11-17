@@ -63,7 +63,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $show2FAModal = true;
         } elseif ($result === true) {
             // Login de cliente normal bem-sucedido.
-            header('Location: Perfil.php');
+            
+            header('Location: perfil.php');
             exit;
         } else {
             // E-mail e senha não correspondem a ADM nem a Cliente.

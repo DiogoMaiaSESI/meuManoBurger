@@ -90,6 +90,18 @@ class Carrinho {
             throw new Exception ('Erro ao pegar produto do carrinho pelo id: ' . $e);
         }
     }
+
+    public function deleteAllClientCart ($id_cliente_fk) {
+        try {
+            $sql = 'DELETE FROM carrinho WHERE id_cliente_fk = :id_cliente_fk';
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(':id_cliente_fk', $id_cliente_fk, PDO::PARAM_INT);
+            $stmt->execute();
+            return true;
+        } catch (PDOException $e) {
+            throw new Exception('Erro ao deletar tudo do carrinho: ' . $e);
+        }
+    }
 }
 
 ?>

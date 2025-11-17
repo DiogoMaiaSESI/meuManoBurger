@@ -8,9 +8,11 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-$_SESSION['id_cliente'] = 7;
-
-$id_cliente = $_SESSION['id_cliente'];
+if($_SESSION['id_cliente'] !== null) {
+    $id_cliente = $_SESSION['id_cliente'];
+} else {
+    header('Location: login.php');
+}
 
 $productController = new ProductController();
 $carrinhoController = new CarrinhoController();
@@ -23,7 +25,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else if (!empty($_POST['product_id_cart']) and empty($_POST['product_id_details'])) {
         $id_produto = $_POST['product_id_cart'];
         $carrinhoController->addProductToCart($id_produto, $id_cliente);
-        header('Location: Carrinho.php');
+        header('Location: carrinho.php');
         exit;
     }
 }
@@ -176,9 +178,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="add-product">
             <h1>Hambúrgueres</h1>
 
-            <figure>
-                <img class="adicionar_produto" src="../templates/assets/img/adicionar.png" alt="">
-            </figure>
+            
         </div>
         <div class="container">
             <?php 
@@ -206,9 +206,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
        <div class="add-product">
             <h1>Lanches</h1>
 
-            <figure>
-                <img class="adicionar_produto" src="../templates/assets/img/adicionar.png" alt="">
-            </figure>
         </div>
 
        <div class="container">
@@ -237,9 +234,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="add-product">
             <h1>Bebidas</h1>
 
-            <figure>
-                <img class="adicionar_produto" src="../templates/assets/img/adicionar.png" alt="">
-            </figure>
         </div>
         
         <div class="container">
@@ -268,9 +262,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     <section class="cafe">
         <div class="add-product">
             <h1>Café da Manhã</h1>
-            <figure>
-                <img class="adicionar_produto" src="../templates/assets/img/adicionar.png" alt="">
-            </figure>
+
         </div>
 
        <div class="container">
@@ -299,9 +291,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="add-product">
             <h1>Doces</h1>
 
-            <figure>
-                <img class="adicionar_produto" src="../templates/assets/img/adicionar.png" alt="">
-            </figure>
         </div>
 
          <div class="container">
@@ -332,9 +321,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="add-product">
             <h1>Tapioca</h1>
 
-            <figure>
-                <img class="adicionar_produto" src="../templates/assets/img/adicionar.png" alt="">
-            </figure>
         </div>
 
          <div class="container">
@@ -364,9 +350,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="add-product">
             <h1>Promoções</h1>
 
-            <figure>
-                <img class="adicionar_produto" src="../templates/assets/img/adicionar.png" alt="">
-            </figure>
         </div>
 
         <div class="container">

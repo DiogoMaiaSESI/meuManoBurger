@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     } else {
         $_SESSION['error_message'] = "Erro ao atualizar o perfil.";
     }
-    header('Location: Perfil.php');
+    header('Location: perfil.php');
     exit;
 }
 // --- LÓGICA DE ALTERAÇÃO DE SENHA ---
@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             $_SESSION['error_message'] = "Ocorreu um erro ao alterar a senha.";
         }
     }
-    header('Location: Perfil.php#content-seguranca');
+    header('Location: perfil.php#content-seguranca');
     exit;
 }
 
@@ -277,7 +277,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
 
         <aside class="sidebar">
             <div class="sidebar-header">
-                <p>Olá, Beanca!</p>
+                <p>Olá, <?php echo strtok($nomeUsuario, ' ');?></p>
             </div>
             <nav class="sidebar-nav">
                 <ul>
@@ -319,7 +319,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
                             </div>
                         </div>
                     </div>
-                    <form id="profile-form" class="profile-form" method="POST" action="Perfil.php"
+                    <form id="profile-form" class="profile-form" method="POST" action="perfil.php"
                         enctype="multipart/form-data">
                         <input type="hidden" name="action" value="update_profile">
 
@@ -403,7 +403,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
                             <a href="#" class="add-2fa-link">+ Adicionar método de autenticação</a>
                         <?php endif; ?>
                     </div>
-                    <form id="security-form" class="security-form" method="POST" action="Perfil.php">
+                    <form id="security-form" class="security-form" method="POST" action="perfil.php">
                         <input type="hidden" name="action" value="update_password">
                         <h3>Alterar senha</h3>
                         <div class="form-group password-group">

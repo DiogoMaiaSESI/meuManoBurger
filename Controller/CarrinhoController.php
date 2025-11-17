@@ -61,6 +61,14 @@ class CarrinhoController {
             throw new Exception('Erro ao pegar produto pelo ID: ' . $e);
         }
     }
+
+    public function deleteAllClientCart ($id_cliente_fk) {
+        try {
+            return $this->carrinhoModel->deleteAllClientCart($id_cliente_fk);
+        }catch (PDOException $e) {
+            throw new Exception('Erro ao deletar carrinho: ' . $e);
+        }
+    }
 }
 
 ?>

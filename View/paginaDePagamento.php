@@ -6,8 +6,11 @@ use Controller\PedidoController;
 use Controller\EstoqueController;
 use Controller\CarrinhoController;
 require_once('../vendor/autoload.php');
-$_SESSION['id_cliente'] = 7;
-$id_cliente = $_SESSION['id_cliente'];
+if($_SESSION['id_cliente'] !== null) {
+    $id_cliente = $_SESSION['id_cliente'];
+} else {
+    header('Location: login.php');
+}
 $productController = new ProductController();
 $pedidoController = new PedidoController();
 $estoqueController = new EstoqueController();
@@ -63,9 +66,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Pega o pedido criado
         $pedidoCriado = $pedidoController->getPedidoByCodigo($codigo);
-
+        $carrinhoController->deleteAllClientCart($id_cliente);
         // Atualiza o estoque do pedido
-        $estoqueController->subEstoque($pedidoCriado['id_pedido']);
+        $estoqueController->subEstoque($pedidoCriado[0]['id_pedido']);
     }
 
     header('Location: pedidosUSER.php');

@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     if (confirmLogoutBtn) {
         confirmLogoutBtn.addEventListener('click', () => {
-            window.location.href = 'Perfil.php?action=logout';
+            window.location.href = 'perfil.php?action=logout';
         });
     }
     if (logoutModal) {
