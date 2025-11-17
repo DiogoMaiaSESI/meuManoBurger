@@ -1,10 +1,24 @@
+<?php
+
+session_start();
+
+if($_SERVER['REQUEST_METHOD'] === 'POST'){
+    if(!empty($_POST['product_id'])){
+        $_SESSION['product_id_details'] = $_POST['product_id'];
+        header('Location: detalhamentoUser.php');
+        exit;
+    }
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="../templates/assets/img/Logo.png">
-    <link rel="stylesheet" href="../templates/assets/css/PaginaPrincipalUser.css">
+    <link rel="stylesheet" href="../templates/assets/css/paginaPrincipalUser.css">
     <title>Home | MeuManoBurger</title>
 </head>
 <body>
@@ -146,49 +160,49 @@
                     <figure>
                         <img src="../templates/assets/img/esfirra.png" alt="">
                     </figure>
-                    <p class="nomedopedido">Esfirra de Carne</p>
+                    <p id="17" class="nomedopedido">Esfirra de Carne</p>
                 </div>
 
                 <div class="card">
                     <figure>
                         <img src="../templates/assets/img/pastel.png" alt="">
                     </figure>
-                    <p class="nomedopedido">Pastel Frito</p>
+                    <p id="14" class="nomedopedido">Pastel Frito</p>
                 </div>
 
                 <div class="card">
                     <figure>
                         <img src="../templates/assets/img/coxinha.png" alt="">
                     </figure>
-                    <p class="nomedopedido">Coxinha de Queijo</p>
+                    <p id="16" class="nomedopedido">Coxinha de Queijo</p>
                 </div>
 
                 <div class="card">
                     <figure>
                         <img src="../templates/assets/img/hamburguer.png" alt="">
                     </figure>
-                    <p class="nomedopedido">Hamburguer</p>
+                    <p id="4" class="nomedopedido">Hamburguer</p>
                 </div>
 
                 <div class="card">
                     <figure>
                         <img src="../templates/assets/img/paopizza.png" alt="">
                     </figure>
-                    <p class="nomedopedido">Pão Pizza</p>
+                    <p id="21" class="nomedopedido">Pão Pizza</p>
                 </div>
 
                 <div class="card">
                     <figure>
                         <img src="../templates/assets/img/empada_menu.png" alt="">
                     </figure>
-                    <p class="nomedopedido">Empada</p>
+                    <p id="19" class="nomedopedido">Empada</p>
                 </div>
 
                 <div class="card">
                     <figure>
                         <img src="../templates/assets/img/cuscuz_menu.png" alt="">
                     </figure>
-                    <p class="nomedopedido">Cuscuz</p>
+                    <p id="22" class="nomedopedido">Cuscuz</p>
                 </div>
 
             </div>
@@ -285,6 +299,7 @@
         <footer>
             <h3>Copyright © 2025 Meumanoburger- Todos os Direitos Reservados</h3>
         </footer>
-    <script src="../templates/assets/js/PaginaPrincipalUser.js"></script>
+        <form method="POST"><input class="product_id" type="hidden" name="product_id"></form>
+    <script src="../templates/assets/js/paginaPrincipalUser.js"></script>
 </body>
 </html>

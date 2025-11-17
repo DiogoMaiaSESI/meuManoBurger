@@ -64,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } elseif ($result === true) {
             // Login de cliente normal bem-sucedido.
             
-            header('Location: perfil.php');
+            header('Location: paginaPrincipalUser.php');
             exit;
         } else {
             // E-mail e senha não correspondem a ADM nem a Cliente.
