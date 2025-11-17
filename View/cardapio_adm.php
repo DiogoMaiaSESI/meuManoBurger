@@ -2,6 +2,9 @@
 require_once('../vendor/autoload.php');
 use Controller\ProductController;
 
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 // Inicia o controller de produtos
 $productController = new ProductController();
 $newProduct = null;
@@ -43,6 +46,17 @@ function renderProductCard($product) {
         </div>
     ';
 }
+
+if($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if(!empty($_POST['id_produto'])){
+        $_SESSION['id_produto'] = $_POST['id_produto'];
+        header('Location: detalhamentoAdm.php');
+        exit();
+    }
+}
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -84,12 +98,6 @@ function renderProductCard($product) {
                         </figure>
                         <h5>Feedbacks</h5>
                     </div>
-                    <div class="option" id="carrinho_sandwich">
-                        <figure>
-                            <img src="../templates/assets/img/shoppingCart.png" alt="">
-                        </figure>
-                        <h5>Carrinho</h5>
-                    </div>
                 </div>
             </div>
             <div class="sombra"></div>
@@ -100,17 +108,16 @@ function renderProductCard($product) {
             </div>
 
             <div class="voltar_perfil">
-                <figure class="voltar_header'">
-                    <img src="../templates/assets/img/voltar_header.png" alt="Seta para voltar" />
-                </figure>
-
-                <figure class="carrinho_header">
-                    <img src="../templates/assets/img/carrinho.png" alt="Carrinho" />
-                </figure>
-
-                <figure class="perfil_header">
-                    <img src="../templates/assets/img/perfil.png" alt="Foto de perfil" />
-                </figure>
+                <a href="empresa.php">
+                    <figure class="voltar_header'">
+                        <img src="../templates/assets/img/voltar_header.png" alt="Seta para voltar" />
+                    </figure>
+                </a>
+                <a href="perfil_adm.php">
+                    <figure class="perfil_header">
+                        <img src="../templates/assets/img/perfil.png" alt="Foto de perfil" />
+                    </figure>
+                </a>
             </div>
         </div>
 
@@ -187,10 +194,11 @@ function renderProductCard($product) {
        
         <div class="add-product">
             <h1>Hambúrgueres</h1>
-
-            <figure>
-                <img class="adicionar_produto" src="../templates/assets/img/adicionar.png" alt="">
-            </figure>
+            <a href="cadastro_produto.php">
+                <figure>
+                    <img class="adicionar_produto" src="../templates/assets/img/adicionar.png" alt="">
+                </figure>
+            </a>
         </div>
         <div class="container">
             <?php 
@@ -203,7 +211,7 @@ function renderProductCard($product) {
                     <div class="informacoes_config">
                         <h3 class="product-title">' . htmlspecialchars($value['nome_produto']) . '</h3>
                         <p class="product-price">R$ '. number_format($value['preco_produto'], 2, ',' , '.') .'</p>
-                        <button class="add-to-cart">
+                        <button class="add-to-cart" id="'. $value['id_produto'] .'">
                             <figure>
                                 <img src="../templates/assets/img/detalhes.png" alt="">
                             </figure>
@@ -218,9 +226,11 @@ function renderProductCard($product) {
        <div class="add-product">
             <h1>Lanches</h1>
 
-            <figure>
-                <img class="adicionar_produto" src="../templates/assets/img/adicionar.png" alt="">
-            </figure>
+            <a href="cadastro_produto.php">
+                <figure>
+                    <img class="adicionar_produto" src="../templates/assets/img/adicionar.png" alt="">
+                </figure>
+            </a>
         </div>
 
        <div class="container">
@@ -234,7 +244,7 @@ function renderProductCard($product) {
                     <div class="informacoes_config">
                         <h3 class="product-title">' . htmlspecialchars($value['nome_produto']) . '</h3>
                         <p class="product-price">R$ '. number_format($value['preco_produto'], 2, ',' , '.') .'</p>
-                        <button class="add-to-cart">
+                        <button class="add-to-cart" id="'. $value['id_produto'] .'">
                             <figure>
                                 <img src="../templates/assets/img/detalhes.png" alt="">
                             </figure>
@@ -249,9 +259,11 @@ function renderProductCard($product) {
         <div class="add-product">
             <h1>Bebidas</h1>
 
-            <figure>
-                <img class="adicionar_produto" src="../templates/assets/img/adicionar.png" alt="">
-            </figure>
+            <a href="cadastro_produto.php">
+                <figure>
+                    <img class="adicionar_produto" src="../templates/assets/img/adicionar.png" alt="">
+                </figure>
+            </a>
         </div>
         
         <div class="container">
@@ -265,7 +277,7 @@ function renderProductCard($product) {
                     <div class="informacoes_config">
                         <h3 class="product-title">' . htmlspecialchars($value['nome_produto']) . '</h3>
                         <p class="product-price">R$ '. number_format($value['preco_produto'], 2, ',' , '.') .'</p>
-                        <button class="add-to-cart">
+                        <button class="add-to-cart" id="'. $value['id_produto'] .'">
                             <figure>
                                 <img src="../templates/assets/img/detalhes.png" alt="">
                             </figure>
@@ -280,9 +292,11 @@ function renderProductCard($product) {
     <section class="cafe">
         <div class="add-product">
             <h1>Café da Manhã</h1>
-            <figure>
-                <img class="adicionar_produto" src="../templates/assets/img/adicionar.png" alt="">
-            </figure>
+            <a href="cadastro_produto.php">
+                <figure>
+                    <img class="adicionar_produto" src="../templates/assets/img/adicionar.png" alt="">
+                </figure>
+            </a>
         </div>
 
        <div class="container">
@@ -296,7 +310,7 @@ function renderProductCard($product) {
                     <div class="informacoes_config">
                         <h3 class="product-title">' . htmlspecialchars($value['nome_produto']) . '</h3>
                         <p class="product-price">R$ '. number_format($value['preco_produto'], 2, ',' , '.') .'</p>
-                        <button class="add-to-cart">
+                        <button class="add-to-cart" id="'. $value['id_produto'] .'">
                             <figure>
                                 <img src="../templates/assets/img/detalhes.png" alt="">
                             </figure>
@@ -310,10 +324,11 @@ function renderProductCard($product) {
     <section class="doces">
         <div class="add-product">
             <h1>Doces</h1>
-
-            <figure>
-                <img class="adicionar_produto" src="../templates/assets/img/adicionar.png" alt="">
-            </figure>
+            <a href="cadastro_produto.php">
+                <figure>
+                    <img class="adicionar_produto" src="../templates/assets/img/adicionar.png" alt="">
+                </figure>
+            </a>
         </div>
 
          <div class="container">
@@ -327,7 +342,7 @@ function renderProductCard($product) {
                     <div class="informacoes_config">
                         <h3 class="product-title">' . htmlspecialchars($value['nome_produto']) . '</h3>
                         <p class="product-price">R$ '. number_format($value['preco_produto'], 2, ',' , '.') .'</p>
-                        <button class="add-to-cart">
+                        <button class="add-to-cart" id="'. $value['id_produto'] .'">
                             <figure>
                                 <img src="../templates/assets/img/detalhes.png" alt="">
                             </figure>
@@ -343,10 +358,11 @@ function renderProductCard($product) {
     <section class="tap">
         <div class="add-product">
             <h1>Tapioca</h1>
-
-            <figure>
-                <img class="adicionar_produto" src="../templates/assets/img/adicionar.png" alt="">
-            </figure>
+            <a href="cadastro_produto.php">
+                <figure>
+                    <img class="adicionar_produto" src="../templates/assets/img/adicionar.png" alt="">
+                </figure>
+            </a>
         </div>
 
          <div class="container">
@@ -360,7 +376,7 @@ function renderProductCard($product) {
                     <div class="informacoes_config">
                         <h3 class="product-title">' . htmlspecialchars($value['nome_produto']) . '</h3>
                         <p class="product-price">R$ '. number_format($value['preco_produto'], 2, ',' , '.') .'</p>
-                        <button class="add-to-cart">
+                        <button class="add-to-cart" id="'. $value['id_produto'] .'">
                             <figure>
                                 <img src="../templates/assets/img/detalhes.png" alt="">
                             </figure>
@@ -375,10 +391,11 @@ function renderProductCard($product) {
     <section class="prom">
         <div class="add-product">
             <h1>Promoções</h1>
-
-            <figure>
-                <img class="adicionar_produto" src="../templates/assets/img/adicionar.png" alt="">
-            </figure>
+            <a href="cadastro_produto.php">
+                <figure>
+                    <img class="adicionar_produto" src="../templates/assets/img/adicionar.png" alt="">
+                </figure>
+            </a>
         </div>
 
         <div class="container">
@@ -392,7 +409,7 @@ function renderProductCard($product) {
                     <div class="informacoes_config">
                         <h3 class="product-title">' . htmlspecialchars($value['nome_produto']) . '</h3>
                         <p class="product-price">R$ '. number_format($value['preco_produto'], 2, ',' , '.') .'</p>
-                        <button class="add-to-cart">
+                        <button class="add-to-cart" id="'. $value['id_produto'] .'">
                             <figure>
                                 <img src="../templates/assets/img/detalhes.png" alt="">
                             </figure>
@@ -403,7 +420,7 @@ function renderProductCard($product) {
             } ?>
         </div>
     </section>
-
+    <form method="POST"><input type="hidden" class="id_produto" name="id_produto"></form>
     <footer>
         <h2>Copyright © 2025 Meumanoburguer - Todos os Direitos Reservados</h2>
     </footer>

@@ -27,7 +27,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $admModel = new \Model\Adm();
         $admController = new AdmController();
         $admin = $admController->login($email, $senha);
-
         if ($admin) {
             if ($admin['2fa_enabled']) {
                 // Precisa de 2FA, prepara a sessão e o modal.
@@ -41,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['nome_adm'] = $admin['nome_adm'];
                 $_SESSION['email_adm'] = $admin['email_adm'];
                 $_SESSION['is_admin'] = true;
-                header('Location: perfil_Adm.php');
+                header('Location: empresa.php');
                 exit;
             }
         } else {
@@ -55,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else { 
         // Se o e-mail NÃO é de administrador, então tenta como cliente.
         $clienteModel = new \Model\Cliente();
-        $clienteController = new \Controller\ClienteController($clienteModel);
+        $clienteController = new \Controller\ClienteController();
         $result = $clienteController->login($email, $senha);
 
         if ($result === '2fa_required') {

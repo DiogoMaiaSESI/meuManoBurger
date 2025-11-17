@@ -20,16 +20,16 @@ $action = $_GET['action'] ?? null;
 if ($action === 'update_product' || $action === 'delete_product') {
     $productModel = new \Model\Product();
     $estoqueModel = new \Model\Estoque();
-    $productController = new \Controller\ProductController($productModel, $estoqueModel);
+    $productController = new \Controller\ProductController();
 
     if ($action === 'update_product' && $_SERVER['REQUEST_METHOD'] === 'POST') {
-        $response = $productController->update();
+        $response = $productController->update($id, $nome, $preco, $tipo, $descricao, $imagem, $id_adm_fk);
         echo json_encode($response);
         exit;
     }
 
     if ($action === 'delete_product' && $_SERVER['REQUEST_METHOD'] === 'POST') {
-        $response = $productController->delete();
+        $response = $productController->delete($id);
         echo json_encode($response);
         exit;
     }
@@ -38,7 +38,7 @@ if ($action === 'update_product' || $action === 'delete_product') {
 // [CORREÇÃO] Adicionamos 'disable-2fa' à condição principal deste bloco.
 if ($action === 'generate-2fa' || $action === 'verify-2fa' || $action === 'disable-2fa') {
     $admModel = new \Model\Adm();
-    $admController = new \Controller\AdmController($admModel);
+    $admController = new \Controller\AdmController();
     $id_adm = $_SESSION['id_adm'];
 
     if ($action === 'generate-2fa') {

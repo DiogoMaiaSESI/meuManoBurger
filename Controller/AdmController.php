@@ -124,7 +124,7 @@ public function createAdm($nome_adm, $email_adm, $senha_adm, $imagem_adm = null)
         } else {
             $_SESSION['error_message'] = "Erro ao atualizar o perfil.";
         }
-        header('Location: Perfil_adm.php');
+        header('Location: perfil_adm.php');
         exit;
     }
 
@@ -145,7 +145,7 @@ public function createAdm($nome_adm, $email_adm, $senha_adm, $imagem_adm = null)
         } else {
             $_SESSION['error_message'] = "Ocorreu um erro ao alterar a senha.";
         }
-        header('Location: Perfil_adm.php#content-seguranca');
+        header('Location: perfil_adm.php#content-seguranca');
         exit;
     }
 
