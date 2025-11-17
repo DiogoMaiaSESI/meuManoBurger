@@ -74,15 +74,21 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <img src="../templates/assets/img/Logo.png" alt="">
             </figure>
             <div class="headerButtons">
-                <figure>
-                    <img class="back" src="../templates/assets/img/volte.png" alt="">
-                </figure>
-                <figure>
-                    <img class="cartPage" src="../templates/assets/img/yellowShoppingCart.png" alt="">
-                </figure>
-                <figure>
-                    <img class="profileButton" src="../templates/assets/img/Profile.png" alt="">
-                </figure>
+                <a href="paginaPrincipalUser.php">
+                    <figure>
+                        <img class="back" src="../templates/assets/img/volte.png" alt="">
+                    </figure>
+                </a>
+                <a href="carrinho.php">
+                    <figure>
+                        <img class="cartPage" src="../templates/assets/img/yellowShoppingCart.png" alt="">
+                    </figure>
+                </a>
+                <a href="perfil.php">
+                    <figure>
+                        <img class="profileButton" src="../templates/assets/img/Profile.png" alt="">
+                    </figure>
+                </a>
             </div>
         </header>
         <main>

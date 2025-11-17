@@ -77,20 +77,22 @@ $pedidos = $pedidoController->getAllUserPedidos($id_cliente);
             </figure>
 
             <div class="lateral">
-
-                <figure class="voltar">
-                    <img src="../templates/assets/img/voltar.png" alt="">
-                </figure>
-
-               <figure class="voltar">
-                    <img src="../templates/assets/img/headercarrinho.png" alt="">
-                </figure>
-
-                <figure class="perfil">
-                    <img src="../templates/assets/img/perfil.png" alt="">
-                </figure>
-
-
+                
+                <a href="paginaPrincipalUser.php">
+                    <figure class="voltar">
+                        <img src="../templates/assets/img/voltar.png" alt="">
+                    </figure>
+                </a>
+                <a href="carrinho.php">
+                    <figure class="voltar">
+                         <img src="../templates/assets/img/headercarrinho.png" alt="">
+                     </figure>
+                </a>
+                <a href="perfil.php">
+                    <figure class="perfil">
+                        <img src="../templates/assets/img/perfil.png" alt="">
+                    </figure>
+                </a>
             </div>
         </div>
     </header>
@@ -134,20 +136,27 @@ $pedidos = $pedidoController->getAllUserPedidos($id_cliente);
                 <div class="resumopedido">
                     <p class="resumotitulo">Resumo do Pedido</p>
 
-                    <div class="resumolanche">
-                        <p class="nomelanche">Hamburguer</p>
-                        <p class="qtdlanche">2x</p>
-                    </div>
+                    <?php 
+                        foreach ($pedidos as $pedido => $value) {
+                            $pedido_produto = $pedidoController->getPedidoProdutoById($pedidoController->getIdPedidoByCodigo($value['codigo'])['id_pedido']);
+                            $arrayPedidosQtd = [];
+                            foreach ($pedido_produto as $i => $item) {
 
-                    <div class="resumolanche">
-                        <p class="nomelanche">Coca-cola</p>
-                        <p class="qtdlanche">1x</p>
-                    </div>
+                                $productName = $productController->findById($item['id_produto_fk'])['nome_produto'];
 
-                    <div class="resumolanche">
-                        <p class="nomelanche">Esfirra</p>
-                        <p class="qtdlanche">3x</p>
-                    </div>
+                                $arrayPedidosQtd[$i] = [
+                                    'nome_produto' => $productName,
+                                    'qtd' => $item['qtd']
+                                ];
+
+                                echo '
+                                <div class="resumolanche">
+                                    <p class="nomelanche">'. $arrayPedidosQtd[$i]['nome_produto'] .'</p>
+                                    <p class="qtdlanche">'. $arrayPedidosQtd[$i]['qtd'] .'x</p>
+                                </div>';
+                            }
+                        }
+                        ?>
                 </div>
 
                 <div class="modalstatus">

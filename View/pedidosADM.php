@@ -120,20 +120,21 @@ $pedidos = $pedidoController->getAllPedidos();
                 <div class="resumopedido">
                     <p class="resumotitulo">Resumo do Pedido</p>
                     <div class="resumos">
-                        <div class="resumolanche">
-                            <p class="nomelanche">Hamburguer</p>
-                            <p class="qtdlanche">2x</p>
-                        </div>
-
-                        <div class="resumolanche">
-                            <p class="nomelanche">Coca-cola</p>
-                            <p class="qtdlanche">1x</p>
-                        </div>
-
-                        <div class="resumolanche">
-                            <p class="nomelanche">Esfirra</p>
-                            <p class="qtdlanche">3x</p>
-                        </div>
+                        <?php 
+                        foreach ($pedidos as $pedido => $value) {
+                            $pedido_produto = $pedidoController->getPedidoProdutoById($pedidoController->getIdPedidoByCodigo($value['codigo'])['id_pedido']);
+                            $arrayPedidosQtd = [];
+                            foreach ($pedido_produto as $item) {
+                                $productName = $productController->findById($item['id_produto_fk'])['nome_produto'];
+                                $arrayPedidosQtd[] = ['nome_produto' => $productName, 'qtd' => $item['qtd']];
+                                echo '
+                                <div class="resumolanche">
+                                <p class="nomelanche">'. $arrayPedidosQtd['nome_produto'] .'</p>
+                                <p class="qtdlanche">' . $arrayPedidosQtd['qtd'] . 'x</p>
+                                </div>';                            
+                            }
+                        }
+                        ?>
                     </div>
                     
                 </div>

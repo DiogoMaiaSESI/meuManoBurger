@@ -44,23 +44,145 @@ $total = 0;
     <!-- Carregando o CSS global e o novo CSS do carrinho -->
     <link rel="stylesheet" href="/meuManoBurger/templates/assets/css/global.css"> 
     <link rel="stylesheet" href="/meuManoBurger/templates/assets/css/carrinho.css">
+
+    <style>
+        .sandwich-menu-container {
+            position: absolute;
+            top: 12.3rem;
+            left: 0;
+            z-index: 1002;
+            pointer-events: none;
+        }
+
+        .options {
+            background-color: var(--VermelhoCereja);
+            width: 25.5rem;
+            border: 2px solid var(--Preto);
+            border-left-style: none;
+            transform: translateX(-100%);
+            transition: transform 500ms ease-in-out;
+            border-radius: 0 1rem 1rem 0;
+            pointer-events: auto;
+            overflow: hidden;
+        }
+
+        .options.optionActive {
+            transform: translateX(0%);
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            height: 6.4rem;
+            border-top: 1px solid var(--Preto);
+            color: var(--Branco);
+            padding-left: 1.6rem;
+            gap: 2.1rem;
+            cursor: pointer;
+            transition: padding-left 300ms;
+        }
+
+        .option:first-child {
+            border-top: none;
+        }
+
+        .option:hover {
+            padding-left: 2.5rem;
+        }
+
+        .option h5 {
+            font-size: 2.1rem;
+            font-weight: 400;
+        }
+
+        .sombra {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1001;
+            background-color: var(--Preto);
+            opacity: 0;
+            transition: opacity 500ms;
+            pointer-events: none;
+        }
+
+        .sombra.shadowActive {
+            opacity: 0.4;
+            pointer-events: all;
+        }
+
+        /* ... (no final do arquivo) ... */
+
+        /* ESTILOS PARA O MODAL 2FA */
+        .qr-code-container {
+            display: flex;
+            justify-content: center;
+            margin: 2rem 0;
+            padding: 1rem;
+            background-color: var(--Branco);
+            border-radius: 1.2rem;
+        }
+
+        #2fa-setup-content p {
+            text-align: center;
+            font-size: 1.6rem;
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+        }
+
+        #2fa-verify-form .form-group {
+            margin-bottom: 2rem;
+        }
+
+        #2fa-verify-form input {
+            text-align: center;
+            font-size: 2rem;
+            letter-spacing: 0.5rem;
+        }
+    </style>
 </head>
 
 <body>
+    <div class="sandwich-menu-container">
+        <div class="options">
+            <div class="option">
+                <figure><img src="/meuManoBurger/templates/assets/img/Cardapio.png" alt="Cardápio"></figure>
+                <h5>Cardápio</h5>
+            </div>
+            <div class="option">
+                <figure><img src="/meuManoBurger/templates/assets/img/Pedidos.png" alt="Pedidos"></figure>
+                <h5>Pedidos</h5>
+            </div>
+            <div class="option">
+                <figure><img src="/meuManoBurger/templates/assets/img/Feedbacks.png" alt="Feedbacks"></figure>
+                <h5>Feedbacks</h5>
+            </div>
+            <div class="option">
+                <figure><img src="/meuManoBurger/templates/assets/img/Carrinho_menu.png" alt="Carrinho"></figure>
+                <h5>Carrinho</h5>
+            </div>
+        </div>
+    </div>
+    <div class="sombra"></div>
     <!-- Header (Estrutura mínima necessária) -->
     <header class="main-header">
         <nav class="header-nav">
-            <button class="menu-btn">
-                <img src="/meuManoBurger/templates/assets/img/Menu.png" alt="Menu" class="icon-img">
-            </button>
+            <li>
+                <button class="menu-btn sandwich-menu-btn">
+                    <figure><img src="/meuManoBurger/templates/assets/img/Menu.png" alt="Menu" class="icon-img">
+                    </figure>
+                </button>
+            </li>
             <div class="logo-container">
                 <img src="/meuManoBurger/templates/assets/img/Logo.png" alt="Logo Meu Mano Burger" class="logo-principal">
             </div>
             <div class="user-actions">
-                <a href="#" class="icon-link">
+                <a href="paginaPrincipalUser.php" class="icon-link">
                     <img src="/meuManoBurger/templates/assets/img/Voltar.png" alt="Voltar" class="icon-img">
                 </a>
-                <a href="#" class="icon-link">
+                <a href="perfil.php" class="icon-link">
                     <img src="/meuManoBurger/templates/assets/img/MiniPerfil.png" alt="Perfil" class="icon-img">
                 </a>
             </div>

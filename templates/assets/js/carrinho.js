@@ -42,7 +42,17 @@ form.addEventListener('submit',(e)=>{
     e.preventDefault()
 })
 
+const sandwichMenu = document.querySelector('.sandwich-menu-btn');
+    const sandwichOptions = document.querySelector('.options');
+    const sandwichSombra = document.querySelector('.sombra');
 
+    function toggleMenu() {
+        if (sandwichOptions) sandwichOptions.classList.toggle('optionActive');
+        if (sandwichSombra) sandwichSombra.classList.toggle('shadowActive');
+    }
+
+    if (sandwichMenu) sandwichMenu.addEventListener('click', toggleMenu);
+    if (sandwichSombra) sandwichSombra.addEventListener('click', toggleMenu);
 
 const buttons = document.querySelectorAll('.recommendations-grid span')
 
@@ -50,5 +60,20 @@ buttons.forEach((button)=>{
     button.addEventListener('click',()=>{
         inputId.value = button.id
         form.submit()
+    })
+})
+
+const option = document.querySelectorAll('.option')
+option.forEach((op, index)=>{
+    op.addEventListener('click',()=>{
+        if(index===0){
+            window.location.href = 'cardapio.php'
+        }else if(index===1){
+            window.location.href = 'pedidosUSER.php'
+        }else if(index===2){
+            window.location.href = 'paginaPrincipalUser.php#feedback'
+        }else if(index===3){
+            window.location.href = 'carrinho.php'
+        }
     })
 })

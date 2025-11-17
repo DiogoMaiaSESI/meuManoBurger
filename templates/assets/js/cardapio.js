@@ -227,3 +227,18 @@ imgs.forEach((img) => {
         form.submit()
     })
 })
+
+const option = document.querySelectorAll('.option')
+option.forEach((op, index)=>{
+    op.addEventListener('click',()=>{
+        if(index===0){
+            window.location.href = 'cardapio.php'
+        }else if(index===1){
+            window.location.href = 'pedidosUSER.php'
+        }else if(index===2){
+            window.location.href = 'paginaPrincipalUser.php#feedback'
+        }else if(index===3){
+            window.location.href = 'carrinho.php'
+        }
+    })
+})

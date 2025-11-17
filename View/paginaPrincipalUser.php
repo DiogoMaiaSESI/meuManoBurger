@@ -65,14 +65,17 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
             
             
             <div class="carrinho_perfil">
-                <figure>
-                    <img src="../templates/assets/img/carrinho.png" alt="">
-                </figure>
+                <a href="carrinho.php">
+                    <figure>
+                        <img src="../templates/assets/img/carrinho.png" alt="">
+                    </figure>
+                </a>
                 
-                
-                <figure>
-                    <img src="../templates/assets/img/perfil.png" alt="">
-                </figure>
+                <a href="perfil.php">
+                    <figure>
+                        <img src="../templates/assets/img/perfil.png" alt="">
+                    </figure>
+                </a>
             </div>
     </header>
 
@@ -235,7 +238,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         
         <hr>
 
-    <section class="feedback">
+    <section class="feedback" id="feedback">
             <div class=" textostitulo">
                 <h2 class="feed">Feedbacks</h2>
                 <h3 class="frase"> Visualize os <span class="word">feedbacks</span> enviados!</h3>

@@ -87,17 +87,21 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
 
             <div class="voltar_perfil">
-                <figure class="voltar_header'">
-                    <img src="../templates/assets/img/voltar_header.png" alt="Seta para voltar" />
-                </figure>
-
-                <figure class="carrinho_header">
-                    <img src="../templates/assets/img/carrinho.png" alt="Carrinho" />
-                </figure>
-
-                <figure class="perfil_header">
-                    <img src="../templates/assets/img/perfil.png" alt="Foto de perfil" />
-                </figure>
+                <a href="paginaPrincipalUser.php">
+                    <figure class="voltar_header'">
+                        <img src="../templates/assets/img/voltar_header.png" alt="Seta para voltar" />
+                    </figure>
+                </a>
+                <a href="carrinho.php">
+                    <figure class="carrinho_header">
+                        <img src="../templates/assets/img/carrinho.png" alt="Carrinho" />
+                    </figure>
+                </a>
+                <a href="perfil.php">
+                    <figure class="perfil_header">
+                        <img src="../templates/assets/img/perfil.png" alt="Foto de perfil" />
+                    </figure>
+                </a>
             </div>
         </div>
 
