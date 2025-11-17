@@ -2,8 +2,17 @@ const  home = document.querySelector('button.sessao1')
 const maispedidos = document.querySelector('.sessao2')
 const sobrenos = document.querySelector('.sessao3')
 const feedbacks = document.querySelector('.sessao4')
+const login = document.querySelector('.login')
+const lancheBtns = document.querySelectorAll('.nomedopedido')
 
-
+lancheBtns.forEach(btn => {
+    btn.addEventListener('click',()=>{
+        window.location.href = 'View/login.php'
+    })
+})
+login.addEventListener('click', ()=>{
+    window.location.href = 'View/login.php'
+})
 home.addEventListener('click', () =>{
   
     if(window.innerWidth > 1100){
@@ -98,4 +107,6 @@ feedbacks.addEventListener('click', () =>{
             behavior: 'smooth'
         })
     }
-})   
+})
+
+

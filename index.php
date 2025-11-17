@@ -22,7 +22,7 @@
             <button class="sessao2">Mais Pedidos</button>
 
             <figure>
-                <img src="templates/assets/img/logo.png" alt="">
+                <img src="templates/assets/img/logoCentro.png" alt="">
             </figure>
 
             <button class="sessao3">Sobre Nós</button>
