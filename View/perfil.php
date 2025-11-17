@@ -95,11 +95,11 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meu Perfil - Meu Mano Burger</title>
-    <link rel="stylesheet" href="/meuManoBurger/templates/assets/css/Perfil.css">
-    <link rel="stylesheet" href="/meuManoBurger/templates/assets/css/FormasPagamento.css">
-    <link rel="stylesheet" href="/meuManoBurger/templates/assets/css/MeusFavoritos.css">
-    <link rel="stylesheet" href="/meuManoBurger/templates/assets/css/Seguranca.css">
-    <link rel="stylesheet" href="/meuManoBurger/templates/assets/css/ModalPagamento.css">
+    <link rel="stylesheet" href="/meuManoBurger/templates/assets/css/perfil.css">
+    <link rel="stylesheet" href="/meuManoBurger/templates/assets/css/formasPagamento.css">
+    <link rel="stylesheet" href="/meuManoBurger/templates/assets/css/meusFavoritos.css">
+    <link rel="stylesheet" href="/meuManoBurger/templates/assets/css/seguranca.css">
+    <link rel="stylesheet" href="/meuManoBurger/templates/assets/css/modalPagamento.css">
 
     <style>
         .sandwich-menu-container {
