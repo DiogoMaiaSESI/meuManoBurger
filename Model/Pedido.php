@@ -94,6 +94,19 @@ class Pedido {
             throw new Exception('Erro ao tentar pegar todos os pedidos: ' . $e);
         }
     }
+
+    public function getAllUserPedidos ($id_cliente_fk) {
+        try {
+            $sql = 'SELECT * FROM pedido WHERE id_cliente_fk = :id_cliente_fk';
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(':id_cliente_fk', $id_cliente_fk, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            throw new Exception('Erro ao pegar pedidos do usuário: ' . $e);
+        }
+    }
+    
     public function getIdPedidoByCodigo ($codigo) {
         try {
             $sql = 'SELECT id_pedido FROM pedido WHERE codigo = :codigo';

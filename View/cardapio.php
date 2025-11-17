@@ -2,8 +2,18 @@
 session_start();
 require_once('../vendor/autoload.php');
 use Controller\ProductController;
+use Controller\CarrinhoController;
+
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+$_SESSION['id_cliente'] = 7;
+
+$id_cliente = $_SESSION['id_cliente'];
 
 $productController = new ProductController();
+$carrinhoController = new CarrinhoController();
 
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
     if(!empty($_POST['product_id_details']) and empty($_POST['product_id_cart'])) {
@@ -11,10 +21,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         header('Location: detalhamentoUser.php');
         exit;
     } else if (!empty($_POST['product_id_cart']) and empty($_POST['product_id_details'])) {
-        if (!isset($_SESSION['cart'])) {
-            $_SESSION['cart'] = [];
-        }
-        $_SESSION['cart'][] = $_POST['product_id_cart'];
+        $id_produto = $_POST['product_id_cart'];
+        $carrinhoController->addProductToCart($id_produto, $id_cliente);
         header('Location: Carrinho.php');
         exit;
     }

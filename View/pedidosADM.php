@@ -6,7 +6,7 @@ use Controller\ProductController;
 session_start();
 $pedidoController = new PedidoController();
 $productController = new ProductController();
-$pedidos = $pedidoController->getAllPedidos();
+
 
 if($_SERVER['REQUEST_METHOD'] === 'POST') {
     if(!empty($_POST['codigo'])){
@@ -19,7 +19,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-
+$pedidos = $pedidoController->getAllPedidos();
 
 ?>
 <!DOCTYPE html>

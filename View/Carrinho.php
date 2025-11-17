@@ -1,16 +1,23 @@
 <?php
+
 session_start();
+
+$_SESSION['id_cliente'] = 7;
+$id_cliente = $_SESSION['id_cliente'];
 use Controller\ProductController;
+use Controller\CarrinhoController;
 require_once('../vendor/autoload.php');
 $productController = new ProductController();
-$products = $_SESSION['cart'];
+$carrinhoController = new CarrinhoController();
+$cartProducts = $carrinhoController->getAllCartProducts($id_cliente);
+$products = [];
+foreach ($cartProducts as $cartProduct) {
+    $products[] = $cartProduct['id_produto_fk'];
+}
 if($_SERVER['REQUEST_METHOD'] === 'POST') {
     $_SESSION['horario'] = $_POST['horario'];
     header('Location: paginaDePagamento.php');
     exit;
-}
-if($products !== null) {
-    $uniqueProducts = array_unique($products);
 }
 $total = 0;
 ?>
@@ -64,10 +71,11 @@ $total = 0;
                             <?php
                             foreach ($products as $product => $value) {
                                 $prod = $productController->findById($value);
-                                $total += $prod['preco_produto'];
+                                $qtd = $carrinhoController->getProductById($value, $id_cliente)[0]['qtd_produto'];
+                                $total += $prod['preco_produto'] * $qtd;
                             }
-                            foreach ($uniqueProducts as $product => $value) {
-                                $qtd = count(array_filter($products, fn($product) => $product == $value));
+                            foreach ($products as $product => $value) {
+                                $qtd = $carrinhoController->getProductById($value, $id_cliente)[0]['qtd_produto'];
                                 $prod = $productController->findById($value);
                                 $imageBase64 = 'data:image/jpeg;base64,' . base64_encode($prod['imagem_produto']);
                                 echo '<li class="cart-item">

@@ -45,13 +45,16 @@ document.addEventListener('DOMContentLoaded', function () {
   })
 
   pedidos.forEach((pedido) => {
+    const form = pedido.querySelector('form')
     const detalhesBtn = pedido.querySelector('.detalhes')
     const statusPendente = pedido.querySelector('.statuspendente')
     const cancelar = pedido.querySelector('.cancelar')
     let codigoatual = pedido.querySelector('.codigo')
     let horaatual = pedido.querySelector('.hora')
     let dataatual = pedido.querySelector('.data')
-
+    form.addEventListener('submit', (e)=>{
+      e.preventDefault()
+    })
 
     if (pedidosRemovidos.includes(codigoatual.textContent)) {
       return;
@@ -88,7 +91,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
   btnsim.addEventListener('click', () => {
     modalcancelar.style.display = 'none'
-
+    const codigo = Pedidoatual.querySelector('.codigo').textContent
+    const inputApagar = Pedidoatual.querySelector('.apagarPedido')
+    const inputPost = Pedidoatual.querySelector('.postPedido')
+    const form = Pedidoatual.querySelector('form')
+    inputPost.value = null
+    inputApagar.value = codigo
+    form.submit()
       const codigoPedido = Pedidoatual.querySelector('.codigo').textContent;
       pedidosRemovidos.push(codigoPedido);
       localStorage.setItem('pedidosRemovidos', JSON.stringify(pedidosRemovidos));

@@ -130,8 +130,8 @@ document.addEventListener('DOMContentLoaded', function () {
     
     lixeiraBtn.addEventListener('click',()=>{
       const codigo = pedido.querySelector('.codigo').textContent
-      inputApagar = pedido.querySelector('.apagarPedido')
-      inputPost = pedido.querySelector('.postPedido')
+      const inputApagar = pedido.querySelector('.apagarPedido')
+      const inputPost = pedido.querySelector('.postPedido')
       inputPost.value = null
       inputApagar.value = codigo
       form.submit()

@@ -34,6 +34,15 @@ class PedidoController {
             throw new Exception('Erro ao tentar pegar todos os pedidos: ' . $e);
         }
     }
+
+    public function getAllUserPedidos ($id_cliente_fk) {
+        try {
+            return $this->pedidoModel->getAllUserPedidos($id_cliente_fk);
+        } catch (PDOException $e) {
+            throw new Exception ('Erro ao pegar pedidos do usuário: ' . $e);
+        }
+    }
+
     public function getIdPedidoByCodigo ($codigo) {
         try {
             return $this->pedidoModel->getPedidoByCodigo($codigo);

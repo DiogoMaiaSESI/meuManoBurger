@@ -1,3 +1,27 @@
+<?php
+
+require_once '../vendor/autoload.php';
+use Controller\PedidoController;
+use Controller\ProductController;
+session_start();
+
+$_SESSION['id_cliente'] = 7;
+$id_cliente = $_SESSION['id_cliente'];
+
+$pedidoController = new PedidoController();
+$productController = new ProductController();
+
+if($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if(!empty($_POST['codigoApagar'])){
+        $codigo = $_POST['codigoApagar'];
+        $pedidoController->deletePedidoByCodigo($codigo);
+    }
+}
+
+$pedidos = $pedidoController->getAllUserPedidos($id_cliente);
+
+?>
+
 <!DOCTYPE html>
 <html lang="PT-BR">
 
@@ -164,18 +188,30 @@
 
             <div class="pedidos">
 
-                <div class="pedido">
-
+                <?php
+                foreach ($pedidos as $pedido => $value) {
+                    list($data, $hora) = explode(' ', $value['retirada']);
+                    $pedido_produto = $pedidoController->getPedidoProdutoById($pedidoController->getIdPedidoByCodigo($value['codigo'])['id_pedido']);
+                    $arrayPedidosQtd = [];
+                    if($value['status']==='Retirado') {
+                        echo '<script>localStorage.setItem(`pedido_' . $value['codigo'] . '`, "retirado")</script>';
+                    }
+                    foreach ($pedido_produto as $item) {
+                        $productName = $productController->findById($item['id_produto_fk'])['nome_produto'];
+                        $arrayPedidosQtd[] = ['nome_produto' => $productName, 'qtd' => $item['qtd']];
+                    }
+                    echo '
+                    <div class="pedido">
                     <div class="ilustracao">
                         <div class="statusretirado">
-                            <p class="statusok">
-                                Retirado
-                            </p>
+                        <p class="statusok">
+                            Retirado
+                        </p>
                         </div>
                         <div class="statuspendente">
-                            <p class="statuspend">
-                                A retirar
-                            </p>
+                        <p class="statuspend">
+                            A retirar
+                        </p>
                         </div>
                         <figure>
                             <img src="../templates/assets/img/ilustracao.png" alt="">
@@ -187,13 +223,13 @@
                         <div class="centralline1">
                             <div class="codigopedidos">
                                 <p class="inforcodigo">Código:
-                                <p class="codigo">utz-z</p>
+                                <p class="codigo">' . $value['codigo'] . '</p>
                                 </p>
                             </div>
 
                             <div class="totalpedidos">
                                 <p class="infortotal">Total:
-                                <p class="total">R$ 15,00</p>
+                                <p class="total">R$ ' . number_format($value['total'],2,',', '.') . '</p>
                                 </p>
                             </div>
 
@@ -205,14 +241,14 @@
                                 <figure>
                                     <img src="../templates/assets/img/relogio.png" alt="">
                                 </figure>
-                                <p class="hora">11:00</p>
+                                <p class="hora">' . substr($hora,0,-3) . '</p>
                             </div>
 
                             <div class="datapedidos">
                                 <figure>
                                     <img src="../templates/assets/img/calendario.png" alt="">
                                 </figure>
-                                <p class="data">21-11-2025</p>
+                                <p class="data">' . str_replace('-','/',$data) . '</p>
                             </div>
 
                         </div>
@@ -220,190 +256,14 @@
 
                     <div class="botoes">
                         <button class="detalhes">Ver Detalhes</button>
-                        <button class="cancelar">Cancelar Pedido</button>
+                        <form method="POST"><input class="postPedido" name="codigo" type="hidden"><input class="apagarPedido" name="codigoApagar" type="hidden"><button class="cancelar" name="codigoApagar">Cancelar Pedido</button></form>
                     </div>
                 </div>
-
-                <div class="pedido">
-
-                    <div class="ilustracao">
-                        <div class="statusretirado">
-                            <p class="statusok">
-                                Retirado
-                            </p>
-                        </div>
-                        <div class="statuspendente">
-                            <p class="statuspend">
-                                A retirar
-                            </p>
-                        </div>
-                        <figure>
-                            <img src="../templates/assets/img/ilustracao.png" alt="">
-                        </figure>
-                    </div>
-
-                    <div class="central">
-
-                        <div class="centralline1">
-                            <div class="codigopedidos">
-                                <p class="inforcodigo">Código:
-                                <p class="codigo">lh4-x</p>
-                                </p>
-                            </div>
-
-                            <div class="totalpedidos">
-                                <p class="infortotal">Total:
-                                <p class="total">R$ 23,60</p>
-                                </p>
-                            </div>
-
-                        </div>
-
-                        <div class="centralline2">
-
-                            <div class="horapedidos">
-                                <figure>
-                                    <img src="../templates/assets/img/relogio.png" alt="">
-                                </figure>
-                                <p class="hora">09:00</p>
-                            </div>
-
-                            <div class="datapedidos">
-                                <figure>
-                                    <img src="../templates/assets/img/calendario.png" alt="">
-                                </figure>
-                                <p class="data">10-10-2025</p>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="botoes">
-                        <button class="detalhes">Ver Detalhes</button>
-                        <button class="cancelar">Cancelar Pedido</button>
-                    </div>
-                </div>
-
-                <div class="pedido">
-
-                    <div class="ilustracao">
-                        <div class="statusretirado">
-                            <p class="statusok">
-                                Retirado
-                            </p>
-                        </div>
-                        <div class="statuspendente">
-                            <p class="statuspend">
-                                A retirar
-                            </p>
-                        </div>
-                        <figure>
-                            <img src="../templates/assets/img/ilustracao.png" alt="">
-                        </figure>
-                    </div>
-
-                    <div class="central">
-
-                        <div class="centralline1">
-                            <div class="codigopedidos">
-                                <p class="inforcodigo">Código:
-                                <p class="codigo">p09-3</p>
-                                </p>
-                            </div>
-
-                            <div class="totalpedidos">
-                                <p class="infortotal">Total:
-                                <p class="total">R$ 5,00</p>
-                                </p>
-                            </div>
-
-                        </div>
-
-                        <div class="centralline2">
-
-                            <div class="horapedidos">
-                                <figure>
-                                    <img src="../templates/assets/img/relogio.png" alt="">
-                                </figure>
-                                <p class="hora">12:00</p>
-                            </div>
-
-                            <div class="datapedidos">
-                                <figure>
-                                    <img src="../templates/assets/img/calendario.png" alt="">
-                                </figure>
-                                <p class="data">16-09-2025</p>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="botoes">
-                        <button class="detalhes">Ver Detalhes</button>
-                        <button class="cancelar">Cancelar Pedido</button>
-                    </div>
-                </div>
-
-                <div class="pedido">
-
-                    <div class="ilustracao">
-                        <div class="statusretirado">
-                            <p class="statusok">
-                                Retirado
-                            </p>
-                        </div>
-                        <div class="statuspendente">
-                            <p class="statuspend">
-                                A retirar
-                            </p>
-                        </div>
-                        <figure>
-                            <img src="../templates/assets/img/ilustracao.png" alt="">
-                        </figure>
-                    </div>
-
-                    <div class="central">
-
-                        <div class="centralline1">
-                            <div class="codigopedidos">
-                                <p class="inforcodigo">Código:
-                                <p class="codigo">df7-t</p>
-                                </p>
-                            </div>
-
-                            <div class="totalpedidos">
-                                <p class="infortotal">Total:
-                                <p class="total">R$ 28,00</p>
-                                </p>
-                            </div>
-
-                        </div>
-
-                        <div class="centralline2">
-
-                            <div class="horapedidos">
-                                <figure>
-                                    <img src="../templates/assets/img/relogio.png" alt="">
-                                </figure>
-                                <p class="hora">08:30</p>
-                            </div>
-
-                            <div class="datapedidos">
-                                <figure>
-                                    <img src="../templates/assets/img/calendario.png" alt="">
-                                </figure>
-                                <p class="data">20-08-2025</p>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="botoes">
-                        <button class="detalhes">Ver Detalhes</button>
-                        <button class="cancelar">Cancelar Pedido</button>
-                    </div>
-                </div>
-
+                    ';
+                }
+                ?>
+                
+                
             </div>
 
 

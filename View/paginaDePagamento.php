@@ -4,16 +4,19 @@ session_start();
 use Controller\ProductController;
 use Controller\PedidoController;
 use Controller\EstoqueController;
+use Controller\CarrinhoController;
 require_once('../vendor/autoload.php');
-
+$_SESSION['id_cliente'] = 7;
+$id_cliente = $_SESSION['id_cliente'];
 $productController = new ProductController();
 $pedidoController = new PedidoController();
 $estoqueController = new EstoqueController();
+$carrinhoController = new CarrinhoController();
 
-$products = $_SESSION['cart'] ?? [];
-
-if (!empty($products)) {
-    $uniqueProducts = array_unique($products);
+$products = [];
+$cartProducts = $carrinhoController->getAllCartProducts($id_cliente);
+foreach ($cartProducts as $cartProduct) {
+    $products[] = $cartProduct['id_produto_fk'];
 }
 
 $horario = $_SESSION['horario'];
@@ -37,19 +40,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $precoTotal = 0;
     foreach ($products as $prodId) {
         $prod = $productController->findById($prodId);
-        $precoTotal += $prod['preco_produto'];
+        $qtd = $carrinhoController->getProductById($prodId, $id_cliente)[0]['qtd_produto'];
+        $precoTotal += $prod['preco_produto'] * $qtd;
     }
 
     // Cria o pedido e os itens
-    foreach ($uniqueProducts as $productId) {
+    foreach ($products as $productId) {
 
         // Conta quantas vezes esse produto aparece
-        $qtd = count(array_filter($products, fn($item) => $item == $productId));
+        $qtd = $carrinhoController->getProductById($prodId, $id_cliente)[0]['qtd_produto'];
 
         // Cria o pedido com o produto e quantidade correta
         $pedidoController->criarPedido(
             $productId,
-            7,
+            $id_cliente,
             $codigo,
             $qtd,
             $precoTotal,
@@ -64,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $estoqueController->subEstoque($pedidoCriado['id_pedido']);
     }
 
-    header('Location: pedidosUser.php');
+    header('Location: pedidosUSER.php');
     exit();
 }
 ?>
@@ -138,11 +142,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $total = 0;
                     foreach ($products as $product => $value) {
                         $prod = $productController->findById($value);
-                        $total += $prod['preco_produto'];
+                        $qtd = $carrinhoController->getProductById($value, $id_cliente)[0]['qtd_produto'];
+                        $total += $prod['preco_produto'] * $qtd;
                     }
-                    foreach ($uniqueProducts as $product => $value) {
+                    foreach ($products as $product => $value) {
                         $prod = $productController->findById($value);
-                        $qtd = count(array_filter($products, fn($product) => $product == $value));
+                        $qtd = $carrinhoController->getProductById($value, $id_cliente)[0]['qtd_produto'];
                         $imageBase64 = 'data:image/jpeg;base64,' . base64_encode($prod['imagem_produto']);
                         echo '<div class="lineDiv">
                         <div class="unitDiv">
