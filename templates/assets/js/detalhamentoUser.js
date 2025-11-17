@@ -15,5 +15,5 @@ sombra.addEventListener('click', () => {
 })
 
 back.addEventListener('click', () => {
-    window.location.href = '../index.php'
+    window.location.href = '../View/cardapio.php'
 })

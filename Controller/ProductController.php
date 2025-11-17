@@ -6,8 +6,11 @@ use Exception;
 use Model\Product;
 use PDOException;
 
-class ProductController {
+class ProductController
+{
     private $productModel;
+    private $estoqueModel;
+    private $db; // Conexão para a transação
 
     public function __construct() {
         $this->productModel = new Product();
@@ -32,7 +35,7 @@ class ProductController {
 
     public function update($id, $nome, $preco, $tipo, $descricao, $imagem, $id_adm_fk) {
         if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-            return ['success' => false, 'errors' => ['Requisição inválida.']];
+            return ['success' => false, 'message' => 'Requisição inválida.'];
         }
 
         $id_sanitizado = filter_var($id, FILTER_VALIDATE_INT);
@@ -52,7 +55,7 @@ class ProductController {
 
     public function delete($id) {
         if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-            return ['success' => false, 'errors' => ['Requisição inválida.']];
+            return ['success' => false, 'message' => 'Requisição inválida.'];
         }
         
         $id_sanitizado = filter_var($id, FILTER_VALIDATE_INT);
@@ -60,11 +63,13 @@ class ProductController {
         return $this->productModel->deleteProduct($id_sanitizado);
     }
 
-    public function listAll() {
+    public function listAll()
+    {
         return $this->productModel->getAllProducts();
     }
 
-    public function findById($id) {
+    public function findById($id)
+    {
         $cleanId = filter_var($id, FILTER_VALIDATE_INT);
         return $this->productModel->getProductById($cleanId);
     }
@@ -84,15 +89,12 @@ class ProductController {
         return $this->productModel->toggleFavorite($userId, $productId_sanitizado);
     }
 
-
-    public function listFavorites() {
-
+    public function listFavorites()
+    {
         $userId = $_SESSION['user_id'] ?? null;
-        
         if (!$userId) {
-            return []; 
+            return [];
         }
-
         return $this->productModel->getFavoritesByUser($userId);
     }
     public function getProductsByType ($type) {

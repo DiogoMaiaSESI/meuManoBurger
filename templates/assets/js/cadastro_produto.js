@@ -40,4 +40,14 @@ inputImagem.addEventListener("change", function () { // Quando o usuário seleci
   }
 });
 
+<<<<<<< HEAD
 });
+=======
+});
+
+const voltar = document.querySelector('.voltar')
+
+voltar.addEventListener('click', () => {
+  window.location.href = 'cardapio.php'
+})
+>>>>>>> feature/Integração_Cadastro-prod_P-detalhes

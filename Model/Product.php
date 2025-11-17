@@ -6,21 +6,25 @@ use Exception;
 use PDO;
 use PDOException;
 
-class Product {
+class Product
+{
     private $conn;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->conn = Connection::getInstance();
     }
 
     public function createProduct($nome, $preco, $tipo, $descricao, $imagem, $id_adm_fk) {
         try {
-            $stmt = $this->conn->prepare("INSERT INTO produto (nome_produto, preco_produto, tipo_produto, descricao_produto, imagem_produto, id_adm_fk) VALUES (:nome, :preco, :tipo, :descricao, :imagem, :id_adm_fk)");
+            $sql = "INSERT INTO produto (nome_produto, preco_produto, tipo_produto, descricao_produto, imagem_produto, id_adm_fk) VALUES (:nome, :preco, :tipo, :descricao, :imagem, :id_adm_fk)";
+            $stmt = $this->conn->prepare($sql);
+
             $stmt->bindParam(':nome', $nome, PDO::PARAM_STR);
             $stmt->bindParam(':preco', $preco, PDO::PARAM_STR);
             $stmt->bindParam(':tipo', $tipo, PDO::PARAM_STR);
             $stmt->bindParam(':descricao', $descricao, PDO::PARAM_STR);
-            $stmt->bindParam(':imagem', $imagem, PDO::PARAM_LOB);
+            $stmt->bindValue(':imagem', $imagem, PDO::PARAM_LOB); // Usar bindValue para LOB é mais seguro
             $stmt->bindParam(':id_adm_fk', $id_adm_fk, PDO::PARAM_INT);
             
             $success = $stmt->execute();
@@ -34,9 +38,11 @@ class Product {
     public function updateProduct($id, $nome, $preco, $tipo, $descricao, $imagem, $id_adm_fk) {
         try {
             $sql = "UPDATE produto SET nome_produto = :nome, preco_produto = :preco, tipo_produto = :tipo, descricao_produto = :descricao, id_adm_fk = :id_adm_fk";
+
             if ($imagem !== null) {
                 $sql .= ", imagem_produto = :imagem";
             }
+
             $sql .= " WHERE id_produto = :id";
 
             $stmt = $this->conn->prepare($sql);
@@ -53,20 +59,17 @@ class Product {
             }
 
             $success = $stmt->execute();
-            
-            if ($stmt->rowCount() === 0) {
-                 return ['success' => true, 'message' => 'Nenhum dado foi alterado.'];
-            }
 
             return ['success' => $success];
 
         } catch (PDOException $e) {
             error_log("Erro ao atualizar produto: " . $e->getMessage());
-            return ['success' => false, 'errors' => ['Ocorreu um erro no servidor ao tentar atualizar o produto.']];
+            return ['success' => false, 'errors' => ['Ocorreu um erro no servidor.']];
         }
     }
 
-    public function deleteProduct($id) {
+    public function deleteProduct($id)
+    {
         if (empty($id) || $id <= 0) {
             return ['success' => false, 'errors' => ['ID do produto inválido.']];
         }
@@ -85,7 +88,8 @@ class Product {
         }
     }
 
-    public function getAllProducts() {
+    public function getAllProducts()
+    {
         try {
             $stmt = $this->conn->prepare("SELECT * FROM produto");
             $stmt->execute();
@@ -96,7 +100,8 @@ class Product {
         }
     }
 
-    public function getProductById($id) {
+    public function getProductById($id)
+    {
         try {
             $stmt = $this->conn->prepare("SELECT * FROM produto WHERE id_produto = :id");
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
@@ -106,7 +111,8 @@ class Product {
             throw new Exception("Erro ao buscar produto por ID: " . $e);
         }
     }
-    private function isFavorite($userId, $productId) {
+    private function isFavorite($userId, $productId)
+    {
         $stmt = $this->conn->prepare("SELECT id_favorito FROM favoritos WHERE id_cliente_fk = :userId AND id_produto_fk = :productId");
         $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
         $stmt->bindParam(':productId', $productId, PDO::PARAM_INT);
@@ -116,7 +122,8 @@ class Product {
     }
 
 
-    public function toggleFavorite($userId, $productId) {
+    public function toggleFavorite($userId, $productId)
+    {
         if (empty($userId) || empty($productId)) {
             return ['success' => false, 'errors' => ['Usuário ou produto inválido.']];
         }
@@ -150,7 +157,8 @@ class Product {
         }
     }
 
-    public function getFavoritesByUser($userId) {
+    public function getFavoritesByUser($userId)
+    {
         if (empty($userId)) {
             return [];
         }

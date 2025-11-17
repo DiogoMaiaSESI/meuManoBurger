@@ -212,6 +212,7 @@ sombra.addEventListener('click', () => {
     sandwich.classList.toggle('sandwichActive')
 })
 
+<<<<<<< HEAD
 addToCartButtons.forEach((btn) => {
     btn.addEventListener('click', () => {
         console.log('clicado')
@@ -225,5 +226,12 @@ imgs.forEach((img) => {
         inputDetails.value = img.id
         inputCart.value = null
         form.submit()
+=======
+const addProduto = document.querySelectorAll('.adicionar_produto')
+
+addProduto.forEach(botao => {
+    botao.addEventListener('click' , () => {
+        window.location.href = 'cadastro_produto.php'
+>>>>>>> feature/Integração_Cadastro-prod_P-detalhes
     })
 })

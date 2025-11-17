@@ -1,0 +1,587 @@
+@import url('global.css');
+
+main{
+    height: 100%;
+}
+.container{
+    align-items: center;
+    display: flex;
+    height: 100%;
+    gap: 10rem;
+    padding: 0;
+}
+
+.imagem_login{
+    background-color: #F0EEEE;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}
+
+.form_login{
+    margin-top: 4.3rem;
+}
+
+.form_login h1{
+    font-family: 'Inter';
+    font-size: 4.5rem;
+    color: var(--VermelhoCereja);
+}
+
+.form_login h2{
+    font-family: 'Inter';
+    font-size: 2.0rem;
+    color: var(--Preto);
+    margin-top: 2.6rem;
+}
+
+form{
+    margin-top: 2.0rem;
+    flex-direction: column;
+}
+
+form p{
+    margin-top: 2.0rem;
+    margin-left: 0.5rem;
+    font-family: 'Inter';
+    font-size: 1.5rem;
+    color: var(--Preto);
+    font-weight: bold;
+}
+
+input{
+    font-family: 'Inter';
+    width: 38.0rem;
+    height: 3.5rem;
+    border: 0.1rem solid var(--Preto);
+    padding-left: 1.2rem;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    font-size: 1.4rem;
+}
+
+button{
+    width: 10.0rem;
+    height: 4rem;
+    border-radius: 0.5rem;
+    background-color: var(--VermelhoCereja);
+    border: none;
+    color: var(--Branco);
+    font-size: 2.0rem;
+    cursor: pointer;
+    margin-top: 4.0rem;
+    margin-left: 12.0rem;
+}
+
+button:hover{
+    background-color: #af353f;
+    border: 1px solid var(--VermelhoCereja)
+}
+
+.google_facebook{
+    display: flex;
+    gap: 2.0rem;
+    margin-top: 2.0rem;
+    margin-left: 13rem;
+}
+
+.imagem_login img{
+    position: absolute;
+    margin-top: 5.0rem;
+    margin-left: 4.0rem;
+    width: 50.0rem;
+    height: 50.1rem;
+}
+
+.google img, .facebook img{
+    width: 2.8rem;
+    height: 2.8rem;
+    cursor: pointer;
+}
+
+
+.cadastre-se{
+    font-family: 'Inter';
+    font-size: 1.5rem;
+    color: var(--Preto);
+    margin-left: 5.0rem;
+    margin-top: 3.0rem;
+}
+
+span{
+    color: #1797a8;
+    cursor: pointer;
+}
+
+span:hover{
+    text-decoration: underline;
+}
+
+footer{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3.0rem;    
+    background-color: #FFDB58;
+}
+
+.msg_erro{
+    color: red;
+    font-size: 1.2rem;
+    margin-left: 0.5rem;
+    margin-top: 0.5rem;
+    display: none;
+}
+
+@media screen and (min-width: 1074px) and (max-width: 1314px){
+
+    .imagem_login{
+        width: 50%;
+        min-width: 51.094rem;
+    }
+    
+    .imagem_login img{
+        margin-left: 2.5rem;
+        width: 45.0rem;
+        height: 45.1rem;
+    }
+}
+
+
+@media screen and (min-width: 971px) and (max-width: 1073px){
+    .imagem_login img{
+        margin-left: 1.0rem;
+        width: 40.0rem;
+        height: 40.1rem;
+    }
+
+    .imagem_login{
+        width: 50%;
+        min-width: 44.594rem;
+    }
+}
+
+@media screen and (min-width: 875px) and (max-width: 971px){
+    .container{
+        gap: 6.0rem;
+    }
+    
+    .imagem_login img{
+        margin-top: 8rem;
+        margin-left: 1.0rem;
+        width: 37.0rem;
+        height: 37.1rem;
+    }
+
+    .imagem_login{
+        width: 50%;
+        min-width: 44.594rem;
+    }
+
+    .form_login h1{
+        font-size: 3rem;
+    }
+
+    .form_login h2{
+        font-size: 1.8rem;
+    }
+
+    input{
+        width: 33.0rem;
+    }
+}
+
+@media screen and (min-width: 783px) and (max-width: 875px){
+    .container{
+        gap: 6.0rem;
+    }
+    
+    .imagem_login img{
+        margin-top: 8rem;
+        margin-left: 1.0rem;
+        width: 37.0rem;
+        height: 37.1rem;
+    }
+
+    .imagem_login{
+        width: 50%;
+        min-width: 40.594rem;
+    }
+
+    .form_login h1{
+        font-size: 3rem;
+    }
+
+    .form_login h2{
+        font-size: 1.8rem;
+    }
+
+    input{
+        width: 30.0rem;
+    }
+
+    button{
+        margin-left: 10rem;
+    }
+
+    .google_facebook{
+        margin-left: 11rem;
+    }
+
+    .cadastre-se{
+        margin-left: 4rem;
+    }
+}
+
+@media screen and (min-width: 700px) and (max-width: 783px){
+    .container{
+        gap: 5.0rem;
+    }
+    
+    .imagem_login img{
+        margin-top: 10rem;
+        margin-left: 1.0rem;
+        width: 35.0rem;
+        height: 35.1rem;
+    }
+
+    .imagem_login{
+        width: 50%;
+        min-width: 36.594rem;
+    }
+
+    .form_login h1{
+        font-size: 3rem;
+    }
+
+    .form_login h2{
+        font-size: 1.6rem;
+    }
+
+    .form_login p{
+        font-size: 1.3rem;
+    }
+
+    input{
+        width: 25.0rem;
+    }
+
+    button{
+        margin-left: 8rem;
+        width: 9rem;
+        height: 3rem;
+        font-size: 1.6rem;
+        border-radius: 0.3rem;
+    }
+
+    .google_facebook{
+        margin-left: 9rem;
+    }
+
+    .cadastre-se{
+        margin-left: 1rem;
+    }
+}
+
+@media screen and (min-width: 620px) and (max-width: 700px){
+    .container{
+        gap: 4.0rem;
+    }
+    
+    .imagem_login img{
+        margin-top: 10rem;
+        margin-left: 1.0rem;
+        width: 30.0rem;
+        height: 30.1rem;
+    }
+
+    .imagem_login{
+        width: 50%;
+        min-width: 32.594rem;
+    }
+
+    .form_login h1{
+        font-size: 2.5rem;
+    }
+
+    .form_login h2{
+        font-size: 1.4rem;
+    }
+
+    .form_login p{
+        font-size: 1.2rem;
+    }
+
+    input{
+         font-size: 1.2rem;
+        width: 22.0rem;
+    }
+
+    button{
+        margin-left: 7rem;
+        width: 7rem;
+        height: 3rem;
+        font-size: 1.3rem;
+        border-radius: 0.3rem;
+    }
+
+    .google_facebook{
+        margin-left: 7rem;
+    }
+
+    .google img, .facebook img{
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+
+    .cadastre-se{
+        margin-left: 1rem;
+    }
+}
+
+@media screen and (min-width: 574px) and (max-width: 620px){
+    .container{
+        gap: 4.0rem;
+    }
+    
+    .imagem_login img{
+        margin-top: 10rem;
+        margin-left: 1.0rem;
+        width: 28.0rem;
+        height: 28.1rem;
+    }
+
+    .imagem_login{
+        width: 50%;
+        min-width: 29.594rem;
+    }
+
+    .form_login h1{
+        font-size: 2.2rem;
+    }
+
+    .form_login h2{
+        font-size: 1.4rem;
+    }
+
+    .form_login p{
+        font-size: 1.2rem;
+    }
+
+    input{
+        font-size: 1.2rem;
+        width: 22.0rem;
+    }
+
+    button{
+        margin-left: 7rem;
+        width: 7rem;
+        height: 3rem;
+        font-size: 1.3rem;
+        border-radius: 0.3rem;
+    }
+
+    .google_facebook{
+        margin-left: 7rem;
+    }
+
+    .google img, .facebook img{
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+
+    .cadastre-se{
+        font-size: 1rem;
+        margin-left: 1rem;
+    }
+}
+
+@media screen and (min-width: 510px) and (max-width: 574px){
+    .container{
+        gap: 4.0rem;
+    }
+    
+    .imagem_login img{
+        margin-top: 10rem;
+        margin-left: 0;
+        width: 25.0rem;
+        height: 25.1rem;
+    }
+
+    .imagem_login{
+        width: 50%;
+        min-width: 25.594rem;
+    }
+
+    .form_login h1{
+        font-size: 2rem;
+    }
+
+    .form_login h2{
+        font-size: 1.2rem;
+    }
+
+    .form_login p{
+        font-size: 1.1rem;
+    }
+
+    input{
+        font-size: 1.2rem;
+        width: 18.0rem;
+    }
+
+    button{
+        margin-left: 5rem;
+        width: 7rem;
+        height: 3rem;
+        font-size: 1.2rem;
+        border-radius: 0.3rem;
+    }
+
+    .google_facebook{
+        margin-left: 5rem;
+    }
+
+    .google img, .facebook img{
+        width: 2.3rem;
+        height: 2.3rem;
+    }
+
+    .cadastre-se{
+        font-size: 1rem;
+        margin-left: 0;
+    }
+}
+
+@media screen and (min-width: 430px) and (max-width: 510px){
+    .container{
+        display: flex;
+        gap: 2rem;
+    }
+    
+    .imagem_login img{
+        margin-top: 10rem;
+        margin-left: 0;
+        width: 23.0rem;
+        height: 23.1rem;
+    }
+
+    .imagem_login{
+        width: 50%;
+        min-width: 23.594rem;
+    }
+
+    .form_login h1{
+        font-size: 1.9rem;
+    }
+
+    .form_login h2{
+        font-size: 1.2rem;
+    }
+
+    .form_login p{
+        font-size: 1.1rem;
+    }
+
+    input{
+        font-size: 1.2rem;
+        width: 16.0rem;
+    }
+
+    button{
+        margin-left: 5rem;
+        width: 6rem;
+        height: 2.7rem;
+        font-size: 1.2rem;
+        border-radius: 0.3rem;
+    }
+
+    .google_facebook{
+        margin-left: 5rem;
+    }
+
+    .google img, .facebook img{
+        width: 2rem;
+        height: 2rem;
+    }
+
+    .cadastre-se{
+        font-size: 0.6rem;
+        margin-left: 0;
+    }
+}
+
+@media screen and (max-width: 430px){
+    .imagem_login{
+        display: none;
+    }
+
+    .container{
+        display: flex;
+        justify-content: center;
+        gap: 0;
+    }
+    .form_login{
+        margin-left: 0;
+        margin-top: 3.0rem;
+        justify-content: center;
+    }
+
+    .form_login h1{
+        font-size: 2.5rem;
+        width: 27rem;
+        justify-content: center;
+        display: flex;
+    }
+
+    .form_login h2{
+        font-size: 1.5rem;
+    }
+
+    .form_login p{
+        font-size: 1.3rem;
+    }
+
+    input{
+        font-size: 1.2rem;
+        width: 20.0rem;
+    }
+
+    button{
+        width: 6rem;
+        height: 2.7rem;
+        font-size: 1.2rem;
+        border-radius: 0.3rem;
+        margin-left: 7rem;
+    }
+
+    .google_facebook{
+        margin-left: 6rem;
+    }
+
+    .google img, .facebook img{
+        width: 3rem;
+        height: 3rem;
+    }
+
+    .cadastre-se{
+        font-size: 0.6rem;
+        margin-left: 0;
+    }
+}
+.login-error-message {
+            background-color: #ffdddd;
+            color: #d8000c;
+            border: 1px solid #d8000c;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            border-radius: 0.8rem;
+            text-align: center;
+            font-size: 1.6rem;
+            width: 57.2%;
+}
