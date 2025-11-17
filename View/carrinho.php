@@ -19,9 +19,16 @@ foreach ($cartProducts as $cartProduct) {
     $products[] = $cartProduct['id_produto_fk'];
 }
 if($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $_SESSION['horario'] = $_POST['horario'];
-    header('Location: paginaDePagamento.php');
-    exit;
+    if(!empty($_POST['horario'])){
+        $_SESSION['horario'] = $_POST['horario'];
+        header('Location: paginaDePagamento.php');
+        exit;
+    }
+    if(!empty($_POST['id_produto'])){
+        $_SESSION['product_id_details'] = $_POST['id_produto'];
+        header('Location: detalhamentoUser.php');
+        exit;
+    }
 }
 $total = 0;
 ?>
@@ -118,7 +125,7 @@ $total = 0;
                     <div class="summary-total">
                         <span>Agende a retirada do seu pedido!</span>
                     </div>
-                    <form method="POST"><input class="datetime-input" type="datetime-local" name="horario" id="horario"></form>
+                    <form method="POST"><input class="datetime-input" type="datetime-local" name="horario" id="horario"><input class="id_produto" type="hidden" name="id_produto"></form>
                     <p>Por favor, insira os dados para retirada</p>
                 </div>
             </div>
@@ -131,17 +138,17 @@ $total = 0;
                 <!-- Recomendação 1 -->
                 <div class="rec-item">
                     <img src="\meuManoBurger\templates\assets\img\EsfirraCarne.png" alt="Esfirra de Carne" class="rec-image">
-                    <span class="rec-name">Esfirra de Carne</span>
+                    <span id="17" class="rec-name">Esfirra de Carne</span>
                 </div>
                 <!-- Recomendação 2 -->
                 <div class="rec-item">
                     <img src="\meuManoBurger\templates\assets\img\PastelFrito.png" alt="Pastel frito" class="rec-image">
-                    <span class="rec-name">Pastel frito</span>
+                    <span id="14" class="rec-name">Pastel frito</span>
                 </div>
                 <!-- Recomendação 3 -->
                 <div class="rec-item">
                     <img src="\meuManoBurger\templates\assets\img\CoxinhaQueijo.png" alt="Coxinha de queijo" class="rec-image">
-                    <span class="rec-name">Coxinha de queijo</span>
+                    <span id="16" class="rec-name">Coxinha de queijo</span>
                 </div>
             </div>
         </div>

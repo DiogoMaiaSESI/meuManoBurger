@@ -1,9 +1,10 @@
 const continuarComprando = document.querySelector('.continue-shopping-btn')
 const form = document.querySelector('form')
-const input = document.querySelector('input')
+const input = document.querySelector('.datetime-input')
 const button = document.querySelector('.checkout-btn')
 const p = document.querySelector('.summary-card p')
 const aviso = document.querySelector('.aviso')
+const inputId = document.querySelector('.id_produto')
 
 continuarComprando.addEventListener('click', () => {
     window.location.href = 'cardapio.php'
@@ -39,4 +40,15 @@ button.addEventListener('click',()=>{
 
 form.addEventListener('submit',(e)=>{
     e.preventDefault()
+})
+
+
+
+const buttons = document.querySelectorAll('.recommendations-grid span')
+
+buttons.forEach((button)=>{
+    button.addEventListener('click',()=>{
+        inputId.value = button.id
+        form.submit()
+    })
 })
