@@ -10,9 +10,9 @@ class ClienteController
 {
     private $clienteModel;
 
-    public function __construct(Cliente $clienteModel)
+    public function __construct()
     {
-        $this->clienteModel = $clienteModel;
+        $this->clienteModel = new Cliente();
     }
 
     public function createCliente($nome_cliente, $email_cliente, $senha_cliente, $imagem_cliente)

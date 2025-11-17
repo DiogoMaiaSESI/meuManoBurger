@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
     // Usa o Controller para criar o cliente
     $clienteModel = new \Model\Cliente();
-    $clienteController = new \Controller\ClienteController($clienteModel);
+    $clienteController = new \Controller\ClienteController();
     $success = $clienteController->createCliente($nome, $email, $senha, $imagem);
 
     if ($success) {

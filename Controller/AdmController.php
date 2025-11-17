@@ -10,9 +10,9 @@ use Exception;
 class AdmController {
     private $AdmModel; 
 
-    public function __construct(Adm $AdmModel)
+    public function __construct()
     {
-        $this->AdmModel = $AdmModel;
+        $this->AdmModel = new Adm();
     }
     
 

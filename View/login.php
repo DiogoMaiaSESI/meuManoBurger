@@ -23,9 +23,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // --- CAMINHO DO ADMINISTRADOR ---
-    if ($email === 'mariane.mmb.admin@gmail.com') {
+    if ($email === 'administrador1@gmail.com' || $email === 'administrador2@gmail.com' || $email === 'administrador3@gmail.com') {
         $admModel = new \Model\Adm();
-        $admController = new AdmController($admModel);
+        $admController = new AdmController();
         $admin = $admController->login($email, $senha);
 
         if ($admin) {
