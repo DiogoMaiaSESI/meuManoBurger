@@ -5,14 +5,17 @@ use Model\Carrinho;
 use PDOException;
 use Exception;
 
-class CarrinhoController {
+class CarrinhoController
+{
     private $carrinhoModel;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->carrinhoModel = new Carrinho();
     }
 
-    public function getAllCartProducts ($id_cliente_fk) {
+    public function getAllCartProducts($id_cliente_fk)
+    {
         try {
             return $this->carrinhoModel->getAllCartProducts($id_cliente_fk);
         } catch (PDOException $e) {
@@ -20,10 +23,11 @@ class CarrinhoController {
         }
     }
 
-    public function addProductToCart ($id_produto_fk, $id_cliente_fk) {
+    public function addProductToCart($id_produto_fk, $id_cliente_fk)
+    {
         try {
             $produto = $this->carrinhoModel->getProductById($id_produto_fk, $id_cliente_fk);
-            if (empty($produto)){
+            if (empty($produto)) {
                 return $this->carrinhoModel->addProductToCart($id_cliente_fk, $id_produto_fk);
             } else {
                 return $this->carrinhoModel->sumOneToProduct($id_cliente_fk, $id_produto_fk);
@@ -33,7 +37,8 @@ class CarrinhoController {
         }
     }
 
-    public function sumOneToProduct ($id_produto_fk, $id_cliente_fk) {
+    public function sumOneToProduct($id_produto_fk, $id_cliente_fk)
+    {
         try {
             return $this->carrinhoModel->sumOneToProduct($id_cliente_fk, $id_produto_fk);
         } catch (PDOException $e) {
@@ -41,9 +46,17 @@ class CarrinhoController {
         }
     }
 
-    public function subtractOneToProduct ($id_produto_fk, $id_cliente_fk) {
+    public function subtractOneToProduct($id_produto_fk, $id_cliente_fk)
+    {
         try {
-            $product = $this->carrinhoModel->getProductById($id_produto_fk, $id_cliente_fk);
+            $productArray = $this->carrinhoModel->getProductById($id_produto_fk, $id_cliente_fk);
+
+            if (empty($productArray)) {
+                return false;
+            }
+
+            $product = $productArray[0];
+
             if ($product['qtd_produto'] > 1) {
                 return $this->carrinhoModel->subtractOneToProduct($id_cliente_fk, $id_produto_fk);
             } else {
@@ -54,7 +67,8 @@ class CarrinhoController {
         }
     }
 
-    public function getProductById ($id_produto_fk, $id_cliente_fk) {
+    public function getProductById($id_produto_fk, $id_cliente_fk)
+    {
         try {
             return $this->carrinhoModel->getProductById($id_produto_fk, $id_cliente_fk);
         } catch (PDOException $e) {
@@ -62,13 +76,17 @@ class CarrinhoController {
         }
     }
 
-    public function deleteAllClientCart ($id_cliente_fk) {
+    public function deleteAllClientCart($id_cliente_fk)
+    {
         try {
             return $this->carrinhoModel->deleteAllClientCart($id_cliente_fk);
-        }catch (PDOException $e) {
+        } catch (PDOException $e) {
             throw new Exception('Erro ao deletar carrinho: ' . $e);
         }
     }
+    public function getCartTotal($idCliente) {
+    return $this->carrinhoModel->getCartTotalValue($idCliente);
+}
 }
 
 ?>

@@ -190,24 +190,25 @@ section {
 .feedback {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    align-items: center; /* Centraliza o título e o contêiner de scroll */
     margin-bottom: 8rem;
+    width: 100%;
+    padding: 0 4.2rem;
+    box-sizing: border-box;
 }
 
 .feedback h3 {
-    font-size: 3rem;
+    font-size: 4rem;
     font-weight: bold;
     color: var(--VermelhoCereja);
     margin-top: 3.5rem;
 }
 
 .subtitulo {
-    font-size: 2rem;
+    font-size: 2.5rem;
     font-weight: normal;
-    margin-top: 1rem;
-    margin-bottom: 8rem;
-
+    margin-top: 2rem;
+    margin-bottom: 5rem;
 }
 
 .word {
@@ -216,31 +217,29 @@ section {
 
 .feedbackcontainer {
     display: flex;
-    flex-direction: column;
+    flex-direction: row; /* <<< GARANTE A HORIZONTALIDADE */
+    gap: 2.5rem;
+    justify-content: flex-start;
+    overflow-x: auto;
+    width: 100%;
+    max-width: 1200px; 
+    padding: 1rem 2.0rem 2rem 2.0rem;
+    scrollbar-width: thin;
+    scrollbar-color: var(--VermelhoCereja) #f1f1f1;
 }
 
-.lineone {
-    display: flex;
-    gap: 3rem;
-    margin-bottom: 4rem;
-}
-
-.linetwo {
-    display: flex;
-    gap: 3rem;
-}
 
 .caixa {
     display: flex;
     flex-direction: column;
     width: 46.8rem;
     height: 27.5rem;
-    padding-top: 2.7rem;
-    padding-left: 2.5rem;
-    padding-right: 2.5rem;
+    padding: 2.7rem 2.5rem;
     border-radius: 1rem;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     background-color: var(--Branco);
+    flex-shrink: 0;
+    min-width: 0;
 }
 
 .dados {
@@ -253,6 +252,8 @@ section {
 .dados img {
     width: 6rem;
     height: 5rem;
+    border-radius: 50%;
+    object-fit: cover;
 }
 
 .dados p {
@@ -262,11 +263,14 @@ section {
 }
 
 .textofeedback {
-    width: 40.9rem;
-    height: 14.4rem;
+    flex-grow: 1;
+    overflow-y: auto;
+    overflow-wrap: break-word;
     font-size: 1.8rem;
     font-weight: bold;
     text-align: justify;
+    scrollbar-width: thin;
+    scrollbar-color: var(--VermelhoCereja) #f1f1f1;
 }
 
 footer {

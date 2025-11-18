@@ -67,7 +67,7 @@ class Carrinho {
 
     public function deleteCartProduct ($id_cliente_fk, $id_produto_fk) {
         try {
-            $sql = 'DELETE FROM carrinho WHERE $id_cliente_fk = :id_cliente_fk AND id_produto_fk = :id_produto_fk';
+            $sql = 'DELETE FROM carrinho WHERE id_cliente_fk = :id_cliente_fk AND id_produto_fk = :id_produto_fk';
             $stmt = $this->db->prepare($sql);
             $stmt->bindParam(':id_produto_fk', $id_produto_fk, PDO::PARAM_INT);
             $stmt->bindParam(':id_cliente_fk', $id_cliente_fk, PDO::PARAM_INT);
@@ -102,6 +102,27 @@ class Carrinho {
             throw new Exception('Erro ao deletar tudo do carrinho: ' . $e);
         }
     }
+    public function getCartTotalValue($idCliente) {
+    try {
+        $sql = "SELECT SUM(p.preco_produto * c.qtd_produto) as total
+                FROM carrinho c
+                JOIN produto p ON c.id_produto_fk = p.id_produto
+                WHERE c.id_cliente_fk = :idCliente";
+        
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':idCliente', $idCliente, PDO::PARAM_INT);
+        $stmt->execute();
+        
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        // Retorna o valor total, ou 0 se o carrinho estiver vazio
+        return $result['total'] ?? 0.0;
+
+    } catch (PDOException $e) {
+        error_log("Erro ao calcular total do carrinho: " . $e->getMessage());
+        return 0.0;
+    }
+}
 }
 
 ?>

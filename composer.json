@@ -8,7 +8,9 @@
         "psr-4": {
             "Diogomaia\\Meumanoburger\\": "meuManoBurger/",
             "Controller\\": "Controller/",
-            "Model\\": "Model/"
+            "Model\\": "Model/",
+            "chillerlan\\QRCode\\": "vendor/chillerlan/php-qrcode/",
+            "Lib\\": "Lib/"
         },
         "files": [
             "Config/configuration.php"

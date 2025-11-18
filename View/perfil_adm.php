@@ -13,7 +13,7 @@ $admModel = new \Model\Adm();
 $admController = new \Controller\AdmController($admModel);
 $admin_info = $admController->getAdmData($_SESSION['id_adm']);
 if (isset($_GET['action']) && $_GET['action'] === 'logout') {
-    
+
     $_SESSION = array();
 
     if (ini_get("session.use_cookies")) {
@@ -26,13 +26,13 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
             $params["domain"],
             $params["secure"],
             $params["httponly"]
-         );
+        );
     }
 
     session_destroy();
 
     header("Location: login.php");
-    exit; 
+    exit;
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -66,7 +66,7 @@ $adm2FAData = $admModel->get2FAData($_SESSION['id_adm']);
 $is2FAEnabled = ($adm2FAData && $adm2FAData['2fa_enabled'] == 1);
 
 if (isset($_GET['action']) && $_GET['action'] === 'logout') {
-    
+
     $_SESSION = array();
 
     if (ini_get("session.use_cookies")) {
@@ -79,13 +79,13 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
             $params["domain"],
             $params["secure"],
             $params["httponly"]
-         );
+        );
     }
 
     session_destroy();
 
     header("Location: login.php");
-    exit; 
+    exit;
 }
 
 if (!isset($_SESSION['id_adm']) || !isset($_SESSION['is_admin']) || $_SESSION['is_admin'] !== true) {
@@ -316,6 +316,12 @@ if (!isset($_SESSION['id_adm']) || !isset($_SESSION['is_admin']) || $_SESSION['i
                             <label for="email">Email</label>
                             <input type="email" id="email" name="email"
                                 value="<?php echo htmlspecialchars($_SESSION['email_adm']); ?>">
+                        </div>
+                        <div class="form-group">
+                            <label for="chave_pix">Chave Pix</label>
+                            <input type="text" id="chave_pix" name="chave_pix"
+                                placeholder="Seu CPF, CNPJ, e-mail ou telefone"
+                                value="<?php echo htmlspecialchars($admin_info['chave_pix'] ?? ''); ?>">
                         </div>
                         <button type="submit" class="submit-btn">Salvar Alterações</button>
                     </form>

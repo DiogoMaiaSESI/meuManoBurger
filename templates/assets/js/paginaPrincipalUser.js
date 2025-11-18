@@ -1,51 +1,90 @@
-const opcoes = document.querySelector('.options')
-const menu = document.querySelector('.menu')
-const sombra = document.querySelector('.sombra')
-const sandwich = document.querySelector('.sandwich')
-const cardapioBtn = document.querySelector('.saibaBtn')
-const lanchesBtn = document.querySelectorAll('.nomedopedido')
-const input = document.querySelector('.product_id')
-const form = document.querySelector('form')
-const categorias = document.querySelectorAll('container_menu figure')
+document.addEventListener('DOMContentLoaded', function () {
 
-menu.addEventListener('click', () => {
-    opcoes.classList.toggle('optionActive')
-    sombra.classList.toggle('shadowActive')
-    sandwich.classList.toggle('sandwichActive') 
-})
-sombra.addEventListener('click', () => {
-    opcoes.classList.toggle('optionActive')
-    sombra.classList.toggle('shadowActive')
-    sandwich.classList.toggle('sandwichActive')
-})
+    // --- LÓGICA DO MENU SANDUÍCHE ---
+    const opcoes = document.querySelector('.options');
+    const menu = document.querySelector('.menu');
+    const sombra = document.querySelector('.sombra');
+    const sandwich = document.querySelector('.sandwich');
 
-cardapioBtn.addEventListener('click', ()=>{
-    window.location.href = 'cardapio.php'
-})
+    if (menu && opcoes && sombra && sandwich) {
+        menu.addEventListener('click', () => {
+            opcoes.classList.toggle('optionActive');
+            sombra.classList.toggle('shadowActive');
+            sandwich.classList.toggle('sandwichActive');
+        });
 
-form.addEventListener('submit',(e)=>{
-    e.preventDefault()
-})
+        sombra.addEventListener('click', () => {
+            opcoes.classList.toggle('optionActive');
+            sombra.classList.toggle('shadowActive');
+            sandwich.classList.toggle('sandwichActive');
+        });
+    }
 
-lanchesBtn.forEach((btn)=>{
-    btn.addEventListener('click',()=>{
-        input.value = btn.id
-        form.submit()
-    })
-})
+    // --- LÓGICA DO MODAL DE FEEDBACK ---
+    const btnAddFeedback = document.getElementById('btn-add-feedback');
+    const modal = document.getElementById('modal-feedback');
 
+    if (btnAddFeedback && modal) {
+        const closeModalBtn = modal.querySelector('.close-modal');
+        const cancelModalBtn = modal.querySelector('.btn-cancel');
 
-const option = document.querySelectorAll('.option')
-option.forEach((op, index)=>{
-    op.addEventListener('click',()=>{
-        if(index===0){
-            window.location.href = 'cardapio.php'
-        }else if(index===1){
-            window.location.href = 'pedidosUSER.php'
-        }else if(index===2){
-            window.location.href = 'paginaPrincipalUser.php#feedback'
-        }else if(index===3){
-            window.location.href = 'carrinho.php'
+        btnAddFeedback.addEventListener('click', () => {
+            modal.classList.add('active');
+        });
+
+        function closeModal() {
+            modal.classList.remove('active');
         }
-    })
-})
+
+        if (closeModalBtn) closeModalBtn.addEventListener('click', closeModal);
+        if (cancelModalBtn) cancelModalBtn.addEventListener('click', closeModal);
+        
+        modal.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                closeModal();
+            }
+        });
+    }
+    
+    // --- LÓGICA DOS OUTROS BOTÕES E LINKS ---
+    const cardapioBtn = document.querySelector('.saibaBtn');
+    if (cardapioBtn) {
+        cardapioBtn.addEventListener('click', () => {
+            window.location.href = 'cardapio.php';
+        });
+    }
+
+    const lanchesBtn = document.querySelectorAll('.nomedopedido');
+    const productIdForm = document.querySelector('form:has(input.product_id)');
+    if (lanchesBtn.length > 0 && productIdForm) {
+        const input = productIdForm.querySelector('.product_id');
+        lanchesBtn.forEach((btn) => {
+            btn.addEventListener('click', () => {
+                if (input) {
+                    input.value = btn.id;
+                    productIdForm.submit();
+                }
+            });
+        });
+    }
+
+    const option = document.querySelectorAll('.option');
+    if (option.length > 0) {
+        option.forEach((op, index) => {
+            op.addEventListener('click', () => {
+                if (index === 0) {
+                    window.location.href = 'cardapio.php';
+                } else if (index === 1) {
+                    window.location.href = 'pedidosUSER.php';
+                } else if (index === 2) {
+                    const feedbackSection = document.getElementById('feedback');
+                    if (feedbackSection) {
+                        feedbackSection.scrollIntoView({ behavior: 'smooth' });
+                    }
+                } else if (index === 3) {
+                    window.location.href = 'carrinho.php';
+                }
+            });
+        });
+    }
+});

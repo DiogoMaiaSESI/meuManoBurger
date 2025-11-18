@@ -5,16 +5,19 @@ use Model\Connection;
 
 use PDO;
 use PDOException;
-class Pedido {
+class Pedido
+{
     private $db;
-    public function __construct() {
+    public function __construct()
+    {
         $this->db = Connection::getInstance();
     }
-    public function criarPedido ($id_produto, $id_cliente, $codigo, $qtd, $total, $retirada, $status) {
+    public function criarPedido($id_produto, $id_cliente, $codigo, $qtd, $total, $retirada, $status)
+    {
         try {
             $pedido_existente = $this->getPedidoByCodigo($codigo);
-            $id_pedido_existente = $pedido_existente['id_pedido'];
-            if($id_pedido_existente===null){
+            $id_pedido_existente = $pedido_existente['id_pedido'] ?? null;
+            if ($id_pedido_existente === null) {
                 $sql = 'INSERT INTO pedido (codigo, id_cliente_fk, total, retirada, status) VALUES (:codigo, :id_cliente_fk, :total, :retirada, :status)';
                 $stmt = $this->db->prepare($sql);
                 $stmt->bindParam(':codigo', $codigo, PDO::PARAM_STR);
@@ -36,7 +39,7 @@ class Pedido {
                 $stmt->bindParam(':id_produto_fk', $id_produto, PDO::PARAM_INT);
                 $stmt->bindParam(':qtd', $qtd, PDO::PARAM_INT);
                 $stmt->execute();
-            }else{
+            } else {
                 $sql = 'INSERT INTO pedido_produto (id_pedido_fk, id_produto_fk, qtd) VALUES (:id_pedido_fk, :id_produto_fk, :qtd)';
                 $stmt = $this->db->prepare($sql);
                 $stmt->bindParam(':id_pedido_fk', $id_pedido_existente, PDO::PARAM_INT);
@@ -49,8 +52,9 @@ class Pedido {
             throw new Exception('Erro ao criar o pedido: ' . $erro);
         }
     }
-    public function getPedidoByCodigo ($codigo) {
-        try{
+    public function getPedidoByCodigo($codigo)
+    {
+        try {
             $sql = 'SELECT id_pedido FROM pedido WHERE codigo = :codigo';
             $stmt = $this->db->prepare($sql);
             $stmt->bindParam(':codigo', $codigo, PDO::PARAM_STR);
@@ -60,8 +64,9 @@ class Pedido {
             throw new Exception('Erro ao pegar id do pedido pelo código: ' . $e);
         }
     }
-    public function getIdProdutos ($codigo){
-        try{
+    public function getIdProdutos($codigo)
+    {
+        try {
             $pedido_existente = $this->getPedidoByCodigo($codigo);
             $id_pedido_existente = $pedido_existente['id_pedido'];
             $sql = "SELECT id_produto_fk, qtd FROM pedido_produto WHERE id_pedido_fk = :id_pedido_fk";
@@ -73,8 +78,9 @@ class Pedido {
             throw new Exception('Erro ao tentar pegar produtos pelo id do pedido: ' . $e);
         }
     }
-    public function getEqualsCodigos ($codigo) {
-        try{
+    public function getEqualsCodigos($codigo)
+    {
+        try {
             $sql = 'SELECT * FROM pedido WHERE codigo = :codigo';
             $stmt = $this->db->prepare($sql);
             $stmt->bindParam(':codigo', $codigo, PDO::PARAM_STR);
@@ -84,7 +90,8 @@ class Pedido {
             throw new Exception('Erro ao pegar códigos iguais: ' . $e);
         }
     }
-    public function getAllPedidos () {
+    public function getAllPedidos()
+    {
         try {
             $sql = 'SELECT * FROM pedido';
             $stmt = $this->db->prepare($sql);
@@ -95,7 +102,8 @@ class Pedido {
         }
     }
 
-    public function getAllUserPedidos ($id_cliente_fk) {
+    public function getAllUserPedidos($id_cliente_fk)
+    {
         try {
             $sql = 'SELECT * FROM pedido WHERE id_cliente_fk = :id_cliente_fk';
             $stmt = $this->db->prepare($sql);
@@ -106,8 +114,9 @@ class Pedido {
             throw new Exception('Erro ao pegar pedidos do usuário: ' . $e);
         }
     }
-    
-    public function getIdPedidoByCodigo ($codigo) {
+
+    public function getIdPedidoByCodigo($codigo)
+    {
         try {
             $sql = 'SELECT id_pedido FROM pedido WHERE codigo = :codigo';
             $stmt = $this->db->prepare($sql);
@@ -118,7 +127,8 @@ class Pedido {
             throw new Exception('Erro ao pegar id do pedido: ' . $e);
         }
     }
-    public function getPedidoProdutoById ($id) {
+    public function getPedidoProdutoById($id)
+    {
         try {
             $sql = 'SELECT * FROM pedido_produto WHERE id_pedido_fk = :id_pedido_fk';
             $stmt = $this->db->prepare($sql);
@@ -129,7 +139,8 @@ class Pedido {
             throw new Exception('Erro ao pegar pedido_produto: ' . $e);
         }
     }
-    public function updateStatusPedido ($codigo, $status) {
+    public function updateStatusPedido($codigo, $status)
+    {
         try {
             $sql = 'UPDATE pedido SET status = :status WHERE codigo = :codigo';
             $stmt = $this->db->prepare($sql);
@@ -142,7 +153,8 @@ class Pedido {
         }
     }
 
-    public function deletePedidoByCodigo ($codigo) {
+    public function deletePedidoByCodigo($codigo)
+    {
         try {
             $sql = 'DELETE FROM pedido WHERE codigo = :codigo';
             $stmt = $this->db->prepare($sql);

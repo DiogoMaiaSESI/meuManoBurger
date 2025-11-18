@@ -108,5 +108,33 @@ feedbacks.addEventListener('click', () =>{
         })
     }
 })
+    const navButtons = document.querySelectorAll('button.nav-button');
+    navButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const targetId = button.getAttribute('data-target');
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                targetElement.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start' // Garante que o topo da seção alinhe com o topo da tela
+                });
+            }
+        });
+    });
+
+    const loginButton = document.querySelector('button.login');
+    if (loginButton) {
+        loginButton.addEventListener('click', () => {
+            window.location.href = 'View/login.php';
+        });
+    }
+
+    const productButtons = document.querySelectorAll('.nomedopedido');
+    productButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Para um usuário não logado, o melhor é levá-lo para o login.
+            window.location.href = 'View/login.php';
+        });
+    });
 
 

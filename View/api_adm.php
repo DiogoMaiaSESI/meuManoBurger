@@ -23,19 +23,18 @@ if ($action === 'update_product' || $action === 'delete_product') {
     $productController = new \Controller\ProductController($productModel, $estoqueModel);
 
     if ($action === 'update_product' && $_SERVER['REQUEST_METHOD'] === 'POST') {
-        $response = $productController->update();
+        $response = $productController->update($id, $nome, $preco, $tipo, $descricao, $imagem, $id_adm_fk);
         echo json_encode($response);
         exit;
     }
 
     if ($action === 'delete_product' && $_SERVER['REQUEST_METHOD'] === 'POST') {
-        $response = $productController->delete();
+        $response = $productController->delete($id);
         echo json_encode($response);
         exit;
     }
 }
 
-// [CORREÇÃO] Adicionamos 'disable-2fa' à condição principal deste bloco.
 if ($action === 'generate-2fa' || $action === 'verify-2fa' || $action === 'disable-2fa') {
     $admModel = new \Model\Adm();
     $admController = new \Controller\AdmController($admModel);
@@ -55,7 +54,6 @@ if ($action === 'generate-2fa' || $action === 'verify-2fa' || $action === 'disab
         exit;
     }
 
-    // [O QUE FALTAVA] Adicionamos o bloco para tratar a ação de desativar.
     if ($action === 'disable-2fa') {
         $password = $_POST['password'] ?? '';
         $response = $admController->disable2FA($id_adm, $password);
@@ -63,6 +61,7 @@ if ($action === 'generate-2fa' || $action === 'verify-2fa' || $action === 'disab
         exit;
     }
 }
+
 
 http_response_code(400  );
 echo json_encode(['success' => false, 'message' => 'Ação de administrador inválida.']);
