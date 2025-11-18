@@ -218,3 +218,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // localStorage.clear()
 })
+
+
+
+const option = document.querySelectorAll('.option')
+option.forEach((op, index)=>{
+    op.addEventListener('click',()=>{
+        if(index===0){
+            window.location.href = 'cardapio_adm.php'
+        }else if(index===1){
+            window.location.href = 'pedidosADM.php'
+        }else if(index===2){
+            window.location.href = 'empresa.php#feedback'
+        }
+    })
+})

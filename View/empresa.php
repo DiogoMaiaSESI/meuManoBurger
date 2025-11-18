@@ -1,3 +1,9 @@
+<?php
+
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
     <head>
@@ -88,7 +94,7 @@
             </div>
             <hr>
         </section>
-        <section class="feedback">
+        <section class="feedback" id="feedback">
             <div class=" textostitulo">
                 <h2 class="feed">Feedbacks</h2>
                 <h3 class="frase"> Visualize os <span class="word">feedbacks</span> enviados!</h3>

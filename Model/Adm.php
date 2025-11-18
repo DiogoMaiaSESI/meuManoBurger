@@ -17,10 +17,23 @@ class Adm
 
     public function login($email_adm, $senha_adm) {
         try {
+            $sql = "INSERT INTO administrador (nome_adm, email_adm, senha_adm, imagem_adm)
+            VALUES (:nome_adm, :email_adm, :senha_adm, :imagem_adm)";
+
             $sql = "SELECT id_adm, nome_adm, email_adm, senha_adm, imagem_adm, 2fa_secret, 2fa_enabled 
                     FROM administrador WHERE email_adm = :email_adm";
             
             $stmt = $this->db->prepare($sql);
+
+            $stmt->bindParam(":nome_adm", $nome_adm, PDO::PARAM_STR);
+            $stmt->bindParam(":email_adm", $email_adm, PDO::PARAM_STR);
+            $stmt->bindParam(":senha_adm", $senha_adm, PDO::PARAM_STR);
+            $stmt->bindParam(":imagem_adm", $imagem_adm, PDO::PARAM_LOB);
+
+            return $stmt->execute();
+        } catch (PDOException $error) {
+            // Em produção, logar o erro em vez de dar echo.
+            error_log("Erro ao registrar ADM: " . $error->getMessage());
             $stmt->bindParam(':email_adm', $email_adm, PDO::PARAM_STR);
             $stmt->execute();
             

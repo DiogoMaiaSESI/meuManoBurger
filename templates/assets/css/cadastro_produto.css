@@ -59,10 +59,7 @@ form {
   display: flex;
   flex-direction: column;
   align-items: center;
-<<<<<<< HEAD
-=======
   width: 100;
->>>>>>> feature/Integração_Cadastro-prod_P-detalhes
   gap: 1.5rem;
 }
 
@@ -104,6 +101,8 @@ select {
   font-size: 1.4rem;
   outline: none;
   font-family: 'Inter';
+  background-color: var(--Branco);
+  color: #353535;
 }
 
 textarea {
@@ -180,9 +179,4 @@ button:hover{
   .logo img {
     display: none;
   }
-<<<<<<< HEAD
 }
-=======
-}
-
->>>>>>> feature/Integração_Cadastro-prod_P-detalhes

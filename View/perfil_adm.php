@@ -1,39 +1,23 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['id_adm']) || !isset($_SESSION['is_admin']) || $_SESSION['is_admin'] !== true) {
+function isAdmLoggedIn()
+{
+    return isset($_SESSION['id_adm']) && isset($_SESSION['is_admin']) && $_SESSION['is_admin'] === true;
+}
+
+if (!isAdmLoggedIn()) {
+    session_unset();
+    session_destroy();
     header('Location: login.php');
-    exit;
+    exit; // Para a execução aqui. Nada abaixo será processado.
 }
 
 require_once __DIR__ . '/../Controller/AdmController.php';
 require_once __DIR__ . '/../Model/Adm.php';
 
 $admModel = new \Model\Adm();
-$admController = new \Controller\AdmController($admModel);
-$admin_info = $admController->getAdmData($_SESSION['id_adm']);
-if (isset($_GET['action']) && $_GET['action'] === 'logout') {
-
-    $_SESSION = array();
-
-    if (ini_get("session.use_cookies")) {
-        $params = session_get_cookie_params();
-        setcookie(
-            session_name(),
-            '',
-            time() - 42000,
-            $params["path"],
-            $params["domain"],
-            $params["secure"],
-            $params["httponly"]
-        );
-    }
-
-    session_destroy();
-
-    header("Location: login.php");
-    exit;
-}
+$admController = new \Controller\AdmController();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['action']) && $_POST['action'] === 'update_profile') {
@@ -54,10 +38,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-$nomeAdm = htmlspecialchars($admin_info['nome_adm'] ?? 'Admin');
-$emailAdm = htmlspecialchars($admin_info['email_adm'] ?? 'admin@exemplo.com');
+$nomeAdm = $_SESSION['nome_adm'] ?? 'Admin';
+$emailAdm = $_SESSION['email_adm'] ?? 'admin@exemplo.com';
 
-$imagemAdm = '/meuManoBurger/templates/assets/img/FotoPerfil.png'; // Imagem padrão
+$imagemAdm = '/meuManoBurger/templates/assets/img/perfil.png'; // Imagem padrão
 if (isset($_SESSION['imagem_adm']) && !empty($_SESSION['imagem_adm'])) {
     $imagemAdm = 'data:image/jpeg;base64,' . base64_encode($_SESSION['imagem_adm']);
 }
@@ -66,9 +50,10 @@ $adm2FAData = $admModel->get2FAData($_SESSION['id_adm']);
 $is2FAEnabled = ($adm2FAData && $adm2FAData['2fa_enabled'] == 1);
 
 if (isset($_GET['action']) && $_GET['action'] === 'logout') {
-
+    // Limpa todas as variáveis da sessão.
     $_SESSION = array();
 
+    // Destrói o cookie de sessão no navegador.
     if (ini_get("session.use_cookies")) {
         $params = session_get_cookie_params();
         setcookie(
@@ -82,14 +67,10 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
         );
     }
 
+    // Finalmente, destrói a sessão no servidor.
     session_destroy();
 
     header("Location: login.php");
-    exit;
-}
-
-if (!isset($_SESSION['id_adm']) || !isset($_SESSION['is_admin']) || $_SESSION['is_admin'] !== true) {
-    header('Location: login.php');
     exit;
 }
 
@@ -103,9 +84,9 @@ if (!isset($_SESSION['id_adm']) || !isset($_SESSION['is_admin']) || $_SESSION['i
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meu Perfil - Meu Mano Burger</title>
-    <link rel="stylesheet" href="/meuManoBurger/templates/assets/css/Perfil.css">
-    <link rel="stylesheet" href="/meuManoBurger/templates/assets/css/Seguranca.css">
-    <link rel="stylesheet" href="/meuManoBurger/templates/assets/css/ModalPagamento.css">
+    <link rel="stylesheet" href="/meuManoBurger/templates/assets/css/perfil.css">
+    <link rel="stylesheet" href="/meuManoBurger/templates/assets/css/seguranca.css">
+    <link rel="stylesheet" href="/meuManoBurger/templates/assets/css/modalPagamento.css">
 
     <style>
         .sandwich-menu-container {
@@ -202,10 +183,6 @@ if (!isset($_SESSION['id_adm']) || !isset($_SESSION['is_admin']) || $_SESSION['i
                 <figure><img src="/meuManoBurger/templates/assets/img/Feedbacks.png" alt="Feedbacks"></figure>
                 <h5>Feedbacks</h5>
             </div>
-            <div class="option">
-                <figure><img src="/meuManoBurger/templates/assets/img/Carrinho_menu.png" alt="Carrinho"></figure>
-                <h5>Carrinho</h5>
-            </div>
         </div>
     </div>
     <div class="sombra"></div>
@@ -236,7 +213,7 @@ if (!isset($_SESSION['id_adm']) || !isset($_SESSION['is_admin']) || $_SESSION['i
                 </li>
                 <li class="mobile-only"><a href="#" id="m-btn-seguranca" class="nav-link hide-on-desktop">Segurança</a>
                 </li>
-                <li><a href="perfil_adm.php?action=logout">Sair da Conta</a></li>
+                <li class="mobile-only"><a href="#" id="m-btn-sair" class="nav-link hide-on-desktop">Sair</a></li>
 
                 <!-- Ícones de Ação (Sempre visíveis, no final) -->
                 <li class="nav-right">
@@ -266,7 +243,7 @@ if (!isset($_SESSION['id_adm']) || !isset($_SESSION['is_admin']) || $_SESSION['i
                     <li><a href="#" id="btn-dados" class="nav-link active">Meus dados</a></li>
                     <li><a href="#" id="btn-historico" class="nav-link">Histórico de Pedidos</a></li>
                     <li><a href="#" id="btn-seguranca" class="nav-link">Segurança</a></li>
-                    <li><a href="perfil_adm.php?action=logout" id="btn-sair" class="nav-link">Sair da Conta</a></li>
+                    <li><a href="#" id="btn-sair" class="nav-link">Sair da Conta</a></li>
                 </ul>
             </nav>
         </aside>
@@ -302,7 +279,7 @@ if (!isset($_SESSION['id_adm']) || !isset($_SESSION['is_admin']) || $_SESSION['i
                             </div>
                         </div>
                     </div>
-                    <form id="profile-form" class="profile-form" method="POST" action="Perfil_adm.php"
+                    <form id="profile-form" class="profile-form" method="POST" action="perfil_adm.php"
                         enctype="multipart/form-data">
                         <input type="hidden" name="action" value="update_profile">
                         <input type="file" name="imagem_adm" id="file-upload-input" accept="image/*"
@@ -345,7 +322,7 @@ if (!isset($_SESSION['id_adm']) || !isset($_SESSION['is_admin']) || $_SESSION['i
                         <?php endif; ?>
                     </div>
 
-                    <form id="security-form" class="security-form" method="POST" action="Perfil_adm.php">
+                    <form id="security-form" class="security-form" method="POST" action="perfil_adm.php">
                         <input type="hidden" name="action" value="update_password">
 
                         <h3>Alterar senha</h3>

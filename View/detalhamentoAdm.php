@@ -16,11 +16,11 @@ require_once __DIR__ . '/../Controller/EstoqueController.php';
 
 $productModel = new \Model\Product();
 $estoqueModel = new \Model\Estoque();
-$productController = new \Controller\ProductController($productModel, $estoqueModel);
+$productController = new \Controller\ProductController();
 $estoqueController = new \Controller\EstoqueController();
 
 // --- 3. LÓGICA PARA BUSCAR O PRODUTO ---
-$productId = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
+$productId = $_SESSION['id_produto'];
 if (!$productId) {
     die('Erro: ID do produto não fornecido ou inválido.');
 }
@@ -147,12 +147,6 @@ elseif (isset($_SESSION['id_cliente'])) {
                     </figure>
                     <h5>Feedbacks</h5>
                 </div>
-                <div class="option">
-                    <figure>
-                        <img src="../templates/assets/img/shoppingCart.png" alt="">
-                    </figure>
-                    <h5>Carrinho</h5>
-                </div>
             </div>
         </div>
         <div class="sombra"></div>
@@ -184,7 +178,7 @@ elseif (isset($_SESSION['id_cliente'])) {
                         <h2 class="title"><?php echo $nomeProduto; ?></h2>
                         <div class="icons">
                             <figure>
-                                <img class="lapis" src="../templates/assets/img/lapis.png" alt="Editar Produto">
+                                <img class="lapis" src="../templates/assets/img/lapis2.png" alt="Editar Produto">
                             </figure>
                             <figure>
                                 <img class="lixeira" src="../templates/assets/img/lixeira.png" alt="Deletar Produto">

@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   const card = document.querySelector('.voltar')
   card.addEventListener('click', () => {
-    // window.location.href = 'cardapiouser.php'
+    window.location.href = 'cardapio_adm.php'
 })
 
 
@@ -45,5 +45,5 @@ inputImagem.addEventListener("change", function () { // Quando o usuário seleci
 const voltar = document.querySelector('.voltar')
 
 voltar.addEventListener('click', () => {
-  window.location.href = 'cardapio.php'
+  window.location.href = 'cardapio_adm.php'
 })

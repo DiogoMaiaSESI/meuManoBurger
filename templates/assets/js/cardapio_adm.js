@@ -21,6 +21,9 @@ const labelTap = document.querySelector('#Tapioca h2')
 const labelProm = document.querySelector('#promocoes h2')
 const promHeader = document.querySelector('.h1_promocoes')
 const cardaHeader = document.querySelector('.h1_cardapio')
+const addToCartBtns = document.querySelectorAll('.add-to-cart')
+const form = document.querySelector('form')
+const input = document.querySelector('.id_produto')
 
 
 hambBtn.addEventListener('click', () => {
@@ -214,5 +217,29 @@ const addProduto = document.querySelectorAll('.adicionar_produto')
 addProduto.forEach(botao => {
     botao.addEventListener('click' , () => {
         window.location.href = 'cadastro_produto.php'
+    })
+})
+form.addEventListener('submit',(e)=>{
+    e.preventDefault()
+})
+
+addToCartBtns.forEach((btn)=>{
+    btn.addEventListener('click',()=>{
+        input.value = btn.id
+        form.submit()
+    })
+})
+
+
+const option = document.querySelectorAll('.option')
+option.forEach((op, index)=>{
+    op.addEventListener('click',()=>{
+        if(index===0){
+            window.location.href = 'cardapio_adm.php'
+        }else if(index===1){
+            window.location.href = 'pedidosADM.php'
+        }else if(index===2){
+            window.location.href = 'empresa.php#feedback'
+        }
     })
 })
