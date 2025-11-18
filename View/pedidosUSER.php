@@ -17,7 +17,7 @@ $productController = new ProductController();
 if($_SERVER['REQUEST_METHOD'] === 'POST') {
     if(!empty($_POST['codigoApagar'])){
         $codigo = $_POST['codigoApagar'];
-        $pedidoController->deletePedidoByCodigo($codigo);
+        $pedidoController->updateStatusPedido($codigo, 'Cancelado');
     }
 }
 
@@ -215,17 +215,31 @@ $pedidos = $pedidoController->getAllUserPedidos($id_cliente);
                     echo '
                     <div class="pedido">
                     <div class="ilustracao">
-                        <div class="statusretirado">
-                        <p class="statusok">
-                            Retirado
-                        </p>
-                        </div>
-                        <div class="statuspendente">
-                        <p class="statuspend">
-                            A retirar
-                        </p>
-                        </div>
-                        <figure>
+                        '; if($value['status'] == 'A retirar') {
+                            echo '
+                            <div class="statuspendente">
+                            <p class="statuspend">
+                                A retirar
+                            </p>
+                            </div>
+                            ';
+                        } else if ($value['status'] == 'Retirado') {
+                            echo '
+                            <div class="statusretirado">
+                            <p class="statusok">
+                                Retirado
+                            </p>
+                            </div>
+                            ';
+                        } else if ($value['status'] == 'Cancelado') {
+                            echo '
+                            <div class="statuscancelado">
+                            <p class="statuscanc">
+                                Cancelado
+                            </p>
+                            </div>
+                            ';
+                        } echo '<figure>
                             <img src="../templates/assets/img/ilustracao.png" alt="">
                         </figure>
                     </div>
@@ -270,8 +284,7 @@ $pedidos = $pedidoController->getAllUserPedidos($id_cliente);
                         <button class="detalhes">Ver Detalhes</button>
                         <form method="POST"><input class="postPedido" name="codigo" type="hidden"><input class="apagarPedido" name="codigoApagar" type="hidden"><button class="cancelar" name="codigoApagar">Cancelar Pedido</button></form>
                     </div>
-                </div>
-                    ';
+                </div>';
                 }
                 ?>
                 
