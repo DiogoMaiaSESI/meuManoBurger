@@ -15,7 +15,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     if(!empty($_POST['codigoApagar'])){
         $codigo = $_POST['codigoApagar'];
-        $pedidoController->deletePedidoByCodigo($codigo);
+        $pedidoController->updateStatusPedido($codigo, 'Cancelado');
     }
 }
 
@@ -67,16 +67,16 @@ $pedidos = $pedidoController->getAllPedidos();
             </figure>
 
             <div class="lateral">
-
-                <figure class="voltar">
-                    <img src="../templates/assets/img/voltar.png" alt="">
-                </figure>
-
-                <figure class="perfil">
-                    <img src="../templates/assets/img/perfil.png" alt="">
-                </figure>
-
-
+                <a href="empresa.php">
+                    <figure class="voltar">
+                        <img src="../templates/assets/img/voltar.png" alt="">
+                    </figure>
+                </a>
+                <a href="perfil_adm.php">
+                    <figure class="perfil">
+                        <img src="../templates/assets/img/perfil.png" alt="">
+                    </figure>
+                </a>
             </div>
         </div>
     </header>
@@ -157,6 +157,18 @@ $pedidos = $pedidoController->getAllPedidos();
             </div>
         </div>
 
+        <div class="modalconfirmexclusion">
+            <div class="conteudomodalconfirmexclusion">
+
+                <h2>Confirmação de cancelamento</h2>
+                <p>Tem certeza que deseja cancelar o pedido?<span style="display: block;">(Essa ação é permanente)</span></p>
+                <div class="modalbotoesexclusion">
+                    <button class="simexclusion">Sim</button>
+                    <button class="naoexclusion">Não</button>
+                </div>
+            </div>
+        </div>
+
         <div class="container">
             <div class="infortitulo">
                 <h1>Seus Pedidos</h1>
@@ -195,16 +207,31 @@ $pedidos = $pedidoController->getAllPedidos();
                     echo '
                     <div class="pedido">
                     <div class="ilustracao">
-                        <div class="statusretirado">
-                        <p class="statusok">
-                            Retirado
-                        </p>
-                        </div>
-                        <div class="statuspendente">
-                        <p class="statuspend">
-                            A retirar
-                        </p>
-                        </div>
+                        '; if($value['status'] == 'A retirar') {
+                            echo '
+                            <div class="statuspendente">
+                            <p class="statuspend">
+                                A retirar
+                            </p>
+                            </div>
+                            ';
+                        } else if ($value['status'] == 'Retirado') {
+                            echo '
+                            <div class="statusretirado">
+                            <p class="statusok">
+                                Retirado
+                            </p>
+                            </div>
+                            ';
+                        } else if ($value['status'] == 'Cancelado') {
+                            echo '
+                            <div class="statuscancelado">
+                            <p class="statuscanc">
+                                Cancelado
+                            </p>
+                            </div>
+                            ';
+                        } echo '
                         <figure>
                             <img src="../templates/assets/img/ilustracao.png" alt="">
                         </figure>
@@ -249,9 +276,13 @@ $pedidos = $pedidoController->getAllPedidos();
                     <div class="botoes">
                         <div class="org">
                             <button class="detalhes" data-array="' . htmlspecialchars(json_encode($arrayPedidosQtd), ENT_QUOTES, 'UTF-8') . '">Ver Detalhes</button>
-                            <button class="lixeira"><img src="../templates/assets/img/Lixeira.png"></button>
+                            '; if ($value['status'] != 'Cancelado') {
+                                echo '<button class="lixeira"><img src="../templates/assets/img/Lixeira.png"></button>';
+                            } echo'
                         </div>
-                        <form method="POST"><input class="postPedido" name="codigo" type="hidden"><input class="apagarPedido" name="codigoApagar" type="hidden"><button class="statusbtn">O pedido foi retirado?</button></form>
+                        '; if ($value['status'] != 'Cancelado') {
+                            echo '<button class="statusbtn">O pedido foi retirado?</button>';
+                        } echo'
                     </div>
                 </div>
                     ';
@@ -261,6 +292,7 @@ $pedidos = $pedidoController->getAllPedidos();
             
 
         </div>
+        <form method="POST"><input class="postPedido" name="codigo" type="hidden"><input class="apagarPedido" name="codigoApagar" type="hidden"></form>
     </main>
     <audio id="notificationSound" src="../templates/assets/audio/notification.mp3" preload="auto"></audio>
 

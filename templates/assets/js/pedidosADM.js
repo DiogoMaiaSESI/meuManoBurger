@@ -8,18 +8,20 @@ document.addEventListener('DOMContentLoaded', function () {
   const modaldetalhes = document.querySelector('.modaldetalhes')
   const fechar = document.querySelector('.fechar')
   const modalconfirm = document.querySelector('.modalconfirm')
+  const modalexcluir = document.querySelector('.modalconfirmexclusion')
   const btnsim = document.querySelector('.sim')
   const btnnao = document.querySelector('.nao')
+  const btnsimexcluir = document.querySelector('.simexclusion')
+  const btnnaoexcluir = document.querySelector('.naoexclusion')
 
-  forms = document.querySelectorAll('form')
+  form = document.querySelector('form')
   let Pedidoatual = null
   let StatusBtnatual = null
   let Statusdetalhesatual = null
+  let LixeiraBtnatual = null
 
-  forms.forEach((form)=>{
-    form.addEventListener('submit', (e)=>{
-      e.preventDefault()
-    })
+  form.addEventListener('submit', (e)=>{
+    e.preventDefault()
   })
 
   menu.addEventListener('click', () => {
@@ -49,35 +51,21 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   })
 
+  window.addEventListener('click', (event) => {
+    if (event.target == modalexcluir) {
+      modalexcluir.style.display = 'none'
+    }
+  })
 
-  function carregarEstados() {
 
-    pedidos.forEach((pedido) => {
-
-      const codigo = pedido.querySelector('.codigo').textContent
-      const estadoSalvo = localStorage.getItem(`pedido_${codigo}`)
-
-      if (estadoSalvo === 'retirado') {
-        const retirado = pedido.querySelector('.statusretirado')
-        const pendente = pedido.querySelector('.statuspendente')
-        const statusBtn = pedido.querySelector('.statusbtn')
-
-        pendente.style.display = 'none'
-        retirado.style.display = 'block'
-        statusBtn.textContent = statusRetiradoTexto
-        statusBtn.disabled = true
-        statusBtn.classList.add('statusbtndesabilitado')
-      }
-    })
-  }
-
-  carregarEstados()
 
   pedidos.forEach((pedido) => {
     const form = pedido.querySelector('form')
     const detalhesBtn = pedido.querySelector('.detalhes')
     const statusBtn = pedido.querySelector('.statusbtn')
     const statusPendente = pedido.querySelector('.statuspendente')
+    const statusRetirado = pedido.querySelector('.statusretirado')
+    const statusCancelado = pedido.querySelector('.statuscancelado')
     const lixeiraBtn = pedido.querySelector('.lixeira')
 
     let codigoatual = pedido.querySelector('.codigo')
@@ -85,9 +73,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let dataatual = pedido.querySelector('.data')
 
 
-    form.addEventListener('submit', (e)=>{
-      e.preventDefault()
-    })
+
     detalhesBtn.addEventListener('click', () => {
 
       let codigomodal = document.querySelector('.modaldetalhes .codigotexto')
@@ -108,11 +94,12 @@ document.addEventListener('DOMContentLoaded', function () {
       })
       let statuspedido
 
-      if (statusPendente.style.display !== 'none') {
+      if (statusPendente) {
         statuspedido = 'A retirar'
-      }
-      else {
+      } else if (statusRetirado) {
         statuspedido = 'Retirado'
+      } else if (statusCancelado) {
+        statuspedido = 'Cancelado'
       }
 
       const statusModal = document.querySelector('.modaldetalhes .modalstatus p')
@@ -120,28 +107,36 @@ document.addEventListener('DOMContentLoaded', function () {
 
       modaldetalhes.style.display = 'block'
     })
-
-    statusBtn.addEventListener('click', () => {
-      Pedidoatual = pedido
-      StatusBtnatual = statusBtn
-      Statusdetalhesatual = document.querySelector('.modaldetalhes .modalstatus p')
-      modalconfirm.style.display = 'block'
-    })
-    
-    lixeiraBtn.addEventListener('click',()=>{
-      const codigo = pedido.querySelector('.codigo').textContent
-      const inputApagar = pedido.querySelector('.apagarPedido')
-      const inputPost = pedido.querySelector('.postPedido')
-      inputPost.value = null
-      inputApagar.value = codigo
-      form.submit()
-    })
+    if (statusBtn) {
+      statusBtn.addEventListener('click', () => {
+        Pedidoatual = pedido
+        StatusBtnatual = statusBtn
+        Statusdetalhesatual = document.querySelector('.modaldetalhes .modalstatus p')
+        modalconfirm.style.display = 'block'
+      })
+    }
+    if (lixeiraBtn) {
+      lixeiraBtn.addEventListener('click',()=>{
+        Pedidoatual = pedido
+        LixeiraBtnatual = lixeiraBtn
+        Statusdetalhesatual = document.querySelector('.modaldetalhes .modalstatus p')
+        modalexcluir.style.display = 'block'
+      })
+    }
   })
+
+
 
   btnnao.addEventListener('click', () => {
     modalconfirm.style.display = 'none'
     Pedidoatual = null
     StatusBtnatual = null
+  })
+
+  btnnaoexcluir.addEventListener('click', () => {
+    modalexcluir.style.display = 'none'
+    Pedidoatual = null
+    LixeiraBtnatual = null
   })
 
   btnsim.addEventListener('click', () => {
@@ -161,23 +156,27 @@ document.addEventListener('DOMContentLoaded', function () {
     StatusBtnatual.classList.add('statusbtndesabilitado')
 
 
-    localStorage.setItem(`pedido_${codigo}`, 'retirado')
-    inputPost = document.querySelectorAll('.postPedido')
-    inputApagar = document.querySelectorAll('.apagarPedido')
-    inputApagar.forEach((input)=>{
-      input.value = null
-    })
-    inputPost.forEach((input)=>{
-      input.value = codigo
-    })
-    
-    forms.forEach((form)=>{
-      form.submit()
-    })
+    inputPost = document.querySelector('.postPedido')
+    inputApagar = document.querySelector('.apagarPedido')
+    inputApagar.value = null
+    inputPost.value = codigo
 
+    
+
+    form.submit()
+    
     Pedidoatual = null
     StatusBtnatual = null
     Statusdetalhesatual = null
+  })
+
+  btnsimexcluir.addEventListener('click', () => {
+    const codigo = Pedidoatual.querySelector('.codigo').textContent
+    const inputApagar = document.querySelector('.apagarPedido')
+    const inputPost = document.querySelector('.postPedido')
+    inputPost.value = null
+    inputApagar.value = codigo
+    form.submit()
   })
   
   const barraPesquisa = document.querySelector('input')
