@@ -17,6 +17,19 @@ header{
     align-items: center;
 }
 
+.perfilFigure {
+    width: 5.5rem;
+    height: 5.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
+    overflow: hidden;
+}
+.profileButton {
+    width: 100%;
+}
+
 .menu {
     width: 8rem !important;
     padding-left: 4rem;

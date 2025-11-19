@@ -11,7 +11,18 @@ figure
     display: inline-block;
     line-height: 0;
 }
-
+.perfilFigure {
+    width: 5.5rem;
+    height: 5.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
+    overflow: hidden;
+}
+.profileButton {
+    width: 100%;
+}
 .main-header
 {
     background-color: var(--VermelhoCereja);

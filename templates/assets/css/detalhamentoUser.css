@@ -15,6 +15,18 @@ header {
     position: relative;
     position: fixed;
 }
+.perfilFigure {
+    width: 5.5rem;
+    height: 5.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
+    overflow: hidden;
+}
+.profileButton {
+    width: 100%;
+}
 .headerButtons {
     display: flex;
     gap: 4.6rem;

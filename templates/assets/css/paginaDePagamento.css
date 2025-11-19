@@ -92,6 +92,18 @@ figure{
     cursor: pointer;
     transition: 500ms;
 }
+.perfilFigure {
+    width: 5.5rem;
+    height: 5.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
+    overflow: hidden;
+}
+.profileButton {
+    width: 100%;
+}
 .option:hover {
     padding-left: 2.5rem;
     transition: 500ms;

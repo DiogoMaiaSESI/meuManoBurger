@@ -15,7 +15,18 @@
     max-width: 140rem;
     margin: 0 auto;
 }
-
+.perfilFigure {
+    width: 5.5rem;
+    height: 5.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
+    overflow: hidden;
+}
+.profileButton {
+    width: 100%;
+}
 .menu-btn {
     background: none;
     border: none;

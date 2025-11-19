@@ -5,16 +5,21 @@ use Controller\ProductController;
 use Controller\PedidoController;
 use Controller\EstoqueController;
 use Controller\CarrinhoController;
+use Controller\ClienteController;
 require_once('../vendor/autoload.php');
 if($_SESSION['id_cliente'] !== null) {
     $id_cliente = $_SESSION['id_cliente'];
 } else {
     header('Location: login.php');
 }
+
 $productController = new ProductController();
 $pedidoController = new PedidoController();
 $estoqueController = new EstoqueController();
 $carrinhoController = new CarrinhoController();
+$clienteController = new ClienteController();
+
+$imagemCliente = $clienteController->getClienteById($id_cliente)['imagem_cliente'];
 
 $products = [];
 $cartProducts = $carrinhoController->getAllCartProducts($id_cliente);
@@ -161,8 +166,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </figure>
                 </a>
                 <a href="perfil.php">
-                    <figure>
-                        <img class="profileButton" src="../templates/assets/img/Profile.png" alt="">
+                    <figure class="perfilFigure">
+                        <img class="profileButton" src="data:image/jpeg;base64,<?php echo base64_encode($imagemCliente);?>" alt="">
                     </figure>
                 </a>
             </div>

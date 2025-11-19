@@ -5,7 +5,16 @@ require_once __DIR__ . '/../Controller/ClienteController.php';
 require_once __DIR__ . '/../Model/Cliente.php';
 
 $clienteModel = new \Model\Cliente();
-$clienteController = new \Controller\ClienteController($clienteModel);
+$clienteController = new \Controller\ClienteController();
+
+if($_SESSION['id_cliente'] !== null) {
+    $id_cliente = $_SESSION['id_cliente'];
+} else {
+    header('Location: login.php');
+}
+
+$imagemCliente = $clienteController->getClienteById($id_cliente)['imagem_cliente'];
+
 
 // --- LÓGICA DE ATUALIZAÇÃO ---
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'update_profile') {
@@ -263,7 +272,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
                         </figure>
                     </a>
                     <a href="#" class="icon-link">
-                        <figure><img src="/meuManoBurger/templates/assets/img/MiniPerfil.png" alt="Perfil"
+                        <figure class="perfilFigure"><img class="profileButton" src="data:image/jpeg;base64,<?php echo base64_encode($imagemCliente);?>" alt="Perfil"
                                 class="icon-img"></figure>
                     </a>
                 </li>
