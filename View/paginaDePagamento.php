@@ -21,57 +21,85 @@ $cartProducts = $carrinhoController->getAllCartProducts($id_cliente);
 foreach ($cartProducts as $cartProduct) {
     $products[] = $cartProduct['id_produto_fk'];
 }
+$produtoSemEstoque = [];
+foreach ($products as $productId) {
+    $qtd = $carrinhoController->getProductById($productId, $id_cliente)[0]['qtd_produto'];
+    $estoque = $estoqueController->obtEstoque($productId)['qtd_produto'];
+    if($estoque - $qtd < 0) {
+        $produtoSemEstoque[] = $productController->findById($productId)['nome_produto'];
+    }
+}
 
 $horario = $_SESSION['horario'];
 $horarioFormatado = str_replace('T', ' ', $horario) . ':00';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-    // Gera o código inicial
-    $codigo = substr(str_shuffle('abcdefghijklmnopqrstuvwxyz0123456789'), 0, 3)
-            . '-' .
-              substr(str_shuffle('abcdefghijklmnopqrstuvwxyz0123456789'), 0, 1);
-
-    // Garante que o código não existe
-    while (!empty($pedidoController->getPedidoByCodigo($codigo))) {
+    $produtoSemEstoque = [];
+    foreach ($products as $productId) {
+        $qtd = $carrinhoController->getProductById($productId, $id_cliente)[0]['qtd_produto'];
+        $estoque = $estoqueController->obtEstoque($productId)['qtd_produto'];
+        if($estoque - $qtd < 0) {
+            $produtoSemEstoque[] = $productController->findById($productId)['nome_produto'];
+        }
+    }
+    if (!$produtoSemEstoque){
+        // Gera o código inicial
         $codigo = substr(str_shuffle('abcdefghijklmnopqrstuvwxyz0123456789'), 0, 3)
                 . '-' .
                   substr(str_shuffle('abcdefghijklmnopqrstuvwxyz0123456789'), 0, 1);
+    
+        // Garante que o código não existe
+        while (!empty($pedidoController->getPedidoByCodigo($codigo))) {
+            $codigo = substr(str_shuffle('abcdefghijklmnopqrstuvwxyz0123456789'), 0, 3)
+                    . '-' .
+                      substr(str_shuffle('abcdefghijklmnopqrstuvwxyz0123456789'), 0, 1);
+        }
+    
+        // Calcula o preço total apenas UMA VEZ (não precisa fazer dentro do foreach)
+        $precoTotal = 0;
+        foreach ($products as $prodId) {
+            $prod = $productController->findById($prodId);
+            $qtd = $carrinhoController->getProductById($prodId, $id_cliente)[0]['qtd_produto'];
+            $precoTotal += $prod['preco_produto'] * $qtd;
+        }
+    
+        // Cria o pedido e os itens
+        foreach ($products as $productId) {
+    
+            // Conta quantas vezes esse produto aparece
+            $qtd = $carrinhoController->getProductById($productId, $id_cliente)[0]['qtd_produto'];
+    
+            // Cria o pedido com o produto e quantidade correta
+            $pedidoController->criarPedido(
+                $productId,
+                $id_cliente,
+                $codigo,
+                $qtd,
+                $precoTotal,
+                $horarioFormatado,
+                'A retirar'
+            );
+    
+            // Pega o pedido criado
+            $pedidoCriado = $pedidoController->getPedidoByCodigo($codigo);
+            // Atualiza o estoque do pedido
+            $estoqueController->subEstoque($pedidoCriado[0]['id_pedido']);
+        }
+    
+        header('Location: pedidosUSER.php');
+        exit();
+    } else {
+        echo '<script>alert("O(s) seguinte(s) produto(s) estão sem estoque disponível: ';
+        $ultimoProduto = count($produtoSemEstoque) - 1;
+        foreach($produtoSemEstoque as $index => $produto){
+            if ($index != $ultimoProduto){
+                echo $produto . ', ';
+            } else {
+                echo $produto . '.';
+            }
+        }
+        echo'")</script>';
     }
-
-    // Calcula o preço total apenas UMA VEZ (não precisa fazer dentro do foreach)
-    $precoTotal = 0;
-    foreach ($products as $prodId) {
-        $prod = $productController->findById($prodId);
-        $qtd = $carrinhoController->getProductById($prodId, $id_cliente)[0]['qtd_produto'];
-        $precoTotal += $prod['preco_produto'] * $qtd;
-    }
-
-    // Cria o pedido e os itens
-    foreach ($products as $productId) {
-
-        // Conta quantas vezes esse produto aparece
-        $qtd = $carrinhoController->getProductById($prodId, $id_cliente)[0]['qtd_produto'];
-
-        // Cria o pedido com o produto e quantidade correta
-        $pedidoController->criarPedido(
-            $productId,
-            $id_cliente,
-            $codigo,
-            $qtd,
-            $precoTotal,
-            $horarioFormatado,
-            'A retirar'
-        );
-
-        // Pega o pedido criado
-        $pedidoCriado = $pedidoController->getPedidoByCodigo($codigo);
-        // Atualiza o estoque do pedido
-        $estoqueController->subEstoque($pedidoCriado[0]['id_pedido']);
-    }
-
-    header('Location: pedidosUSER.php');
-    exit();
 }
 ?>
 
