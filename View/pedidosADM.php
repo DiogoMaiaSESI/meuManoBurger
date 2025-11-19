@@ -280,7 +280,7 @@ $pedidos = $pedidoController->getAllPedidos();
                                 echo '<button class="lixeira"><img src="../templates/assets/img/Lixeira.png"></button>';
                             } echo'
                         </div>
-                        '; if ($value['status'] != 'Cancelado') {
+                        '; if ($value['status'] === 'A retirar') {
                             echo '<button class="statusbtn">O pedido foi retirado?</button>';
                         } echo'
                     </div>

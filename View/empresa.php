@@ -1,6 +1,15 @@
 <?php
+session_start();
+if($_SESSION['id_adm'] !== null) {
+    $idAdm = $_SESSION['id_adm'];
+} else {
+    header('Location: login.php');
+}
 
+require_once __DIR__ . '/../Controller/AdmController.php';
+$admController = new \Controller\AdmController();
 
+$imagem_adm = $admController->getAdmById($idAdm)['imagem_adm'];
 
 ?>
 
@@ -44,8 +53,8 @@
                 <figure class="logo">
                     <img src="../templates/assets/img/logo.png" alt="">
                 </figure>
-                <figure class="perfil">
-                    <img src="../templates/assets/img/perfil.png" alt="">
+                <figure class="perfil perfilFigure">
+                    <img class="profileButton" src="data:image/jpeg;base64,<?php echo base64_encode($imagem_adm);?>" alt="">
                 </figure>
             </div>
         </header>

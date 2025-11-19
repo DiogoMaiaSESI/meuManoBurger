@@ -3,6 +3,7 @@ session_start();
 require_once('../vendor/autoload.php');
 use Controller\ProductController;
 use Controller\CarrinhoController;
+use Controller\ClienteController;
 
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
@@ -16,6 +17,9 @@ if($_SESSION['id_cliente'] !== null) {
 
 $productController = new ProductController();
 $carrinhoController = new CarrinhoController();
+$clienteController = new ClienteController();
+
+$imagemCliente = $clienteController->getClienteById($id_cliente)['imagem_cliente'];
 
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
     if(!empty($_POST['product_id_details']) and empty($_POST['product_id_cart'])) {
@@ -98,8 +102,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </figure>
                 </a>
                 <a href="perfil.php">
-                    <figure class="perfil_header">
-                        <img src="../templates/assets/img/perfil.png" alt="Foto de perfil" />
+                    <figure class="perfilFigure">
+                        <img class="profileButton" src="data:image/jpeg;base64,<?php echo base64_encode($imagemCliente);?>" alt="Foto de perfil" />
                     </figure>
                 </a>
             </div>

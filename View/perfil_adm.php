@@ -225,7 +225,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
 
                 <!-- Ícones de Ação (Sempre visíveis, no final) -->
                 <li class="nav-right">
-                    <a href="#" class="icon-link">
+                    <a href="empresa.php" class="icon-link">
                         <figure><img src="/meuManoBurger/templates/assets/img/Voltar.png" alt="Voltar" class="icon-img">
                         </figure>
                     </a>

@@ -116,12 +116,12 @@ h5 {
     gap: 3rem;
 }
 
-.carrinho_perfil img{
+.carrinhoPerfilImg{
     width: 5rem;
     height: 5rem;
 }
 
-.carrinho_perfil img:hover{
+.carrinhoPerfilImg{
     cursor: pointer;
     transition: 500ms;
     opacity: 70%;
@@ -548,7 +548,7 @@ footer h3 {
         padding-right: 2rem;
     }
 
-    .carrinho_perfil img{
+    .carrinhoPerfilImg{
         width: 4rem;
         height: 4rem;
     }
@@ -678,7 +678,7 @@ footer h3 {
         padding-right: 2rem;
     }
 
-    .carrinho_perfil img{
+    .carrinhoPerfilImg{
         width: 4rem;
         height: 4rem;
     }
@@ -812,7 +812,7 @@ footer h3 {
         padding-right: 2rem;
     }
 
-    .carrinho_perfil img{
+    .carrinhoPerfilImg{
         width: 4rem;
         height: 4rem;
     }
@@ -976,7 +976,7 @@ footer h3 {
         padding-right: 2rem;
     }
 
-    .carrinho_perfil img{
+    .carrinhoPerfilImg{
         width: 4rem;
         height: 4rem;
     }
@@ -1156,7 +1156,7 @@ footer h3 {
         padding-right: 2rem;
     }
 
-    .carrinho_perfil img{
+    .carrinhoPerfilImg{
         width: 4rem;
         height: 4rem;
     }
@@ -1350,7 +1350,7 @@ footer h3 {
         padding-right: 2rem;
     }
 
-    .carrinho_perfil img{
+    .carrinhoPerfilImg{
         width: 4rem;
         height: 4rem;
     }
@@ -1579,7 +1579,7 @@ footer h3 {
         padding-right: 2rem;
     }
 
-    .carrinho_perfil img{
+    .carrinhoPerfilImg{
         width: 4rem;
         height: 4rem;
     }
@@ -1793,7 +1793,7 @@ footer h3 {
         padding-right: 2rem;
     }
 
-    .carrinho_perfil img{
+    .carrinhoPerfilImg{
         width: 3rem;
         height: 3rem;
     }
@@ -2008,7 +2008,7 @@ footer h3 {
         padding-right: 2rem;
     }
 
-    .carrinho_perfil img{
+    .carrinhoPerfilImg{
         width: 3rem;
         height: 3rem;
     }

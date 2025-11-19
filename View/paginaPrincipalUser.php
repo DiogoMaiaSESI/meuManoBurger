@@ -81,7 +81,7 @@ $imagemCliente = $clienteController->getClienteById($id_cliente)['imagem_cliente
             <div class="carrinho_perfil">
                 <a href="carrinho.php">
                     <figure>
-                        <img src="../templates/assets/img/carrinho.png" alt="">
+                        <img class="carrinhoPerfilImg" src="../templates/assets/img/carrinho.png" alt="">
                     </figure>
                 </a>
                 

@@ -8,11 +8,16 @@ if($_SESSION['id_cliente'] !== null) {
     header('Location: login.php');
 }
 
+use Controller\ClienteController;
 use Controller\ProductController;
 use Controller\CarrinhoController;
 require_once('../vendor/autoload.php');
 $productController = new ProductController();
 $carrinhoController = new CarrinhoController();
+$clienteController = new ClienteController();
+
+$imagemCliente = $clienteController->getClienteById($id_cliente)['imagem_cliente'];
+
 $cartProducts = $carrinhoController->getAllCartProducts($id_cliente);
 $products = [];
 foreach ($cartProducts as $cartProduct) {
@@ -182,8 +187,8 @@ $total = 0;
                 <a href="paginaPrincipalUser.php" class="icon-link">
                     <img src="/meuManoBurger/templates/assets/img/Voltar.png" alt="Voltar" class="icon-img">
                 </a>
-                <a href="perfil.php" class="icon-link">
-                    <img src="/meuManoBurger/templates/assets/img/MiniPerfil.png" alt="Perfil" class="icon-img">
+                <a href="perfil.php" class="icon-link perfilFigure">
+                    <img src="data:image/jpeg;base64,<?php echo base64_encode($imagemCliente);?>" alt="Perfil" class="profileButton">
                 </a>
             </div>
         </nav>

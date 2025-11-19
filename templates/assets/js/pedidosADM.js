@@ -141,36 +141,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
   btnsim.addEventListener('click', () => {
     modalconfirm.style.display = 'none'
-    if (!Pedidoatual) return
-
-    const retirado = Pedidoatual.querySelector('.statusretirado')
-    const pendente = Pedidoatual.querySelector('.statuspendente')
     const codigo = Pedidoatual.querySelector('.codigo').textContent
-
-    pendente.style.display = 'none'
-    retirado.style.display = 'block'
-
-    StatusBtnatual.textContent = statusRetiradoTexto
-    Statusdetalhesatual.textContent = statusRetiradoTexto
-    StatusBtnatual.disabled = true
-    StatusBtnatual.classList.add('statusbtndesabilitado')
-
-
-    inputPost = document.querySelector('.postPedido')
-    inputApagar = document.querySelector('.apagarPedido')
+    const inputPost = document.querySelector('.postPedido')
+    const inputApagar = document.querySelector('.apagarPedido')
     inputApagar.value = null
     inputPost.value = codigo
-
-    
-
     form.submit()
-    
-    Pedidoatual = null
-    StatusBtnatual = null
-    Statusdetalhesatual = null
   })
 
   btnsimexcluir.addEventListener('click', () => {
+    modalexcluir.style.display = 'none'
     const codigo = Pedidoatual.querySelector('.codigo').textContent
     const inputApagar = document.querySelector('.apagarPedido')
     const inputPost = document.querySelector('.postPedido')

@@ -2,16 +2,13 @@
 
 
 .perfilFigure {
-    width: 5.5rem;
-    height: 5.5rem;
+    width: 4rem;
+    height: 4rem;
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 100%;
     overflow: hidden;
-}
-.profileButton {
-    width: 100%;
 }
 header {
     width: 100%;

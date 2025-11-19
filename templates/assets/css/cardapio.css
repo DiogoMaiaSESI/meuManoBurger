@@ -10,8 +10,8 @@ header{
     cursor: pointer;
 }
 .perfilFigure {
-    width: 5.5rem;
-    height: 5.5rem;
+    width: 4rem; 
+    height: 4rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -19,7 +19,8 @@ header{
     overflow: hidden;
 }
 .profileButton {
-    width: 100%;
+    width: 100% !important;
+    height: 100% !important;
 }
 .menu:hover {
     transition: 500ms;

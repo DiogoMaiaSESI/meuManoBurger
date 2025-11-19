@@ -155,7 +155,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <img src="../templates/assets/img/Logo.png" alt="">
             </figure>
             <div class="headerButtons">
-                <a href="paginaPrincipalEmpresa.php">
+                <a href="paginaPrincipalUser.php">
                     <figure>
                         <img class="back" src="../templates/assets/img/volte.png" alt="">
                     </figure>

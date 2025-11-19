@@ -3,6 +3,7 @@
 require_once '../vendor/autoload.php';
 use Controller\PedidoController;
 use Controller\ProductController;
+use Controller\ClienteController;
 session_start();
 
 if($_SESSION['id_cliente'] !== null) {
@@ -13,6 +14,7 @@ if($_SESSION['id_cliente'] !== null) {
 
 $pedidoController = new PedidoController();
 $productController = new ProductController();
+$clienteController = new ClienteController();
 
 if($_SERVER['REQUEST_METHOD'] === 'POST') {
     if(!empty($_POST['codigoApagar'])){
@@ -20,6 +22,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
         $pedidoController->updateStatusPedido($codigo, 'Cancelado');
     }
 }
+
+$imagemCliente = $clienteController->getClienteById($id_cliente)['imagem_cliente'];
 
 $pedidos = $pedidoController->getAllUserPedidos($id_cliente);
 
@@ -89,8 +93,8 @@ $pedidos = $pedidoController->getAllUserPedidos($id_cliente);
                      </figure>
                 </a>
                 <a href="perfil.php">
-                    <figure class="perfil">
-                        <img src="../templates/assets/img/perfil.png" alt="">
+                    <figure class="perfil perfilFigure">
+                        <img class="profileButton" src="data:image/jpeg;base64,<?php echo base64_encode($imagemCliente);?>" alt="">
                     </figure>
                 </a>
             </div>
