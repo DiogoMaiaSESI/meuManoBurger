@@ -2,6 +2,17 @@
 
 session_start();
 
+
+require_once('../Controller/ClienteController.php');
+use Controller\ClienteController;
+$clienteController = new ClienteController();
+
+if($_SESSION['id_cliente'] !== null) {
+    $id_cliente = $_SESSION['id_cliente'];
+} else {
+    header('Location: login.php');
+}
+
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
     if(!empty($_POST['product_id'])){
         $_SESSION['product_id_details'] = $_POST['product_id'];
@@ -9,6 +20,9 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         exit;
     }
 }
+
+$imagemCliente = $clienteController->getClienteById($id_cliente)['imagem_cliente'];
+
 
 ?>
 
@@ -72,8 +86,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
                 </a>
                 
                 <a href="perfil.php">
-                    <figure>
-                        <img src="../templates/assets/img/perfil.png" alt="">
+                    <figure class="perfilFigure">
+                        <img class="profileButton" src="data:image/jpeg;base64,<?php echo base64_encode($imagemCliente);?>" alt="">
                     </figure>
                 </a>
             </div>
