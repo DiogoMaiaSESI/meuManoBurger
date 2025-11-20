@@ -5,8 +5,14 @@ use Controller\ProductController;
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-// Inicia o controller de produtos
-$productController = new ProductController();
+
+// MODELS necessários para o construtor
+$productModel = new \Model\Product();
+$estoqueModel = new \Model\Estoque();
+
+// AGORA sim o controller funciona
+$productController = new ProductController($productModel, $estoqueModel);
+
 $newProduct = null;
 $targetCategoryClass = '';
 
@@ -20,23 +26,23 @@ if (isset($_GET['new_product_id']) && isset($_GET['category_class'])) {
         $newProduct = $productController->findById($newProductId);
     }
 }
-// Função para gerar o HTML de um card de produto
-function renderProductCard($product) {
-    // Formata o preço para o padrão brasileiro (R$ X,XX)
+
+// Função para gerar o HTML de um card de produto (não usada nas seções abaixo,
+// mas mantida caso queira usá-la)
+function renderProductCard($product)
+{
     $formattedPrice = 'R$ ' . number_format($product['preco_produto'], 2, ',', '.');
-    // Converte a imagem (BLOB) para um formato que o HTML entende (Base64)
     $imageBase64 = 'data:image/jpeg;base64,' . base64_encode($product['imagem_produto']);
 
-    // Retorna a estrutura HTML do card com os dados do produto
     return '
-        <div class="config_card">
+        <div class="config_card" data-id="' . htmlspecialchars($product['id_produto']) . '">
             <div class="product-image">
                 <img src="' . $imageBase64 . '" alt="' . htmlspecialchars($product['nome_produto']) . '">
             </div>
             <div class="informacoes_config">
                 <h3 class="product-title">' . htmlspecialchars($product['nome_produto']) . '</h3>
                 <p class="product-price">' . $formattedPrice . '</p>
-                <button class="add-to-cart">
+                <button type="button" class="add-to-cart" data-id="' . htmlspecialchars($product['id_produto']) . '">
                     <figure>
                         <img src="../templates/assets/img/detalhes.png" alt="Ícone de detalhes">
                     </figure>
@@ -47,18 +53,20 @@ function renderProductCard($product) {
     ';
 }
 
-if($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if(!empty($_POST['id_produto'])){
-        $_SESSION['id_produto'] = $_POST['id_produto'];
-        header('Location: detalhamentoAdm.php');
-        exit();
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (!empty($_POST['id_produto'])) {
+        // 1. Limpa e valida o ID recebido via POST.
+        $productId = filter_var($_POST['id_produto'], FILTER_VALIDATE_INT);
+
+        // 2. Se o ID for válido...
+        if ($productId) {
+            // 3. Redireciona para a página de detalhes, passando o ID na URL (GET).
+            header('Location: detalhamentoAdm.php?id=' . $productId);
+            exit();
+        }
     }
 }
-
-
-
 ?>
-
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -76,31 +84,31 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <div class="menu_logo">
                 <div class="sandwich">
-                <figure class="menu">
-                    <img src="../templates/assets/img/menuSanduiche.png" alt="">
-                </figure>
-                <div class="options">
-                    <div class="option">
-                        <figure>
-                            <img src="../templates/assets/img/cutlery.png" alt="">
-                        </figure>
-                        <h5>Cardápio</h5>
-                    </div>
-                    <div class="option">
-                        <figure>
-                            <img src="../templates/assets/img/coxinhaIcon.png" alt="">
-                        </figure>
-                        <h5>Pedidos</h5>
-                    </div>
-                    <div class="option">
-                        <figure>
-                            <img src="../templates/assets/img/chat.png" alt="">
-                        </figure>
-                        <h5>Feedbacks</h5>
+                    <figure class="menu">
+                        <img src="../templates/assets/img/menuSanduiche.png" alt="">
+                    </figure>
+                    <div class="options">
+                        <div class="option">
+                            <figure>
+                                <img src="../templates/assets/img/cutlery.png" alt="">
+                            </figure>
+                            <h5>Cardápio</h5>
+                        </div>
+                        <div class="option">
+                            <figure>
+                                <img src="../templates/assets/img/coxinhaIcon.png" alt="">
+                            </figure>
+                            <h5>Pedidos</h5>
+                        </div>
+                        <div class="option">
+                            <figure>
+                                <img src="../templates/assets/img/chat.png" alt="">
+                            </figure>
+                            <h5>Feedbacks</h5>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="sombra"></div>
+                <div class="sombra"></div>
 
                 <figure class="logo">
                     <img src="../templates/assets/img/Logo.png" alt="Logo MeuManoBurger" />
@@ -126,7 +134,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
             <h1 class="h1_promocoes">Promoções</h1>
         </div>
 
-        
     </header>
 
     <main>
@@ -191,7 +198,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
     </main>
 
     <section class="hamb">
-       
         <div class="add-product">
             <h1>Hambúrgueres</h1>
             <a href="cadastro_produto.php">
@@ -200,18 +206,20 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </figure>
             </a>
         </div>
+
         <div class="container">
-            <?php 
+            <?php
             $hambs = $productController->getProductsByType('Hamburgueres');
-            foreach ($hambs as $hamb => $value) {
-                echo '<div class="config_card">
+            foreach ($hambs as $value) {
+                // cada card TEM data-id e o botão TEM data-id
+                echo '<div class="config_card" data-id="' . htmlspecialchars($value['id_produto']) . '">
                     <div class="product-image">
-                        <img src="' . 'data:image/jpeg;base64,' . base64_encode($value['imagem_produto']) . '" alt="' . htmlspecialchars($value['nome_produto']) . '" alt="Hambúrguer X-Tudo">
+                        <img src="data:image/jpeg;base64,' . base64_encode($value['imagem_produto']) . '" alt="' . htmlspecialchars($value['nome_produto']) . '">
                     </div>
                     <div class="informacoes_config">
                         <h3 class="product-title">' . htmlspecialchars($value['nome_produto']) . '</h3>
-                        <p class="product-price">R$ '. number_format($value['preco_produto'], 2, ',' , '.') .'</p>
-                        <button class="add-to-cart" id="'. $value['id_produto'] .'">
+                        <p class="product-price">R$ ' . number_format($value['preco_produto'], 2, ',' , '.') . '</p>
+                        <button type="button" class="add-to-cart" data-id="' . htmlspecialchars($value['id_produto']) . '">
                             <figure>
                                 <img src="../templates/assets/img/detalhes.png" alt="">
                             </figure>
@@ -222,10 +230,10 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
             } ?>
         </div>
     </section>
-    <section class="lanc">
-       <div class="add-product">
-            <h1>Lanches</h1>
 
+    <section class="lanc">
+        <div class="add-product">
+            <h1>Lanches</h1>
             <a href="cadastro_produto.php">
                 <figure>
                     <img class="adicionar_produto" src="../templates/assets/img/adicionar.png" alt="">
@@ -233,18 +241,18 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
             </a>
         </div>
 
-       <div class="container">
-            <?php 
+        <div class="container">
+            <?php
             $lancs = $productController->getProductsByType('Lanches');
-            foreach ($lancs as $lanc => $value) {
-                echo '<div class="config_card">
+            foreach ($lancs as $value) {
+                echo '<div class="config_card" data-id="' . htmlspecialchars($value['id_produto']) . '">
                     <div class="product-image">
-                        <img src="' . 'data:image/jpeg;base64,' . base64_encode($value['imagem_produto']) . '" alt="' . htmlspecialchars($value['nome_produto']) . '" alt="Hambúrguer X-Tudo">
+                        <img src="data:image/jpeg;base64,' . base64_encode($value['imagem_produto']) . '" alt="' . htmlspecialchars($value['nome_produto']) . '">
                     </div>
                     <div class="informacoes_config">
                         <h3 class="product-title">' . htmlspecialchars($value['nome_produto']) . '</h3>
-                        <p class="product-price">R$ '. number_format($value['preco_produto'], 2, ',' , '.') .'</p>
-                        <button class="add-to-cart" id="'. $value['id_produto'] .'">
+                        <p class="product-price">R$ ' . number_format($value['preco_produto'], 2, ',' , '.') . '</p>
+                        <button type="button" class="add-to-cart" data-id="' . htmlspecialchars($value['id_produto']) . '">
                             <figure>
                                 <img src="../templates/assets/img/detalhes.png" alt="">
                             </figure>
@@ -255,29 +263,29 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
             } ?>
         </div>
     </section>
+
     <section class="beb">
         <div class="add-product">
             <h1>Bebidas</h1>
-
             <a href="cadastro_produto.php">
                 <figure>
                     <img class="adicionar_produto" src="../templates/assets/img/adicionar.png" alt="">
                 </figure>
             </a>
         </div>
-        
+
         <div class="container">
-                <?php 
+            <?php
             $bebs = $productController->getProductsByType('Bebidas');
-            foreach ($bebs as $beb => $value) {
-                echo '<div class="config_card">
+            foreach ($bebs as $value) {
+                echo '<div class="config_card" data-id="' . htmlspecialchars($value['id_produto']) . '">
                     <div class="product-image">
-                        <img src="' . 'data:image/jpeg;base64,' . base64_encode($value['imagem_produto']) . '" alt="' . htmlspecialchars($value['nome_produto']) . '" alt="Hambúrguer X-Tudo">
+                        <img src="data:image/jpeg;base64,' . base64_encode($value['imagem_produto']) . '" alt="' . htmlspecialchars($value['nome_produto']) . '">
                     </div>
                     <div class="informacoes_config">
                         <h3 class="product-title">' . htmlspecialchars($value['nome_produto']) . '</h3>
-                        <p class="product-price">R$ '. number_format($value['preco_produto'], 2, ',' , '.') .'</p>
-                        <button class="add-to-cart" id="'. $value['id_produto'] .'">
+                        <p class="product-price">R$ ' . number_format($value['preco_produto'], 2, ',' , '.') . '</p>
+                        <button type="button" class="add-to-cart" data-id="' . htmlspecialchars($value['id_produto']) . '">
                             <figure>
                                 <img src="../templates/assets/img/detalhes.png" alt="">
                             </figure>
@@ -286,9 +294,9 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                 </div>';
             } ?>
-            </div>
-
+        </div>
     </section>
+
     <section class="cafe">
         <div class="add-product">
             <h1>Café da Manhã</h1>
@@ -299,18 +307,18 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
             </a>
         </div>
 
-       <div class="container">
-            <?php 
+        <div class="container">
+            <?php
             $cafes = $productController->getProductsByType('Cafe da manha');
-            foreach ($cafes as $cafe => $value) {
-                echo '<div class="config_card">
+            foreach ($cafes as $value) {
+                echo '<div class="config_card" data-id="' . htmlspecialchars($value['id_produto']) . '">
                     <div class="product-image">
-                        <img src="' . 'data:image/jpeg;base64,' . base64_encode($value['imagem_produto']) . '" alt="' . htmlspecialchars($value['nome_produto']) . '" alt="Hambúrguer X-Tudo">
+                        <img src="data:image/jpeg;base64,' . base64_encode($value['imagem_produto']) . '" alt="' . htmlspecialchars($value['nome_produto']) . '">
                     </div>
                     <div class="informacoes_config">
                         <h3 class="product-title">' . htmlspecialchars($value['nome_produto']) . '</h3>
-                        <p class="product-price">R$ '. number_format($value['preco_produto'], 2, ',' , '.') .'</p>
-                        <button class="add-to-cart" id="'. $value['id_produto'] .'">
+                        <p class="product-price">R$ ' . number_format($value['preco_produto'], 2, ',' , '.') . '</p>
+                        <button type="button" class="add-to-cart" data-id="' . htmlspecialchars($value['id_produto']) . '">
                             <figure>
                                 <img src="../templates/assets/img/detalhes.png" alt="">
                             </figure>
@@ -319,8 +327,9 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                 </div>';
             } ?>
-            </div>
+        </div>
     </section>
+
     <section class="doces">
         <div class="add-product">
             <h1>Doces</h1>
@@ -331,18 +340,18 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
             </a>
         </div>
 
-         <div class="container">
-        <?php 
+        <div class="container">
+            <?php
             $doces = $productController->getProductsByType('Doces');
-            foreach ($doces as $doce => $value) {
-                echo '<div class="config_card">
+            foreach ($doces as $value) {
+                echo '<div class="config_card" data-id="' . htmlspecialchars($value['id_produto']) . '">
                     <div class="product-image">
-                        <img src="' . 'data:image/jpeg;base64,' . base64_encode($value['imagem_produto']) . '" alt="' . htmlspecialchars($value['nome_produto']) . '" alt="Hambúrguer X-Tudo">
+                        <img src="data:image/jpeg;base64,' . base64_encode($value['imagem_produto']) . '" alt="' . htmlspecialchars($value['nome_produto']) . '">
                     </div>
                     <div class="informacoes_config">
                         <h3 class="product-title">' . htmlspecialchars($value['nome_produto']) . '</h3>
-                        <p class="product-price">R$ '. number_format($value['preco_produto'], 2, ',' , '.') .'</p>
-                        <button class="add-to-cart" id="'. $value['id_produto'] .'">
+                        <p class="product-price">R$ ' . number_format($value['preco_produto'], 2, ',' , '.') . '</p>
+                        <button type="button" class="add-to-cart" data-id="' . htmlspecialchars($value['id_produto']) . '">
                             <figure>
                                 <img src="../templates/assets/img/detalhes.png" alt="">
                             </figure>
@@ -351,10 +360,9 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                 </div>';
             } ?>
-            </div>
-
-
+        </div>
     </section>
+
     <section class="tap">
         <div class="add-product">
             <h1>Tapioca</h1>
@@ -365,18 +373,18 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
             </a>
         </div>
 
-         <div class="container">
+        <div class="container">
             <?php
             $taps = $productController->getProductsByType('Tapioca');
-            foreach ($taps as $tap => $value) {
-                echo '<div class="config_card">
+            foreach ($taps as $value) {
+                echo '<div class="config_card" data-id="' . htmlspecialchars($value['id_produto']) . '">
                     <div class="product-image">
-                        <img src="' . 'data:image/jpeg;base64,' . base64_encode($value['imagem_produto']) . '" alt="' . htmlspecialchars($value['nome_produto']) . '" alt="Hambúrguer X-Tudo">
+                        <img src="data:image/jpeg;base64,' . base64_encode($value['imagem_produto']) . '" alt="' . htmlspecialchars($value['nome_produto']) . '">
                     </div>
                     <div class="informacoes_config">
                         <h3 class="product-title">' . htmlspecialchars($value['nome_produto']) . '</h3>
-                        <p class="product-price">R$ '. number_format($value['preco_produto'], 2, ',' , '.') .'</p>
-                        <button class="add-to-cart" id="'. $value['id_produto'] .'">
+                        <p class="product-price">R$ ' . number_format($value['preco_produto'], 2, ',' , '.') . '</p>
+                        <button type="button" class="add-to-cart" data-id="' . htmlspecialchars($value['id_produto']) . '">
                             <figure>
                                 <img src="../templates/assets/img/detalhes.png" alt="">
                             </figure>
@@ -386,8 +394,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>';
             } ?>
         </div>
-
     </section>
+
     <section class="prom">
         <div class="add-product">
             <h1>Promoções</h1>
@@ -399,17 +407,17 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
 
         <div class="container">
-    <?php
+            <?php
             $proms = $productController->getProductsByType('Promocoes');
-            foreach ($proms as $prom => $value) {
-                echo '<div class="config_card">
+            foreach ($proms as $value) {
+                echo '<div class="config_card" data-id="' . htmlspecialchars($value['id_produto']) . '">
                     <div class="product-image">
-                        <img src="' . 'data:image/jpeg;base64,' . base64_encode($value['imagem_produto']) . '" alt="' . htmlspecialchars($value['nome_produto']) . '" alt="Hambúrguer X-Tudo">
+                        <img src="data:image/jpeg;base64,' . base64_encode($value['imagem_produto']) . '" alt="' . htmlspecialchars($value['nome_produto']) . '">
                     </div>
                     <div class="informacoes_config">
                         <h3 class="product-title">' . htmlspecialchars($value['nome_produto']) . '</h3>
-                        <p class="product-price">R$ '. number_format($value['preco_produto'], 2, ',' , '.') .'</p>
-                        <button class="add-to-cart" id="'. $value['id_produto'] .'">
+                        <p class="product-price">R$ ' . number_format($value['preco_produto'], 2, ',' , '.') . '</p>
+                        <button type="button" class="add-to-cart" data-id="' . htmlspecialchars($value['id_produto']) . '">
                             <figure>
                                 <img src="../templates/assets/img/detalhes.png" alt="">
                             </figure>
@@ -420,7 +428,9 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
             } ?>
         </div>
     </section>
-    <form method="POST"><input type="hidden" class="id_produto" name="id_produto"></form>
+
+    <form method="POST" id="productForm"><input type="hidden" id="id_produto" class="id_produto" name="id_produto" value=""></form>
+
     <footer>
         <h2>Copyright © 2025 Meumanoburguer - Todos os Direitos Reservados</h2>
     </footer>

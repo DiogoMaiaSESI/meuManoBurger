@@ -2,7 +2,7 @@
 
 namespace Model;
 
-use Exception;
+require_once __DIR__ . '/../Model/Connection.php';
 use PDO;
 use PDOException;
 
@@ -15,7 +15,34 @@ class Product
         $this->conn = Connection::getInstance();
     }
 
-    public function createProduct($nome, $preco, $tipo, $descricao, $imagem, $id_adm_fk) {
+    private function validate($nome, $preco, $tipo, $descricao, $id_adm_fk)
+    {
+        $errors = [];
+
+        if (empty($nome)) {
+            $errors[] = "O nome do produto é obrigatório.";
+        }
+        if (strlen($nome) > 255) {
+            $errors[] = "O nome do produto não pode exceder 255 caracteres.";
+        }
+        if ($preco === false || $preco <= 0) {
+            $errors[] = "O preço do produto deve ser um número positivo.";
+        }
+        if (empty($tipo)) {
+            $errors[] = "O tipo do produto é obrigatório.";
+        }
+        if (empty($descricao)) {
+            $errors[] = "A descrição do produto é obrigatória.";
+        }
+        if ($id_adm_fk === false || $id_adm_fk <= 0) {
+            $errors[] = "O administrador responsável é inválido.";
+        }
+
+        return $errors;
+    }
+
+    public function createProduct($nome, $preco, $tipo, $descricao, $imagem, $id_adm_fk)
+    {
         try {
             $sql = "INSERT INTO produto (nome_produto, preco_produto, tipo_produto, descricao_produto, imagem_produto, id_adm_fk) VALUES (:nome, :preco, :tipo, :descricao, :imagem, :id_adm_fk)";
             $stmt = $this->conn->prepare($sql);
@@ -26,20 +53,28 @@ class Product
             $stmt->bindParam(':descricao', $descricao, PDO::PARAM_STR);
             $stmt->bindValue(':imagem', $imagem, PDO::PARAM_LOB); // Usar bindValue para LOB é mais seguro
             $stmt->bindParam(':id_adm_fk', $id_adm_fk, PDO::PARAM_INT);
-            
-            $success = $stmt->execute();
-            return ['success' => $success];
+
+            if ($stmt->execute()) {
+                return $this->conn->lastInsertId(); // Retorna o ID do produto criado
+            }
+            return false; // Retorna false se a execução falhar
 
         } catch (PDOException $e) {
-            throw new Exception("Erro ao criar produto: " . $e->getMessage());
+            // Em um ambiente real, logar o erro é crucial.
+            error_log("Erro ao criar produto no Model: " . $e->getMessage());
+            return false;
         }
     }
 
-    public function updateProduct($id, $nome, $preco, $tipo, $descricao, $imagem, $id_adm_fk) {
+    public function updateProduct($id, $nome, $preco, $tipo, $descricao, $imagem_conteudo, $update_image, $id_adm_fk)
+    {
+
         try {
+            // A query base
             $sql = "UPDATE produto SET nome_produto = :nome, preco_produto = :preco, tipo_produto = :tipo, descricao_produto = :descricao, id_adm_fk = :id_adm_fk";
 
-            if ($imagem !== null) {
+            // Adiciona a atualização da imagem apenas se o sinalizador for verdadeiro
+            if ($update_image) {
                 $sql .= ", imagem_produto = :imagem";
             }
 
@@ -54,8 +89,9 @@ class Product
             $stmt->bindParam(':id_adm_fk', $id_adm_fk, PDO::PARAM_INT);
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
 
-            if ($imagem !== null) {
-                $stmt->bindParam(':imagem', $imagem, PDO::PARAM_LOB);
+            // Faz o bind do parâmetro da imagem apenas se o sinalizador for verdadeiro
+            if ($update_image) {
+                $stmt->bindParam(':imagem', $imagem_conteudo, PDO::PARAM_LOB);
             }
 
             $success = $stmt->execute();
@@ -108,9 +144,12 @@ class Product
             $stmt->execute();
             return $stmt->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
-            throw new Exception("Erro ao buscar produto por ID: " . $e);
+            error_log("Erro ao buscar produto por ID: " . $e->getMessage());
+            return null;
         }
     }
+
+    // Favoritos e filtros (mantidos como estavam)
     private function isFavorite($userId, $productId)
     {
         $stmt = $this->conn->prepare("SELECT id_favorito FROM favoritos WHERE id_cliente_fk = :userId AND id_produto_fk = :productId");
@@ -121,7 +160,6 @@ class Product
         return $stmt->fetch() !== false;
     }
 
-
     public function toggleFavorite($userId, $productId)
     {
         if (empty($userId) || empty($productId)) {
@@ -129,9 +167,7 @@ class Product
         }
 
         try {
-
             if ($this->isFavorite($userId, $productId)) {
-
                 $stmt = $this->conn->prepare(
                     "DELETE FROM favoritos WHERE id_cliente_fk = :userId AND id_produto_fk = :productId"
                 );
@@ -141,7 +177,6 @@ class Product
 
                 return ['success' => true, 'action' => 'unfavorited'];
             } else {
-
                 $stmt = $this->conn->prepare(
                     "INSERT INTO favoritos (id_cliente_fk, id_produto_fk) VALUES (:userId, :productId)"
                 );
@@ -164,7 +199,6 @@ class Product
         }
 
         try {
-
             $stmt = $this->conn->prepare(
                 "SELECT p.* FROM produto p
                  JOIN favoritos f ON p.id_produto = f.id_produto_fk
@@ -187,7 +221,7 @@ class Product
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
-            throw new Exception('Erro ao selecionar produtos pelo ID: ' . $e);
+            throw new \Exception('Erro ao selecionar produtos pelo tipo: ' . $e);
         }
     }
 }

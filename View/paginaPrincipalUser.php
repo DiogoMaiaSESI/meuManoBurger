@@ -14,30 +14,6 @@ if($_SESSION['id_cliente'] !== null) {
 
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
     if(!empty($_POST['product_id'])){
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (!empty($_POST['product_id'])) {
-        $_SESSION['product_id_details'] = $_POST['product_id'];
-        header('Location: detalhamentoUser.php');
-        exit;
-    }
-}
-
-// --- 1. INCLUSÕES (Sempre no topo) ---
-require_once __DIR__ . '/../Model/Feedback.php';
-require_once __DIR__ . '/../Controller/FeedbackController.php';
-
-// --- 2. PROCESSAMENTO DE AÇÕES POST (Tudo em um só lugar) ---
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-    // Ação: Criar um novo feedback
-    if (isset($_POST['action']) && $_POST['action'] === 'create_feedback') {
-        $feedbackModel = new \Model\Feedback();
-        $feedbackController = new \Controller\FeedbackController($feedbackModel);
-        $feedbackController->create(); // O controller já tem header() e exit()
-    }
-
-    // Ação: Ir para os detalhes de um produto
-    if (!empty($_POST['product_id'])) {
         $_SESSION['product_id_details'] = $_POST['product_id'];
         header('Location: detalhamentoUser.php');
         exit;

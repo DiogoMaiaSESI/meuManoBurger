@@ -9,13 +9,17 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-if($_SESSION['id_cliente'] !== null) {
+if ($_SESSION['id_cliente'] !== null) {
     $id_cliente = $_SESSION['id_cliente'];
 } else {
     header('Location: login.php');
+    exit;
 }
 
-$productController = new ProductController();
+
+$productModel = new \Model\Product();
+$estoqueModel = new \Model\Estoque();
+$productController = new ProductController($productModel, $estoqueModel);
 $carrinhoController = new CarrinhoController();
 $clienteController = new ClienteController();
 

@@ -243,3 +243,129 @@ option.forEach((op, index)=>{
         }
     })
 })
+document.querySelectorAll(".config_card").forEach(card => {
+    card.addEventListener("click", () => {
+        const id = card.dataset.id;
+        document.querySelector(".id_produto").value = id;
+        document.querySelector("form").submit();
+    });
+});
+
+document.querySelectorAll(".add-to-cart").forEach(btn => {
+    btn.addEventListener("click", (e) => {
+        e.stopPropagation(); // evita conflito com clique no card
+        const id = btn.dataset.id;
+        document.querySelector(".id_produto").value = id;
+        document.querySelector("form").submit();
+    });
+    // --- LÓGICA DE FILTRO DE CATEGORIAS ---
+    // Seleciona todos os botões e seções de uma vez
+    const categoryButtons = document.querySelectorAll('.container_menu .config_menu');
+    const productSections = document.querySelectorAll('main + section'); // Seleciona todas as seções de produto
+    const categoryLabels = document.querySelectorAll('.container_menu h2');
+    const headerLinks = {
+        cardapio: document.querySelector('.h1_cardapio'),
+        promocoes: document.querySelector('.h1_promocoes')
+    };
+
+    // Função para gerenciar a visibilidade e os estilos
+    function showCategory(targetSectionClass) {
+        // Esconde todas as seções
+        productSections.forEach(section => section.style.display = 'none');
+        // Remove a borda de todos os labels
+        categoryLabels.forEach(label => label.style.borderBottom = 'none');
+
+        // Mostra a seção alvo
+        const sectionToShow = document.querySelector(`.${targetSectionClass}`);
+        if (sectionToShow) {
+            sectionToShow.style.display = 'block';
+        }
+
+        // Adiciona a borda no label correspondente
+        const labelToHighlight = document.querySelector(`#${targetSectionClass} h2, .${targetSectionClass} h2`);
+        if (labelToHighlight) {
+            labelToHighlight.style.borderBottom = '2px solid #ffcc00';
+        }
+
+        // Ajusta os headers
+        if (targetSectionClass === 'prom') {
+            headerLinks.promocoes.style.borderBottom = '0.1rem solid #FFFFFF';
+            headerLinks.cardapio.style.borderBottom = 'none';
+        } else {
+            headerLinks.cardapio.style.borderBottom = '0.1rem solid #FFFFFF';
+            headerLinks.promocoes.style.borderBottom = 'none';
+        }
+    }
+
+    // Adiciona o evento de clique para cada botão de categoria
+    categoryButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            // Extrai a classe da seção a partir do ID do botão (ex: 'hamburgueres' -> 'hamb')
+            const sectionClass = button.id.substring(0, 4).replace('Tapi', 'tap');
+            showCategory(sectionClass);
+        });
+    });
+
+    // Eventos para os links do header
+    if (headerLinks.cardapio) {
+        headerLinks.cardapio.addEventListener('click', () => showCategory('hamb'));
+    }
+    if (headerLinks.promocoes) {
+        headerLinks.promocoes.addEventListener('click', () => showCategory('prom'));
+    }
+
+
+    // --- LÓGICA PARA ENVIAR O ID DO PRODUTO (A CORREÇÃO PRINCIPAL) ---
+    const productForm = document.getElementById('productForm');
+    const productIdInput = document.getElementById('id_produto');
+
+    if (productForm && productIdInput) {
+        // Seleciona todos os botões "Ver Detalhes"
+        const detailButtons = document.querySelectorAll('.add-to-cart');
+
+        detailButtons.forEach(button => {
+            button.addEventListener('click', function(event) {
+                // Impede que o clique no botão "vaze" para o card pai, evitando duplo clique
+                event.stopPropagation(); 
+                
+                // Pega o ID do atributo 'data-id' do botão (o método correto)
+                const productId = this.dataset.id;
+                
+                // Coloca o ID no campo oculto do formulário
+                productIdInput.value = productId;
+                
+                // Envia o formulário
+                productForm.submit();
+            });
+        });
+    } else {
+        console.error("Formulário de produto ou campo de ID não encontrado!");
+    }
+
+
+    // --- LÓGICA DO MENU SANDUÍCHE E OUTROS LINKS ---
+    const menu = document.querySelector('.menu');
+    const opcoes = document.querySelector('.options');
+    const sombra = document.querySelector('.sombra');
+    const sandwich = document.querySelector('.sandwich');
+
+    if (menu && opcoes && sombra && sandwich) {
+        const toggleMenu = () => {
+            opcoes.classList.toggle('optionActive');
+            sombra.classList.toggle('shadowActive');
+            sandwich.classList.toggle('sandwichActive');
+        };
+        menu.addEventListener('click', toggleMenu);
+        sombra.addEventListener('click', toggleMenu);
+    }
+
+    const optionLinks = document.querySelectorAll('.option');
+    optionLinks.forEach((op, index) => {
+        op.addEventListener('click', () => {
+            const urls = ['cardapio_adm.php', 'pedidosADM.php', 'empresa.php#feedback'];
+            if (urls[index]) {
+                window.location.href = urls[index];
+            }
+        });
+    });
+});

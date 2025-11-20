@@ -16,11 +16,11 @@ require_once __DIR__ . '/../Controller/EstoqueController.php';
 
 $productModel = new \Model\Product();
 $estoqueModel = new \Model\Estoque();
-$productController = new \Controller\ProductController();
+$productController = new \Controller\ProductController($productModel, $estoqueModel);
 $estoqueController = new \Controller\EstoqueController();
 
 // --- 3. LÓGICA PARA BUSCAR O PRODUTO ---
-$productId = $_SESSION['id_produto'];
+$productId = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 if (!$productId) {
     die('Erro: ID do produto não fornecido ou inválido.');
 }
@@ -66,6 +66,7 @@ elseif (isset($_SESSION['id_cliente'])) {
                 <div class="foto">
                     <h3>Foto</h3>
                     <figure>
+                        <!-- o IMG dentro do figure é o que o JS manipula -->
                         <img id="edit-preview-img" src="../templates/assets/img/camera.png" alt="Preview da imagem">
                     </figure>
                     <input type="file" name="imagem_produto" id="edit-foto-input" style="display: none;">
@@ -79,13 +80,13 @@ elseif (isset($_SESSION['id_cliente'])) {
                     <h4>Tipo</h4>
                     <select id="edit-tipo" name="tipo_produto" required>
                         <option value="" disabled>Selecione o tipo do lanche</option>
-                        <option value="2">Hambúrgueres</option>
-                        <option value="3">Lanches</option>
-                        <option value="4">Bebidas</option>
-                        <option value="5">Café da manhã</option>
-                        <option value="6">Doces</option>
-                        <option value="7">Tapioca</option>
-                        <option value="8">Promoções</option>
+                        <option value="Hamburgueres">Hambúrgueres</option>
+                        <option value="Lanches">Lanches</option>
+                        <option value="Bebidas">Bebidas</option>
+                        <option value="Cafe da manha">Café da manhã</option>
+                        <option value="Doces">Doces</option>
+                        <option value="Tapioca">Tapioca</option>
+                        <option value="Promocoes">Promoções</option>
                     </select>
                 </div>
             </div>
@@ -147,6 +148,12 @@ elseif (isset($_SESSION['id_cliente'])) {
                     </figure>
                     <h5>Feedbacks</h5>
                 </div>
+                <div class="option">
+                    <figure>
+                        <img src="../templates/assets/img/shoppingCart.png" alt="">
+                    </figure>
+                    <h5>Carrinho</h5>
+                </div>
             </div>
         </div>
         <div class="sombra"></div>
@@ -178,7 +185,7 @@ elseif (isset($_SESSION['id_cliente'])) {
                         <h2 class="title"><?php echo $nomeProduto; ?></h2>
                         <div class="icons">
                             <figure>
-                                <img class="lapis" src="../templates/assets/img/lapis2.png" alt="Editar Produto">
+                                <img class="lapis" src="../templates/assets/img/lapis.png" alt="Editar Produto">
                             </figure>
                             <figure>
                                 <img class="lixeira" src="../templates/assets/img/lixeira.png" alt="Deletar Produto">
