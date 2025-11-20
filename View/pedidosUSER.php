@@ -3,6 +3,7 @@
 require_once '../vendor/autoload.php';
 use Controller\PedidoController;
 use Controller\ProductController;
+use Controller\ClienteController;
 session_start();
 
 if($_SESSION['id_cliente'] !== null) {
@@ -13,13 +14,16 @@ if($_SESSION['id_cliente'] !== null) {
 
 $pedidoController = new PedidoController();
 $productController = new ProductController();
+$clienteController = new ClienteController();
 
 if($_SERVER['REQUEST_METHOD'] === 'POST') {
     if(!empty($_POST['codigoApagar'])){
         $codigo = $_POST['codigoApagar'];
-        $pedidoController->deletePedidoByCodigo($codigo);
+        $pedidoController->updateStatusPedido($codigo, 'Cancelado');
     }
 }
+
+$imagemCliente = $clienteController->getClienteById($id_cliente)['imagem_cliente'];
 
 $pedidos = $pedidoController->getAllUserPedidos($id_cliente);
 
@@ -89,8 +93,8 @@ $pedidos = $pedidoController->getAllUserPedidos($id_cliente);
                      </figure>
                 </a>
                 <a href="perfil.php">
-                    <figure class="perfil">
-                        <img src="../templates/assets/img/perfil.png" alt="">
+                    <figure class="perfil perfilFigure">
+                        <img class="profileButton" src="data:image/jpeg;base64,<?php echo base64_encode($imagemCliente);?>" alt="">
                     </figure>
                 </a>
             </div>
@@ -215,17 +219,31 @@ $pedidos = $pedidoController->getAllUserPedidos($id_cliente);
                     echo '
                     <div class="pedido">
                     <div class="ilustracao">
-                        <div class="statusretirado">
-                        <p class="statusok">
-                            Retirado
-                        </p>
-                        </div>
-                        <div class="statuspendente">
-                        <p class="statuspend">
-                            A retirar
-                        </p>
-                        </div>
-                        <figure>
+                        '; if($value['status'] == 'A retirar') {
+                            echo '
+                            <div class="statuspendente">
+                            <p class="statuspend">
+                                A retirar
+                            </p>
+                            </div>
+                            ';
+                        } else if ($value['status'] == 'Retirado') {
+                            echo '
+                            <div class="statusretirado">
+                            <p class="statusok">
+                                Retirado
+                            </p>
+                            </div>
+                            ';
+                        } else if ($value['status'] == 'Cancelado') {
+                            echo '
+                            <div class="statuscancelado">
+                            <p class="statuscanc">
+                                Cancelado
+                            </p>
+                            </div>
+                            ';
+                        } echo '<figure>
                             <img src="../templates/assets/img/ilustracao.png" alt="">
                         </figure>
                     </div>
@@ -270,8 +288,7 @@ $pedidos = $pedidoController->getAllUserPedidos($id_cliente);
                         <button class="detalhes">Ver Detalhes</button>
                         <form method="POST"><input class="postPedido" name="codigo" type="hidden"><input class="apagarPedido" name="codigoApagar" type="hidden"><button class="cancelar" name="codigoApagar">Cancelar Pedido</button></form>
                     </div>
-                </div>
-                    ';
+                </div>';
                 }
                 ?>
                 

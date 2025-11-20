@@ -6,6 +6,13 @@ function isAdmLoggedIn()
     return isset($_SESSION['id_adm']) && isset($_SESSION['is_admin']) && $_SESSION['is_admin'] === true;
 }
 
+if($_SESSION['id_adm'] !== null) {
+    $idAdm = $_SESSION['id_adm'];
+} else {
+    header('Location: login.php');
+}
+
+
 if (!isAdmLoggedIn()) {
     session_unset();
     session_destroy();
@@ -19,6 +26,7 @@ require_once __DIR__ . '/../Model/Adm.php';
 $admModel = new \Model\Adm();
 $admController = new \Controller\AdmController();
 
+$imagem_adm = $admController->getAdmById($idAdm)['imagem_adm'];
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['action']) && $_POST['action'] === 'update_profile') {
         $admController->updateAdm(
@@ -217,12 +225,12 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
 
                 <!-- Ícones de Ação (Sempre visíveis, no final) -->
                 <li class="nav-right">
-                    <a href="#" class="icon-link">
+                    <a href="empresa.php" class="icon-link">
                         <figure><img src="/meuManoBurger/templates/assets/img/Voltar.png" alt="Voltar" class="icon-img">
                         </figure>
                     </a>
                     <a href="#" class="icon-link">
-                        <figure><img src="/meuManoBurger/templates/assets/img/MiniPerfil.png" alt="Perfil"
+                        <figure class="perfilFigure"><img class="profileButton" src="data:image/jpeg;base64,<?php echo base64_encode($imagem_adm);?>" alt="Perfil"
                                 class="icon-img"></figure>
                     </a>
                 </li>

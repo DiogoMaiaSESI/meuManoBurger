@@ -6,6 +6,7 @@ require_once __DIR__ . '/../Model/Adm.php';
 
 use Model\Adm;
 use Exception;
+use PDOException;
 
 class AdmController
 {
@@ -57,6 +58,15 @@ class AdmController
     {
         return $this->AdmModel->getAdmById($id_adm);
     }
+
+    public function getAdmById ($id_adm) {
+        try {
+            return $this->AdmModel->getAdmById($id_adm);
+        } catch (PDOException $e) {
+            throw new Exception('Erro ao pegar adm pelo id: ' . $e);
+        }
+    }
+
     public function generate2FASecret($id_adm, $email_adm)
     {
         try {

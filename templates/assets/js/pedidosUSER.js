@@ -24,14 +24,6 @@ document.addEventListener('DOMContentLoaded', function () {
   const btnnao = document.querySelector('.nao')
   let Pedidoatual = null
 
-  pedidos.forEach((pedido) => {
-
-    const codigo = pedido.querySelector('.codigo').textContent;
-    if (pedidosRemovidos.includes(codigo)) {
-      pedido.style.display = 'none'
-    }
-  })
-
   if (fechar) {
     fechar.addEventListener('click', () => {
       modaldetalhes.style.display = 'none'
@@ -48,6 +40,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const form = pedido.querySelector('form')
     const detalhesBtn = pedido.querySelector('.detalhes')
     const statusPendente = pedido.querySelector('.statuspendente')
+    const statusRetirado = pedido.querySelector('.statusretirado')
+    const statusCancelado = pedido.querySelector('.statuscancelado')
     const cancelar = pedido.querySelector('.cancelar')
     let codigoatual = pedido.querySelector('.codigo')
     let horaatual = pedido.querySelector('.hora')
@@ -56,9 +50,6 @@ document.addEventListener('DOMContentLoaded', function () {
       e.preventDefault()
     })
 
-    if (pedidosRemovidos.includes(codigoatual.textContent)) {
-      return;
-    }
 
     detalhesBtn.addEventListener('click', () => {
       let codigomodal = document.querySelector('.modaldetalhes .codigotexto')
@@ -70,7 +61,14 @@ document.addEventListener('DOMContentLoaded', function () {
       let horamodal = document.querySelector('.modaldetalhes .modalhora p')
       horamodal.textContent = horaatual.textContent
 
-      let statuspedido = statusPendente.style.display !== 'none' ? 'A retirar' : 'Retirado'
+      let statuspedido
+      if(statusPendente) {
+        statuspedido = 'A retirar'
+      } else if (statusRetirado) {
+        statuspedido = 'Retirado'
+      } else if (statusCancelado) {
+        statuspedido = 'Cancelado'
+      }
 
       const statusModal = document.querySelector('.modaldetalhes .modalstatus p')
       statusModal.textContent = statuspedido
@@ -98,12 +96,10 @@ document.addEventListener('DOMContentLoaded', function () {
     inputPost.value = null
     inputApagar.value = codigo
     form.submit()
-      const codigoPedido = Pedidoatual.querySelector('.codigo').textContent;
-      pedidosRemovidos.push(codigoPedido);
-      localStorage.setItem('pedidosRemovidos', JSON.stringify(pedidosRemovidos));
-      
-      Pedidoatual.style.display = 'none'
-      Pedidoatual = null
+    const codigoPedido = Pedidoatual.querySelector('.codigo').textContent;
+    
+    Pedidoatual.style.display = 'none'
+    Pedidoatual = null
 
   })
 
@@ -118,9 +114,8 @@ document.addEventListener('DOMContentLoaded', function () {
       const hora = pedido.querySelector('.hora').textContent
       const data = pedido.querySelector('.data').textContent
 
-      const foiRemovido = pedidosRemovidos.includes(pedido.querySelector('.codigo').textContent);
 
-      if ((codigo.includes(texto) || hora.includes (texto) || data.includes(texto)) && foiRemovido===false) {
+      if ((codigo.includes(texto) || hora.includes (texto) || data.includes(texto))) {
         pedido.style.display = 'flex'
       } else {
         pedido.style.display = 'none'

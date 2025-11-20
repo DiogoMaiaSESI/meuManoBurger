@@ -5,7 +5,16 @@ require_once __DIR__ . '/../Controller/ClienteController.php';
 require_once __DIR__ . '/../Model/Cliente.php';
 
 $clienteModel = new \Model\Cliente();
-$clienteController = new \Controller\ClienteController($clienteModel);
+$clienteController = new \Controller\ClienteController();
+
+if($_SESSION['id_cliente'] !== null) {
+    $id_cliente = $_SESSION['id_cliente'];
+} else {
+    header('Location: login.php');
+}
+
+$imagemCliente = $clienteController->getClienteById($id_cliente)['imagem_cliente'];
+
 
 // --- LÓGICA DE ATUALIZAÇÃO ---
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'update_profile') {
@@ -96,7 +105,6 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meu Perfil - Meu Mano Burger</title>
     <link rel="stylesheet" href="/meuManoBurger/templates/assets/css/perfil.css">
-    <link rel="stylesheet" href="/meuManoBurger/templates/assets/css/formasPagamento.css">
     <link rel="stylesheet" href="/meuManoBurger/templates/assets/css/meusFavoritos.css">
     <link rel="stylesheet" href="/meuManoBurger/templates/assets/css/seguranca.css">
     <link rel="stylesheet" href="/meuManoBurger/templates/assets/css/modalPagamento.css">
@@ -263,7 +271,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
                         </figure>
                     </a>
                     <a href="#" class="icon-link">
-                        <figure><img src="/meuManoBurger/templates/assets/img/MiniPerfil.png" alt="Perfil"
+                        <figure class="perfilFigure"><img class="profileButton" src="data:image/jpeg;base64,<?php echo base64_encode($imagemCliente);?>" alt="Perfil"
                                 class="icon-img"></figure>
                     </a>
                 </li>
@@ -284,7 +292,6 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
                     <li><a href="#" id="btn-dados" class="nav-link active">Meus dados</a></li>
                     <li><a href="#" id="btn-historico" class="nav-link">Histórico de Pedidos</a></li>
                     <li><a href="#" id="btn-favoritos" class="nav-link">Meus Favoritos</a></li>
-                    <li><a href="#" id="btn-pagamento" class="nav-link">Formas de Pagamento</a></li>
                     <li><a href="#" id="btn-seguranca" class="nav-link">Segurança</a></li>
                     <li><a href="#" id="btn-sair" class="nav-link">Sair da Conta</a></li>
                 </ul>
@@ -340,16 +347,6 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
                     </form>
                 </div>
             </div>
-            </div>
-
-            <div id="content-pagamento" class="content-tab">
-                <div class="form-card">
-                    <div class="form-header">
-                        <h2>Formas de Pagamento</h2>
-                    </div>
-                    <div id="payment-methods-list" class="payment-methods-list"></div>
-                    <button type="button" class="add-payment-btn">Adicionar forma de pagamento</button>
-                </div>
             </div>
 
             <div id="content-favoritos" class="content-tab">

@@ -5,6 +5,7 @@ require_once __DIR__ . '/../Model/Cliente.php';
 
 use Model\Cliente;
 use Exception;
+use PDOException;
 
 class ClienteController
 {
@@ -87,6 +88,15 @@ class ClienteController
     {
         return $this->clienteModel->getClienteInfo($nome_cliente, $email_cliente, $senha_cliente, $imagem_cliente);
     }
+
+    public function getClienteById ($id_cliente) {
+        try {
+            return $this->clienteModel->getClienteById($id_cliente);
+        } catch (PDOException $e) {
+            throw new Exception('Erro ao pegar cliente pelo id: ' . $e);
+        }
+    }
+
     public function updatePassword($id_cliente, $nova_senha, $confirmar_senha)
     {
         if (empty($id_cliente) || empty($nova_senha) || empty($confirmar_senha)) {

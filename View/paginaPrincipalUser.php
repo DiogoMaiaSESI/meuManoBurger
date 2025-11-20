@@ -1,5 +1,19 @@
 <?php
 session_start();
+
+
+require_once('../Controller/ClienteController.php');
+use Controller\ClienteController;
+$clienteController = new ClienteController();
+
+if($_SESSION['id_cliente'] !== null) {
+    $id_cliente = $_SESSION['id_cliente'];
+} else {
+    header('Location: login.php');
+}
+
+if($_SERVER['REQUEST_METHOD'] === 'POST'){
+    if(!empty($_POST['product_id'])){
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!empty($_POST['product_id'])) {
         $_SESSION['product_id_details'] = $_POST['product_id'];
@@ -29,6 +43,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 }
+
+$imagemCliente = $clienteController->getClienteById($id_cliente)['imagem_cliente'];
+
+
+$imagemCliente = $clienteController->getClienteById($id_cliente)['imagem_cliente'];
+
 
 // --- 3. PREPARAÇÃO DE DADOS PARA RENDERIZAR A PÁGINA (Método GET) ---
 
@@ -164,6 +184,28 @@ $isClienteLoggedIn = isset($_SESSION['id_cliente']);
                         <h5>Carrinho</h5>
                     </div>
                 </div>
+                </div>
+            </div>
+            <div class="sombra"></div>
+            
+                <figure class="figure_logo">
+                    <img src="../templates/assets/img/Logo.png" alt="">
+                </figure>
+            
+            
+            <div class="carrinho_perfil">
+                <a href="carrinho.php">
+                    <figure>
+                        <img class="carrinhoPerfilImg" src="../templates/assets/img/carrinho.png" alt="">
+                    </figure>
+                </a>
+                
+                <a href="perfil.php">
+                    <figure class="perfilFigure">
+                        <img class="profileButton" src="data:image/jpeg;base64,<?php echo base64_encode($imagemCliente);?>" alt="">
+                    </figure>
+                </a>
+            </div>
             </div>
         </div>
         <div class="sombra"></div>
