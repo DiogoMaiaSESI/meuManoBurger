@@ -3,6 +3,7 @@ session_start();
 
 
 require_once('../Controller/ClienteController.php');
+require_once('../Controller/FeedbackController.php');
 use Controller\ClienteController;
 $clienteController = new ClienteController();
 
@@ -22,8 +23,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
 $imagemCliente = $clienteController->getClienteById($id_cliente)['imagem_cliente'];
 
-
-$imagemCliente = $clienteController->getClienteById($id_cliente)['imagem_cliente'];
 
 
 // --- 3. PREPARAÇÃO DE DADOS PARA RENDERIZAR A PÁGINA (Método GET) ---
@@ -46,7 +45,7 @@ $isClienteLoggedIn = isset($_SESSION['id_cliente']);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="../templates/assets/img/Logo.png">
-    <link rel="stylesheet" href="../templates/assets/css/PaginaPrincipalUser.css">
+    <link rel="stylesheet" href="../templates/assets/css/paginaPrincipalUser.css">
     <style>
         .feedbackcontainer {
             margin-bottom: 3.0rem;
@@ -182,20 +181,6 @@ $isClienteLoggedIn = isset($_SESSION['id_cliente']);
                     </figure>
                 </a>
             </div>
-            </div>
-        </div>
-        <div class="sombra"></div>
-        <figure class="figure_logo">
-            <img src="../templates/assets/img/Logo.png" alt="Logo MeuManoBurger">
-        </figure>
-        <div class="carrinho_perfil">
-            <a href="carrinho.php">
-                <figure><img src="../templates/assets/img/carrinho.png" alt="Carrinho"></figure>
-            </a>
-            <a href="perfil.php">
-                <figure><img src="../templates/assets/img/perfil.png" alt="Perfil"></figure>
-            </a>
-        </div>
     </header>
 
     <main>

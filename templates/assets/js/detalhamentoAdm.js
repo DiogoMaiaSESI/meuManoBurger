@@ -1,126 +1,119 @@
-// [BLOCO DE SEGURANÇA] Espera o HTML inteiro ser carregado antes de executar qualquer coisa.
 document.addEventListener('DOMContentLoaded', function () {
 
-    // --- Seletores Únicos e Centralizados ---
-    // [NOTA] Cada variável aponta para um único elemento no seu HTML. Sem duplicatas.
+    // ===================================================================
+    // 1. SELETORES DE ELEMENTOS (com verificações)
+    // ===================================================================
+
+    // --- Ícones e Navegação ---
     const menuIcon = document.querySelector('.menu');
     const backButton = document.querySelector('.back');
     const lapisIcon = document.querySelector('.lapis');
     const lixeiraIcon = document.querySelector('.lixeira');
-    
     const optionsMenu = document.querySelector('.options');
     const sombraMenu = document.querySelector('.sombra');
-    const sombraForm = document.querySelector('.sombraForm');
-    const deleteFormOverlay = document.querySelector('.deleteForm');
 
-    // [PONTO CRÍTICO] Seleciona os modais pelos IDs e classes que definimos no HTML.
+    // --- Formulário e Modal de Edição ---
     const editModal = document.getElementById('edit-product-form');
-    const deleteModal = document.querySelector('.apagar');
+    const sombraForm = document.querySelector('.sombraForm');
+    const previewImage = editModal ? editModal.querySelector('#edit-preview-img') : null;
+    const fotoInputEdit = editModal ? editModal.querySelector('#edit-foto-input') : null;
+    const btnCancelarEdit = editModal ? editModal.querySelector('.cancelar') : null;
 
-    if (!menuIcon || !backButton || !lapisIcon || !lixeiraIcon || !editModal || !deleteModal) {
-        console.error("ERRO FATAL: Um ou mais elementos essenciais da página (ícones, modais) não foram encontrados. O script não pode continuar. Verifique os seletores e o HTML.");
-        return;
-    }
+    // --- Formulário e Modal de Exclusão ---
+    const deleteForm = document.getElementById('delete-product-form');
+    const deleteOverlay = document.querySelector('.deleteForm');
+    const deleteModal = deleteForm ? deleteForm.querySelector('.apagar') : null;
+    const btnCancelarDelete = deleteForm ? deleteForm.querySelector('.cancelar2') : null;
 
-    const btnCancelarEdit = editModal.querySelector('.cancelar');
-    const btnConfirmEdit = editModal.querySelector('.editar');
-    const btnCancelarDelete = deleteModal.querySelector('.cancelar2');
-    const btnConfirmDelete = deleteModal.querySelector('.deletar');
-    const figContainerEdit = editModal.querySelector('.foto figure');
-    const fotoInputEdit = editModal.querySelector('#edit-foto-input');
+    // ===================================================================
+    // 2. FUNÇÕES DE TOGGLE (para mostrar/esconder)
+    // ===================================================================
 
     const toggleSideMenu = () => {
-        optionsMenu.classList.toggle('optionActive');
-        sombraMenu.classList.toggle('shadowActive');
+        if (optionsMenu && sombraMenu) {
+            optionsMenu.classList.toggle('optionActive');
+            sombraMenu.classList.toggle('shadowActive');
+        }
     };
+
     const toggleEditModal = () => {
-        editModal.classList.toggle('formActive');
-        sombraForm.classList.toggle('shadowFormActive');
+        if (editModal && sombraForm) {
+            editModal.classList.toggle('formActive');
+            sombraForm.classList.toggle('shadowFormActive');
+        }
     };
+
     const toggleDeleteModal = () => {
-        deleteModal.classList.toggle('apagarActive');
-        deleteFormOverlay.classList.toggle('deleteFormActive');
+        if (deleteOverlay && deleteModal) {
+            deleteOverlay.classList.toggle('deleteFormActive');
+            deleteModal.classList.toggle('apagarActive');
+        }
     };
 
-    menuIcon.addEventListener('click', toggleSideMenu);
-    sombraMenu.addEventListener('click', toggleSideMenu);
-    backButton.addEventListener('click', () => window.history.back());
+    // ===================================================================
+    // 3. EVENT LISTENERS (Ouvintes de Ações)
+    // ===================================================================
 
-    lapisIcon.addEventListener('click', () => {
-        document.getElementById('edit-nome').value = document.querySelector('.rightDiv .title h2').textContent.trim();
-        document.getElementById('edit-descricao').value = document.querySelector('.rightDiv p').textContent.trim();
-        document.getElementById('edit-preco').value = parseFloat(document.querySelector('.rightDiv .price').textContent.replace('R$', '').replace(',', '.').trim());
-        document.getElementById('edit-quantidade').value = parseInt(document.querySelector('.secondDiv div:nth-child(2) .subtitle2').textContent.trim());
-        document.getElementById('edit-tipo').value = document.querySelector('.secondDiv div:nth-child(1) .subtitle2').textContent.trim();
-        document.getElementById('edit-id-produto').value = new URLSearchParams(window.location.search).get('id');
-        figContainerEdit.src = document.querySelector('.leftDiv img').src;
-        toggleEditModal();
-    });
-    lixeiraIcon.addEventListener('click', toggleDeleteModal);
+    // --- Navegação e Menu ---
+    if (menuIcon) menuIcon.addEventListener('click', toggleSideMenu);
+    if (sombraMenu) sombraMenu.addEventListener('click', toggleSideMenu);
+    if (backButton) backButton.addEventListener('click', () => window.history.back());
 
-    btnCancelarEdit.addEventListener('click', toggleEditModal);
-    sombraForm.addEventListener('click', () => editModal.classList.contains('formActive') && toggleEditModal());
-    btnCancelarDelete.addEventListener('click', toggleDeleteModal);
-    deleteFormOverlay.addEventListener('click', () => deleteModal.classList.contains('apagarActive') && toggleDeleteModal());
-
-    figContainerEdit.addEventListener('click', () => fotoInputEdit.click());
-    fotoInputEdit.addEventListener('change', function() {
-        if (this.files && this.files[0]) {
-            const reader = new FileReader();
-            reader.onload = (e) => { figContainerEdit.src = e.target.result; };
-            reader.readAsDataURL(this.files[0]);
-        }
-    });
-
-    editModal.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const formData = new FormData(editModal);
-        try {
-            const response = await fetch('/meuManoBurger/View/api_adm.php?action=update_product', { method: 'POST', body: formData });
-            const result = await response.json();
-            if (result.success) {
-                alert('Produto atualizado com sucesso!');
-                window.location.reload();
-            } else {
-                alert('Erro ao atualizar: ' + (result.message || 'Verifique os campos.'));
+    // --- Abrir Modal de Edição ---
+    if (lapisIcon) {
+        lapisIcon.addEventListener('click', () => {
+            if (!editModal) return; // Segurança extra
+            // Preenche o formulário
+            document.getElementById('edit-nome').value = document.querySelector('.rightDiv .title h2').textContent.trim();
+            document.getElementById('edit-descricao').value = document.querySelector('.rightDiv p').textContent.trim();
+            const priceText = document.querySelector('.rightDiv .price').textContent.replace('R$', '').replace(/\./g, '').replace(',', '.').trim();
+            document.getElementById('edit-preco').value = parseFloat(priceText);
+            document.getElementById('edit-quantidade').value = parseInt(document.querySelector('.secondDiv div:nth-child(2) .subtitle2').textContent.trim());
+            document.getElementById('edit-tipo').value = document.querySelector('.secondDiv div:nth-child(1) .subtitle2').textContent.trim();
+            const productId = document.getElementById('delete-id-produto').value;
+            document.getElementById('edit-id-produto').value = productId;
+            if (previewImage) {
+                previewImage.src = document.querySelector('.leftDiv img').src;
             }
-        } catch (error) {
-            alert('Erro de comunicação ao editar.');
-        }
-    });
+            toggleEditModal();
+        });
+    }
 
-    btnConfirmDelete.addEventListener('click', async () => {
-        const productId = new URLSearchParams(window.location.search).get('id');
-        try {
-            const response = await fetch('/meuManoBurger/View/api_adm.php?action=delete_product', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ id_produto: productId })
+    // --- Abrir Modal de Exclusão ---
+    if (lixeiraIcon) {
+        lixeiraIcon.addEventListener('click', toggleDeleteModal);
+    }
+
+    // --- Fechar Modais ---
+    if (btnCancelarEdit) btnCancelarEdit.addEventListener('click', (e) => { e.preventDefault(); toggleEditModal(); });
+    if (btnCancelarDelete) btnCancelarDelete.addEventListener('click', (e) => { e.preventDefault(); toggleDeleteModal(); });
+    if (sombraForm) sombraForm.addEventListener('click', () => { if (editModal && editModal.classList.contains('formActive')) toggleEditModal(); });
+    if (deleteOverlay) deleteOverlay.addEventListener('click', () => { if (deleteModal && deleteModal.classList.contains('apagarActive')) toggleDeleteModal(); });
+
+    // --- Lógica de Troca de Imagem ---
+    if (previewImage) {
+        previewImage.addEventListener('click', () => {
+            if (fotoInputEdit) fotoInputEdit.click();
+        });
+    }
+    if (fotoInputEdit) {
+        fotoInputEdit.addEventListener('change', function() {
+            if (this.files && this.files[0]) {
+                const reader = new FileReader();
+                reader.onload = (e) => { if (previewImage) previewImage.src = e.target.result; };
+                reader.readAsDataURL(this.files[0]);
+            }
+        });
+    }
+
+    // --- Navegação do Menu Lateral ---
+    const optionLinks = document.querySelectorAll('.option');
+    if (optionLinks.length > 0) {
+        optionLinks.forEach((op, index) => {
+            op.addEventListener('click', () => {
+                const urls = ['cardapio_adm.php', 'pedidosADM.php', 'empresa.php#feedback'];
+                if (urls[index]) window.location.href = urls[index];
             });
-            const result = await response.json();
-            if (result.success) {
-                alert('Produto deletado com sucesso!');
-                window.location.href = 'cardapioAdm.php';
-            } else {
-                alert('Erro ao deletar: ' + (result.message || 'Tente novamente.'));
-            }
-        } catch (error) {
-            alert('Erro de comunicação ao deletar.');
-        }
-    });
+        });
+    }
 });
-
-
-
-const option = document.querySelectorAll('.option')
-option.forEach((op, index)=>{
-    op.addEventListener('click',()=>{
-        if(index===0){
-            window.location.href = 'cardapio_adm.php'
-        }else if(index===1){
-            window.location.href = 'pedidosADM.php'
-        }else if(index===2){
-            window.location.href = 'empresa.php#feedback'
-        }
-    })
-})

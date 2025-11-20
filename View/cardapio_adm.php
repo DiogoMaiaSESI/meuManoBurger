@@ -54,14 +54,15 @@ function renderProductCard($product)
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Verifica se um 'id_produto' foi enviado via POST
     if (!empty($_POST['id_produto'])) {
-        // 1. Limpa e valida o ID recebido via POST.
+        // Limpa e valida o ID
         $productId = filter_var($_POST['id_produto'], FILTER_VALIDATE_INT);
-
-        // 2. Se o ID for válido...
         if ($productId) {
-            // 3. Redireciona para a página de detalhes, passando o ID na URL (GET).
-            header('Location: detalhamentoAdm.php?id=' . $productId);
+            // Salva o ID na sessão
+            $_SESSION['product_id'] = $productId;
+            // Redireciona para a página de detalhes (sem ID na URL)
+            header('Location: detalhamentoAdm.php');
             exit();
         }
     }

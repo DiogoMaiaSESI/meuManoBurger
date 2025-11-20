@@ -19,8 +19,41 @@ $estoqueModel = new \Model\Estoque();
 $productController = new \Controller\ProductController($productModel, $estoqueModel);
 $estoqueController = new \Controller\EstoqueController();
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $action = $_POST['action'] ?? null;
+
+    // Ação para ATUALIZAR o produto
+    if ($action === 'update_product') {
+        $updateResult = $productController->update(); // O controller já lê o $_POST
+        if ($updateResult['success']) {
+            $_SESSION['success_message'] = 'Produto atualizado com sucesso!';
+        } else {
+            $_SESSION['error_message'] = 'Erro ao atualizar: ' . ($updateResult['message'] ?? 'Verifique os campos.');
+        }
+        // Recarrega a página para mostrar a mensagem e os dados atualizados
+        header('Location: ' . $_SERVER['REQUEST_URI']);
+        exit;
+    }
+
+    // Ação para DELETAR o produto
+    if ($action === 'delete_product') {
+        // O método delete() do controller precisa ser ajustado para ler de $_POST
+        $deleteResult = $productController->delete(); 
+        if ($deleteResult['success']) {
+            $_SESSION['success_message'] = 'Produto deletado com sucesso!';
+            header('Location: cardapioAdm.php');
+            exit;
+        } else {
+            $_SESSION['error_message'] = 'Erro ao deletar o produto.';
+            header('Location: ' . $_SERVER['REQUEST_URI']);
+            exit;
+        }
+    }
+}
+
+
 // --- 3. LÓGICA PARA BUSCAR O PRODUTO ---
-$productId = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
+$productId = $_SESSION['product_id'];
 if (!$productId) {
     die('Erro: ID do produto não fornecido ou inválido.');
 }
@@ -60,6 +93,7 @@ elseif (isset($_SESSION['id_cliente'])) {
 
 <body>
     <form id="edit-product-form" class="modal-form" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="action" value="update_product">    
         <div class="formLeft">
             <h2>Editar lanche</h2>
             <div class="inputs">
@@ -112,18 +146,23 @@ elseif (isset($_SESSION['id_cliente'])) {
             </div>
         </div>
     </form>
-    <div class="apagar">
-        <div class="text">
-            <h3>Confirmar exclusão</h3>
-            <h4>Tem certeza que deseja deletar este lanche?</h4>
+    <form id="delete-product-form" class="deleteForm "method="POST">
+        <input type="hidden" name="action" value="delete_product">
+        <input type="hidden" id="delete-id-produto" name="id_produto" value="<?php echo $productId; ?>">
+
+        <div class="apagar">
+            <div class="text">
+                <h3>Confirmar exclusão</h3>
+                <h4>Tem certeza que deseja deletar este lanche?</h4>
+            </div>
+            <div class="botoes">
+                <button type="button" class="cancelar2">Cancelar</button>
+                <!-- O botão de deletar agora é do tipo 'submit' -->
+                <button type="submit" class="deletar">Deletar</button>
+            </div>
         </div>
-        <div class="botoes">
-            <button class="cancelar2">Cancelar</button>
-            <button class="deletar">Deletar</button>
-        </div>
-    </div>
+    </form>
     <div class="sombraForm"></div>
-    <div class="deleteForm"></div>
     <header>
         <div class="sandwich">
             <figure class="menu">

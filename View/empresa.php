@@ -60,7 +60,7 @@ $imagem_adm = $admController->getAdmById($idAdm)['imagem_adm'];
         </header>
         <main>
             <figure class="hamburger">
-                <img src="../templates/assets/img/hamburguer.png" alt="" class="hambImg">
+                <img src="../templates/assets/img/hamburger.png" alt="" class="hambImg">
             </figure>
             <h1 class="title">Controle o <span>fluxo de pedidos</span> e realize o atendimento com agilidade</h1>
         </main>
