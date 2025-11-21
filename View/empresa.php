@@ -170,5 +170,15 @@ $imagem_adm = $admController->getAdmById($idAdm)['imagem_adm'];
             <h4>Copyright © 2025 Meumanoburger - Todos os Direitos Reservados</h4>
         </footer>
         <script src="../templates/assets/js/empresa.js"></script>
+  <div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+      <div class="vw-plugin-top-wrapper"></div>
+    </div>
+  </div>
+  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+  <script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+  </script>
     </body>
 </html>

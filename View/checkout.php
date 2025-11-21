@@ -64,5 +64,15 @@ $qrCodeImageUrl = 'https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=' .
         <div class="payload-text"><?php echo $payload; ?></div>
         <p style="margin-top: 20px;">Após o pagamento, seu pedido será confirmado.</p>
     </div>
+  <div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+      <div class="vw-plugin-top-wrapper"></div>
+    </div>
+  </div>
+  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+  <script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+  </script>
 </body>
 </html>

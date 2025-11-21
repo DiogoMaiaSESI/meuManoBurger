@@ -342,6 +342,16 @@ $isClienteLoggedIn = isset($_SESSION['id_cliente']);
     <form method="POST"><input class="product_id" type="hidden" name="product_id"></form>
 
     <script src="../templates/assets/js/PaginaPrincipalUser.js"></script>
+  <div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+      <div class="vw-plugin-top-wrapper"></div>
+    </div>
+  </div>
+  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+  <script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+  </script>
 </body>
 
 </html>
