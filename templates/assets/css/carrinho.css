@@ -8,6 +8,16 @@
     z-index: 1000;
 }
 
+.setas {
+    width: 2.5rem;
+}
+
+.setaButton {
+    background-color: transparent;
+    border-style: none;
+    cursor: pointer;
+}
+
 .header-nav {
     display: flex;
     align-items: center;

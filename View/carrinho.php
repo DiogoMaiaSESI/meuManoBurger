@@ -18,11 +18,7 @@ $clienteController = new ClienteController();
 
 $imagemCliente = $clienteController->getClienteById($id_cliente)['imagem_cliente'];
 
-$cartProducts = $carrinhoController->getAllCartProducts($id_cliente);
-$products = [];
-foreach ($cartProducts as $cartProduct) {
-    $products[] = $cartProduct['id_produto_fk'];
-}
+
 if($_SERVER['REQUEST_METHOD'] === 'POST') {
     if(!empty($_POST['horario'])){
         $_SESSION['horario'] = $_POST['horario'];
@@ -34,7 +30,16 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
         header('Location: detalhamentoUser.php');
         exit;
     }
+    if(!empty($_POST['cima'])) {
+        $carrinhoController->sumOneToProduct($_POST['cima'], $id_cliente);
+    }
+    if(!empty($_POST['baixo'])) {
+        $carrinhoController->subtractOneToProduct($_POST['baixo'], $id_cliente);
+    }
 }
+$cartProducts = $carrinhoController->getAllCartProducts($id_cliente);
+$products = [];
+$products = array_column($cartProducts, 'id_produto_fk');
 $total = 0;
 ?>
 
@@ -221,7 +226,11 @@ $total = 0;
                                     <div class="item-info">
                                         <img src="'. $imageBase64 .'" alt="Hambúrguer" class="item-image">
                                         <span class="item-name">' . $qtd . 'x ' . $prod['nome_produto'] . '</span>
-                                    </div>
+                                        <form method="POST">
+                                            <button class="setaButton" name="cima" value="'. $prod['id_produto'] .'"><img class="setas setaCima" src="../templates/assets/img/seta-para-cima.png"></button>
+                                            <button class="setaButton" name="baixo" value="'. $prod['id_produto'] .'"><img class="setas setaBaixo" src="../templates/assets/img/seta-para-baixo.png"></button>
+                                        </form>
+                                        </div>
                                     <span class="item-price">R$ '. number_format($prod['preco_produto'],2,',','.') . '</span>
                                 </li>';
                                 }
