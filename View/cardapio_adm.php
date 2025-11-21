@@ -1,9 +1,16 @@
 <?php
 require_once('../vendor/autoload.php');
 use Controller\ProductController;
+use Controller\AdmController;
 
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
+}
+
+if($_SESSION['id_adm'] !== null) {
+    $idAdm = $_SESSION['id_adm'];
+} else {
+    header('Location: login.php');
 }
 
 // MODELS necessários para o construtor
@@ -11,7 +18,10 @@ $productModel = new \Model\Product();
 $estoqueModel = new \Model\Estoque();
 
 // AGORA sim o controller funciona
-$productController = new ProductController($productModel, $estoqueModel);
+$productController = new ProductController();
+$admController = new AdmController();
+
+$imagem_adm = $admController->getAdmById($idAdm)['imagem_adm'];
 
 $newProduct = null;
 $targetCategoryClass = '';
@@ -123,8 +133,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </figure>
                 </a>
                 <a href="perfil_adm.php">
-                    <figure class="perfil_header">
-                        <img src="../templates/assets/img/perfil.png" alt="Foto de perfil" />
+                    <figure class="perfil_header perfilFigure">
+                        <img class="profileButton" src="data:image/jpeg;base64,<?php echo base64_encode($imagem_adm);?>" alt="Foto de perfil" />
                     </figure>
                 </a>
             </div>
@@ -435,17 +445,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <footer>
         <h2>Copyright © 2025 Meumanoburguer - Todos os Direitos Reservados</h2>
     </footer>
-    <script src="../templates/assets/js/cardapio_adm.js"></script>
-  <div vw class="enabled">
-    <div vw-access-button class="active"></div>
-    <div vw-plugin-wrapper>
-      <div class="vw-plugin-top-wrapper"></div>
+    <div vw class="enabled">
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+            <div class="vw-plugin-top-wrapper"></div>
+        </div>
     </div>
-  </div>
-  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
-  <script>
-    new window.VLibras.Widget('https://vlibras.gov.br/app');
-  </script>
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script>
+        new window.VLibras.Widget('https://vlibras.gov.br/app');
+        </script>
+        <script src="../templates/assets/js/cardapio_adm.js"></script>
+        <script>
+            const opcoes = document.querySelector('.options')
+const menu = document.querySelector('.menu')
+const sombra = document.querySelector('.sombra')
+const sandwich = document.querySelector('.sandwich')
+menu.addEventListener('click', () => {
+    sandwich.classList.toggle('sandwichActive') 
+    opcoes.classList.toggle('optionActive')
+    sombra.classList.toggle('shadowActive')
+})
+sombra.addEventListener('click', () => {
+    opcoes.classList.toggle('optionActive')
+    sombra.classList.toggle('shadowActive')
+    sandwich.classList.toggle('sandwichActive')
+})
+        </script>
 </body>
 
 </html>

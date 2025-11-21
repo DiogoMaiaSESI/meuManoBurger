@@ -3,10 +3,19 @@
 require_once '../vendor/autoload.php';
 use Controller\PedidoController;
 use Controller\ProductController;
+use Controller\AdmController;
 session_start();
 $pedidoController = new PedidoController();
 $productController = new ProductController();
+$admController = new AdmController();
 
+if($_SESSION['id_adm'] !== null) {
+    $idAdm = $_SESSION['id_adm'];
+} else {
+    header('Location: login.php');
+}
+
+$imagem_adm = $admController->getAdmById($idAdm)['imagem_adm'];
 
 if($_SERVER['REQUEST_METHOD'] === 'POST') {
     if(!empty($_POST['codigo'])){
@@ -73,8 +82,8 @@ $pedidos = $pedidoController->getAllPedidos();
                     </figure>
                 </a>
                 <a href="perfil_adm.php">
-                    <figure class="perfil">
-                        <img src="../templates/assets/img/perfil.png" alt="">
+                    <figure class="perfil perfilFigure">
+                        <img class="profileButton" src="data:image/jpeg;base64,<?php echo base64_encode($imagem_adm);?>" alt="">
                     </figure>
                 </a>
             </div>

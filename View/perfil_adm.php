@@ -266,7 +266,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
                         </div>
                         <div class="profile-picture-container">
                             <figure>
-                                <img src="<?php echo $imagemAdm; ?>" alt="Foto de Perfil" id="profile-pic-preview"
+                                <img src="data:image/jpeg;base64,<?php echo base64_encode($imagem_adm);?>" alt="Foto de Perfil" id="profile-pic-preview"
                                     class="profile-picture">
                             </figure>
 

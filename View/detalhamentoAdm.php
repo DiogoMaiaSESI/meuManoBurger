@@ -7,18 +7,27 @@ if (!isset($_SESSION['id_adm']) || !isset($_SESSION['is_admin']) || $_SESSION['i
     exit;
 }
 
+if($_SESSION['id_adm'] !== null) {
+    $idAdm = $_SESSION['id_adm'];
+} else {
+    header('Location: login.php');
+}
+
 // --- 2. INCLUSÕES E INSTÂNCIAS ---
 require_once __DIR__ . '/../Model/Connection.php';
 require_once __DIR__ . '/../Model/Product.php';
 require_once __DIR__ . '/../Model/Estoque.php';
 require_once __DIR__ . '/../Controller/ProductController.php';
 require_once __DIR__ . '/../Controller/EstoqueController.php';
+require_once __DIR__ . '/../Controller/AdmController.php';
 
 $productModel = new \Model\Product();
 $estoqueModel = new \Model\Estoque();
 $productController = new \Controller\ProductController();
 $estoqueController = new \Controller\EstoqueController();
+$admController = new \Controller\AdmController();
 
+$imagem_adm = $admController->getAdmById($idAdm)['imagem_adm'];
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'] ?? null;
 
@@ -187,12 +196,6 @@ elseif (isset($_SESSION['id_cliente'])) {
                     </figure>
                     <h5>Feedbacks</h5>
                 </div>
-                <div class="option">
-                    <figure>
-                        <img src="../templates/assets/img/shoppingCart.png" alt="">
-                    </figure>
-                    <h5>Carrinho</h5>
-                </div>
             </div>
         </div>
         <div class="sombra"></div>
@@ -204,8 +207,8 @@ elseif (isset($_SESSION['id_cliente'])) {
                 <img class="back" src="../templates/assets/img/volte.png" alt="">
             </figure>
             <a href="<?php echo $urlPerfil; ?>">
-            <figure>
-                <img class="profileButton" src="../templates/assets/img/Profile.png" alt="">
+            <figure class="perfilFigure">
+                <img class="profileButton" src="data:image/jpeg;base64,<?php echo base64_encode($imagem_adm);?>" alt="">
             </figure>
             </a>
         </div>

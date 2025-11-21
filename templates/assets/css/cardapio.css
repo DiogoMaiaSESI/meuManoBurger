@@ -52,7 +52,7 @@ header{
     border-bottom-right-radius: 1rem;
 }
 .optionActive {
-    transform: translateX(0%);
+    transform: translateX(0%) !important;
     transition: 500ms;
 }
 .option {

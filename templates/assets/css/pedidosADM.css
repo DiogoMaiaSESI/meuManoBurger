@@ -6,8 +6,8 @@ header {
 }
 
 .perfilFigure {
-    width: 5.5rem;
-    height: 5.5rem;
+    width: 3.5rem;
+    height: 3.5rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -120,11 +120,6 @@ h5 {
 .logo img {
     width: 9rem;
     height: 7rem;
-}
-
-.perfil img {
-    width: 4rem;
-    height: 4rem;
 }
 
 .voltar img {
@@ -710,10 +705,18 @@ button.statusbtn.statusbtndesabilitado:hover {
         font-size: 1.6rem;
     }
 
-    .voltar img,
-    .perfil img {
+    .voltar img{
         width: 3.5rem;
         height: 3.5rem;
+    }
+
+    .perfilFigure {
+        width: 3.5rem;
+        height: 3.5rem;
+    }
+    .profileButton {
+        width: 100% !important;
+        height: 100% !important;
     }
 
     .infortitulo {
@@ -927,6 +930,14 @@ button.statusbtn.statusbtndesabilitado:hover {
     .voltar img {
         width: 3rem;
         height: 3em;
+    }
+    .perfilFigure {
+        width: 3rem;
+        height: 3rem;
+    }
+    .profileButton {
+        width: 100% !important;
+        height: 100% !important;
     }
 
     .logo img {

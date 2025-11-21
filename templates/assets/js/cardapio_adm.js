@@ -1,3 +1,4 @@
+document.addEventListener('DOMContentLoaded', () => {
 const hambBtn = document.querySelector('.hambBtn')
 const lancBtn = document.querySelector('.lancBtn')
 const bebBtn = document.querySelector('.bebBtn')
@@ -197,21 +198,6 @@ if (cardaHeader) {
 }
 
 
-const opcoes = document.querySelector('.options')
-const menu = document.querySelector('.menu')
-const sombra = document.querySelector('.sombra')
-const sandwich = document.querySelector('.sandwich')
-menu.addEventListener('click', () => {
-    opcoes.classList.toggle('optionActive')
-    sombra.classList.toggle('shadowActive')
-    sandwich.classList.toggle('sandwichActive') 
-})
-sombra.addEventListener('click', () => {
-    opcoes.classList.toggle('optionActive')
-    sombra.classList.toggle('shadowActive')
-    sandwich.classList.toggle('sandwichActive')
-})
-
 const addProduto = document.querySelectorAll('.adicionar_produto')
 
 addProduto.forEach(botao => {
@@ -358,3 +344,5 @@ document.querySelectorAll(".config_card").forEach(card => {
             }
         });
     });
+
+})
