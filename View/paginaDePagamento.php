@@ -75,6 +75,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $qtd = $carrinhoController->getProductById($productId, $id_cliente)[0]['qtd_produto'];
     
             // Cria o pedido com o produto e quantidade correta
+            if(!empty($_POST['payment_method'])){
+                $forma_pagamento = $_POST['payment_method'];
+            }
             $pedidoController->criarPedido(
                 $productId,
                 $id_cliente,
@@ -82,7 +85,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $qtd,
                 $precoTotal,
                 $horarioFormatado,
-                'A retirar'
+                'A retirar',
+                $forma_pagamento
             );
     
             // Pega o pedido criado
@@ -90,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Atualiza o estoque do pedido
             $estoqueController->subEstoque($pedidoCriado[0]['id_pedido']);
         }
-    
+        
         header('Location: pedidosUSER.php');
         exit();
     } else {
@@ -208,45 +212,56 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <h2>Método de Pagamento</h2>
             <div class="line"></div>
         </div>
-        <div class="paymentMethod">
-            <div class="card" id="btn-pix">
-                <div class="cardContainer">
-                    <figure><img src="../templates/assets/img/pix.png" alt=""></figure>
-                    <h4>Pix</h4>
+
+        <section class="payment-method">
+            <!-- Seção de Pagamento Virtual -->
+            <div class="payment-group">
+                <h3>Pagamento Virtual</h3>
+                <div class="payment-options">
+                    <div class="payment-option" data-method="Pix" id="pix-option">
+                        <figure><img src="../templates/assets/img/pix.png" alt=""></figure>
+                        <span>Pix</span>
+                    </div>
                 </div>
             </div>
-            <div class="card">
-                <div class="cardContainer">
-                    <figure><img src="../templates/assets/img/card.png" alt=""></figure>
-                    <h4>Cartão de Crédito</h4>
+
+            <!-- Seção de Pagamento Presencial -->
+            <div class="payment-group">
+                <h3>Pagamento Presencial</h3>
+                <div class="payment-options">
+                    <div class="payment-option" data-method="Cartão de Crédito">
+                        <figure><img src="../templates/assets/img/card.png" alt=""></figure>
+                        <span>Cartão de Crédito</span>
+                    </div>
+                    <div class="payment-option" data-method="Cartão de Débito">
+                        <figure><img src="../templates/assets/img/card.png" alt=""></figure>
+                        <span>Cartão de Débito</span>
+                    </div>
+                    <div class="payment-option" data-method="Voucher">
+                        <figure><img src="../templates/assets/img/voucher.png" alt=""></figure>
+                        <span>Voucher</span>
+                    </div>
                 </div>
             </div>
-            <div class="card">
-                <div class="cardContainer">
-                    <figure><img src="../templates/assets/img/card.png" alt=""></figure>
-                    <h4>Cartão de Débito</h4>
-                </div>
-            </div>
-            <div class="card">
-                <div class="cardContainer">
-                    <figure><img src="../templates/assets/img/voucher.png" alt=""></figure>
-                    <h4>Voucher</h4>
-                </div>
-            </div>
-        </div>
-        <form method="post"></form>
-        <button>Finalizar pagamento</button>
+        </section>
+        <form id="checkout-form" method="POST">
+            <input type="hidden" id="selected-payment-method" name="payment_method" value="">
+            <button type="submit">Finalizar pagamento</button>
+        </form>
     </main>
-    <div id="modal-pix" class="modal-overlay">
+    <div id="pix-modal" class="modal-overlay">
         <div class="modal-content">
             <span class="close-modal">&times;</span>
-            <h2>Pague com Pix</h2>
-            <p>Escaneie o QR Code abaixo com o app do seu banco.</p>
-            <div id="pix-qrcode-container" style="text-align: center;">
-                <!-- O QR Code será inserido aqui -->
+            <h2>Pagamento via PIX</h2>
+            <div class="pix-container">
+                <p>Escaneie o QR Code abaixo com o app do seu banco.</p>
+                <!-- Usando uma imagem estática -->
+                <img src="../templates/assets/img/qrcode-fixo.png" alt="QR Code Pix Fixo" class="pix-qrcode">
             </div>
-            <h3>Pix Copia e Cola:</h3>
-            <textarea id="pix-payload-text" readonly></textarea>
+            <hr>
+            <p class="important-notice">
+                <strong>Atenção:</strong> Conclua o pagamento e mostre o comprovante na retirada do produto.
+            </p>
         </div>
     </div>
     <script src="../templates/assets/js/paginaDePagamento.js"></script>

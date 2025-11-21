@@ -46,62 +46,56 @@ option.forEach((op, index) => {
         }
     })
 })
-const btnPix = document.getElementById('btn-pix');
-const modalPix = document.getElementById('modal-pix');
+const paymentOptions = document.querySelectorAll('.payment-option');
+    const selectedPaymentInput = document.getElementById('selected-payment-method');
+    const checkoutForm = document.getElementById('checkout-form');
 
-if (btnPix && modalPix) {
-
-    const closeModalBtn = modalPix.querySelector('.close-modal');
-    const qrContainer = document.getElementById('pix-qrcode-container');
-    const payloadText = document.getElementById('pix-payload-text');
-
-    btnPix.addEventListener('click', async () => {
-
-        qrContainer.innerHTML = '<p>Gerando QR Code, por favor aguarde...</p>';
-        payloadText.value = 'Aguarde...';
-        modalPix.style.display = 'flex';
-
-        try {
-
-            const response = await fetch('api.php?action=generate_pix_qrcode');
-            const data = await response.json();
-
-            if (data.success) {
-
-                qrContainer.innerHTML = `
-                    <img src="${data.qrCodeUrl}" 
-                         alt="QR Code Pix"
-                         style="width: 300px; height: 300px;">
-                `;
-
-                payloadText.value = data.payload;
-
-            } else {
-                qrContainer.innerHTML = `
-                    <p style="color: red; font-weight: bold;">
-                        ${data.message}
-                    </p>
-                `;
-            }
-
-        } catch (error) {
-            console.error('Erro ao gerar QR Code:', error);
-            qrContainer.innerHTML = `
-                <p style="color: red; font-weight: bold;">
-                    Não foi possível conectar ao servidor.
-                </p>`;
-        }
+    paymentOptions.forEach(option => {
+        option.addEventListener('click', function() {
+            // Remove a classe 'selected' de todas as opções
+            paymentOptions.forEach(opt => opt.classList.remove('selected'));
+            
+            // Adiciona a classe 'selected' apenas na opção clicada
+            this.classList.add('selected');
+            
+            // Pega o método de pagamento do atributo 'data-method'
+            const selectedMethod = this.dataset.method;
+            
+            // Atualiza o valor do campo oculto no formulário
+            selectedPaymentInput.value = selectedMethod;
+        });
     });
 
-    const closeModal = () => {
-        modalPix.style.display = 'none';
-    };
+    // --- Lógica do Modal PIX ---
+    const pixOption = document.getElementById('pix-option');
+    const pixModal = document.getElementById('pix-modal');
+    const closeModalBtn = pixModal.querySelector('.close-modal');
 
-    closeModalBtn.addEventListener('click', closeModal);
+    if (pixOption) {
+        pixOption.addEventListener('click', function() {
+            // Abre o modal
+            pixModal.classList.add('active');
+        });
+    }
 
-    modalPix.addEventListener('click', (e) => {
-        if (e.target === modalPix) {
+    // Funções para fechar o modal
+    const closeModal = () => pixModal.classList.remove('active');
+    if (closeModalBtn) closeModalBtn.addEventListener('click', closeModal);
+    pixModal.addEventListener('click', (event) => {
+        // Fecha se clicar fora do conteúdo do modal
+        if (event.target === pixModal) {
             closeModal();
         }
     });
-}
+
+    // --- Validação do Formulário ao Finalizar ---
+    if (checkoutForm) {
+        checkoutForm.addEventListener('submit', function(event) {
+            if (!selectedPaymentInput.value) {
+                alert('Por favor, selecione um método de pagamento.');
+                event.preventDefault(); // Impede o envio do formulário se nada for selecionado
+            }
+        });
+    }
+
+
