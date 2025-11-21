@@ -251,13 +251,6 @@ document.querySelectorAll(".config_card").forEach(card => {
     });
 });
 
-document.querySelectorAll(".add-to-cart").forEach(btn => {
-    btn.addEventListener("click", (e) => {
-        e.stopPropagation(); // evita conflito com clique no card
-        const id = btn.dataset.id;
-        document.querySelector(".id_produto").value = id;
-        document.querySelector("form").submit();
-    });
     // --- LÓGICA DE FILTRO DE CATEGORIAS ---
     // Seleciona todos os botões e seções de uma vez
     const categoryButtons = document.querySelectorAll('.container_menu .config_menu');
@@ -344,10 +337,7 @@ document.querySelectorAll(".add-to-cart").forEach(btn => {
 
 
     // --- LÓGICA DO MENU SANDUÍCHE E OUTROS LINKS ---
-    const menu = document.querySelector('.menu');
-    const opcoes = document.querySelector('.options');
-    const sombra = document.querySelector('.sombra');
-    const sandwich = document.querySelector('.sandwich');
+
 
     if (menu && opcoes && sombra && sandwich) {
         const toggleMenu = () => {
@@ -368,4 +358,3 @@ document.querySelectorAll(".add-to-cart").forEach(btn => {
             }
         });
     });
-});

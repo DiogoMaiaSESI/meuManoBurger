@@ -47,6 +47,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (deleteOverlay && deleteModal) {
             deleteOverlay.classList.toggle('deleteFormActive');
             deleteModal.classList.toggle('apagarActive');
+            sombraForm.classList.toggle('shadowFormActive');
         }
     };
 

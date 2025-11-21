@@ -16,7 +16,7 @@ require_once __DIR__ . '/../Controller/EstoqueController.php';
 
 $productModel = new \Model\Product();
 $estoqueModel = new \Model\Estoque();
-$productController = new \Controller\ProductController($productModel, $estoqueModel);
+$productController = new \Controller\ProductController();
 $estoqueController = new \Controller\EstoqueController();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $deleteResult = $productController->delete(); 
         if ($deleteResult['success']) {
             $_SESSION['success_message'] = 'Produto deletado com sucesso!';
-            header('Location: cardapioAdm.php');
+            header('Location: cardapio_adm.php');
             exit;
         } else {
             $_SESSION['error_message'] = 'Erro ao deletar o produto.';
@@ -224,7 +224,7 @@ elseif (isset($_SESSION['id_cliente'])) {
                         <h2 class="title"><?php echo $nomeProduto; ?></h2>
                         <div class="icons">
                             <figure>
-                                <img class="lapis" src="../templates/assets/img/lapis.png" alt="Editar Produto">
+                                <img class="lapis" src="../templates/assets/img/lapis2.png" alt="Editar Produto">
                             </figure>
                             <figure>
                                 <img class="lixeira" src="../templates/assets/img/lixeira.png" alt="Deletar Produto">

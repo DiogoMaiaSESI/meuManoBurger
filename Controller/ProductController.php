@@ -73,10 +73,11 @@ class ProductController
 
             $this->db->commit();
             $_SESSION['success_message'] = "Produto cadastrado com sucesso!";
+            $_SESSION['product_id'] = $id_produto_criado;
             header('Location: detalhamentoAdm.php?id=' . $id_produto_criado);
             exit;
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->db->rollBack();
             $_SESSION['error_message'] = "Ocorreu um erro inesperado: " . $e->getMessage();
             header('Location: cadastro_produto.php');
