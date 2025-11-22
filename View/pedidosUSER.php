@@ -297,7 +297,11 @@ $pedidos = $pedidoController->getAllUserPedidos($id_cliente);
                     <div class="paymentMethod" id="'. $value['forma_pagamento'] .'"></div>
                     <div class="botoes">
                         <button class="detalhes" data-array="' . htmlspecialchars(json_encode($arrayPedidosQtd), ENT_QUOTES, 'UTF-8') . '">Ver Detalhes</button>
-                        <form method="POST"><input class="postPedido" name="codigo" type="hidden"><input class="apagarPedido" name="codigoApagar" type="hidden"><button class="cancelar" name="codigoApagar">Cancelar Pedido</button></form>
+                        <form method="POST"><input class="postPedido" name="codigo" type="hidden"><input class="apagarPedido" name="codigoApagar" type="hidden">';
+                            if ($value['status'] === 'A retirar') {
+                                echo '<button class="cancelar" name="codigoApagar">Cancelar Pedido</button>';
+                            }
+                        echo '</form>
                     </div>
                 </div>';
                 }

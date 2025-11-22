@@ -88,11 +88,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
       modaldetalhes.style.display = 'block'
     })
-
-    cancelar.addEventListener('click', () => {
-      Pedidoatual = pedido
-      modalcancelar.style.display = 'block'
-    })
+    if(cancelar){
+      cancelar.addEventListener('click', () => {
+        Pedidoatual = pedido
+        modalcancelar.style.display = 'block'
+      })
+    }
   })
 
   btnnao.addEventListener('click', () => {
