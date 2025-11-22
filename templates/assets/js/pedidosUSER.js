@@ -38,6 +38,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   pedidos.forEach((pedido) => {
     const form = pedido.querySelector('form')
+    console.log(form)
     const detalhesBtn = pedido.querySelector('.detalhes')
     const statusPendente = pedido.querySelector('.statuspendente')
     const statusRetirado = pedido.querySelector('.statusretirado')
@@ -46,6 +47,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let codigoatual = pedido.querySelector('.codigo')
     let horaatual = pedido.querySelector('.hora')
     let dataatual = pedido.querySelector('.data')
+    let pagamentoatual = pedido.querySelector('.paymentMethod')
     form.addEventListener('submit', (e)=>{
       e.preventDefault()
     })
@@ -60,6 +62,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
       let horamodal = document.querySelector('.modaldetalhes .modalhora p')
       horamodal.textContent = horaatual.textContent
+
+      let pagamentomodal = document.querySelector('.modaldetalhes .modalpagamento p')
+      pagamentomodal.textContent = pagamentoatual.id
+
+      let array = JSON.parse(detalhesBtn.dataset.array)
+
+      const resumos = document.querySelector('.resumos')
+      resumos.innerHTML = ''
+      array.forEach((item)=>{
+        resumos.innerHTML = resumos.innerHTML + `<div class="resumolanche"><p class="nomelanche">${item.nome_produto}</p><p class="qtdlanche">${item.qtd}x</p></div>`
+      })
 
       let statuspedido
       if(statusPendente) {

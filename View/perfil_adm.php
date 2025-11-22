@@ -249,7 +249,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
             <nav class="sidebar-nav">
                 <ul>
                     <li><a href="#" id="btn-dados" class="nav-link active">Meus dados</a></li>
-                    <li><a href="#" id="btn-historico" class="nav-link">Histórico de Pedidos</a></li>
+                    <li><a href="pedidosADM.php" id="btn-historico" class="nav-link">Histórico de Pedidos</a></li>
                     <li><a href="#" id="btn-seguranca" class="nav-link">Segurança</a></li>
                     <li><a href="#" id="btn-sair" class="nav-link">Sair da Conta</a></li>
                 </ul>

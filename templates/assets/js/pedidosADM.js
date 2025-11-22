@@ -71,6 +71,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let codigoatual = pedido.querySelector('.codigo')
     let horaatual = pedido.querySelector('.hora')
     let dataatual = pedido.querySelector('.data')
+    let pagamentoatual = pedido.querySelector('.paymentMethod')
 
 
 
@@ -84,6 +85,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
       let horamodal = document.querySelector('.modaldetalhes .modalhora p')
       horamodal.textContent = horaatual.textContent
+
+      let pagamentomodal = document.querySelector('.modaldetalhes .modalpagamento p')
+      pagamentomodal.textContent = pagamentoatual.id
 
       let array = JSON.parse(detalhesBtn.dataset.array)
 

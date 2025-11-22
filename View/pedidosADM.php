@@ -110,19 +110,28 @@ $pedidos = $pedidoController->getAllPedidos();
                         <p class="codigotexto">ut4-z</p>
                         </p>
                     </div>
-
-                    <div class="modaldata">
-                        <figure>
-                            <img src="../templates/assets/img/calendario.png" alt="">
-                        </figure>
-                        <p>21-11-2025</p>
-                    </div>
-
-                    <div class="modalhora">
-                        <figure>
-                            <img src="../templates/assets/img/relogio.png" alt="">
-                        </figure>
-                        <p>11:00</p>
+                    <div class="alinhador">
+                        <div class="pagamentoDiv">
+                            <div class="modaldata">
+                                <figure>
+                                    <img src="../templates/assets/img/calendario.png" alt="">
+                                </figure>
+                                <p>21-11-2025</p>
+                            </div>
+    
+                            <div class="modalhora">
+                                <figure>
+                                    <img src="../templates/assets/img/relogio.png" alt="">
+                                </figure>
+                                <p>11:00</p>
+                            </div>
+                        </div>
+                        <div class="modalpagamento">
+                            <figure>
+                                <img src="../templates/assets/img/dinheiro.png" alt="">
+                            </figure>
+                            <p>Pix</p>
+                        </div>
                     </div>
                 </div>
 
@@ -281,7 +290,7 @@ $pedidos = $pedidoController->getAllPedidos();
 
                         </div>
                     </div>
-
+                    <div class="paymentMethod" id="'. $value['forma_pagamento'] .'"></div>
                     <div class="botoes">
                         <div class="org">
                             <button class="detalhes" data-array="' . htmlspecialchars(json_encode($arrayPedidosQtd), ENT_QUOTES, 'UTF-8') . '">Ver Detalhes</button>

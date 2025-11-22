@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     navLinks.forEach(link => {
         link.addEventListener('click', function (event) {
-            event.preventDefault();
+            //event.preventDefault();
             let targetId = this.id || '';
             // Normaliza o ID do menu mobile para corresponder ao da sidebar
             if (targetId.startsWith('m-')) {

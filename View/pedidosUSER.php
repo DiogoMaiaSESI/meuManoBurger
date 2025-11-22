@@ -121,46 +121,57 @@ $pedidos = $pedidoController->getAllUserPedidos($id_cliente);
                         <p class="codigotexto">ut4-z</p>
                         </p>
                     </div>
-
-                    <div class="modaldata">
-                        <figure>
-                            <img src="../templates/assets/img/calendario.png" alt="">
-                        </figure>
-                        <p>21-11-2025</p>
-                    </div>
-
-                    <div class="modalhora">
-                        <figure>
-                            <img src="../templates/assets/img/relogio.png" alt="">
-                        </figure>
-                        <p>11:00</p>
+                    <div class="alinhador">
+                        <div class="pagamentoDiv">
+                            <div class="modaldata">
+                                <figure>
+                                    <img src="../templates/assets/img/calendario.png" alt="">
+                                </figure>
+                                <p>21-11-2025</p>
+                            </div>
+        
+                            <div class="modalhora">
+                                <figure>
+                                    <img src="../templates/assets/img/relogio.png" alt="">
+                                </figure>
+                                <p>11:00</p>
+                            </div>
+                        </div>
+                        <div class="modalpagamento">
+                            <figure>
+                                <img src="../templates/assets/img/dinheiro.png" alt="">
+                            </figure>
+                            <p>Pix</p>
+                        </div>
                     </div>
                 </div>
 
                 <div class="resumopedido">
                     <p class="resumotitulo">Resumo do Pedido</p>
+                    <div class="resumos">
 
-                    <?php 
+                        <?php 
                         foreach ($pedidos as $pedido => $value) {
                             $pedido_produto = $pedidoController->getPedidoProdutoById($pedidoController->getIdPedidoByCodigo($value['codigo'])['id_pedido']);
                             $arrayPedidosQtd = [];
                             foreach ($pedido_produto as $i => $item) {
-
+                                
                                 $productName = $productController->findById($item['id_produto_fk'])['nome_produto'];
-
+                                
                                 $arrayPedidosQtd[$i] = [
                                     'nome_produto' => $productName,
                                     'qtd' => $item['qtd']
                                 ];
-
+                                
                                 echo '
                                 <div class="resumolanche">
-                                    <p class="nomelanche">'. $arrayPedidosQtd[$i]['nome_produto'] .'</p>
-                                    <p class="qtdlanche">'. $arrayPedidosQtd[$i]['qtd'] .'x</p>
+                                <p class="nomelanche">'. $arrayPedidosQtd[$i]['nome_produto'] .'</p>
+                                <p class="qtdlanche">'. $arrayPedidosQtd[$i]['qtd'] .'x</p>
                                 </div>';
                             }
                         }
                         ?>
+                        </div>
                 </div>
 
                 <div class="modalstatus">
@@ -283,9 +294,9 @@ $pedidos = $pedidoController->getAllUserPedidos($id_cliente);
 
                         </div>
                     </div>
-
+                    <div class="paymentMethod" id="'. $value['forma_pagamento'] .'"></div>
                     <div class="botoes">
-                        <button class="detalhes">Ver Detalhes</button>
+                        <button class="detalhes" data-array="' . htmlspecialchars(json_encode($arrayPedidosQtd), ENT_QUOTES, 'UTF-8') . '">Ver Detalhes</button>
                         <form method="POST"><input class="postPedido" name="codigo" type="hidden"><input class="apagarPedido" name="codigoApagar" type="hidden"><button class="cancelar" name="codigoApagar">Cancelar Pedido</button></form>
                     </div>
                 </div>';

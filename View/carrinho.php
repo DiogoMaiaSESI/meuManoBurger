@@ -227,8 +227,8 @@ $total = 0;
                                         <img src="'. $imageBase64 .'" alt="Hambúrguer" class="item-image">
                                         <span class="item-name">' . $qtd . 'x ' . $prod['nome_produto'] . '</span>
                                         <form method="POST">
-                                            <button class="setaButton" name="cima" value="'. $prod['id_produto'] .'"><img class="setas setaCima" src="../templates/assets/img/seta-para-cima.png"></button>
-                                            <button class="setaButton" name="baixo" value="'. $prod['id_produto'] .'"><img class="setas setaBaixo" src="../templates/assets/img/seta-para-baixo.png"></button>
+                                            <button class="setaButton" name="cima" value="'. $prod['id_produto'] .'">+</button>
+                                            <button class="setaButton" name="baixo" value="'. $prod['id_produto'] .'">-</button>
                                         </form>
                                         </div>
                                     <span class="item-price">R$ '. number_format($prod['preco_produto'],2,',','.') . '</span>

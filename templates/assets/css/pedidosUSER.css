@@ -15,6 +15,18 @@ header {
     background-color: var(--VermelhoCereja);
 }
 
+.pagamentoDiv{
+    display: flex;
+    gap: 1rem;
+}
+
+.alinhador {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
 .cabecalho {
     display: flex;
     justify-content: center;
@@ -428,7 +440,8 @@ button.cancelar:hover {
 }
 
 .modaldata,
-.modalhora {
+.modalhora,
+.modalpagamento {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -448,8 +461,21 @@ button.cancelar:hover {
     justify-content: center;
 }
 
+.modalpagamento p {
+    font-size: 1.5rem;
+    font-weight: bold;
+    width: 25rem;
+    height: 3rem;
+    background-color: var(--AmareloPrimario);
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .modaldata img,
-.modalhora img {
+.modalhora img,
+.modalpagamento img {
     width: 3rem;
     height: 3rem;
 }

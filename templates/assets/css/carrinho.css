@@ -8,16 +8,17 @@
     z-index: 1000;
 }
 
-.setas {
-    width: 2.5rem;
-}
-
 .setaButton {
     background-color: transparent;
     border-style: none;
     cursor: pointer;
+    font-size: 3rem;
+    font-weight: 800;
 }
-
+form {
+    display: flex;
+    gap: 1rem;
+}
 .header-nav {
     display: flex;
     align-items: center;

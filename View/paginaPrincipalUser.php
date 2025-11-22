@@ -341,7 +341,7 @@ $isClienteLoggedIn = isset($_SESSION['id_cliente']);
 
     <form method="POST"><input class="product_id" type="hidden" name="product_id"></form>
 
-    <script src="../templates/assets/js/PaginaPrincipalUser.js"></script>
+    <script src="../templates/assets/js/paginaPrincipalUser.js"></script>
   <div vw class="enabled">
     <div vw-access-button class="active"></div>
     <div vw-plugin-wrapper>

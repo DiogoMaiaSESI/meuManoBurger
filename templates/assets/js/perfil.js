@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     navLinks.forEach(link => {
         link.addEventListener('click', function (event) {
-            event.preventDefault();
+            //event.preventDefault();
             let targetId = this.id || '';
             if (targetId.startsWith('m-')) {
                 targetId = 'btn-' + targetId.substring(targetId.indexOf('-') + 1);
