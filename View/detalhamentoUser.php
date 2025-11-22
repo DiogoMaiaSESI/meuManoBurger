@@ -1,24 +1,41 @@
 <?php
 
+
 session_start();
 require_once('../vendor/autoload.php');
 use Controller\EstoqueController;
 use Controller\ProductController;
 use Controller\CarrinhoController;
+use Controller\FavoritoController;
+use Controller\ClienteController;
 $estoqueController = new EstoqueController();
 $productController = new ProductController();
 $carrinhoController = new CarrinhoController();
+$favoritoController = new FavoritoController();
+$clienteController = new ClienteController();
 if($_SESSION['id_cliente'] !== null) {
     $id_cliente = $_SESSION['id_cliente'];
 } else {
     header('Location: login.php');
 }
+$imagem_cliente = $clienteController->getClienteById($id_cliente)['imagem_cliente'];
 $productId = $_SESSION['product_id_details'];
+$favoriteProduct = $favoritoController->getSingleProduct($id_cliente, $productId);
 $product = $productController->findById($productId);
 $imageBase64 = 'data:image/jpeg;base64,' . base64_encode($product['imagem_produto']);
 $estoque = $estoqueController->obtEstoque($product['id_produto']);
 
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if(!empty($_POST['favoriteProduct'])){
+        $product_id = $_POST['favoriteProduct'];
+        $favoritoController->createFavorite($product_id, $id_cliente);
+        header('Location: detalhamentoUser.php');
+    }
+    if(!empty($_POST['rmFavoriteProduct'])){
+        $rm_product_id = $_POST['rmFavoriteProduct'];
+        $favoritoController->deleteFavorite($rm_product_id, $id_cliente);
+        header('Location: detalhamentoUser.php');
+    }
     if (!empty($_POST['product_id'])) {
         $id_produto = $_POST['product_id'];
         $carrinhoController->addProductToCart($id_produto, $id_cliente);
@@ -85,8 +102,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </figure>
                 </a>
                 <a href="perfil.php">
-                    <figure>
-                        <img class="profileButton" src="../templates/assets/img/Profile.png" alt="">
+                    <figure class="perfilFigure">
+                        <img class="profileButton" src="data:image/jpeg;base64,<?php echo base64_encode($imagem_cliente);?>" alt="">
                     </figure>
                 </a>
             </div>
@@ -105,7 +122,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <h2 class="price">R$ <?php echo number_format($product['preco_produto'],2,',','.'); ?></h2>
                         <div class="buttons">
                             <button class="cart" id="<?php echo $product['id_produto'];?>">Adicionar ao carrinho</button>
-                            <button class="favorite">Adicionar aos favoritos</button>
+                            <?php 
+                            if (empty($favoriteProduct)){
+                                echo '<button class="favorite" id="' . $product["id_produto"] . '" name="favorite">Adicionar aos favoritos</button>';
+                            } else {
+                                echo '<button class="removeFavorite" id="' . $product["id_produto"] . '" name="favorite">Remover dos favoritos</button>';
+                            }
+                            ?>
                         </div>
                     </div>
                 </div>
@@ -114,7 +137,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div><h4 class="subtitle">Quantidade</h4><h4 class="subtitle2"><?php echo $estoque['qtd_produto']; ?></h4></div>
                 </div>
             </div>
-            <form method="POST"><input class="product_id" type="hidden" name="product_id"></form>
+            <form method="POST"><input class="product_id" type="hidden" name="product_id"><input class="favoriteProduct" type="hidden" name="favoriteProduct"><input class="rmFavoriteProduct" type="hidden" name="rmFavoriteProduct"></form>
         </main>
         <script src="../templates/assets/js/detalhamentoUser.js"></script>
   <div vw class="enabled">

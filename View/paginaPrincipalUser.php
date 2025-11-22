@@ -193,38 +193,6 @@ $isClienteLoggedIn = isset($_SESSION['id_cliente']);
         </div>
     </main>
 
-    <section>
-        <div class="container_menu">
-            <div class="config_menu" id="hamburgueres">
-                <figure><img class="hambBtn" src="../templates/assets/img/hamburgueres.png" alt="Hamburgueres"></figure>
-                <h2>Hambúrgueres</h2>
-            </div>
-            <div class="config_menu" id="lanches">
-                <figure><img class="lancBtn" src="../templates/assets/img/lanches.png" alt="Lanches"></figure>
-                <h2>Lanches</h2>
-            </div>
-            <div class="config_menu" id="bebidas">
-                <figure><img class="bebBtn" src="../templates/assets/img/bebidas.png" alt="Bebidas"></figure>
-                <h2>Bebidas</h2>
-            </div>
-            <div class="config_menu" id="cafe_manha">
-                <figure><img class="cafeBtn" src="../templates/assets/img/cafedamanha.png" alt="Café da manhã"></figure>
-                <h2>Café da manhã</h2>
-            </div>
-            <div class="config_menu" id="doces">
-                <figure><img class="docesBtn" src="../templates/assets/img/doces.png" alt="Doces"></figure>
-                <h2>Doces</h2>
-            </div>
-            <div class="config_menu" id="Tapioca">
-                <figure><img class="tapBtn" src="../templates/assets/img/tapioca.png" alt="Tapioca"></figure>
-                <h2>Tapiocas</h2>
-            </div>
-            <div class="config_menu" id="promocoes">
-                <figure><img class="promBtn" src="../templates/assets/img/promocoes.png" alt="Promoções"></figure>
-                <h2>Promoções</h2>
-            </div>
-        </div>
-    </section>
 
     <section class="sessaomaispedidos">
         <div class="maispedidos">

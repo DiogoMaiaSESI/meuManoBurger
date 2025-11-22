@@ -1,7 +1,8 @@
 <?php
 
 namespace Controller;
-
+require_once __DIR__ . "/../Model/Product.php";
+require_once __DIR__ . "/../Model/Estoque.php";
 use Exception;
 use PDOException;
 use Model\Product;

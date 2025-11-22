@@ -160,7 +160,7 @@ p {
     transition: 500ms;
     background-color: #c0222f;
 }
-.favorite {
+.favorite, .removeFavorite {
     cursor: pointer;
     width: 17.2rem;
     height: 4.7rem;
@@ -177,7 +177,7 @@ p {
     border-style: none;
     transition: 500ms;
 }
-.favorite:hover {
+.favorite:hover, .removeFavorite:hover {
     background-color: var(--AmareloSecundario);
     border-style: solid;
     border-width: 0.1rem;

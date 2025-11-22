@@ -7,6 +7,10 @@ const profileButton = document.querySelector('.profileButton')
 const form = document.querySelector('form')
 const cartBtn = document.querySelector('.cart')
 const idInput = document.querySelector('.product_id')
+const favoriteBtn = document.querySelector('.favorite')
+const rmFavoriteBtn = document.querySelector('.removeFavorite')
+const inputFavorite = document.querySelector('.favoriteProduct')
+const rmInputFavorite = document.querySelector('.rmFavoriteProduct')
 
 menu.addEventListener('click', () => {
     opcoes.classList.toggle('optionActive')
@@ -44,3 +48,17 @@ option.forEach((op, index)=>{
         }
     })
 })
+
+if(favoriteBtn){
+    favoriteBtn.addEventListener('click', ()=>{
+        inputFavorite.value = favoriteBtn.id
+        form.submit()
+    })
+}
+
+if(rmFavoriteBtn){
+    rmFavoriteBtn.addEventListener('click', ()=>{
+        rmInputFavorite.value = rmFavoriteBtn.id
+        form.submit()
+    })
+}

@@ -94,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Atualiza o estoque do pedido
             $estoqueController->subEstoque($pedidoCriado[0]['id_pedido']);
         }
-        
+        $carrinhoController->deleteAllClientCart($id_cliente);
         header('Location: pedidosUSER.php');
         exit();
     } else {

@@ -63,6 +63,7 @@
 }
 
 .details-btn img {
+    width: fit-content;
     height: 1.6rem;
     margin-right: 0.8rem;
     filter: brightness(0) invert(1);

@@ -25,7 +25,9 @@ const cardaHeader = document.querySelector('.h1_cardapio')
 const addToCartBtns = document.querySelectorAll('.add-to-cart')
 const form = document.querySelector('form')
 const input = document.querySelector('.id_produto')
-
+const optionsMenu = document.querySelector('.options');
+const sombraMenu = document.querySelector('.sombra');
+const menuIcon = document.querySelector('.menu');
 
 hambBtn.addEventListener('click', () => {
     hambSection.style.display = 'block'
@@ -200,18 +202,18 @@ if (cardaHeader) {
 
 const addProduto = document.querySelectorAll('.adicionar_produto')
 
+form.addEventListener('submit',(e)=>{
+    e.preventDefault()
+})
 addProduto.forEach(botao => {
     botao.addEventListener('click' , () => {
         window.location.href = 'cadastro_produto.php'
     })
 })
-form.addEventListener('submit',(e)=>{
-    e.preventDefault()
-})
 
 addToCartBtns.forEach((btn)=>{
     btn.addEventListener('click',()=>{
-        input.value = btn.id
+        input.value = btn.dataset.id
         form.submit()
     })
 })
@@ -294,55 +296,15 @@ document.querySelectorAll(".config_card").forEach(card => {
     }
 
 
-    // --- LÓGICA PARA ENVIAR O ID DO PRODUTO (A CORREÇÃO PRINCIPAL) ---
-    const productForm = document.getElementById('productForm');
-    const productIdInput = document.getElementById('id_produto');
-
-    if (productForm && productIdInput) {
-        // Seleciona todos os botões "Ver Detalhes"
-        const detailButtons = document.querySelectorAll('.add-to-cart');
-
-        detailButtons.forEach(button => {
-            button.addEventListener('click', function(event) {
-                // Impede que o clique no botão "vaze" para o card pai, evitando duplo clique
-                event.stopPropagation(); 
-                
-                // Pega o ID do atributo 'data-id' do botão (o método correto)
-                const productId = this.dataset.id;
-                
-                // Coloca o ID no campo oculto do formulário
-                productIdInput.value = productId;
-                
-                // Envia o formulário
-                productForm.submit();
-            });
-        });
-    } else {
-        console.error("Formulário de produto ou campo de ID não encontrado!");
-    }
-
-
     // --- LÓGICA DO MENU SANDUÍCHE E OUTROS LINKS ---
-
-
-    if (menu && opcoes && sombra && sandwich) {
-        const toggleMenu = () => {
-            opcoes.classList.toggle('optionActive');
-            sombra.classList.toggle('shadowActive');
-            sandwich.classList.toggle('sandwichActive');
-        };
-        menu.addEventListener('click', toggleMenu);
-        sombra.addEventListener('click', toggleMenu);
+    const toggleSideMenu = () => {
+        if (optionsMenu && sombraMenu) {
+            optionsMenu.classList.toggle('optionActive')
+            sombraMenu.classList.toggle('shadowActive')
+        }
     }
 
-    const optionLinks = document.querySelectorAll('.option');
-    optionLinks.forEach((op, index) => {
-        op.addEventListener('click', () => {
-            const urls = ['cardapio_adm.php', 'pedidosADM.php', 'empresa.php#feedback'];
-            if (urls[index]) {
-                window.location.href = urls[index];
-            }
-        });
-    });
-
+    if (menuIcon) menuIcon.addEventListener('click', toggleSideMenu)
+    if (sombraMenu) sombraMenu.addEventListener('click', toggleSideMenu)
+    
 })

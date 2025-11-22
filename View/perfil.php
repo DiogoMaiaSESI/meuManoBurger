@@ -3,9 +3,13 @@ session_start();
 
 require_once __DIR__ . '/../Controller/ClienteController.php';
 require_once __DIR__ . '/../Model/Cliente.php';
+require_once __DIR__ . '/../Controller/FavoritoController.php';
+require_once __DIR__ . '/../Controller/ProductController.php';
 
+$favoritoController = new \Controller\FavoritoController();
 $clienteModel = new \Model\Cliente();
 $clienteController = new \Controller\ClienteController();
+$productController = new \Controller\ProductController();
 
 if($_SESSION['id_cliente'] !== null) {
     $id_cliente = $_SESSION['id_cliente'];
@@ -14,6 +18,8 @@ if($_SESSION['id_cliente'] !== null) {
 }
 
 $imagemCliente = $clienteController->getClienteById($id_cliente)['imagem_cliente'];
+
+$favoriteIds = $favoritoController->getAllFavoritesByClient($id_cliente);
 
 
 // --- LÓGICA DE ATUALIZAÇÃO ---
@@ -57,6 +63,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     }
     header('Location: perfil.php#content-seguranca');
     exit;
+}
+
+if($_SERVER['REQUEST_METHOD'] === 'POST'){
+    if (!empty($_POST['product_id_details'])){
+        $_SESSION['product_id_details'] = $_POST['product_id_details'];
+        header('Location: detalhamentoUser.php');
+        exit;
+    }
 }
 
 // --- LÓGICA DE EXIBIÇÃO ---
@@ -350,34 +364,27 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
             </div>
 
             <div id="content-favoritos" class="content-tab">
+                <form class="detailsForm" method="POST"><input type="hidden" name="product_id_details" id="product_id_details"></form>
                 <div class="form-card">
                     <div class="form-header">
                         <h2>Meus Favoritos</h2>
                     </div>
                     <div class="favorites-grid">
-                        <div class="favorite-card">
-                            <figure><img src="\meuManoBurger\templates\assets\img\Hamburguer.png" alt="Triplo Cheddar">
-                            </figure>
-                            <h3>Triplo Cheddar</h3>
-                            <span class="price">R$ 7,00</span>
-                            <button class="details-btn"><img src="/meuManoBurger/templates/assets/img/Carrinho.png"> Ver
-                                detalhes</button>
-                        </div>
-                        <div class="favorite-card">
-                            <figure><img src="\meuManoBurger\templates\assets\img\Coxinha.png" alt="Coxinha"></figure>
-                            <h3>Coxinha</h3>
-                            <span class="price">R$ 7,00</span>
-                            <button class="details-btn"><img src="/meuManoBurger/templates/assets/img/Carrinho.png"> Ver
-                                detalhes</button>
-                        </div>
-                        <div class="favorite-card">
-                            <figure><img src="\meuManoBurger\templates\assets\img\Pastel.png" alt="Pastel de Carne">
-                            </figure>
-                            <h3>Pastel de Carne</h3>
-                            <span class="price">R$ 7,00</span>
-                            <button class="details-btn"><img src="/meuManoBurger/templates/assets/img/Carrinho.png"> Ver
-                                detalhes</button>
-                        </div>
+                        <?php 
+                        foreach ($favoriteIds as $prod) {
+                            $produto = $productController->findById($prod['id_produto_fk']);
+                            echo '
+                                <div class="favorite-card">
+                                    <figure><img src="data:image/jpeg;base64,'. base64_encode($produto['imagem_produto']) .'" alt="Triplo Cheddar">
+                                    </figure>
+                                    <h3>'. $produto['nome_produto'] .'</h3>
+                                    <span class="price">R$ '. number_format($produto['preco_produto'], 2, ',', '.') .'</span>
+                                    <button class="details-btn" id="'. $produto['id_produto'] .'"><img src="/meuManoBurger/templates/assets/img/Carrinho.png"> Ver
+                                        detalhes</button>
+                                </div>
+                            ';
+                        }
+                        ?>
                     </div>
                 </div>
             </div>

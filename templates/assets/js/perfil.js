@@ -512,3 +512,19 @@ option.forEach((op, index)=>{
         }
     })
 })
+
+
+const detalhesBtn = document.querySelectorAll('.details-btn')
+const formDetails = document.querySelector('.detailsForm')
+const input = formDetails.querySelector('input')
+
+formDetails.addEventListener('submit', (e)=>{
+    e.preventDefault()
+})
+
+detalhesBtn.forEach((btn)=>{
+    btn.addEventListener('click', () => {
+        input.value = btn.id
+        formDetails.submit()
+    })
+})
