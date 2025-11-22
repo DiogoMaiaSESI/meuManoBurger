@@ -120,7 +120,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                 </div>
                 <div class="sombra"></div>
-
                 <figure class="logo">
                     <img src="../templates/assets/img/Logo.png" alt="Logo MeuManoBurger" />
                 </figure>
@@ -456,22 +455,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         new window.VLibras.Widget('https://vlibras.gov.br/app');
         </script>
         <script src="../templates/assets/js/cardapio_adm.js"></script>
-        <script>
-            const opcoes = document.querySelector('.options')
-const menu = document.querySelector('.menu')
-const sombra = document.querySelector('.sombra')
-const sandwich = document.querySelector('.sandwich')
-menu.addEventListener('click', () => {
-    sandwich.classList.toggle('sandwichActive') 
-    opcoes.classList.toggle('optionActive')
-    sombra.classList.toggle('shadowActive')
-})
-sombra.addEventListener('click', () => {
-    opcoes.classList.toggle('optionActive')
-    sombra.classList.toggle('shadowActive')
-    sandwich.classList.toggle('sandwichActive')
-})
-        </script>
 </body>
 
 </html>

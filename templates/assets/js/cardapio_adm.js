@@ -219,18 +219,6 @@ addToCartBtns.forEach((btn)=>{
 })
 
 
-const option = document.querySelectorAll('.option')
-option.forEach((op, index)=>{
-    op.addEventListener('click',()=>{
-        if(index===0){
-            window.location.href = 'cardapio_adm.php'
-        }else if(index===1){
-            window.location.href = 'pedidosADM.php'
-        }else if(index===2){
-            window.location.href = 'empresa.php#feedback'
-        }
-    })
-})
 document.querySelectorAll(".config_card").forEach(card => {
     card.addEventListener("click", () => {
         const id = card.dataset.id;
@@ -296,15 +284,30 @@ document.querySelectorAll(".config_card").forEach(card => {
     }
 
 
-    // --- LÓGICA DO MENU SANDUÍCHE E OUTROS LINKS ---
-    const toggleSideMenu = () => {
-        if (optionsMenu && sombraMenu) {
-            optionsMenu.classList.toggle('optionActive')
-            sombraMenu.classList.toggle('shadowActive')
-        }
-    }
-
-    if (menuIcon) menuIcon.addEventListener('click', toggleSideMenu)
-    if (sombraMenu) sombraMenu.addEventListener('click', toggleSideMenu)
-    
+    const opcoes = document.querySelector('.options')
+    const menu = document.querySelector('.menu')
+    const sombra = document.querySelector('.sombra')
+    const sandwich = document.querySelector('.sandwich')
+    menu.addEventListener('click', () => {
+        opcoes.classList.toggle('optionActive')
+        sombra.classList.toggle('shadowActive')
+        sandwich.classList.toggle('sandwichActive') 
+    })
+    sombra.addEventListener('click', () => {
+        opcoes.classList.toggle('optionActive')
+        sombra.classList.toggle('shadowActive')
+        sandwich.classList.toggle('sandwichActive')
+    })
+    const option = document.querySelectorAll('.option')
+    option.forEach((op, index)=>{
+        op.addEventListener('click',()=>{
+            if(index===0){
+                window.location.href = 'cardapio_adm.php'
+            }else if(index===1){
+                window.location.href = 'pedidosADM.php'
+            }else if(index===2){
+                window.location.href = 'empresa.php#feedback'
+            }
+        })
+    })
 })
