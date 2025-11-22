@@ -19,7 +19,7 @@ if ($_SESSION['id_cliente'] !== null) {
 
 $productModel = new \Model\Product();
 $estoqueModel = new \Model\Estoque();
-$productController = new ProductController($productModel, $estoqueModel);
+$productController = new ProductController();
 $carrinhoController = new CarrinhoController();
 $clienteController = new ClienteController();
 
