@@ -1,10 +1,10 @@
 <?php
 session_start();
 
-require_once __DIR__ . '/meuManoBurger/Controller/ClienteController.php';
-require_once __DIR__ . '/meuManoBurger/Model/Cliente.php';
-require_once __DIR__ . '/meuManoBurger/Controller/FavoritoController.php';
-require_once __DIR__ . '/meuManoBurger/Controller/ProductController.php';
+require_once __DIR__ . '/Controller/ClienteController.php';
+require_once __DIR__ . '/Model/Cliente.php';
+require_once __DIR__ . '/Controller/FavoritoController.php';
+require_once __DIR__ . '/Controller/ProductController.php';
 
 $favoritoController = new \Controller\FavoritoController();
 $clienteModel = new \Model\Cliente();
@@ -88,7 +88,7 @@ if (!$clienteController->isLoggedIn()) {
 $nomeUsuario = $_SESSION['nome_cliente'] ?? 'Usuário';
 $emailUsuario = $_SESSION['email_cliente'] ?? 'email@exemplo.com';
 
-$imagemUsuario = 'meuManoBurger/templates/assets/img/FotoPerfil.png'; // Caminho para a imagem padrão (Alanzoka)
+$imagemUsuario = 'templates/assets/img/FotoPerfil.png'; // Caminho para a imagem padrão (Alanzoka)
 if (isset($_SESSION['imagem_cliente']) && !empty($_SESSION['imagem_cliente'])) {
     $imagemUsuario = 'data:image/jpeg;base64,' . base64_encode($_SESSION['imagem_cliente']);
 }
@@ -122,10 +122,10 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meu Perfil - Meu Mano Burger</title>
-    <link rel="stylesheet" href="/meuManoBurger/templates/assets/css/perfil.css">
-    <link rel="stylesheet" href="/meuManoBurger/templates/assets/css/meusFavoritos.css">
-    <link rel="stylesheet" href="/meuManoBurger/templates/assets/css/seguranca.css">
-    <link rel="stylesheet" href="/meuManoBurger/templates/assets/css/modalPagamento.css">
+    <link rel="stylesheet" href="/templates/assets/css/perfil.css">
+    <link rel="stylesheet" href="/templates/assets/css/meusFavoritos.css">
+    <link rel="stylesheet" href="/templates/assets/css/seguranca.css">
+    <link rel="stylesheet" href="/templates/assets/css/modalPagamento.css">
 
     <style>
         .sandwich-menu-container {
@@ -231,19 +231,19 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
     <div class="sandwich-menu-container">
         <div class="options">
             <div class="option">
-                <figure><img src="/meuManoBurger/templates/assets/img/Cardapio.png" alt="Cardápio"></figure>
+                <figure><img src="/templates/assets/img/Cardapio.png" alt="Cardápio"></figure>
                 <h5>Cardápio</h5>
             </div>
             <div class="option">
-                <figure><img src="/meuManoBurger/templates/assets/img/Pedidos.png" alt="Pedidos"></figure>
+                <figure><img src="/templates/assets/img/Pedidos.png" alt="Pedidos"></figure>
                 <h5>Pedidos</h5>
             </div>
             <div class="option">
-                <figure><img src="/meuManoBurger/templates/assets/img/Feedbacks.png" alt="Feedbacks"></figure>
+                <figure><img src="/templates/assets/img/Feedbacks.png" alt="Feedbacks"></figure>
                 <h5>Feedbacks</h5>
             </div>
             <div class="option">
-                <figure><img src="/meuManoBurger/templates/assets/img/Carrinho_menu.png" alt="Carrinho"></figure>
+                <figure><img src="/templates/assets/img/Carrinho_menu.png" alt="Carrinho"></figure>
                 <h5>Carrinho</h5>
             </div>
         </div>
@@ -256,7 +256,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
                 <!-- Menu Sanduíche (Sempre visível) -->
                 <li>
                     <button class="menu-btn sandwich-menu-btn">
-                        <figure><img src="/meuManoBurger/templates/assets/img/Menu.png" alt="Menu" class="icon-img">
+                        <figure><img src="/templates/assets/img/Menu.png" alt="Menu" class="icon-img">
                         </figure>
                     </button>
                 </li>
@@ -264,7 +264,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
                 <!-- Logo (Apenas Desktop) -->
                 <li class="desktop-only">
                     <figure class="logo-container">
-                        <img src="/meuManoBurger/templates/assets/img/Logo.png" alt="Logo Meu Mano Burger"
+                        <img src="/templates/assets/img/Logo.png" alt="Logo Meu Mano Burger"
                             class="logo-principal">
                     </figure>
                 </li>
@@ -285,7 +285,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
                 <!-- Ícones de Ação (Sempre visíveis, no final) -->
                 <li class="nav-right">
                     <a href="paginaPrincipalUser.php" class="icon-link">
-                        <figure><img src="/meuManoBurger/templates/assets/img/Voltar.png" alt="Voltar" class="icon-img">
+                        <figure><img src="/templates/assets/img/Voltar.png" alt="Voltar" class="icon-img">
                         </figure>
                     </a>
                     <a href="#" class="icon-link">
@@ -334,7 +334,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
                                 style="display: none;">
 
                             <button type="button" id="edit-pic-btn" class="edit-picture-btn">
-                                <figure><img src="/meuManoBurger/templates/assets/img/Edicao.png" alt="Editar Foto"
+                                <figure><img src="/templates/assets/img/Edicao.png" alt="Editar Foto"
                                         class="icon-img icon-editar"></figure>
                             </button>
 
@@ -383,7 +383,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
                                     </figure>
                                     <h3>'. $produto['nome_produto'] .'</h3>
                                     <span class="price">R$ '. number_format($produto['preco_produto'], 2, ',', '.') .'</span>
-                                    <button class="details-btn" id="'. $produto['id_produto'] .'"><img src="/meuManoBurger/templates/assets/img/Carrinho.png"> Ver
+                                    <button class="details-btn" id="'. $produto['id_produto'] .'"><img src="/templates/assets/img/Carrinho.png"> Ver
                                         detalhes</button>
                                 </div>
                             ';
@@ -416,13 +416,13 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
                         <h3>Alterar senha</h3>
                         <div class="form-group password-group">
                             <input type="password" id="nova-senha" name="nova_senha" placeholder="Nova senha">
-                            <img src="/meuManoBurger/templates/assets/img/olhofechado.png" class="password-toggle-icon"
+                            <img src="/templates/assets/img/olhofechado.png" class="password-toggle-icon"
                                 alt="Mostrar/Ocultar Senha">
                         </div>
                         <div class="form-group password-group">
                             <input type="password" id="confirmar-senha" name="confirmar_senha"
                                 placeholder="Confirmação de nova senha">
-                            <img src="/meuManoBurger/templates/assets/img/olhofechado.png" class="password-toggle-icon"
+                            <img src="/templates/assets/img/olhofechado.png" class="password-toggle-icon"
                                 alt="Mostrar/Ocultar Senha">
                         </div>
                         <button type="submit" id="btn-salvar-senha" class="submit-btn">Salvar Alterações</button>
@@ -517,7 +517,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
             <form id="disable-2fa-form">
                 <div class="form-group password-group">
                     <input type="password" id="disable-2fa-password" placeholder="Sua senha atual" required>
-                    <img src="/meuManoBurger/templates/assets/img/olhofechado.png" class="password-toggle-icon"
+                    <img src="/templates/assets/img/olhofechado.png" class="password-toggle-icon"
                         alt="Mostrar/Ocultar Senha">
                 </div>
                 <button type="submit" class="submit-btn danger">Confirmar e Desativar</button>
@@ -552,7 +552,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
     </div>
 
 
-    <script src="/meuManoBurger/templates/assets/js/perfil.js"></script>
+    <script src="/templates/assets/js/perfil.js"></script>
     <?php
 
     // 1. Verifica se existe uma mensagem específica para o USUÁRIO.
