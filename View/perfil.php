@@ -552,7 +552,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
     </div>
 
 
-    <script src="meuManoBurger/templates/assets/js/perfil.js"></script>
+    <script src="/meuManoBurger/templates/assets/js/perfil.js"></script>
     <?php
 
     // 1. Verifica se existe uma mensagem específica para o USUÁRIO.
