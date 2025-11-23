@@ -1,10 +1,10 @@
 <?php
 session_start();
 
-require_once __DIR__ . '/../Controller/ClienteController.php';
-require_once __DIR__ . '/../Model/Cliente.php';
-require_once __DIR__ . '/../Controller/FavoritoController.php';
-require_once __DIR__ . '/../Controller/ProductController.php';
+require_once __DIR__ . '/meuManoBurger/Controller/ClienteController.php';
+require_once __DIR__ . '/meuManoBurger/Model/Cliente.php';
+require_once __DIR__ . '/meuManoBurger/Controller/FavoritoController.php';
+require_once __DIR__ . '/meuManoBurger/Controller/ProductController.php';
 
 $favoritoController = new \Controller\FavoritoController();
 $clienteModel = new \Model\Cliente();
@@ -88,7 +88,7 @@ if (!$clienteController->isLoggedIn()) {
 $nomeUsuario = $_SESSION['nome_cliente'] ?? 'Usuário';
 $emailUsuario = $_SESSION['email_cliente'] ?? 'email@exemplo.com';
 
-$imagemUsuario = '../templates/assets/img/FotoPerfil.png'; // Caminho para a imagem padrão (Alanzoka)
+$imagemUsuario = 'meuManoBurger/templates/assets/img/FotoPerfil.png'; // Caminho para a imagem padrão (Alanzoka)
 if (isset($_SESSION['imagem_cliente']) && !empty($_SESSION['imagem_cliente'])) {
     $imagemUsuario = 'data:image/jpeg;base64,' . base64_encode($_SESSION['imagem_cliente']);
 }
@@ -552,7 +552,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
     </div>
 
 
-    <script src="/meuManoBurger/templates/assets/js/perfil.js"></script>
+    <script src="meuManoBurger/templates/assets/js/perfil.js"></script>
     <?php
 
     // 1. Verifica se existe uma mensagem específica para o USUÁRIO.
