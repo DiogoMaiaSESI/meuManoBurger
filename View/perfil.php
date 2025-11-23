@@ -37,9 +37,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     $success = $clienteController->updateCliente($id_cliente, $nome, $email, $imagem);
 
     if ($success) {
-        $_SESSION['success_message'] = "Perfil atualizado com sucesso!";
+        // [CORREÇÃO AQUI]
+        $_SESSION['user_success_message'] = "Perfil atualizado com sucesso!";
     } else {
-        $_SESSION['error_message'] = "Erro ao atualizar o perfil.";
+        // [CORREÇÃO AQUI]
+        $_SESSION['user_error_message'] = "Erro ao atualizar o perfil.";
     }
     header('Location: perfil.php');
     exit;
@@ -55,10 +57,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     $success = $clienteController->updatePassword($id_cliente, $nova_senha, $confirmar_senha);
 
     if ($success) {
-        $_SESSION['success_message'] = "Senha alterada com sucesso!";
+        // [CORREÇÃO AQUI]
+        $_SESSION['user_success_message'] = "Senha alterada com sucesso!";
     } else {
-        if (!isset($_SESSION['error_message'])) {
-            $_SESSION['error_message'] = "Ocorreu um erro ao alterar a senha.";
+        if (!isset($_SESSION['user_error_message'])) { // A lógica original estava boa, mas vamos padronizar
+            // [CORREÇÃO AQUI]
+            $_SESSION['user_error_message'] = "As senhas não coincidem.";
         }
     }
     header('Location: perfil.php#content-seguranca');
@@ -550,47 +554,34 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
 
     <script src="/meuManoBurger/templates/assets/js/perfil.js"></script>
     <?php
-    // Verifica se existe uma mensagem de sucesso ou erro na sessão
-    if (isset($_SESSION['success_message']) || isset($_SESSION['error_message'])) {
 
-        // Define a mensagem e o tipo (classe CSS)
-        $message = $_SESSION['success_message'] ?? $_SESSION['error_message'];
-        $type = isset($_SESSION['success_message']) ? 'success' : 'error';
+    // 1. Verifica se existe uma mensagem específica para o USUÁRIO.
+    if (isset($_SESSION['user_success_message']) || isset($_SESSION['user_error_message'])) {
 
-        // Limpa as mensagens da sessão para não exibi-las novamente
-        unset($_SESSION['success_message']);
-        unset($_SESSION['error_message']);
+        // 2. Define a mensagem e o tipo com base nas chaves do USUÁRIO.
+        $message = $_SESSION['user_success_message'] ?? $_SESSION['user_error_message'];
+        $type = isset($_SESSION['user_success_message']) ? 'success' : 'error';
 
-        // Gera o script JavaScript para criar e exibir a notificação
+        // 3. Limpa APENAS as chaves do USUÁRIO.
+        unset($_SESSION['user_success_message'], $_SESSION['user_error_message']);
+
+        // 4. Gera o script do toast (código idêntico ao que já funcionava).
         echo "
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 const container = document.getElementById('notification-container');
-                
-                // Cria o elemento da notificação
-                const toast = document.createElement('div');
-                toast.className = 'toast {$type}';
-                toast.textContent = '{$message}';
-                
-                // Adiciona a notificação ao container
-                container.appendChild(toast);
-                
-                // Força o navegador a aplicar o estilo inicial antes de adicionar a classe 'show'
-                setTimeout(() => {
-                    toast.classList.add('show');
-                }, 10); // Um pequeno delay é suficiente
-                
-                // Remove a notificação após 5 segundos
-                setTimeout(() => {
-                    toast.classList.remove('show');
-                    // Remove o elemento do DOM após a animação de saída
+                if (container) {
+                    const toast = document.createElement('div');
+                    toast.className = 'toast {$type} show';
+                    toast.textContent = '{$message}';
+                    container.appendChild(toast);
                     setTimeout(() => {
-                        toast.remove();
-                    }, 500); // Tempo igual à duração da transição do CSS
-                }, 5000);
+                        toast.classList.remove('show');
+                        setTimeout(() => toast.remove(), 500);
+                    }, 5000);
+                }
             });
-        </script>
-        ";
+        </script>";
     }
     ?>
   <div vw class="enabled">

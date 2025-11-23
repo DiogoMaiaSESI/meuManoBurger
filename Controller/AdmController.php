@@ -68,20 +68,46 @@ class AdmController
     }
 
     public function generate2FASecret($id_adm, $email_adm)
-    {
-        try {
+{
+    try {
+        // Tenta gerar o QR Code da forma ideal
+        $google2fa = new \PragmaRX\Google2FAQRCode\Google2FA();
+        $secret = $google2fa->generateSecretKey();
+        $this->AdmModel->set2FASecret($id_adm, $secret); // Salva o segredo no banco
+
+        $qrCodeUrl = $google2fa->getQRCodeInline(
+            'MeuManoBurger (Admin)', // Nome da sua aplicação
+            $email_adm,
+            $secret
+        );
+
+        return ['success' => true, 'secret' => $secret, 'qrCodeUrl' => $qrCodeUrl];
+
+    } catch (\PragmaRX\Google2FAQRCode\Exception\MissingQrCodeServiceException $e) {
+        if (!isset($secret)) {
             $google2fa = new \PragmaRX\Google2FAQRCode\Google2FA();
             $secret = $google2fa->generateSecretKey();
-
             $this->AdmModel->set2FASecret($id_adm, $secret);
-
-            $qrCodeUrl = $google2fa->getQRCodeInline('MeuManoBurger (Admin)', $email_adm, $secret);
-
-            return ['success' => true, 'secret' => $secret, 'qrCodeUrl' => $qrCodeUrl];
-        } catch (\Throwable $ex) {
-            return ['success' => false, 'message' => 'Erro ao gerar 2FA: ' . $ex->getMessage()];
         }
+
+        // Monta a URL de autenticação manualmente
+        $otpauth = 'otpauth://totp/' . rawurlencode('MeuManoBurger (Admin):' . $email_adm) . '?secret=' . $secret . '&issuer=' . rawurlencode('MeuManoBurger (Admin)');
+        
+        // Usa a API pública do Google Charts para gerar a imagem do QR Code
+        $qrCodeUrl = 'https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl=' . rawurlencode($otpauth );
+
+        return [
+            'success' => true,
+            'secret' => $secret,
+            'qrCodeUrl' => $qrCodeUrl,
+            'warning' => 'Usando fallback público para gerar QR Code.'
+        ];
+
+    } catch (\Throwable $ex) {
+        // Pega qualquer outro erro inesperado
+        return ['success' => false, 'message' => 'Erro ao gerar 2FA: ' . $ex->getMessage()];
     }
+}
 
     public function verifyAndEnable2FA($id_adm, $secret, $code)
     {
@@ -115,17 +141,12 @@ class AdmController
     public function updateAdm($id_adm, $nome_adm, $email_adm, $imagem_adm_file)
     {
 
-
-
-
-        $chave_pix = $_POST['chave_pix'] ?? null;
-
         $imagem_conteudo = null;
         if (isset($imagem_adm_file) && $imagem_adm_file['error'] === UPLOAD_ERR_OK) {
             $imagem_conteudo = file_get_contents($imagem_adm_file['tmp_name']);
         }
 
-        $success = $this->AdmModel->updateAdm($id_adm, $nome_adm, $email_adm, $imagem_conteudo, $chave_pix);
+        $success = $this->AdmModel->updateAdm($id_adm, $nome_adm, $email_adm, $imagem_conteudo);
 
         if ($success) {
             $_SESSION['nome_adm'] = $nome_adm;
@@ -133,7 +154,6 @@ class AdmController
             if ($imagem_conteudo !== null) {
                 $_SESSION['imagem_adm'] = $imagem_conteudo;
             }
-            $_SESSION['chave_pix_adm'] = $chave_pix;
             $_SESSION['success_message'] = "Perfil atualizado com sucesso!";
         } else {
             $_SESSION['error_message'] = "Erro ao atualizar o perfil.";

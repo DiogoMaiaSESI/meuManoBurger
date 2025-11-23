@@ -1,7 +1,10 @@
 <?php
-// Define o tipo de conteúdo da resposta como JSON para todas as respostas.
 header('Content-Type: application/json');
 session_start();
+
+// --- [A CORREÇÃO DEFINITIVA ESTÁ AQUI] ---
+// Inclui o autoload do Composer, que carrega todas as bibliotecas externas.
+require_once __DIR__ . '/../vendor/autoload.php';
 
 // 1. Bloco de Segurança: Verifica se o administrador está logado.
 if (!isset($_SESSION['id_adm']) || !isset($_SESSION['is_admin']) || $_SESSION['is_admin'] !== true) {
@@ -10,58 +13,41 @@ if (!isset($_SESSION['id_adm']) || !isset($_SESSION['is_admin']) || $_SESSION['i
     exit;
 }
 
-// 2. Inclusões de Arquivos Essenciais
-// O autoload do Composer deve ser o primeiro, se você o usa.
-// require_once __DIR__ . '/../vendor/autoload.php'; 
-require_once __DIR__ . '/../Model/Connection.php'; // Essencial para os Models
+// 2. Inclusões de Arquivos Essenciais (APENAS o que for necessário para a ação)
+require_once __DIR__ . '/../Model/Connection.php';
 require_once __DIR__ . '/../Model/Adm.php';
 require_once __DIR__ . '/../Controller/AdmController.php';
-require_once __DIR__ . '/../Model/Product.php';
-require_once __DIR__ . '/../Model/Estoque.php';
-require_once __DIR__ . '/../Controller/ProductController.php';
 
-// Pega a ação solicitada pela URL (ex: ?action=update_product)
+// Pega a ação solicitada pela URL
 $action = $_GET['action'] ?? null;
 
 // 3. Roteador de Ações
 switch ($action) {
-    // --- AÇÕES DE PRODUTO ---
-    case 'update_product':
-    case 'delete_product':
-        // Instancia os models e o controller CORRETAMENTE
-        $productModel = new \Model\Product();
-        $estoqueModel = new \Model\Estoque();
-        $productController = new \Controller\ProductController($productModel, $estoqueModel);
-
-        if ($action === 'update_product' && $_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Chama o método SEM argumentos. O método já sabe ler $_POST e $_FILES.
-            $response = $productController->update();
-            echo json_encode($response);
-        } elseif ($action === 'delete_product' && $_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Chama o método SEM argumentos. O método já sabe ler o corpo da requisição.
-            $response = $productController->delete();
-            echo json_encode($response);
-        }
-        break;
-
     // --- AÇÕES DE AUTENTICAÇÃO 2FA ---
     case 'generate-2fa':
-    case 'verify-2fa':
-    case 'disable-2fa':
-        // Instancia os models e o controller de ADM
-        $admModel = new \Model\Adm();
-        $admController = new \Controller\AdmController(); // Supondo que o construtor precise do model
+        $admController = new \Controller\AdmController();
         $id_adm = $_SESSION['id_adm'];
+        $email_adm = $_SESSION['email_adm'];
+        // Agora, esta chamada funcionará porque o autoload foi incluído.
+        $response = $admController->generate2FASecret($id_adm, $email_adm);
+        echo json_encode($response);
+        break;
 
-        if ($action === 'generate-2fa') {
-            $response = $admController->generate2FASecret($id_adm, $_SESSION['email_adm']);
-            echo json_encode($response);
-        } elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'verify-2fa') {
+    case 'verify-2fa':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $admController = new \Controller\AdmController();
+            $id_adm = $_SESSION['id_adm'];
             $secret = $_POST['secret'] ?? '';
             $code = $_POST['code'] ?? '';
             $response = $admController->verifyAndEnable2FA($id_adm, $secret, $code);
             echo json_encode($response);
-        } elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'disable-2fa') {
+        }
+        break;
+
+    case 'disable-2fa':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $admController = new \Controller\AdmController();
+            $id_adm = $_SESSION['id_adm'];
             $password = $_POST['password'] ?? '';
             $response = $admController->disable2FA($id_adm, $password);
             echo json_encode($response);
@@ -75,4 +61,4 @@ switch ($action) {
         break;
 }
 
-exit; // Garante que o script termine aqui.
+exit;

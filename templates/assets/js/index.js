@@ -108,7 +108,7 @@ feedbacks.addEventListener('click', () =>{
         })
     }
 })
-    const navButtons = document.querySelectorAll('button.nav-button');
+const navButtons = document.querySelectorAll('button.nav-button');
     navButtons.forEach(button => {
         button.addEventListener('click', () => {
             const targetId = button.getAttribute('data-target');
@@ -116,12 +116,14 @@ feedbacks.addEventListener('click', () =>{
             if (targetElement) {
                 targetElement.scrollIntoView({
                     behavior: 'smooth',
-                    block: 'start' // Garante que o topo da seção alinhe com o topo da tela
+                    block: 'start'
                 });
             }
         });
     });
 
+
+    // --- BOTÕES DE LOGIN E PRODUTOS ---
     const loginButton = document.querySelector('button.login');
     if (loginButton) {
         loginButton.addEventListener('click', () => {

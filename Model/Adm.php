@@ -77,11 +77,11 @@ class Adm
         }
     }
 
-    public function updateAdm($id_adm, $nome_adm, $email_adm, $imagem_adm, $chave_pix)
+    public function updateAdm($id_adm, $nome_adm, $email_adm, $imagem_adm)
     {
         try {
             // 2. Adicione o campo chave_pix à query SQL
-            $sql = 'UPDATE administrador SET nome_adm = :nome_adm, email_adm = :email_adm, chave_pix = :chave_pix';
+            $sql = 'UPDATE administrador SET nome_adm = :nome_adm, email_adm = :email_adm';
 
             if ($imagem_adm !== null) {
                 $sql .= ', imagem_adm = :imagem_adm';
@@ -93,8 +93,7 @@ class Adm
             $stmt->bindParam(":nome_adm", $nome_adm, PDO::PARAM_STR);
             $stmt->bindParam(":email_adm", $email_adm, PDO::PARAM_STR);
 
-            // 3. Faça o bind do novo parâmetro
-            $stmt->bindParam(":chave_pix", $chave_pix, PDO::PARAM_STR);
+
 
             if ($imagem_adm !== null) {
                 $stmt->bindParam(":imagem_adm", $imagem_adm, PDO::PARAM_LOB);

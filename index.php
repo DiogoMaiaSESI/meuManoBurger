@@ -91,7 +91,6 @@ $feedbacks = $feedbackController->listAll();
         <h3>Feedbacks</h3>
         <p class="subtitulo">Seu <span class="word">Feedback</span> é muito importante para nós!</p>
         
-        <!-- [INÍCIO DA MUDANÇA] Estrutura dinâmica com scroll horizontal -->
         <div class="feedbackcontainer">
             <?php if (empty($feedbacks)): ?>
                 <p style="font-size: 1.8rem; color: #555;">Nenhum feedback encontrado.</p>
@@ -111,7 +110,6 @@ $feedbacks = $feedbackController->listAll();
                 <?php endforeach; ?>
             <?php endif; ?>
         </div>
-        <!-- [FIM DA MUDANÇA] -->
     </section>
 
     <footer>

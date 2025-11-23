@@ -69,11 +69,13 @@ document.addEventListener('DOMContentLoaded', function () {
             activateTab('btn-dados');
         });
     }
-    if (confirmLogoutBtn) {
-        confirmLogoutBtn.addEventListener('click', () => {
-            window.location.href = 'perfil.php?action=logout';
-        });
-    }
+
+if (confirmLogoutBtn) {
+    confirmLogoutBtn.addEventListener('click', () => {
+        // [CORREÇÃO] Aponta para a URL correta de logout do ADM
+        window.location.href = 'perfil_adm.php?action=logout';
+    });
+}
     if (logoutModal) {
         logoutModal.addEventListener('click', (event) => {
             if (event.target === logoutModal) {
@@ -122,55 +124,63 @@ document.addEventListener('DOMContentLoaded', function () {
     const open2FAModalBtn = document.querySelector('.add-2fa-link');
     const modal2FA = document.getElementById('modal-2fa');
     const close2FAModalBtn = document.getElementById('close-2fa-modal-btn');
-    const qrCodeContainer = document.getElementById('qr-code-container');
     const secretInput = document.getElementById('2fa-secret-input');
     const verifyForm = document.getElementById('2fa-verify-form');
-    const errorCodeMessage = document.getElementById('2fa-error-message');
+    const errorCodeMessage = document.getElementById('2fa-error-message'); 
 
-    if (open2FAModalBtn) {
-        open2FAModalBtn.addEventListener('click', async function (event) {
-            event.preventDefault();
+    if (open2FAModalBtn && modal2FA) {
+        const close2FAModalBtn = document.getElementById('close-2fa-modal-btn');
+        const qrCodeContainer = document.getElementById('qr-code-container');
+        const verifyForm = document.getElementById('2fa-verify-form');
+        const errorCodeMessage = document.getElementById('2fa-error-message');
+
+        open2FAModalBtn.addEventListener('click', async function (e) {
+            e.preventDefault();
             qrCodeContainer.innerHTML = '<p>Gerando QR Code...</p>';
             if (errorCodeMessage) errorCodeMessage.textContent = '';
-            const codeInput = document.getElementById('2fa-code');
-            if (codeInput) codeInput.value = '';
-            if (modal2FA) modal2FA.classList.add('active');
+            modal2FA.classList.add('active');
 
             try {
-                const resp = await fetch('/meuManoBurger/View/api_adm.php?action=generate-2fa', {
-                    method: 'GET',
-                    credentials: 'same-origin'
-                });
-
-                const text = await resp.text();
-                let data;
-                try { data = JSON.parse(text); }
-                catch (err) { throw new Error('Resposta inválida do servidor: ' + text.substring(0, 300)); }
-
-                if (!resp.ok) throw new Error('HTTP ' + resp.status + ' — ' + (data.message || 'Erro no servidor'));
+                // [PONTO CRÍTICO] A URL da API é a única coisa que muda
+                const response = await fetch('/meuManoBurger/View/api_adm.php?action=generate-2fa');
+                const data = await response.json();
 
                 if (data.success) {
-                    const qr = data.qrCodeUrl || '';
-                    if (/^\s*(data:|https?:\/\/)/i.test(qr)) {
-                        qrCodeContainer.innerHTML = `<img src="${qr}" alt="QR Code para 2FA">`;
-                    }
-                    else if (/^\s*</.test(qr)) {
-                        qrCodeContainer.innerHTML = qr;
-                    }
-                    else {
-                        qrCodeContainer.innerHTML = `<p>${qr}</p>`;
-                    }
-                    if (typeof secretInput !== 'undefined' && secretInput) {
-                        secretInput.value = data.secret || '';
-                    }
+                    qrCodeContainer.innerHTML = `<img src="${data.qrCodeUrl}" alt="QR Code para 2FA">`;
+                    document.getElementById('2fa-secret-input').value = data.secret;
                 } else {
                     qrCodeContainer.innerHTML = `<p style="color: red;">${data.message || 'Erro ao gerar QR Code.'}</p>`;
                 }
             } catch (error) {
-                console.error('generate-2fa error:', error);
-                qrCodeContainer.innerHTML = '<p style="color: red;">Erro de comunicação com o servidor.</p>';
+                qrCodeContainer.innerHTML = '<p style="color: red;">Erro de comunicação.</p>';
             }
         });
+
+        if (verifyForm) {
+            verifyForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const formData = new FormData(this);
+                const secret = document.getElementById('2fa-secret-input').value;
+                formData.append('secret', secret);
+
+                try {
+                    const response = await fetch('/meuManoBurger/View/api_adm.php?action=verify-2fa', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    const data = await response.json();
+                    if (data.success) {
+                        window.location.reload();
+                    } else {
+                        if (errorCodeMessage) errorCodeMessage.textContent = data.message || 'Código inválido.';
+                    }
+                } catch (error) {
+                    if (errorCodeMessage) errorCodeMessage.textContent = 'Erro de comunicação.';
+                }
+            });
+        }
+        if (close2FAModalBtn) close2FAModalBtn.addEventListener('click', () => modal2FA.classList.remove('active'));
+        modal2FA.addEventListener('click', (e) => { if (e.target === modal2FA) modal2FA.classList.remove('active'); });
     }
     // --- LÓGICA PARA DESATIVAÇÃO DO 2FA ---
     const openDisableModalBtn = document.getElementById('btn-open-disable-2fa');

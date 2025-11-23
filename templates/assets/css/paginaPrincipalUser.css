@@ -366,28 +366,32 @@ main img{
 .feedback {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     margin-bottom: 8rem;
+    width: 100%;
+    padding: 0 4.2rem;
+    box-sizing: border-box;
 }
 
-.textostitulo{
+.textostitulo {
     margin-left: 3rem;
     display: flex;
     flex-direction: column;
-    justify-content: left;
-    margin-right: 85rem;
+    justify-content: flex-start;
+    align-items: left;
+    margin-right: 0;
+    width: 45%;
 }
+
 .frase {
     font-size: 3rem;
     font-weight: 300;
-    margin-top: 3.5rem;
     margin-bottom: 6rem;
 }
 
 .feed {
     font-size: 4rem;
-    color: var(--VermelhoCereja); ;
+    color: var(--VermelhoCereja);
     font-weight: bold;
     text-align: left;
     margin-top: 3rem;
@@ -400,11 +404,22 @@ main img{
 }
 
 .feedbackcontainer {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
     gap: 2.5rem;
-    flex-direction: column;
-    justify-content: center;
+    flex-direction: row;
+
+    justify-content: flex-start;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    padding: 1rem 2.0rem 2rem 2.0rem;
+
+    scrollbar-width: auto;
+    scrollbar-color: var(--VermelhoCereja) #f1f1f1;
+
+    width: 100%;
+    max-width: 100%;
 }
 
 .caixa {
@@ -418,6 +433,7 @@ main img{
     border-radius: 1rem;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     background-color: var(--Branco);
+    flex-shrink: 0;
 }
 
 .dados {
@@ -440,15 +456,39 @@ main img{
 
 .textofeedback {
     width: 40.9rem;
-    height: 14.4rem;
+    height: 13.4rem;
     font-size: 1.8rem;
     font-weight: bold;
     text-align: justify;
+    overflow-y: auto; 
+    padding-bottom: 2.0rem;
+    
+    overflow-wrap: break-word; 
+    
+    scrollbar-width: thin;
+    scrollbar-color: var(--VermelhoCereja) #f1f1f1;
 }
 
 .textofeedback p {
     font-size: 2rem;
     font-weight: bold;
+    text-align: justify;
+    overflow-wrap: break-word;
+    max-height: 50%;
+    
+}
+.add-feedback-container {
+    display: flex;
+    justify-content: center; /* Centraliza o botão horizontalmente */
+    width: 100%;
+    padding: 2rem 0; /* Adiciona um espaço acima e abaixo do botão */
+}
+
+/* E ajuste o estilo do botão para corresponder ao seu design original */
+#btn-add-feedback.saibaBtn {
+    width: auto; /* Largura automática baseada no texto */
+    padding: 1rem 2.5rem; /* Espaçamento interno */
+    margin-top: 0; /* Remove a margem que estava inline */
 }
 
 hr{

@@ -1,6 +1,8 @@
 <?php
 session_start();
-
+require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../Controller/AdmController.php';
+require_once __DIR__ . '/../Model/Adm.php';
 function isAdmLoggedIn()
 {
     return isset($_SESSION['id_adm']) && isset($_SESSION['is_admin']) && $_SESSION['is_admin'] === true;
@@ -11,6 +13,9 @@ if($_SESSION['id_adm'] !== null) {
 } else {
     header('Location: login.php');
 }
+$idAdm = $_SESSION['id_adm'];
+$admModel = new \Model\Adm();
+$admController = new \Controller\AdmController();
 
 
 if (!isAdmLoggedIn()) {
@@ -22,6 +27,7 @@ if (!isAdmLoggedIn()) {
 
 require_once __DIR__ . '/../Controller/AdmController.php';
 require_once __DIR__ . '/../Model/Adm.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
 $admModel = new \Model\Adm();
 $admController = new \Controller\AdmController();
@@ -301,12 +307,6 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
                             <label for="email">Email</label>
                             <input type="email" id="email" name="email"
                                 value="<?php echo htmlspecialchars($_SESSION['email_adm']); ?>">
-                        </div>
-                        <div class="form-group">
-                            <label for="chave_pix">Chave Pix</label>
-                            <input type="text" id="chave_pix" name="chave_pix"
-                                placeholder="Seu CPF, CNPJ, e-mail ou telefone"
-                                value="<?php echo htmlspecialchars($admin_info['chave_pix'] ?? ''); ?>">
                         </div>
                         <button type="submit" class="submit-btn">Salvar Alterações</button>
                     </form>

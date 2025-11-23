@@ -25,11 +25,40 @@ $imagemCliente = $clienteController->getClienteById($id_cliente)['imagem_cliente
 
 
 
-// --- 3. PREPARAÇÃO DE DADOS PARA RENDERIZAR A PÁGINA (Método GET) ---
 
-// Instancia os controllers para buscar dados
+require_once __DIR__ . '/../Model/Feedback.php';
+require_once __DIR__ . '/../Controller/FeedbackController.php';
+
+// --- 2. INSTÂNCIAS ---
+$clienteController = new ClienteController();
 $feedbackModel = new \Model\Feedback();
 $feedbackController = new \Controller\FeedbackController($feedbackModel);
+
+// --- 3. LÓGICA DE AÇÕES (POST) ---
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Ação para criar um feedback
+    if (isset($_POST['action']) && $_POST['action'] === 'create_feedback') {
+        $feedbackController->Create(); // Chama o método correto do controller
+    }
+    
+    // Ação para ver detalhes de um produto
+    if (!empty($_POST['product_id'])) {
+        $_SESSION['product_id_details'] = $_POST['product_id'];
+        header('Location: detalhamentoUser.php');
+        exit;
+    }
+}
+
+// --- 4. PREPARAÇÃO DE DADOS PARA EXIBIR A PÁGINA (GET) ---
+if (isset($_SESSION['id_cliente'])) {
+    $id_cliente = $_SESSION['id_cliente'];
+    $imagemCliente = $clienteController->getClienteById($id_cliente)['imagem_cliente'];
+    $isClienteLoggedIn = true;
+} else {
+    // Define valores padrão se o usuário não estiver logado
+    $imagemCliente = null; 
+    $isClienteLoggedIn = false;
+}
 
 // Busca todos os feedbacks para exibir na página
 $feedbacks = $feedbackController->listAll();
@@ -280,7 +309,9 @@ $isClienteLoggedIn = isset($_SESSION['id_cliente']);
             
         </div>
         <?php if ($isClienteLoggedIn): ?>
-            <button id="btn-add-feedback" class="saibaBtn" style="margin-top: 2rem; width: auto; padding: 0 2rem;">Deixar meu Feedback</button>
+            <div class="add-feedback-container">
+                <button id="btn-add-feedback" class="saibaBtn">Deixar meu Feedback</button>
+            </div>
         <?php endif; ?>
 
         

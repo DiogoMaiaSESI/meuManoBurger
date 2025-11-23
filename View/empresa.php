@@ -11,6 +11,18 @@ $admController = new \Controller\AdmController();
 
 $imagem_adm = $admController->getAdmById($idAdm)['imagem_adm'];
 
+require_once __DIR__ . '/../Controller/AdmController.php';
+require_once __DIR__ . '/../Model/Feedback.php'; // Inclui o Model de Feedback
+require_once __DIR__ . '/../Controller/FeedbackController.php'; // Inclui o Controller de Feedback
+
+// 2. Instancia os controllers
+$admController = new \Controller\AdmController();
+$feedbackModel = new \Model\Feedback();
+$feedbackController = new \Controller\FeedbackController($feedbackModel);
+
+// 3. Busca os dados
+$imagem_adm = $admController->getAdmById($idAdm)['imagem_adm'];
+$feedbacks = $feedbackController->listAll(); // Busca todos os feedbacks do banco
 ?>
 
 <!DOCTYPE html>
@@ -104,68 +116,34 @@ $imagem_adm = $admController->getAdmById($idAdm)['imagem_adm'];
             <hr>
         </section>
         <section class="feedback" id="feedback">
-            <div class=" textostitulo">
-                <h2 class="feed">Feedbacks</h2>
-                <h3 class="frase"> Visualize os <span class="word">feedbacks</span> enviados!</h3>
-            </div>
-            <div class="feedbackcontainer">
-                <div class="lineone">
+        <div class="textostitulo">
+            <h2 class="feed">Feedbacks</h2>
+            <h3 class="frase"> Visualize os <span class="word">feedbacks</span> enviados!</h3>
+        </div>
+
+        <!-- [CORREÇÃO NO HTML DO FEEDBACK] -->
+        <!-- Usando a mesma estrutura do index.php -->
+        <div class="feedbackcontainer">
+            <?php if (empty($feedbacks)): ?>
+                <p style="font-size: 1.8rem; color: #555; text-align: center; width: 100%;">Nenhum feedback encontrado no banco de dados.</p>
+            <?php else: ?>
+                <?php foreach ($feedbacks as $fb): ?>
                     <div class="caixa">
                         <div class="dados">
                             <figure>
-                                <img src="../templates/assets/img/lucia.png" alt="">
+                                <!-- Lógica para mostrar imagem do cliente ou uma padrão -->
+                                <img src="<?php echo ($fb['imagem_cliente'] ? 'data:image/jpeg;base64,' . base64_encode($fb['imagem_cliente']) : '../templates/assets/img/perfil.png'); ?>" alt="Foto de <?php echo htmlspecialchars($fb['nome_cliente']); ?>">
                             </figure>
-                            <p>Lúcia santos</p>
+                            <p><?php echo htmlspecialchars($fb['nome_cliente']); ?></p>
                         </div>
                         <div class="textofeedback">
-                            <p>Mano, a cantina virou o point do
-                                recreio! O "X-Mano" é monstro, vem recheado e barato.
-                                Ainda salvam com aquele refri</p>
+                            <p><?php echo htmlspecialchars($fb['descricao_feedback']); ?></p>
                         </div>
                     </div>
-                    <div class="caixa">
-                        <div class="dados">
-                            <figure>
-                                <img src="../templates/assets/img/julia.png" alt="">
-                            </figure>
-                            <p>Júlia Costa</p>
-                        </div>
-                        <div class="textofeedback">
-                            <p>Atendem muito rápido, o que é essencial para o pouco
-                                tempo do recreio. Os lanches são saborosos e noto
-                                que as crianças estão adorando.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="linetwo">
-                    <div class="caixa">
-                        <div class="dados">
-                            <figure>
-                                <img src="../templates/assets/img/Rodrigo.png" alt="">
-                            </figure>
-                            <p>Rodrigo Carvalho</p>
-                        </div>
-                        <div class="textofeedback">
-                            <p>Achei uma iniciativa excelente. Preços acessíveis e o
-                                cardápio é mais atrativo e saudável do que a
-                                cantina anterior, que só vendia salgados fritos.</p>
-                        </div>
-                    </div>
-                    <div class="caixa">
-                        <div class="dados">
-                            <figure>
-                                <img src="../templates/assets/img/joao.png" alt="">
-                            </figure>
-                            <p>João da Silva</p>
-                        </div>
-                        <div class="textofeedback">
-                            <p>Parabéns ao "Meu Mano Burger" pela qualidade.
-                                É raro encontrar uma cantina escolar que se
-                                preocupe tanto com a procedência dos ingredientes.</p>
-                        </div>
-                    </div>
-                </div>
-        </section>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </div>
+    </section>
         <footer>
             <h4>Copyright © 2025 Meumanoburger - Todos os Direitos Reservados</h4>
         </footer>

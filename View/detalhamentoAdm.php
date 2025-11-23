@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($action === 'update_product') {
         $updateResult = $productController->update(); // O controller já lê o $_POST
         if ($updateResult['success']) {
-            $_SESSION['success_message'] = 'Produto atualizado com sucesso!';
+            $_SESSION['adm_success_message'] = 'Produto atualizado com sucesso!';
         } else {
             $_SESSION['error_message'] = 'Erro ao atualizar: ' . ($updateResult['message'] ?? 'Verifique os campos.');
         }
