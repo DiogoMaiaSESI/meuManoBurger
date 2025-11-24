@@ -366,7 +366,7 @@ main img{
 .feedback {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     margin-bottom: 8rem;
     width: 100%;
     padding: 0 4.2rem;
@@ -425,8 +425,8 @@ main img{
 .caixa {
     display: flex;
     flex-direction: column;
-    width: 30rem;
-    height: 18rem;
+    width: 36rem;
+    height: 20rem;
     padding-top: 2.7rem;
     padding-left: 2.5rem;
     padding-right: 2.5rem;
@@ -455,15 +455,12 @@ main img{
 }
 
 .textofeedback {
-    width: 40.9rem;
-    height: 13.4rem;
+    flex-grow: 1;
+    overflow-y: auto;
+    overflow-wrap: break-word;
     font-size: 1.8rem;
     font-weight: bold;
     text-align: justify;
-    flex-grow: 1;
-    overflow-y: auto; 
-    padding-bottom: 2.0rem;
-    overflow-wrap: break-word; 
     scrollbar-width: thin;
     scrollbar-color: var(--VermelhoCereja) #f1f1f1;
 }
@@ -619,8 +616,8 @@ footer h3 {
     }
 
     .caixa {
-        width: 30.2rem;
-        height: 26rem;
+        width: 32.2rem;
+        height: 22rem;
     }
     .dados figure img {
         width: 4.8rem;
@@ -749,8 +746,8 @@ footer h3 {
     }
 
     .caixa {
-        width: 30.2rem;
-        height: 26rem;
+        width: 32.2rem;
+        height: 22rem;
     }
     .dados figure img {
         width: 4.8rem;
@@ -900,8 +897,8 @@ footer h3 {
     }
 
     .caixa {
-        width: 30.2rem;
-        height: 26rem;
+        width: 32.2rem;
+        height: 22rem;
     }
     .dados figure img {
         width: 4.8rem;
@@ -1076,12 +1073,12 @@ footer h3 {
     }
     .frase {
         margin-top: 2rem;
-        font-size: 2.6rem;
+        font-size: 2.0rem;
         width: 44rem;
     }
     .caixa {
-        width: 22.2rem;
-        height: 24rem;
+        width: 28.2rem;
+        height: 18rem;
     }
     .dados figure img {
         width: 4.8rem;
@@ -1263,12 +1260,12 @@ footer h3 {
     }
     .frase {
         margin-top: 2rem;
-        font-size: 2.6rem;
+        font-size: 2.rem;
         width: 44rem;
     }
     .caixa {
-        width: 22.2rem;
-        height: 24rem;
+        width: 28.2rem;
+        height: 18rem;
     }
     .dados figure img {
         width: 4.8rem;
@@ -1456,10 +1453,10 @@ footer h3 {
          overflow-x: auto;
         overflow-y: hidden;
         padding-bottom: 2rem;
-        padding-left: 37rem;
         scrollbar-width: thin;
         scrollbar-color: var(--VermelhoCereja) #f1f1f1;
         max-width: 97vw;
+        
     }
 
     .caixa{
@@ -1477,12 +1474,12 @@ footer h3 {
     }
     .frase {
         margin-top: 2rem;
-        font-size: 2.6rem;
+        font-size: 2.0rem;
         width: 44rem;
     }
     .caixa {
-        width: 22.2rem;
-        height: 24rem;
+        width: 28.2rem;
+        height: 18rem;
     }
     .dados figure img {
         width: 4.8rem;
@@ -1603,7 +1600,6 @@ footer h3 {
         overflow-x: auto;
         overflow-y: hidden;
         padding-bottom: 2rem;
-        padding-left: 47rem;
         scrollbar-width: thin;
         scrollbar-color: var(--VermelhoCereja) #f1f1f1;
         max-width: 97vw;
@@ -1688,7 +1684,7 @@ footer h3 {
 
     .caixa {
         width: 22.2rem;
-        height: 24rem;
+        height: 18rem;
     }
 
     .dados figure img {
@@ -1908,8 +1904,8 @@ footer h3 {
     }
 
     .caixa {
-        width: 22.2rem;
-        height: 24rem;
+        width: 26.2rem;
+        height: 18rem;
     }
 
     .dados figure img {
@@ -2128,8 +2124,8 @@ footer h3 {
     }
 
     .caixa {
-        width: 22.2rem;
-        height: 24rem;
+        width: 26.2rem;
+        height: 18rem;
     }
 
     .dados figure img {
