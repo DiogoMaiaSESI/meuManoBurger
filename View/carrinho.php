@@ -52,8 +52,8 @@ $total = 0;
     <title>Carrinho - Meu Mano Burger</title>
     
     <!-- Carregando o CSS global e o novo CSS do carrinho -->
-    <link rel="stylesheet" href="/meuManoBurger/templates/assets/css/global.css"> 
-    <link rel="stylesheet" href="/meuManoBurger/templates/assets/css/carrinho.css">
+    <link rel="stylesheet" href="/templates/assets/css/global.css"> 
+    <link rel="stylesheet" href="/templates/assets/css/carrinho.css">
 
     <style>
         .sandwich-menu-container {
@@ -158,19 +158,19 @@ $total = 0;
     <div class="sandwich-menu-container">
         <div class="options">
             <div class="option">
-                <figure><img src="/meuManoBurger/templates/assets/img/Cardapio.png" alt="Cardápio"></figure>
+                <figure><img src="/templates/assets/img/Cardapio.png" alt="Cardápio"></figure>
                 <h5>Cardápio</h5>
             </div>
             <div class="option">
-                <figure><img src="/meuManoBurger/templates/assets/img/Pedidos.png" alt="Pedidos"></figure>
+                <figure><img src="/templates/assets/img/Pedidos.png" alt="Pedidos"></figure>
                 <h5>Pedidos</h5>
             </div>
             <div class="option">
-                <figure><img src="/meuManoBurger/templates/assets/img/Feedbacks.png" alt="Feedbacks"></figure>
+                <figure><img src="/templates/assets/img/Feedbacks.png" alt="Feedbacks"></figure>
                 <h5>Feedbacks</h5>
             </div>
             <div class="option">
-                <figure><img src="/meuManoBurger/templates/assets/img/Carrinho_menu.png" alt="Carrinho"></figure>
+                <figure><img src="/templates/assets/img/Carrinho_menu.png" alt="Carrinho"></figure>
                 <h5>Carrinho</h5>
             </div>
         </div>
@@ -181,16 +181,16 @@ $total = 0;
         <nav class="header-nav">
             <li>
                 <button class="menu-btn sandwich-menu-btn">
-                    <figure><img src="/meuManoBurger/templates/assets/img/Menu.png" alt="Menu" class="icon-img">
+                    <figure><img src="/templates/assets/img/Menu.png" alt="Menu" class="icon-img">
                     </figure>
                 </button>
             </li>
             <div class="logo-container">
-                <img src="/meuManoBurger/templates/assets/img/Logo.png" alt="Logo Meu Mano Burger" class="logo-principal">
+                <img src="/templates/assets/img/Logo.png" alt="Logo Meu Mano Burger" class="logo-principal">
             </div>
             <div class="user-actions">
                 <a href="paginaPrincipalUser.php" class="icon-link">
-                    <img src="/meuManoBurger/templates/assets/img/Voltar.png" alt="Voltar" class="icon-img">
+                    <img src="/templates/assets/img/Voltar.png" alt="Voltar" class="icon-img">
                 </a>
                 <a href="perfil.php" class="icon-link perfilFigure">
                     <img src="data:image/jpeg;base64,<?php echo base64_encode($imagemCliente);?>" alt="Perfil" class="profileButton">
@@ -273,24 +273,24 @@ $total = 0;
             <div class="recommendations-grid">
                 <!-- Recomendação 1 -->
                 <div class="rec-item">
-                    <img src="\meuManoBurger\templates\assets\img\EsfirraCarne.png" alt="Esfirra de Carne" class="rec-image">
+                    <img src="/templates/assets/img/EsfirraCarne.png" alt="Esfirra de Carne" class="rec-image">
                     <span id="17" class="rec-name">Esfirra de Carne</span>
                 </div>
                 <!-- Recomendação 2 -->
                 <div class="rec-item">
-                    <img src="\meuManoBurger\templates\assets\img\PastelFrito.png" alt="Pastel frito" class="rec-image">
+                    <img src="/templates/assets/img/PastelFrito.png" alt="Pastel frito" class="rec-image">
                     <span id="14" class="rec-name">Pastel frito</span>
                 </div>
                 <!-- Recomendação 3 -->
                 <div class="rec-item">
-                    <img src="\meuManoBurger\templates\assets\img\CoxinhaQueijo.png" alt="Coxinha de queijo" class="rec-image">
+                    <img src="/templates/assets/img/CoxinhaQueijo.png" alt="Coxinha de queijo" class="rec-image">
                     <span id="16" class="rec-name">Coxinha de queijo</span>
                 </div>
             </div>
         </div>
 
     </main>
-    <script src="../templates/assets/js/carrinho.js"></script>
+    <script src="/templates/assets/js/carrinho.js"></script>
   <div vw class="enabled">
     <div vw-access-button class="active"></div>
     <div vw-plugin-wrapper>
