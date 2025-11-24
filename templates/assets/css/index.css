@@ -246,9 +246,9 @@ section {
 .caixa {
     display: flex;
     flex-direction: column;
-    width: 46.8rem;
-    height: 27.5rem;
-    padding: 2.7rem 2.5rem;
+    width: 30rem;
+    height: 18rem;
+    padding: 1.7rem 1.7rem;
     border-radius: 1rem;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     background-color: var(--Branco);
@@ -264,14 +264,14 @@ section {
 }
 
 .dados img {
-    width: 6rem;
-    height: 5rem;
+    width: 4rem;
+    height: 4rem;
     border-radius: 50%;
     object-fit: cover;
 }
 
 .dados p {
-    font-size: 2rem;
+    font-size: 1.4rem;
     color: var(--VermelhoCereja);
     font-weight: bold;
 }
@@ -280,7 +280,7 @@ section {
     flex-grow: 1;
     overflow-y: auto;
     overflow-wrap: break-word;
-    font-size: 1.8rem;
+    font-size: 1.4rem;
     font-weight: bold;
     text-align: justify;
     scrollbar-width: thin;
@@ -462,19 +462,14 @@ footer h5 {
         gap: 2rem;
     }
 
-    .caixa {
-        width: 40.8rem;
-        height: 25.5rem;
-    }
-
     .dados {
         margin-bottom: 1rem;
     }
 
     .textofeedback {
-        width: 35rem;
+        width: 100%;
         height: 14.4rem;
-        font-size: 1.5rem;
+        font-size: 1.4rem;
     }
 
     footer {
@@ -646,8 +641,8 @@ footer h5 {
     }
 
     .caixa {
-        width: 26.8rem;
-        height: 18.5rem;
+        width: 24.8rem;
+        height: 15.5rem;
     }
 
     .dados {
@@ -655,18 +650,18 @@ footer h5 {
     }
 
     .dados img {
-        width: 4.3rem;
+        width: 3.3rem;
         height: 3.3rem;
     }
 
     .dados p {
-        font-size: 1.4rem;
+        font-size: 1.2rem;
     }
 
     .textofeedback {
         width: 22rem;
         height: 14.4rem;
-        font-size: 1.2rem;
+        font-size: 1.1rem;
     }
 
     footer {
@@ -873,10 +868,10 @@ footer h5 {
 
     .caixa {
         width: 20.8rem;
-        height: 15.5rem;
-        padding-left: 1.5rem;
-        padding-right: 1.5rem;
-        padding-top: 1.7rem;
+        height: 12.5rem;
+        padding-left: 1.2rem;
+        padding-right: 1.2rem;
+        padding-top: 1.4rem;
     }
 
     .dados {
@@ -885,7 +880,7 @@ footer h5 {
     }
 
     .dados img {
-        width: 4rem;
+        width: 3rem;
         height: 3rem;
     }
 
@@ -896,7 +891,7 @@ footer h5 {
     .textofeedback {
         width: 18rem;
         height: 14.4rem;
-        font-size: 1rem;
+        font-size: 0.9rem;
     }
 
     footer {
@@ -1116,10 +1111,10 @@ footer h5 {
 
     .caixa {
         width: 18rem;
-        height: 14.5rem;
-        padding-left: 1.5rem;
-        padding-right: 1.5rem;
-        padding-top: 1.7rem;
+        height: 11.5rem;
+        padding-left: 1.2rem;
+        padding-right: 1.2rem;
+        padding-top: 1.4rem;
     }
 
     .dados {
@@ -1128,8 +1123,8 @@ footer h5 {
     }
 
     .dados img {
-        width: 4rem;
-        height: 3rem;
+        width: 2.5rem;
+        height: 2.5rem;
     }
 
     .dados p {
@@ -1139,7 +1134,7 @@ footer h5 {
     .textofeedback {
         width: 95%;
         height: 7rem;
-        font-size: .8rem;
+        font-size: .7rem;
     }
 
     footer {
