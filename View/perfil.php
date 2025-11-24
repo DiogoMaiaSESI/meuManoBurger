@@ -1,10 +1,11 @@
 <?php
 session_start();
 
-require_once __DIR__ . '/Controller/ClienteController.php';
-require_once __DIR__ . '/Model/Cliente.php';
-require_once __DIR__ . '/Controller/FavoritoController.php';
-require_once __DIR__ . '/Controller/ProductController.php';
+$root = $_SERVER['DOCUMENT_ROOT'];
+require_once "$root/Controller/ClienteController.php";
+require_once "$root/Model/Cliente.php";
+require_once "$root/Controller/FavoritoController.php";
+require_once "$root/Controller/ProductController.php";
 
 $favoritoController = new \Controller\FavoritoController();
 $clienteModel = new \Model\Cliente();
@@ -88,7 +89,7 @@ if (!$clienteController->isLoggedIn()) {
 $nomeUsuario = $_SESSION['nome_cliente'] ?? 'Usuário';
 $emailUsuario = $_SESSION['email_cliente'] ?? 'email@exemplo.com';
 
-$imagemUsuario = 'templates/assets/img/FotoPerfil.png'; // Caminho para a imagem padrão (Alanzoka)
+$imagemUsuario = "/meuManoBurger/templates/assets/img/FotoPerfil.png"; // Caminho para a imagem padrão (Alanzoka)
 if (isset($_SESSION['imagem_cliente']) && !empty($_SESSION['imagem_cliente'])) {
     $imagemUsuario = 'data:image/jpeg;base64,' . base64_encode($_SESSION['imagem_cliente']);
 }
@@ -477,10 +478,10 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
                         <label>Bandeira</label>
                         <div class="brand-selector">
                             <button type="button" class="brand-btn" data-brand="visa">
-                                <img src="\meuManoBurger\templates\assets\img\Visa.webp" alt="Visa">
+                                <img src="/meuManoBurger/templates/assets/img/Visa.webp" alt="Visa">
                             </button>
                             <button type="button" class="brand-btn" data-brand="mastercard">
-                                <img src="\meuManoBurger\templates\assets\img\Mastercard.webp" alt="Mastercard">
+                                <img src="/meuManoBurger/templates/assets/img/Mastercard.webp" alt="Mastercard">
                             </button>
                         </div>
                         <input type="hidden" id="card-brand-selected" name="card-brand-selected" value="">
