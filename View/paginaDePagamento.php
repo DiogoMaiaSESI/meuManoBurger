@@ -256,7 +256,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="pix-container">
                 <p>Escaneie o QR Code abaixo com o app do seu banco.</p>
                 <!-- Usando uma imagem estática -->
-                <img src="../templates/assets/img/qrcode-fixo.png" alt="QR Code Pix Fixo" class="pix-qrcode">
+                <img src="../templates/assets/img/qrCode.jpeg" alt="QR Code Pix Fixo" class="pix-qrcode">
             </div>
             <hr>
             <p class="important-notice">

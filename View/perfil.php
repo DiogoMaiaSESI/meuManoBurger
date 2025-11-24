@@ -2,10 +2,10 @@
 session_start();
 
 $root = $_SERVER['DOCUMENT_ROOT'];
-require_once "$root/Controller/ClienteController.php";
-require_once "$root/Model/Cliente.php";
-require_once "$root/Controller/FavoritoController.php";
-require_once "$root/Controller/ProductController.php";
+require_once "$root/meuManoBurger/Controller/ClienteController.php";
+require_once "$root/meuManoBurger/Model/Cliente.php";
+require_once "$root/meuManoBurger/Controller/FavoritoController.php";
+require_once "$root/meuManoBurger/Controller/ProductController.php";
 
 $favoritoController = new \Controller\FavoritoController();
 $clienteModel = new \Model\Cliente();
@@ -123,10 +123,10 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meu Perfil - Meu Mano Burger</title>
-    <link rel="stylesheet" href="/templates/assets/css/perfil.css">
-    <link rel="stylesheet" href="/templates/assets/css/meusFavoritos.css">
-    <link rel="stylesheet" href="/templates/assets/css/seguranca.css">
-    <link rel="stylesheet" href="/templates/assets/css/modalPagamento.css">
+    <link rel="stylesheet" href="../templates/assets/css/perfil.css">
+    <link rel="stylesheet" href="../templates/assets/css/meusFavoritos.css">
+    <link rel="stylesheet" href="../templates/assets/css/seguranca.css">
+    <link rel="stylesheet" href="../templates/assets/css/modalPagamento.css">
 
     <style>
         .sandwich-menu-container {
@@ -232,19 +232,19 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
     <div class="sandwich-menu-container">
         <div class="options">
             <div class="option">
-                <figure><img src="/templates/assets/img/Cardapio.png" alt="Cardápio"></figure>
+                <figure><img src="../templates/assets/img/Cardapio.png" alt="Cardápio"></figure>
                 <h5>Cardápio</h5>
             </div>
             <div class="option">
-                <figure><img src="/templates/assets/img/Pedidos.png" alt="Pedidos"></figure>
+                <figure><img src="../templates/assets/img/Pedidos.png" alt="Pedidos"></figure>
                 <h5>Pedidos</h5>
             </div>
             <div class="option">
-                <figure><img src="/templates/assets/img/Feedbacks.png" alt="Feedbacks"></figure>
+                <figure><img src="../templates/assets/img/Feedbacks.png" alt="Feedbacks"></figure>
                 <h5>Feedbacks</h5>
             </div>
             <div class="option">
-                <figure><img src="/templates/assets/img/Carrinho_menu.png" alt="Carrinho"></figure>
+                <figure><img src="../templates/assets/img/Carrinho_menu.png" alt="Carrinho"></figure>
                 <h5>Carrinho</h5>
             </div>
         </div>
@@ -257,7 +257,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
                 <!-- Menu Sanduíche (Sempre visível) -->
                 <li>
                     <button class="menu-btn sandwich-menu-btn">
-                        <figure><img src="/templates/assets/img/Menu.png" alt="Menu" class="icon-img">
+                        <figure><img src="../templates/assets/img/Menu.png" alt="Menu" class="icon-img">
                         </figure>
                     </button>
                 </li>
@@ -265,7 +265,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
                 <!-- Logo (Apenas Desktop) -->
                 <li class="desktop-only">
                     <figure class="logo-container">
-                        <img src="/templates/assets/img/Logo.png" alt="Logo Meu Mano Burger"
+                        <img src="../templates/assets/img/Logo.png" alt="Logo Meu Mano Burger"
                             class="logo-principal">
                     </figure>
                 </li>
@@ -286,7 +286,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
                 <!-- Ícones de Ação (Sempre visíveis, no final) -->
                 <li class="nav-right">
                     <a href="paginaPrincipalUser.php" class="icon-link">
-                        <figure><img src="/templates/assets/img/Voltar.png" alt="Voltar" class="icon-img">
+                        <figure><img src="../templates/assets/img/Voltar.png" alt="Voltar" class="icon-img">
                         </figure>
                     </a>
                     <a href="#" class="icon-link">
@@ -335,7 +335,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
                                 style="display: none;">
 
                             <button type="button" id="edit-pic-btn" class="edit-picture-btn">
-                                <figure><img src="/templates/assets/img/Edicao.png" alt="Editar Foto"
+                                <figure><img src="../templates/assets/img/Edicao.png" alt="Editar Foto"
                                         class="icon-img icon-editar"></figure>
                             </button>
 
@@ -553,7 +553,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
     </div>
 
 
-    <script src="/templates/assets/js/perfil.js"></script>
+    <script src="../templates/assets/js/perfil.js"></script>
     <?php
 
     // 1. Verifica se existe uma mensagem específica para o USUÁRIO.
