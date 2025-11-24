@@ -157,6 +157,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <body>
     <main>
+        <a href="../index.php">
+            <figure class="voltarFigure">
+                <img class="voltarImg" src="../templates/assets/img/Voltar.png" alt="">
+            </figure>
+        </a>
         <div class="container">
             <div class="imagem_login">
                 <img src="../templates/assets/img/imglogin-cadastro.png" alt="Uma mulher sentada...">

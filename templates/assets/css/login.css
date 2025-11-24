@@ -3,6 +3,17 @@
 main{
     height: 100%;
 }
+
+.voltarFigure{
+    position: fixed;
+    right: 2rem;
+    top: 2rem;
+}
+
+.voltarImg {
+    cursor: pointer;
+}
+
 .container{
     align-items: center;
     display: flex;
@@ -349,6 +360,11 @@ footer{
         gap: 4.0rem;
     }
     
+    .voltarImg {
+        width: 3.5rem;
+        height: 3.5rem;
+    }
+
     .imagem_login img{
         margin-top: 10rem;
         margin-left: 1.0rem;
