@@ -47,7 +47,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Ação para DELETAR o produto
     if ($action === 'delete_product') {
         // O método delete() do controller precisa ser ajustado para ler de $_POST
-        $deleteResult = $productController->delete();
+        $deleteResult = $productController->delete(); 
+        header('Location: cardapio_adm.php');
     }
 }
 

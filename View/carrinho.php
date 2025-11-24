@@ -15,9 +15,7 @@ require_once('../vendor/autoload.php');
 $productController = new ProductController();
 $carrinhoController = new CarrinhoController();
 $clienteController = new ClienteController();
-
 $imagemCliente = $clienteController->getClienteById($id_cliente)['imagem_cliente'];
-
 
 if($_SERVER['REQUEST_METHOD'] === 'POST') {
     if(!empty($_POST['horario'])){

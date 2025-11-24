@@ -116,7 +116,7 @@ document.addEventListener('DOMContentLoaded', function () {
         Pedidoatual = pedido
         StatusBtnatual = statusBtn
         Statusdetalhesatual = document.querySelector('.modaldetalhes .modalstatus p')
-        modalconfirm.style.display = 'block'
+        modalconfirm.style.display = 'flex'
       })
     }
     if (lixeiraBtn) {
@@ -124,7 +124,7 @@ document.addEventListener('DOMContentLoaded', function () {
         Pedidoatual = pedido
         LixeiraBtnatual = lixeiraBtn
         Statusdetalhesatual = document.querySelector('.modaldetalhes .modalstatus p')
-        modalexcluir.style.display = 'block'
+        modalexcluir.style.display = 'flex'
       })
     }
   })

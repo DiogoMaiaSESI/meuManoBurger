@@ -272,8 +272,8 @@ body {
 }
 
 .rec-image {
-    width: 100%;
-    height: 26rem;  
+    width: 80%;
+    height: 20rem;  
     object-fit: cover;
     border-radius: 1.2rem;
     margin-bottom: 1.5rem;  

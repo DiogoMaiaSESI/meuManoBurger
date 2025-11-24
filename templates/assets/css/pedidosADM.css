@@ -410,12 +410,13 @@ button.statusbtn.statusbtndesabilitado:hover {
 
 .conteudomodaldetalhes {
     width: 55rem;
-    height: 60rem;
+    height: fit-content;
     border-radius: 2rem;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
     background-color: var(--Branco);
     margin-top: 5%;
     margin-left: 33%;
+    padding-bottom: .1rem;
 }
 
 .fechar {
@@ -516,7 +517,7 @@ button.statusbtn.statusbtndesabilitado:hover {
     margin-right: 2rem;
     border-radius: .5rem;
     background-color: var(--RosaClaro);
-    height: 50%;
+    height: fit-content;
     padding: 2rem;
 }
 
@@ -566,10 +567,12 @@ button.statusbtn.statusbtndesabilitado:hover {
     z-index: 2;
     left: 0;
     top: 0;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     background-color: rgba(0, 0, 0, 0.5);
     display: none;
+    justify-content: center;
+    align-items: center;
 }
 
 .conteudomodalconfirm, .conteudomodalconfirmexclusion  {
@@ -579,8 +582,6 @@ button.statusbtn.statusbtndesabilitado:hover {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
     z-index: 2;
     background-color: var(--Branco);
-    margin-top: 17%;
-    margin-left: 39%;
 }
 
 .conteudomodalconfirm h2, .conteudomodalconfirmexclusion h2 {
@@ -683,7 +684,6 @@ button.statusbtn.statusbtndesabilitado:hover {
 
     .conteudomodaldetalhes {
         width: 55rem;
-        height: 57rem;
         margin-top: 5%;
         margin-left: auto;
         margin-right: auto;
@@ -784,10 +784,19 @@ button.statusbtn.statusbtndesabilitado:hover {
 
     .conteudomodaldetalhes {
         width: 45rem;
-        height: 58rem;
         margin-top: 5%;
         margin-left: auto;
         margin-right: auto;
+    }
+
+    .modalpagamento {
+        flex-direction: column;
+    }
+    .modalpagamento p {
+        width: 21rem;
+    }
+    .modalpagamento img {
+        display: none;
     }
 
     .fechar {
@@ -893,7 +902,6 @@ button.statusbtn.statusbtndesabilitado:hover {
 
     .conteudomodaldetalhes {
         width: 40rem;
-        height: 50rem;
         margin-top: 8%;
         margin-left: auto;
         margin-right: auto;
@@ -913,6 +921,16 @@ button.statusbtn.statusbtndesabilitado:hover {
     .modalhora {
         display: flex;
         flex-direction: column;
+    }
+
+    .modalpagamento {
+        flex-direction: column;
+    }
+    .modalpagamento p {
+        width: 21rem;
+    }
+    .modalpagamento img {
+        display: none;
     }
 
     .modalcodigopedidos {
@@ -1058,7 +1076,6 @@ button.statusbtn.statusbtndesabilitado:hover {
 
     .conteudomodaldetalhes {
         width: 35rem;
-        height: 50rem;
         margin-top: 10%;
         margin-left: auto;
         margin-right: auto;
@@ -1091,6 +1108,16 @@ button.statusbtn.statusbtndesabilitado:hover {
     .modalhora {
         display: flex;
         flex-direction: column;
+    }
+
+    .modalpagamento {
+        flex-direction: column;
+    }
+    .modalpagamento p {
+        width: 21rem;
+    }
+    .modalpagamento img {
+        display: none;
     }
 
     .resumopedido {
@@ -1128,7 +1155,7 @@ button.statusbtn.statusbtndesabilitado:hover {
 
 }
 
-@media screen and (min-width: 340px) and (max-width:400px) {
+@media screen and (max-width:400px) {
     .cabecalho {
         margin-right: .5rem;
         margin-left: 5rem;
@@ -1223,11 +1250,18 @@ button.statusbtn.statusbtndesabilitado:hover {
         display: block;
     }
 
-    button.detalhes,
+    button.detalhes{
+        width: 8rem;
+        height: 2.8rem;
+        font-size: 0.8rem;
+    }
     button.statusbtn {
-        width: 12rem;
-        height: 3.6rem;
-        font-size: 1rem;
+        width: 12.8rem;
+        height: 2.8rem;
+        font-size: 0.8rem;
+    }
+    .lixeira {
+        height: 2.8rem;
     }
 
     .central {
@@ -1256,7 +1290,6 @@ button.statusbtn.statusbtndesabilitado:hover {
 
     .conteudomodaldetalhes {
         width: 25rem;
-        height: 50rem;
         margin-top: 10%;
         margin-left: auto;
         margin-right: auto;
@@ -1286,14 +1319,23 @@ button.statusbtn.statusbtndesabilitado:hover {
         gap: 2rem;
     }
 
+    .pagamentoDiv {
+        flex-direction: column;
+    }
+
     .modaldata,
     .modalhora {
         display: flex;
         flex-direction: row;
     }
 
+    .modalpagamento p {
+        width: 10rem;
+    }
+
     .modalcodigopedidos {
         gap: .5rem;
+        margin-bottom: 1rem;
     }
     .codigotexto{
         width: 15rem;
@@ -1302,12 +1344,25 @@ button.statusbtn.statusbtndesabilitado:hover {
         height: 40%;
         padding: 1.5rem;
     }
-
+    .org {
+        width: 100%;
+    }
     .modalstatus p {
         width: 20rem;
         font-size: 1.6rem;
     }
-
+    .conteudomodalconfirmexclusion {
+        width: 30rem;
+    }
+    .conteudomodalconfirmexclusion h2{
+        font-size: 1.6rem;
+    }
+    .conteudomodalconfirmexclusion p{
+        font-size: 1rem;
+    }
+    .conteudomodalconfirmexclusion p span{
+        font-size: 0.9rem;
+    }
     .conteudomodalconfirm h2 {
         font-size: 1.8rem;
         padding-top: 3rem;
@@ -1330,8 +1385,7 @@ button.statusbtn.statusbtndesabilitado:hover {
         margin-left: auto;
         margin-right: auto;
     }
-
-        .sombra {
+    .sombra {
         position: fixed;
         height: 100%;
     }
