@@ -2,7 +2,7 @@
 
 session_start();
 
-if($_SESSION['id_cliente'] !== null) {
+if ($_SESSION['id_cliente'] !== null) {
     $id_cliente = $_SESSION['id_cliente'];
 } else {
     header('Location: login.php');
@@ -17,21 +17,21 @@ $carrinhoController = new CarrinhoController();
 $clienteController = new ClienteController();
 $imagemCliente = $clienteController->getClienteById($id_cliente)['imagem_cliente'];
 
-if($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if(!empty($_POST['horario'])){
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (!empty($_POST['horario'])) {
         $_SESSION['horario'] = $_POST['horario'];
         header('Location: paginaDePagamento.php');
         exit;
     }
-    if(!empty($_POST['id_produto'])){
+    if (!empty($_POST['id_produto'])) {
         $_SESSION['product_id_details'] = $_POST['id_produto'];
         header('Location: detalhamentoUser.php');
         exit;
     }
-    if(!empty($_POST['cima'])) {
+    if (!empty($_POST['cima'])) {
         $carrinhoController->sumOneToProduct($_POST['cima'], $id_cliente);
     }
-    if(!empty($_POST['baixo'])) {
+    if (!empty($_POST['baixo'])) {
         $carrinhoController->subtractOneToProduct($_POST['baixo'], $id_cliente);
     }
 }
@@ -48,9 +48,9 @@ $total = 0;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carrinho - Meu Mano Burger</title>
-    
+
     <!-- Carregando o CSS global e o novo CSS do carrinho -->
-    <link rel="stylesheet" href="../templates/assets/css/global.css"> 
+    <link rel="stylesheet" href="../templates/assets/css/global.css">
     <link rel="stylesheet" href="../templates/assets/css/carrinho.css">
 
     <style>
@@ -81,11 +81,11 @@ $total = 0;
         .option {
             display: flex;
             align-items: center;
-            height: 6.4rem;
+            height: 5.5rem;
             border-top: 1px solid var(--Preto);
             color: var(--Branco);
             padding-left: 1.6rem;
-            gap: 2.1rem;
+            gap: 1.5rem;
             cursor: pointer;
             transition: padding-left 300ms;
         }
@@ -99,7 +99,7 @@ $total = 0;
         }
 
         .option h5 {
-            font-size: 2.1rem;
+            font-size: 1.8rem;
             font-weight: 400;
         }
 
@@ -177,21 +177,23 @@ $total = 0;
     <!-- Header (Estrutura mínima necessária) -->
     <header class="main-header">
         <nav class="header-nav">
-            <li>
+            <div class="header-start">
                 <button class="menu-btn sandwich-menu-btn">
-                    <figure><img src="../templates/assets/img/Menu.png" alt="Menu" class="icon-img">
-                    </figure>
+                    <img src="../templates/assets/img/Menu.png" alt="Menu" class="icon-img">
                 </button>
-            </li>
-            <div class="logo-container">
-                <img src="../templates/assets/img/Logo.png" alt="Logo Meu Mano Burger" class="logo-principal">
             </div>
-            <div class="user-actions">
+            <div class="header-center">
+                <a href="paginaPrincipalUser.php">
+                    <img src="../templates/assets/img/Logo.png" alt="Logo Meu Mano Burger" class="logo-principal">
+                </a>
+            </div>
+            <div class="header-end">
                 <a href="paginaPrincipalUser.php" class="icon-link">
                     <img src="../templates/assets/img/Voltar.png" alt="Voltar" class="icon-img">
                 </a>
                 <a href="perfil.php" class="icon-link perfilFigure">
-                    <img src="data:image/jpeg;base64,<?php echo base64_encode($imagemCliente);?>" alt="Perfil" class="profileButton">
+                    <img src="data:image/jpeg;base64,<?php echo base64_encode($imagemCliente); ?>" alt="Perfil"
+                        class="profileButton">
                 </a>
             </div>
         </nav>
@@ -199,7 +201,7 @@ $total = 0;
 
     <!-- Conteúdo Principal do Carrinho -->
     <main class="cart-container">
-        
+
         <div class="cart-layout">
             <!-- Coluna da Esquerda: Itens do Carrinho -->
             <div class="cart-items-column">
@@ -210,7 +212,7 @@ $total = 0;
                     <div class="cart-items-background">
                         <ul class="cart-item-list">
                             <?php
-                            if(!empty($products)){
+                            if (!empty($products)) {
                                 foreach ($products as $product => $value) {
                                     $prod = $productController->findById($value);
                                     $qtd = $carrinhoController->getProductById($value, $id_cliente)[0]['qtd_produto'];
@@ -222,14 +224,14 @@ $total = 0;
                                     $imageBase64 = 'data:image/jpeg;base64,' . base64_encode($prod['imagem_produto']);
                                     echo '<li class="cart-item">
                                     <div class="item-info">
-                                        <img src="'. $imageBase64 .'" alt="Hambúrguer" class="item-image">
+                                        <img src="' . $imageBase64 . '" alt="Hambúrguer" class="item-image">
                                         <span class="item-name">' . $qtd . 'x ' . $prod['nome_produto'] . '</span>
                                         <form method="POST">
-                                            <button class="setaButton" name="cima" value="'. $prod['id_produto'] .'">+</button>
-                                            <button class="setaButton" name="baixo" value="'. $prod['id_produto'] .'">-</button>
+                                            <button class="setaButton" name="cima" value="' . $prod['id_produto'] . '">+</button>
+                                            <button class="setaButton" name="baixo" value="' . $prod['id_produto'] . '">-</button>
                                         </form>
                                         </div>
-                                    <span class="item-price">R$ '. number_format($prod['preco_produto'],2,',','.') . '</span>
+                                    <span class="item-price">R$ ' . number_format($prod['preco_produto'], 2, ',', '.') . '</span>
                                 </li>';
                                 }
                             } else {
@@ -251,7 +253,7 @@ $total = 0;
                 <div class="summary-card">
                     <div class="summary-total">
                         <span>Total Estimado:</span>
-                        <span class="total-price">R$ <?php echo number_format($total,2,',','.'); ?></span>
+                        <span class="total-price">R$ <?php echo number_format($total, 2, ',', '.'); ?></span>
                     </div>
                     <button class="checkout-btn">Continuar para o pagamento</button>
                 </div>
@@ -259,7 +261,8 @@ $total = 0;
                     <div class="summary-total">
                         <span>Agende a retirada do seu pedido!</span>
                     </div>
-                    <form method="POST"><input class="datetime-input" type="datetime-local" name="horario" id="horario"><input class="id_produto" type="hidden" name="id_produto"></form>
+                    <form method="POST"><input class="datetime-input" type="datetime-local" name="horario"
+                            id="horario"><input class="id_produto" type="hidden" name="id_produto"></form>
                     <p>Por favor, insira os dados para retirada</p>
                 </div>
             </div>
@@ -289,15 +292,16 @@ $total = 0;
 
     </main>
     <script src="../templates/assets/js/carrinho.js"></script>
-  <div vw class="enabled">
-    <div vw-access-button class="active"></div>
-    <div vw-plugin-wrapper>
-      <div class="vw-plugin-top-wrapper"></div>
+    <div vw class="enabled">
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+            <div class="vw-plugin-top-wrapper"></div>
+        </div>
     </div>
-  </div>
-  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
-  <script>
-    new window.VLibras.Widget('https://vlibras.gov.br/app');
-  </script>
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script>
+        new window.VLibras.Widget('https://vlibras.gov.br/app');
+    </script>
 </body>
+
 </html>

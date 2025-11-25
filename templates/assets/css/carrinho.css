@@ -1,7 +1,7 @@
 /* --- HEADER (Estilo reutilizado com ajustes de tamanho) --- */
 .main-header {
     background-color: var(--VermelhoCereja);
-    padding: 1.5rem 2vw; /* Aumentado o padding vertical */
+    padding: 1rem 2vw;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     position: sticky;
     top: 0;
@@ -23,8 +23,28 @@ form {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    width: 100%;
     max-width: 140rem;
     margin: 0 auto;
+}
+.header-start, .header-end {
+    display: flex;
+    align-items: center;
+    gap: clamp(1.5rem, 2.5vw, 3rem);
+    flex: 1;
+}
+.header-start {
+    justify-content: flex-start;
+}
+
+.header-end {
+    justify-content: flex-end;
+}
+
+.header-center {
+    flex: 2; /* Dá mais espaço para a logo */
+    display: flex;
+    justify-content: center;
 }
 .perfilFigure {
     width: 5.5rem;
@@ -69,15 +89,15 @@ body {
 .cart-container {
     max-width: 120rem;
     margin: 4rem auto;  
-    padding: 2rem 2rem;
+    padding: 0 2rem;
     width: 100%;
 }
 
 .cart-layout {
     display: flex;
-    gap: 4rem;  
+    gap: 3rem;  
     align-items: flex-start;
-    margin-bottom: 5rem;  
+    margin-bottom: 4rem;  
 }
 
 .cart-items-column {
@@ -89,6 +109,7 @@ body {
 .cart-summary-column {
     display: flex;
     flex-direction: column;
+    top: 12rem;
     flex: 1;
     position: sticky;
     gap: 4rem;
@@ -113,12 +134,17 @@ body {
     outline: none;
     box-shadow: 0 0 0.5rem rgba(244,162,97,0.5);
 }
+.cart-items-column,
+.cart-card {
+    width: 100% !important;
+    max-width: 100% !important;
+}
 .cart-card,
 .summary-card,
 .recommendations-card {
     background-color: var(--Branco);
-    padding: 3.5rem;  
-    border-radius: 1.8rem;
+    padding: 2.5rem;  
+    border-radius: 1.5rem;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 .summary-card p {
@@ -131,19 +157,18 @@ body {
     display: none;
 }
 .cart-title {
-    font-size: 3rem;  
+    font-size: 2.4rem;  
     font-weight: 700;
     color: var(--Preto);
     margin-top: 0;
     margin-bottom: 2rem;  
-    padding-bottom: 2rem;  
+    padding-bottom: 1.5rem;  
     border-bottom: 1px solid var(--CinzaClaro);
 }
 
 .cart-items-background {
     background-color: var(--RosaClaro);
     border-radius: 1.2rem;
-    padding: 1rem 2rem;  
     margin-top: 2rem;  
 }
 
@@ -172,8 +197,8 @@ body {
 }
 
 .item-image {
-    width: 7rem;  
-    height: 7rem;  
+    width: 10rem;  
+    height: 10rem;  
     object-fit: cover;
     border-radius: 1rem;
 }
@@ -201,7 +226,7 @@ body {
     color: var(--Preto);
     padding: 1.5rem 3rem;  
     border-radius: 1.8rem;
-    font-size: 1.8rem;  
+    font-size: 1.6rem;  
     font-weight: 700;
     cursor: pointer;
     transition: all 0.2s;
@@ -216,7 +241,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
-    font-size: 2.6rem;  
+    font-size: 2.0rem;  
     font-weight: 700;
     margin-bottom: 2rem;  
 }
@@ -234,12 +259,12 @@ body {
 
 .checkout-btn {
     width: 100%;
-    padding: 1.8rem;  
+    padding: 1.5rem;  
     background-color: var(--VermelhoCereja);
     color: var(--Branco);
     border: none;
     border-radius: 1.8rem;
-    font-size: 1.8rem;  
+    font-size: 1.6rem;  
     font-weight: 700;
     cursor: pointer;
     transition: opacity 0.2s;
@@ -250,30 +275,35 @@ body {
 }
 
 .recommendations-card {
-    margin-top: 3rem;  
+    margin-top: 4rem;  
 }
 
 .recommendations-title {
-    font-size: 2.6rem;  
+    font-size: 2.2rem;  
     font-weight: 700;
     color: var(--VermelhoCereja);
     margin-top: 0;
-    margin-bottom: 3rem;  
+    margin-bottom: 2rem;  
 }
 
 .recommendations-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));  
-    gap: 2.5rem;  
+    display: flex;
+    overflow-x: auto;
+    gap: 2rem;
+    padding: 1rem 0.5rem;
+    scrollbar-width: thin;
+    scrollbar-color: var(--VermelhoCereja) #f1f1f1;
 }
 
 .rec-item {
     text-align: center;
+    flex: 0 0 18rem;
+    min-width: 0;
 }
 
 .rec-image {
     width: 80%;
-    height: 20rem;  
+    height: 12rem;  
     object-fit: cover;
     border-radius: 1.2rem;
     margin-bottom: 1.5rem;  
@@ -287,10 +317,11 @@ body {
     font-size: 1.8rem;
     padding: 1.2rem; 
     border-radius: 1rem;
+    margin-bottom: 1rem;
 }
 
 /* --- RESPONSIVIDADE --- */
-@media (max-width: 834px) {
+@media (max-width: 734px) {
     .cart-layout {
         flex-direction: column;
     }
@@ -309,5 +340,31 @@ body {
     }
     .user-actions {
         gap: 1.5rem;
+    }
+}
+@media (max-width: 515px) {
+    body {
+        font-size: 1.4rem; /* Diminui a fonte base em telas pequenas */
+    }
+    .cart-container {
+        margin-top: 2rem;
+        padding: 0;
+    }
+    .cart-card, .summary-card, .recommendations-card {
+        padding: 2rem;
+    }
+    .cart-card {
+        width: 100%;
+        box-sizing: border-box; /* Garante que o padding não quebre o layout */
+    }
+    .item-info {
+        gap: 1.5rem;
+    }
+    .item-image {
+        width: 6rem;
+        height: 6rem;
+    }
+    .setaButton {
+        font-size: 2.4rem;
     }
 }
