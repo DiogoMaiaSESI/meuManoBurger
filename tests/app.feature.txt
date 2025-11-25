@@ -1,0 +1,344 @@
+﻿CASOS DE TESTE
+
+
+Descrição: Cadastro de usuários
+ID: 1 - Cenário 1: Cadastro com credenciais válidas
+Dado que eu estou na página de cadastro
+Quando eu insiro uma foto do cliente no campo "Adicionar foto" (opcional)
+E eu insiro Beatriz Mota no campo de Nome
+E insiro chata@example.com no campo de Email
+E insiro 12345 no campo de Senha 
+E insiro 12345 no campo de  Confirmar Senha
+Então os dados inseridos devem ser registrados no Banco de Dados
+
+
+ID: 2- Cenário 2: Cadastro com email já cadastrado
+Pré-condição: Cadastrar previamente o email testado
+Dado que eu estou na página de cadastro
+Quando eu insiro uma foto do cliente no campo "Adicionar foto" (opcional)
+E eu insiro Chata Santos no campo de Nome 
+E insiro chata@example.com no campo de Email
+E insiro 12345 no campo de Senha 
+E insiro 12345 no campo de  Confirmar Senha
+Então a mensagem de erro "Email já cadastrado" deve ser retornada
+
+
+Descrição: Login de usuários
+ID: 3 - Cenário 1: Login com credenciais válidas
+Pré-condição: Cadastro do usuário testado
+Dado que eu estou na página de login
+Quando eu  insiro chata@example.com  no campo de Email
+E insiro 12345 no campo de Senha
+Então o login deve ser realizado
+
+
+ID: 4 - Cenário 2: Login com credenciais inválidas
+Pré-condição: Usuário testado não estar cadastrado
+Dado que eu estou na página de login
+Quando eu insiro exatas@example.com no campo de Email
+E insiro 123457  no campo de Senha
+E o usuário não está cadastrado
+Então a mensagem "E-mail ou senha inválidos. Verifique seus dados ou cadastre-se." deve ser retornada
+
+
+Descrição: Login de administradores
+ID: 5 - Cenário 1: Login com credenciais válidas 
+Dado que o método login() está disponível
+E existe um administrador cadastrado com:
+email: mariane.mmb.admin@gmail.com
+senha: 1234 Quando eu executo o método login() com:
+email: mariane.mmb.admin@gmail.com
+senha: 1234
+ Então o sistema deve retornar true
+ E deve configurar a sessão com:
+id_adm: 1
+nome_adm: "Mariane Silva"
+email_adm: "mariane.mmb.admin@gmail.com"
+
+
+ID: 6 - Cenário 2: Login com credenciais inválidas
+ Dado que o método login() está disponível 
+E existe um administrador cadastrado com:
+email: mariane.mmb.admin@gmail.com
+senha: 1234 Quando eu executo o método login() com:
+email: mariane.mmb.admin@gmail.com
+senha: senha_errada 
+Então o sistema deve retornar false
+
+
+ID: 7 - Cenário 3: Criação de novo administrador 
+Dado que o método createAdm() está disponível 
+E não existe administrador com email: mariane.mmb.admin@gmail.com 
+Quando eu executo o método createAdm() com:
+nome_adm: "Mariane Silva"
+email_adm: "mariane.mmb.admin@gmail.com"
+senha_adm: "1234"
+imagem_adm: ""
+
+
+Descrição: Cadastro de Produtos
+ID: 8 - Cenário 1:  Cadastro do Produto com credenciais válidas
+Pré-condição: Administrador logado no painel
+Dado que eu estou na página de cadastro
+Quando eu insiro uma foto do Produto no campo de Adicionar foto
+E insiro Pastel de Forno de Frango no campo de Nome
+E seleciono "Lanche" no campo de Categoria
+E insiro " Pastel de forno com frango, o melhor da cidade!" no campo de Descrição
+E insiro 12.30 no campo de Preço
+E insiro 2 no campo de Quantidade
+E insiro o ID do administrador que está registrando o produto
+Então os dados inseridos devem ser registrados no Banco de Dados
+
+
+
+
+Descrição: Manipulação de pedidos
+D: 9 - Cenário 1: Criação básica de pedido
+Dado que o método criarPedido() está disponível
+Quando eu executo o método criarPedido() com parâmetros válidos:
+id_produto: 5
+id_cliente: 10
+codigo: "UT4-Z"
+qtd: 2
+total: 150.00
+retirada: "retirada_loja"
+status: "pendente"
+Então o sistema deve retornar true indicando sucesso
+
+
+ID: 10- Cenário 2: Criação básica de pedido com outro produto
+Dado que o método criarPedido() está disponível
+Quando eu executo o método criarPedido() com:
+id_produto: 8
+id_cliente: 10
+codigo: "UT4-Z"
+qtd: 1
+total: 75.00
+retirada: "retirada_loja"
+status: "pendente"
+Então o sistema deve retornar true indicando sucesso
+
+
+ID: 11 - Cenário 3: Busca de pedido por código usando getEqualsCodigos
+Dado que existe um pedido com código "UT4-Z" no banco de dados
+Quando eu executo o método getPedidoByCodigo("UT4-Z")
+Então o sistema deve retornar um array de pedidos
+E o primeiro item do array deve conter a chave "id_pedido"
+E o valor deve ser 20
+
+
+ID: 12 - Cenário 4: Busca de ID do pedido por código
+Dado que existe um pedido com código "UT4-Z" no banco de dados
+Quando eu executo o método getIdPedidoByCodigo("UT4-Z")
+Então o sistema deve retornar um array associativo
+E o array deve conter a chave "id_pedido"
+E o valor deve ser 20
+
+
+Descrição: Manipulação do estoque
+ID: 13 - Cenário 1: Inserir produto no estoque
+ Dado que o método insEstoque() está disponível
+ Quando eu executo o método insEstoque() com:
+qtd_produto: 50
+id_produto_fk: 5 
+Então o sistema deve retornar true indicando sucesso
+ID: 17 - Cenário 2: Subtrair estoque com quantidade suficiente 
+Dado que o método subEstoque() está disponível 
+Quando eu executo o método subEstoque() com:
+id_pedido: 10
+ Então o sistema deve retornar a mensagem: "Pedido processado. Estoque atualizado de 50 para 40."
+
+
+ID: 14 - Cenário 3: Tentativa de subtração com estoque insuficiente 
+Dado que o método subEstoque() está disponível 
+Quando eu executo o método subEstoque() com:
+id_pedido: 11
+ Então o sistema deve retornar a mensagem: "Estoque insuficiente: disponível 5, pedido 10."
+
+
+ID: 15 - Cenário 4: Atualizar quantidade do estoque
+ Dado que o método atEstoque() está disponível
+ Quando eu executo o método atEstoque() com:
+id_produto_fk: 5
+new_qtd: 100 
+Então o sistema deve retornar true indicando sucesso
+
+
+ID: 16  - Cenário 5: Obter informações do estoque
+ Dado que o método obtEstoque() está disponível 
+Quando eu executo o método obtEstoque() com:
+id_produto_fk: 5 
+Então o sistema deve retornar um array com:
+id_estoque: 1
+qtd_produto: 50
+id_produto_fk: 5
+
+
+
+
+EM INGLÊS
+
+
+TEST CASES
+
+
+Description: User registration
+ID: 1 - Scenario 1: Registration with valid credentials
+Given that I am on the registration page
+When I insert a photo of the customer in the “Add photo” field (optional)
+And I enter Beatriz Mota in the Name field
+And I enter chata@example.com in the Email field
+And I enter 12345 in the Password field 
+And I enter 12345 in the Confirm Password field
+Then the data entered must be recorded in the Database
+
+
+ID: 2- Scenario 2: Registration with an email address already registered
+Precondition: Previously register the tested email address
+Given that I am on the registration page
+When I enter a photo of the customer in the “Add photo” field (optional)
+And I enter Chata Santos in the Name field 
+And I enter chata@example.com in the Email field
+And I enter 12345 in the Password field 
+And I enter 12345 in the  Confirm Password field
+Then the error message “Email already registered” should be returned
+
+
+Description: User login
+ID: 3 - Scenario 1: Login with valid credentials
+Precondition: Test user registration
+Given that I am on the login page
+When I enter chata@example.com in the Email field
+And I enter 12345 in the Password field
+Then the login should be successful
+
+
+ID: 4 - Scenario 2: Login with invalid credentials
+Precondition: Tested user is not registered
+Given that I am on the login page
+When I enter exatas@example.com in the Email field
+And enter 123457 in the Password field
+And the user is not registered
+Then the message “Invalid email or password. Check your details or register.” should be returned
+
+
+Description: Administrator login
+ID: 5 - Scenario 1: Login with valid credentials
+Given that the login() method is available
+And there is a registered administrator with:
+email: mariane.mmb.admin@gmail.com
+password: 1234 When I run the login() method with:
+email: mariane.mmb.admin@gmail.com
+password: 1234
+Then the system should return true
+And it should configure the session with:
+id_adm: 1
+name_adm: “Mariane Silva”
+email_adm: “mariane.mmb.admin@gmail.com”
+
+
+ID: 6 - Scenario 2: Login with invalid credentials
+Given that the login() method is available
+And there is a registered administrator with:
+email: mariane.mmb.admin@gmail.com
+password: 1234 When I execute the login() method with:
+email: mariane.mmb.admin@gmail.com
+password: wrong_password
+Then the system should return false
+
+
+ID: 7 - Scenario 3: Creating a new administrator
+Given that the createAdm() method is available
+And there is no administrator with email: mariane.mmb.admin@gmail.com
+When I run the createAdm() method with:
+admin_name: “Mariane Silva”
+admin_email: “mariane.mmb.admin@gmail.com”
+admin_password: “1234”
+admin_image: “”
+
+
+Description: Product Registration
+ID: 8 - Scenario 1: Product Registration with valid credentials
+Precondition: Administrator logged into the panel
+Given that I am on the registration page
+When I insert a photo of the Product in the Add photo field
+And I insert Chicken Pastry in the Name field
+And I select “Snack” in the Category field
+And I insert “Chicken pastry, the best in town!” in the Description field
+And I enter 12.30 in the Price field
+And I enter 2 in the Quantity field
+And I enter the ID of the administrator who is registering the product
+Then the data entered must be recorded in the Database
+
+
+Description: Order handling
+ID: 9 - Scenario 1: Basic order creation
+Given that the createOrder() method is available
+When I run the createOrder() method with valid parameters:
+product_id: 5
+customer_id: 10
+code: “UT4-Z”
+qty: 2
+total: 150.00
+pickup: “store_pickup”
+status: “pending”
+Then the system should return true indicating success
+
+
+ID: 10- Scenario 2: Basic order creation with another product
+Given that the createOrder() method is available
+When I execute the createOrder() method with:
+product_id: 8
+customer_id: 10
+code: “UT4-Z”
+quantity: 1
+total: 75.00
+pickup: “store_pickup”
+status: “pending”
+Then the system should return true indicating success
+
+
+ID: 11 - Scenario 3: Searching for an order by code using getEqualsCodigos
+Given that there is an order with code “UT4-Z” in the database
+When I run the method getOrderByCode(“UT4-Z”)
+Then the system should return an array of orders
+And the first item in the array should contain the key “id_order”
+And the value should be 20
+
+
+ID: 12 - Scenario 4: Search for order ID by code
+Given that there is an order with code “UT4-Z” in the database
+When I execute the getIdPedidoByCodigo(“UT4-Z”) method
+Then the system should return an associative array
+And the array should contain the key “id_pedido”
+And the value should be 20
+
+
+Description: Inventory management
+ID: 13 - Scenario 1: Insert product into inventory
+Given that the insInventory() method is available
+When I execute the insInventory() method with:
+product_quantity: 50
+product_id_fk: 5
+Then the system should return true indicating success
+
+
+ID: 14 - Scenario 3: Attempt to subtract with insufficient stock
+Given that the subStock() method is available
+When I execute the subStock() method with:
+order_id: 11
+Then the system should return the message: “Insufficient stock: 5 available, 10 ordered.”
+
+
+ID: 15 - Scenario 4: Update stock quantity
+Given that the atStock() method is available
+When I run the atStock() method with:
+product_id_fk: 5
+new_qty: 100
+Then the system should return true indicating success
+
+
+ID: 16 - Scenario 5: Obtain stock information
+Given that the obtEstoque() method is available
+When I execute the obtEstoque() method with:
+id_produto_fk: 5
