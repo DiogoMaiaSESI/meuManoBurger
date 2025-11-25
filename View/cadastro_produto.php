@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
         }
         if(!$igual) {
-            $productController->create($nome, $preco, $opcoes, $descricao, $imagem, $id_adm_fk);
+            $productController->create();
             $produtos = $productController->listAll();
             $ultimoProduto = end($produtos);
             $id_produto = $ultimoProduto['id_produto'];
